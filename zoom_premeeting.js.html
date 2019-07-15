@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: zoom_premeeting.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: zoom_premeeting.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>const { ZoomSDKError } = require('./settings.js');
+
+var ZoomPreMeeting = (function () {
+  var instance;
+  /**
+   * mode: Zoom SDK ZoomPreMeeting Service Init
+   * @param {Object} addon zoom sdk module
+   * @return {ZoomPreMeeting}
+   */
+  function init(opts) { 
+    var clientOpts = opts || {};
+
+    // Private methods and variables
+    var _addon = clientOpts.addon.GetPremeetingObj() || null;
+
+    function onScheduleOrEditMeeting(result) {
+      console.log('onScheduleOrEditMeeting', result)
+    }
+
+    return {
+      /**
+      * mode: Get General ZoomPreMeeting Module
+      * @param {String} content
+      * @return {ZoomPreMeeting}
+      */
+      GetInviteEmailContent: function (opts) {
+        if (_addon) {
+          let clientOpts = opts || {};
+          let content = clientOpts.content;
+          return _addon.GetPremeetingMeetingItemCtrl().GetInviteEmailContent(content);
+        }
+        return ZoomSDKError.SDKERR_UNINITIALIZE;
+      },
+      /**
+      * mode: Schedule Meeting
+      * @param {String} hSelfWnd SelfWnd (require hexadecimal)
+      * @param {String} hParent parent window handle (require hexadecimal)
+      * @param {String} left chat window left pos
+      * @param {String} top chat window top pos
+      * @return {ZoomPreMeeting}
+      */
+      ScheduleMeeting: function (opts) {
+        if (_addon) {
+          let clientOpts = opts || {};
+          let hSelfWnd = clientOpts.hSelfWnd || '0';
+          let hParent = clientOpts.hParent || '0';
+          let left = clientOpts.left || '0';
+          let top = clientOpts.top || '0';
+          return _addon.ScheduleMeeting(hSelfWnd, hParent, left, top, onScheduleOrEditMeeting);
+        }
+        return ZoomSDKError.SDKERR_UNINITIALIZE;
+      }
+    };
+  };
+  return {
+    /**
+     * mode: Get Zoom SDK ZoomPreMeeting Service Module
+     * @return {ZoomPreMeeting}
+    */
+    getInstance: function (opts) {
+      if (!instance) {
+        instance = init(opts);
+      }
+      return instance;
+    }
+  };
+})();
+
+module.exports = {
+  ZoomPreMeeting: ZoomPreMeeting
+}</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#Annotaion_Clear">Annotaion_Clear</a></li><li><a href="global.html#Annotaion_IsAnnotaionDisable">Annotaion_IsAnnotaionDisable</a></li><li><a href="global.html#Annotaion_Redo">Annotaion_Redo</a></li><li><a href="global.html#Annotaion_SetColor">Annotaion_SetColor</a></li><li><a href="global.html#Annotaion_SetLineWidth">Annotaion_SetLineWidth</a></li><li><a href="global.html#Annotaion_SetTool">Annotaion_SetTool</a></li><li><a href="global.html#Annotaion_StartAnnotation">Annotaion_StartAnnotation</a></li><li><a href="global.html#Annotaion_StopAnnotation">Annotaion_StopAnnotation</a></li><li><a href="global.html#Annotaion_Undo">Annotaion_Undo</a></li><li><a href="global.html#Checking_IsAeroModeInSharingTurnOff">Checking_IsAeroModeInSharingTurnOff</a></li><li><a href="global.html#Checking_IsAutoAdjustMicEnabled">Checking_IsAutoAdjustMicEnabled</a></li><li><a href="global.html#Checking_IsAutoFitToWindowWhenViewSharingEnabled">Checking_IsAutoFitToWindowWhenViewSharingEnabled</a></li><li><a href="global.html#Checking_IsAutoFullScreenVideoWhenJoinMeetingEnabled">Checking_IsAutoFullScreenVideoWhenJoinMeetingEnabled</a></li><li><a href="global.html#Checking_IsAutoJoinAudioEnabled">Checking_IsAutoJoinAudioEnabled</a></li><li><a href="global.html#Checking_IsDualScreenModeEnabled">Checking_IsDualScreenModeEnabled</a></li><li><a href="global.html#Checking_IsFaceBeautyEffectEnabled">Checking_IsFaceBeautyEffectEnabled</a></li><li><a href="global.html#Checking_IsMirrorEffectEnabled">Checking_IsMirrorEffectEnabled</a></li><li><a href="global.html#Checking_IsSplitScreenModeEnabled">Checking_IsSplitScreenModeEnabled</a></li><li><a href="global.html#CheckingIsInternalMeeting">CheckingIsInternalMeeting</a></li><li><a href="global.html#CleanUPSDK">CleanUPSDK</a></li><li><a href="global.html#GetAudioConnQuality">GetAudioConnQuality</a></li><li><a href="global.html#GetAudioSetting">GetAudioSetting</a></li><li><a href="global.html#GetAuth">GetAuth</a></li><li><a href="global.html#GetCustomizedResource">GetCustomizedResource</a></li><li><a href="global.html#GetGeneralSetting">GetGeneralSetting</a></li><li><a href="global.html#getInstance">getInstance</a></li><li><a href="global.html#GetInviteEmailContent">GetInviteEmailContent</a></li><li><a href="global.html#GetInviteEmailTeamplate">GetInviteEmailTeamplate</a></li><li><a href="global.html#GetInviteEmailTitle">GetInviteEmailTitle</a></li><li><a href="global.html#GetJoinMeetingUrl">GetJoinMeetingUrl</a></li><li><a href="global.html#GetMeeting">GetMeeting</a></li><li><a href="global.html#GetMeetingHostTag">GetMeetingHostTag</a></li><li><a href="global.html#GetMeetingID">GetMeetingID</a></li><li><a href="global.html#GetMeetingInfo">GetMeetingInfo</a></li><li><a href="global.html#GetMeetingNumber">GetMeetingNumber</a></li><li><a href="global.html#GetMeetingTopic">GetMeetingTopic</a></li><li><a href="global.html#GetMeetingType">GetMeetingType</a></li><li><a href="global.html#GetRecordingSetting">GetRecordingSetting</a></li><li><a href="global.html#GetSetting">GetSetting</a></li><li><a href="global.html#GetSharingConnQuality">GetSharingConnQuality</a></li><li><a href="global.html#Getting_GetRecordingPath">Getting_GetRecordingPath</a></li><li><a href="global.html#GetVideoConnQuality">GetVideoConnQuality</a></li><li><a href="global.html#GetVideoSetting">GetVideoSetting</a></li><li><a href="global.html#H323_CallOutH323">H323_CallOutH323</a></li><li><a href="global.html#H323_CancelCallOutH323">H323_CancelCallOutH323</a></li><li><a href="global.html#H323_GetCalloutH323DeviceList">H323_GetCalloutH323DeviceList</a></li><li><a href="global.html#H323_GetH323Address">H323_GetH323Address</a></li><li><a href="global.html#H323_GetH323Password">H323_GetH323Password</a></li><li><a href="global.html#InitSDK">InitSDK</a></li><li><a href="global.html#JoinMeeting">JoinMeeting</a></li><li><a href="global.html#JoinMeetingWithoutLogin">JoinMeetingWithoutLogin</a></li><li><a href="global.html#LeaveMeeting">LeaveMeeting</a></li><li><a href="global.html#Lock_Meeting">Lock_Meeting</a></li><li><a href="global.html#Login">Login</a></li><li><a href="global.html#LoginWithSSOToken">LoginWithSSOToken</a></li><li><a href="global.html#Logout">Logout</a></li><li><a href="global.html#MeetingAudio_JoinVoip">MeetingAudio_JoinVoip</a></li><li><a href="global.html#MeetingAudio_LeaveVoip">MeetingAudio_LeaveVoip</a></li><li><a href="global.html#MeetingAudio_MuteAudio">MeetingAudio_MuteAudio</a></li><li><a href="global.html#MeetingAudio_UnMuteAudio">MeetingAudio_UnMuteAudio</a></li><li><a href="global.html#MeetingConfig_CancelUpdate">MeetingConfig_CancelUpdate</a></li><li><a href="global.html#MeetingConfig_DisablePopupMeetingWrongPSWDlg">MeetingConfig_DisablePopupMeetingWrongPSWDlg</a></li><li><a href="global.html#MeetingConfig_DisableWaitingForHostDialog">MeetingConfig_DisableWaitingForHostDialog</a></li><li><a href="global.html#MeetingConfig_EnableAutoEndOtherMeetingWhenStartMeeting">MeetingConfig_EnableAutoEndOtherMeetingWhenStartMeeting</a></li><li><a href="global.html#MeetingConfig_EnableInviteButtonOnMeetingUI">MeetingConfig_EnableInviteButtonOnMeetingUI</a></li><li><a href="global.html#MeetingConfig_EnableLButtonDBClick4SwitchFullScreenMode">MeetingConfig_EnableLButtonDBClick4SwitchFullScreenMode</a></li><li><a href="global.html#MeetingConfig_GetReminderType">MeetingConfig_GetReminderType</a></li><li><a href="global.html#MeetingConfig_HideMeetingInfoFromMeetingUITitle">MeetingConfig_HideMeetingInfoFromMeetingUITitle</a></li><li><a href="global.html#MeetingConfig_PrePopulateWebinarRegistrationInfo">MeetingConfig_PrePopulateWebinarRegistrationInfo</a></li><li><a href="global.html#MeetingConfig_SetBottomFloatToolbarWndVisibility">MeetingConfig_SetBottomFloatToolbarWndVisibility</a></li><li><a href="global.html#MeetingConfig_SetDirectShareMonitorID">MeetingConfig_SetDirectShareMonitorID</a></li><li><a href="global.html#MeetingConfig_SetFloatVideoPos">MeetingConfig_SetFloatVideoPos</a></li><li><a href="global.html#MeetingConfig_SetFloatVideoWndVisibility">MeetingConfig_SetFloatVideoWndVisibility</a></li><li><a href="global.html#MeetingConfig_SetFreeMeetingNeedToUpgradeCB">MeetingConfig_SetFreeMeetingNeedToUpgradeCB</a></li><li><a href="global.html#MeetingConfig_SetFreeMeetingUpgradeToGiftFreeTrialStartCB">MeetingConfig_SetFreeMeetingUpgradeToGiftFreeTrialStartCB</a></li><li><a href="global.html#MeetingConfig_SetFreeMeetingUpgradeToGiftFreeTrialStopCB">MeetingConfig_SetFreeMeetingUpgradeToGiftFreeTrialStopCB</a></li><li><a href="global.html#MeetingConfig_SetFreeMeetingUpgradeToProMeetingCB">MeetingConfig_SetFreeMeetingUpgradeToProMeetingCB</a></li><li><a href="global.html#MeetingConfig_SetMeetingIDForMeetingUITitle">MeetingConfig_SetMeetingIDForMeetingUITitle</a></li><li><a href="global.html#MeetingConfig_SetMeetingUIPos">MeetingConfig_SetMeetingUIPos</a></li><li><a href="global.html#MeetingConfig_SetSharingToolbarVisibility">MeetingConfig_SetSharingToolbarVisibility</a></li><li><a href="global.html#MeetingConfig_UpgradeAccount">MeetingConfig_UpgradeAccount</a></li><li><a href="global.html#MeetingConfig_UpgradeMeeting">MeetingConfig_UpgradeMeeting</a></li><li><a href="global.html#MeetingShare_StartAppShare">MeetingShare_StartAppShare</a></li><li><a href="global.html#MeetingShare_StartMonitorShare">MeetingShare_StartMonitorShare</a></li><li><a href="global.html#MeetingShare_StopShare">MeetingShare_StopShare</a></li><li><a href="global.html#MeetingUI_ChangeFloatoActiveSpkVideoSize">MeetingUI_ChangeFloatoActiveSpkVideoSize</a></li><li><a href="global.html#MeetingUI_EnterFullScreen">MeetingUI_EnterFullScreen</a></li><li><a href="global.html#MeetingUI_ExitFullScreen">MeetingUI_ExitFullScreen</a></li><li><a href="global.html#MeetingUI_GetCurrentSplitScreenModeInfo">MeetingUI_GetCurrentSplitScreenModeInfo</a></li><li><a href="global.html#MeetingUI_GetWallViewPageInfo">MeetingUI_GetWallViewPageInfo</a></li><li><a href="global.html#MeetingUI_HideChatDlg">MeetingUI_HideChatDlg</a></li><li><a href="global.html#MeetingUI_HideJoinAudioDlg">MeetingUI_HideJoinAudioDlg</a></li><li><a href="global.html#MeetingUI_MoveFloatVideoWnd">MeetingUI_MoveFloatVideoWnd</a></li><li><a href="global.html#MeetingUI_ShowBottomFloatToolbarWnd">MeetingUI_ShowBottomFloatToolbarWnd</a></li><li><a href="global.html#MeetingUI_ShowChatDlg">MeetingUI_ShowChatDlg</a></li><li><a href="global.html#MeetingUI_ShowJoinAudioDlg">MeetingUI_ShowJoinAudioDlg</a></li><li><a href="global.html#MeetingUI_ShowParticipantsListWnd">MeetingUI_ShowParticipantsListWnd</a></li><li><a href="global.html#MeetingUI_ShowPreOrNextPageVideo">MeetingUI_ShowPreOrNextPageVideo</a></li><li><a href="global.html#MeetingUI_ShowSharingFrameWindows">MeetingUI_ShowSharingFrameWindows</a></li><li><a href="global.html#MeetingUI_ShowSharingToolbar">MeetingUI_ShowSharingToolbar</a></li><li><a href="global.html#MeetingUI_SwitchFloatVideoToActiveSpkMod">MeetingUI_SwitchFloatVideoToActiveSpkMod</a></li><li><a href="global.html#MeetingUI_SwitchFloatVideoToGalleryMod">MeetingUI_SwitchFloatVideoToGalleryMod</a></li><li><a href="global.html#MeetingUI_SwitchSplitScreenMode">MeetingUI_SwitchSplitScreenMode</a></li><li><a href="global.html#MeetingUI_SwitchToVideoWall">MeetingUI_SwitchToVideoWall</a></li><li><a href="global.html#MeetingUI_SwtichToAcitveSpeaker">MeetingUI_SwtichToAcitveSpeaker</a></li><li><a href="global.html#MeetingVideo_HideOrShowNoVideoUserOnVideoWall">MeetingVideo_HideOrShowNoVideoUserOnVideoWall</a></li><li><a href="global.html#MeetingVideo_MuteVideo">MeetingVideo_MuteVideo</a></li><li><a href="global.html#MeetingVideo_PinVideo">MeetingVideo_PinVideo</a></li><li><a href="global.html#MeetingVideo_SpotlightVideo">MeetingVideo_SpotlightVideo</a></li><li><a href="global.html#MeetingVideo_UnMuteVideo">MeetingVideo_UnMuteVideo</a></li><li><a href="global.html#Resource_AddCustomizedPictureResource">Resource_AddCustomizedPictureResource</a></li><li><a href="global.html#Resource_AddCustomizedStringResource">Resource_AddCustomizedStringResource</a></li><li><a href="global.html#Resource_AddCustomizedURLResource">Resource_AddCustomizedURLResource</a></li><li><a href="global.html#ScheduleMeeting">ScheduleMeeting</a></li><li><a href="global.html#SDKAuth">SDKAuth</a></li><li><a href="global.html#Setting_EnableAutoAdjustMic">Setting_EnableAutoAdjustMic</a></li><li><a href="global.html#Setting_EnableAutoFitToWindowWhenViewSharing">Setting_EnableAutoFitToWindowWhenViewSharing</a></li><li><a href="global.html#Setting_EnableAutoFullScreenVideoWhenJoinMeeting">Setting_EnableAutoFullScreenVideoWhenJoinMeeting</a></li><li><a href="global.html#Setting_EnableAutoJoinAudio">Setting_EnableAutoJoinAudio</a></li><li><a href="global.html#Setting_EnableDualScreenMode">Setting_EnableDualScreenMode</a></li><li><a href="global.html#Setting_EnableFaceBeautyEffect">Setting_EnableFaceBeautyEffect</a></li><li><a href="global.html#Setting_EnableSplitScreenMode">Setting_EnableSplitScreenMode</a></li><li><a href="global.html#Setting_EnableVideoMirrorEffect">Setting_EnableVideoMirrorEffect</a></li><li><a href="global.html#Setting_GetCameraList">Setting_GetCameraList</a></li><li><a href="global.html#Setting_GetMicList">Setting_GetMicList</a></li><li><a href="global.html#Setting_GetSpeakerList">Setting_GetSpeakerList</a></li><li><a href="global.html#Setting_SelectMic">Setting_SelectMic</a></li><li><a href="global.html#Setting_SelectSpeaker">Setting_SelectSpeaker</a></li><li><a href="global.html#Setting_SelectVideoCamera">Setting_SelectVideoCamera</a></li><li><a href="global.html#Setting_SetRecordingPath">Setting_SetRecordingPath</a></li><li><a href="global.html#Setting_TurnOffAeroModeInSharing">Setting_TurnOffAeroModeInSharing</a></li><li><a href="global.html#SettingUI_HideSettingDlg">SettingUI_HideSettingDlg</a></li><li><a href="global.html#SettingUI_ShowTheSettingDlg">SettingUI_ShowTheSettingDlg</a></li><li><a href="global.html#StartMeeting">StartMeeting</a></li><li><a href="global.html#StartMeetingWithOutLogin">StartMeetingWithOutLogin</a></li><li><a href="global.html#StartMonitorUIAction">StartMonitorUIAction</a></li><li><a href="global.html#StopMonitorUIAction">StopMonitorUIAction</a></li><li><a href="global.html#Un_lock_Meeting">Un_lock_Meeting</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.2</a> on Thu Jul 11 2019 14:59:31 GMT+0800 (GMT+08:00)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

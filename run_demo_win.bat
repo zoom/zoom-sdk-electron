@@ -1,2 +1,0 @@
-cd .\demo
-call electron .

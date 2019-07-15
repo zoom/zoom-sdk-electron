@@ -1,0 +1,6 @@
+framework module ZoomSDKVideoUI {
+  umbrella header "ZoomSDKVideoUI.h"
+
+  export *
+  module * { export * }
+}

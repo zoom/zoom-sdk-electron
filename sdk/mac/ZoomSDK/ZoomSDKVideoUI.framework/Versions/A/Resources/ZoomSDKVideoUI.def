@@ -1,0 +1,14 @@
+_OBJC_CLASS_$_ZPConfSharingView
+_OBJC_CLASS_$_ZPConfVideoViewItem
+_OBJC_CLASS_$_ZoomSDKJBHWindowController
+_OBJC_METACLASS_$_ZPConfSharingView
+_OBJC_METACLASS_$_ZPConfVideoViewItem
+_OBJC_CLASS_$_ZMQAUIMgr
+_OBJC_CLASS_$_ZMShareMgr
+_OBJC_CLASS_$_ZMAudioMgr
+_OBJC_IVAR_$_ZMQAUIMgr._sink
+_OBJC_IVAR_$_ZMShareMgr._shareEventSink
+__ZTV16ZMShareEventSink
+_InitModule
+_TermModule
+_OBJC_CLASS_$_ZMConfRenderAvatarView

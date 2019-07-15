@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>BuildMachineOSBuild</key>
+	<string>17E199</string>
+	<key>CFBundleDevelopmentRegion</key>
+	<string>en</string>
+	<key>CFBundleExecutable</key>
+	<string>ZoomAudioDevice</string>
+	<key>CFBundleIdentifier</key>
+	<string>zoom.us.ZoomAudioDevice</string>
+	<key>CFBundleInfoDictionaryVersion</key>
+	<string>6.0</string>
+	<key>CFBundleName</key>
+	<string>ZoomAudioDevice</string>
+	<key>CFBundlePackageType</key>
+	<string>BNDL</string>
+	<key>CFBundleShortVersionString</key>
+	<string>1.0</string>
+	<key>CFBundleSignature</key>
+	<string>????</string>
+	<key>CFBundleSupportedPlatforms</key>
+	<array>
+		<string>MacOSX</string>
+	</array>
+	<key>CFBundleVersion</key>
+	<string>1.0</string>
+	<key>CFPlugInFactories</key>
+	<dict>
+		<key>E60A2918-B0D2-4B3D-9CD4-1697DE168E9E</key>
+		<string>ZoomAudio_Create</string>
+	</dict>
+	<key>CFPlugInTypes</key>
+	<dict>
+		<key>443ABAB8-E7B3-491A-B985-BEB9187030DB</key>
+		<array>
+			<string>E60A2918-B0D2-4B3D-9CD4-1697DE168E9E</string>
+		</array>
+	</dict>
+	<key>DTCompiler</key>
+	<string>com.apple.compilers.llvm.clang.1_0</string>
+	<key>DTPlatformBuild</key>
+	<string>9C40b</string>
+	<key>DTPlatformVersion</key>
+	<string>GM</string>
+	<key>DTSDKBuild</key>
+	<string>17C76</string>
+	<key>DTSDKName</key>
+	<string>macosx10.13</string>
+	<key>DTXcode</key>
+	<string>0920</string>
+	<key>DTXcodeBuild</key>
+	<string>9C40b</string>
+</dict>
+</plist>

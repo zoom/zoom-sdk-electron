@@ -1,0 +1,47 @@
+<html>
+<head>
+	<link rel="stylesheet" type="text/css" href="./css/style.css" />
+	<script>
+		const {ipcRenderer} = require('electron');
+
+		function senddomainmsg(domain, enable_log){
+			ipcRenderer.send('asynchronous-message', 'setDomain', domain, enable_log);
+		}
+
+		function doinit(){
+			let domain = document.getElementById("domain").value.replace(/^\s+|\s+$/g, ''); 
+			let enable_log = document.getElementById("enable_log").value.replace(/^\s+|\s+$/g, ''); 
+			let pattern = /((ht|f)tps?:)\/\/[-A-Za-z0-9+&@#/%?=~_|!:,.;]+[-A-Za-z0-9+&@#/%=~_|]/g;
+			let ret = pattern.test(domain);
+			if (ret == true) {
+				document.getElementById("tip").style.cssText="display: none;";
+				senddomainmsg(domain, enable_log == 'true' ? true : false);
+			} else {
+				document.getElementById("tip").style.cssText="display: block;";
+			}
+		}
+	</script>
+
+</head>
+
+<title>Zoom Electron Demo</title>
+<body>
+	<div class="center">
+		<img class="logo" src="./images/fte_Logo.png" />
+	</div> 
+	<br/><br />
+	<div class="center"><input type="text" name="domain" placeholder="input domain" size="50" id="domain" value="https://www.zoom.us"/></div>
+	<div class="tip" id="tip">
+		your input domain is incorrect
+	</div>
+  <br/>
+  <div class="center">
+    <select id="enable_log">
+      <option value="true" selected>enable_log</option>
+      <option value="false">not enable_log</option>
+    </select>
+  </div>
+	<br/>
+	<div class="center"><button type="button" onclick="doinit()">Start Demo</button></div>
+</body>
+</html>

@@ -1,0 +1,48 @@
+package com.saasbee.webapp.proto;
+
+option java_package = "com.saasbee.webapp.proto";
+option java_outer_classname = "BOProtos";
+option optimize_for = LITE_RUNTIME;
+
+enum BOStatusProto
+{
+	BO_STATUS_NO_TOKEN  = 1;
+	BO_STATUS_GOT_TOKEN = 2;
+	BO_STATUS_STARTED   = 3;	//host click start
+	BO_STATUS_STOPPING  = 4;	//host click stop
+	BO_STATUS_ENDED     = 5;	//BO Host end BO
+}
+
+message BOObjectProto
+{
+	required string	BID				= 1;
+	required string MeetingTitle	= 2;
+	required BOStatusProto Status	= 3;
+	required string MeetingToken	= 4;
+	repeated string ParticipantList = 5;	//participant GUID list
+	required string HostID			= 6;	//host GUID
+}
+
+enum BOControlProto
+{
+	BO_CONTROL_EDIT     = 1;
+	BO_CONTROL_STARTED  = 2;
+	BO_CONTROL_STOPPING = 3;
+	BO_CONTROL_ENDED    = 4;
+}
+
+message BOListProto
+{
+	repeated BOObjectProto  ItemList      = 1;
+	required BOControlProto ControlStatus = 2;
+	required uint32	WaitSeconds			  = 3; //wait seconds when stopping
+	required uint32 NameIndex			  = 4; //current name index (breakout session 1, breakout session 2, ...)
+	
+	optional uint32 IsAutoJoinEnabled	= 5;
+	optional uint32 IsBackToMainSessionEnabled = 6;
+	
+	optional uint32 IsTimerEnabled = 7;
+	optional uint32 IsTimerAutoEndEnabled = 8;	//auto or manual end when timer end
+	optional uint32 TimerDuration = 9;	//BO schedule duration, in seconds
+	optional uint32 StartTimeOnMMR = 10; //BO start time, in seconds
+}

@@ -1,0 +1,135 @@
+<html>
+<head>
+  <link rel="stylesheet" type="text/css" href="./css/style.css" />
+  <script>
+    const {ipcRenderer} = require('electron')
+
+    function sendstart(meetingnumber){
+      ipcRenderer.send('asynchronous-message', 'start', Number(meetingnumber));
+    }
+
+    function sendjoin(meetingnumber, username){
+      ipcRenderer.send('asynchronous-message', 'join', Number(meetingnumber), username);
+    }
+
+    function dostart(){
+      let username=document.getElementById("username").value; 
+      let meetingnumber=document.getElementById("meetingnumber").value; 
+      sendstart(meetingnumber);
+    }
+
+    function dojoin(){
+      let username=document.getElementById("username").value; 
+      let meetingnumber=document.getElementById("meetingnumber").value; 
+      sendjoin(meetingnumber, username);
+    }
+
+    function dologout(){
+      ipcRenderer.send('asynchronous-message', 'logout');
+    }
+
+    
+    function setFloatVideoPos() {
+			ipcRenderer.send('asynchronous-message', 'setFloatVideoPos');
+    }
+    
+    function setBottomFloatToolbarWndVisibility() {
+      let meetingNum = document.getElementById("meetingNum").value;
+			ipcRenderer.send('asynchronous-message', 'setBottomFloatToolbarWndVisibility', Boolean(meetingNum));
+    }
+
+    function setSharingToolbarVisibility() {
+      let meetingNum = document.getElementById("meetingNum").value;
+			ipcRenderer.send('asynchronous-message', 'setSharingToolbarVisibility', Boolean(meetingNum));
+    }
+
+    // function setDirectShareMonitorID() {
+    //   let meetingnumber = document.getElementById("meetingnumber").value;
+		// 	ipcRenderer.send('asynchronous-message', 'setDirectShareMonitorID', meetingnumber);
+    // }
+
+    function setMeetingUIPos() {
+			ipcRenderer.send('asynchronous-message', 'setMeetingUIPos');
+    }
+
+    function disableWaitingForHostDialog() {
+      let meetingNum = document.getElementById("meetingNum").value;
+			ipcRenderer.send('asynchronous-message', 'disableWaitingForHostDialog', Boolean(meetingNum));
+    }
+
+    function hideMeetingInfoFromMeetingUITitle() {
+      let meetingNum = document.getElementById("meetingNum").value;
+			ipcRenderer.send('asynchronous-message', 'hideMeetingInfoFromMeetingUITitle', Boolean(meetingNum));
+    }
+
+    function setMeetingIDForMeetingUITitle() {
+      let meetingNum = document.getElementById("meetingNum").value;
+			ipcRenderer.send('asynchronous-message', 'setMeetingIDForMeetingUITitle', meetingNum);
+    }
+
+    function disablePopupMeetingWrongPSWDlg() {
+      let meetingNum = document.getElementById("meetingNum").value;
+			ipcRenderer.send('asynchronous-message', 'disablePopupMeetingWrongPSWDlg', Boolean(meetingNum));
+    }
+
+    function enableAutoEndOtherMeetingWhenStartMeeting() {
+      let meetingNum = document.getElementById("meetingNum").value;
+			ipcRenderer.send('asynchronous-message', 'enableAutoEndOtherMeetingWhenStartMeeting', Boolean(meetingNum));
+    }
+
+    function enableLButtonDBClick4SwitchFullScreenMode() {
+      let meetingNum = document.getElementById("meetingNum").value;
+			ipcRenderer.send('asynchronous-message', 'enableLButtonDBClick4SwitchFullScreenMode', Boolean(meetingNum));
+    }
+
+    function setFloatVideoWndVisibility() {
+      let meetingNum = document.getElementById("meetingNum").value;
+			ipcRenderer.send('asynchronous-message', 'setFloatVideoWndVisibility', Boolean(meetingNum));
+    }
+
+    // function prePopulateWebinarRegistrationInfo() {
+    //   let meetingnumber = document.getElementById("meetingnumber").value;
+    //   let userName = document.getElementById("username").value;
+		// 	ipcRenderer.send('asynchronous-message', 'prePopulateWebinarRegistrationInfo', meetingnumber, userName);
+    // }
+  </script>
+
+</head>
+
+<title>Zoom Electron Demo</title>
+<body>
+	<div class="center">
+    <img class="logo" src="./images/fte_Logo.png" />
+  </div> 
+  <br/><br />
+  <div class="tip2">Tip: APIs test result shown on the console </div>
+	<div class="center"><input type="text" name="meetingnumber" placeholder="input meetingNumber" id="meetingnumber"/></div>
+	<br/>
+	<div class="center"><input type="text" name="username" placeholder="input user name" id="username"/></div>
+	<br/>
+	<div class="center">
+		<button type="button" onclick="dostart()">Start</button>   
+		<button type="button" onclick="dojoin()">Join</button> 
+    <button type="button" onclick="dologout()">Logout</button>
+    <div>
+      <div class="section">Test Before Start Meeting</div>
+      <div>
+        <input type="text" name="meetingNum" class="input-show" placeholder="empty is false otherwise is true" id="meetingNum"/>
+      </div>
+      <button type="button" class="button-small" onclick="setFloatVideoPos()">Set FloatVideoPos</button>
+      <button type="button" class="button-small" onclick="setBottomFloatToolbarWndVisibility()">Set BottomFloatToolbarWnd</button>
+      <button type="button" class="button-small" onclick="setSharingToolbarVisibility()">Set SharingToolbar</button>
+      <!-- <button type="button" class="button-small" onclick="setDirectShareMonitorID()">Set DirectShareMonitorID</button> -->
+      <button type="button" class="button-small" onclick="setMeetingUIPos()">Set MeetingUIPos</button>
+      <button type="button" class="button-small" onclick="disableWaitingForHostDialog()">Disable WaitingForHostDialog</button>
+      <button type="button" class="button-small" onclick="hideMeetingInfoFromMeetingUITitle()">Hide MeetingInfoFromMeetingUITitle</button>
+      <button type="button" class="button-small" onclick="setMeetingIDForMeetingUITitle()">Set MeetingIDForMeetingUITitle</button>
+      <button type="button" class="button-small" onclick="disablePopupMeetingWrongPSWDlg()">Disable PopupMeetingWrongPSWDlg</button>
+      <button type="button" class="button-small" onclick="enableAutoEndOtherMeetingWhenStartMeeting()">Enable AutoEndOtherMeeting</button>
+      <button type="button" class="button-small" onclick="enableLButtonDBClick4SwitchFullScreenMode()">Enable LButtonDBClick4SwitchFullScreenMode</button>
+      <button type="button" class="button-small" onclick="setFloatVideoWndVisibility()">Set FloatVideoWndVisibility</button>
+      <!-- <button type="button" class="button-small" onclick="prePopulateWebinarRegistrationInfo()">PrePopulate WebinarRegistrationInfo</button> -->
+    </div>
+	</div>
+</body>
+</html>

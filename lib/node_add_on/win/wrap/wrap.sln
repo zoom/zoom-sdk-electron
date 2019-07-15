@@ -1,0 +1,22 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio 14
+VisualStudioVersion = 14.0.25420.1
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "wrap", "wrap.vcxproj", "{5B3D4BAD-0C04-4412-A4B5-053E9DA52A16}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Win32 = Debug|Win32
+		Release|Win32 = Release|Win32
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{5B3D4BAD-0C04-4412-A4B5-053E9DA52A16}.Debug|Win32.ActiveCfg = Debug|Win32
+		{5B3D4BAD-0C04-4412-A4B5-053E9DA52A16}.Debug|Win32.Build.0 = Debug|Win32
+		{5B3D4BAD-0C04-4412-A4B5-053E9DA52A16}.Release|Win32.ActiveCfg = Release|Win32
+		{5B3D4BAD-0C04-4412-A4B5-053E9DA52A16}.Release|Win32.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

@@ -1,0 +1,1497 @@
+package com.saasbee.webapp.proto;
+
+option java_package = "com.saasbee.webapp.proto";
+option java_outer_classname = "MeetingProtos";
+option optimize_for = LITE_RUNTIME;
+
+message AttendeeProto {
+  optional string email       = 1;
+  optional string displayName = 2; 
+  optional string picUrl      = 3;
+  optional string userId      = 4;
+}
+
+message AttendeeListProto {
+  repeated AttendeeProto attendee = 1;
+}
+
+message CountryCodeProto {
+  optional string id     = 1; // country id, such as 'CA' for Canada
+  optional string name   = 2; // country name, such as 'Canada'
+  optional string code   = 3; // country code, such as '+1'
+  optional string number = 4; // call-in number (not formatted as zoomconference page), such as '+1 6475580588'
+  optional string displayNumber = 5; // call-in display number (formatted as zoomconference page), such as '+1 647 558 0588', new client should use this
+  optional int32 callType  = 6; //0: toll, 1: toll-free, 10: premium, 999: internal call out
+  
+}
+
+message CountryCodeListProto {
+  repeated CountryCodeProto countryCode = 1;
+}
+
+message H323DeviceProto{
+  enum DeviceType {
+    H323  = 1;
+    SIP   = 2;
+    BOTH  = 3;
+  }
+  enum EncryptType {
+    NO = 0;
+    YES      = 1;
+    AUTO     = 2;
+  }
+  required string deviceName=1;
+  required string deviceIp=2;
+  required DeviceType deviceType=3;  //1 H.323  2 SIP  3 Both
+  optional EncryptType encryptType=4; //0 NO 1 Yes 2 Auto
+  optional string e164number=5;
+}
+
+message RCProto{
+  required string ip =1;
+  required string token=2;
+}
+
+message MeetingProto {
+  enum Status {
+    NOT_START  = 0;
+    IN_PROCESS = 1;
+    FINISHED   = 2;
+  }
+  enum MeetingType {
+    PRE_SCHEDULE = 0;
+    INSTANT      = 1;
+    SCHEDULE     = 2;
+    REPEAT       = 3;
+  }
+  enum ExtendMeetingType {
+    NORMAL  = 0;
+    PMI     = 1;
+    WEBINAR = 2;
+  }
+  enum CalloutType {
+    NONE          = 0;
+    US_ONLY       = 1;
+    INTERNATIONAL = 2;
+  }
+  enum WaitMeetingStatus {
+	NO_WAITING = 0;
+	OUT_12_HOURS = 1;
+	IN_12_HOURS = 2;
+	IN_PRACTICE_SESSION = 3;
+  }
+  optional string id                     = 1;
+  optional string hostId                 = 2;
+  optional string hostName               = 3;
+  optional string topic                  = 4;
+  optional string password               = 5;
+  optional Status status                 = 6;
+  optional int64  startTime              = 7; // scheduled start time, not actual start time
+  optional int32  duration               = 8;
+  optional int64  options                = 9; // client options, not used in web backend
+  optional string pingServer             = 10; // ping zc list
+  optional string token                  = 11;
+  optional int64  meetingNumber          = 12;
+  optional AttendeeListProto attendees   = 13;
+  optional string agenda                 = 14;
+  optional int64  lastModified           = 15;
+  optional int32  phoneId                = 16; // attendee ID for teleconference
+  optional string callinNumber           = 17; // US call in number if enabled PSTN
+  optional string hostZC                 = 18;
+  optional string topMMR                 = 19;
+  optional MeetingType type              = 20;
+  optional int32  hasPassword            = 21;
+  optional string googleCalendarUrl      = 22;
+  optional string gmailUrl               = 23;
+  optional string yahooUrl               = 24;
+  optional string inviteEmail            = 25; // doesn't include meeting time
+  optional string inviteEmailWithTime    = 26; // include meeting time
+  optional int32 isInternal              = 27; // internal meeting to start in hybrid cloud
+  optional string joinUrl                = 28; // meeting join url
+  optional int64 scheduleOptions         = 29; // schedule options
+  repeated string inprogressMeetingId    = 30; // inprogress meeting ids
+  optional int32 repeatType              = 31; // repeat type: daily, weekly, bi-weekly, monthly, etc
+  optional int64 repeatEndTime           = 32; // end time of repeat meeting
+  optional string timezone               = 33; // client's local timezone
+  optional int32 hostType                = 34; // host sns type, default value -1
+  optional string hostEmail              = 35; // host email address, default value is EMPTY
+  optional string h323Gateway            = 36; // h323 gateway, delimiter: ";", default value is EMPTY
+  optional int32 enablePSTN              = 37; // enablePSTN, 0/1, default value is 0
+  optional string assistantId            = 38; // assistant user id
+  optional int32 isViewOnlyJoin          = 39; // is view-only join, default value is 0
+  optional int32 isSupportTollFree       = 40; // default value is 0
+  optional string tollFreeCallInNumber   = 41; // toll free numbers, delimiter: ";", default value is EMPTY
+  optional ExtendMeetingType exType      = 42; // extend meeting type for PMI, Webinar
+  optional string h323Password           = 43; // pure digit password for H323 gateway join
+  optional string teleConfUrl            = 44; // teleconference page url
+  optional int32 meetingCapacity         = 45;
+  optional string inviteEmailSubject     = 46; // branded invite email subject
+  optional int32 pstnOptions             = 47; // pstn options: bit0-if need to confirm 1 to join meeting or not, bit1-check the account is an enterprise or not
+  optional int32 needRegWebinar          = 48; // need to register webinar as attendee
+  optional string webinarRegUrl          = 49; // webinar registration url
+  optional string backupPingServer       = 50; // backup AWS ping zc list for Paid account
+  optional int32 backupPingDelay         = 51; // backup AWS ping delay time in milliseconds
+  optional string webinarJID             = 52; // webinar QA group JID
+  optional int32 enableH323              = 53; // enable H323 join, 0/1, default 0
+  optional CalloutType supportCallout    = 54; // support call-out type
+  optional CountryCodeListProto calloutCountry = 55; // call-out country list
+  optional CountryCodeListProto callinCountry  = 56; // call-in country and number list
+  optional string otherTeleConfInfo      = 57; // other teleconference info
+  optional int32 isAutoApprovalWebinar   = 58; // auto approve register webinar attendee flag. 1 means auto approval.
+  optional int64 originalMtgNumber       = 59; // original meeting number which replaced by PMI
+  optional string webinarToken           = 60; // webinar token
+  repeated H323DeviceProto deviceList    = 61;  //h323/sip room list
+  repeated RCProto crclist               = 62;
+  repeated RCProto vrclist               = 63;
+  optional string rawPassword            = 64; // raw plain meeting password
+  repeated CountryCodeProto tollFreeCallInNumberList	= 65; // tollfree callin numbers
+  optional string hostKey                = 66; //Host key for PSTN/H323 gateway, it is md5 string
+  optional string tunnelServer           = 67; // ping tunnel server list, delimiter: ";"
+  optional string expressTunnelServer    = 68; // ping express tunnel server list, delimiter: ";"
+  optional WaitMeetingStatus statusExt   = 69; // when meeting status is waiting or webinar session practice is close. return 1 means scheduleTime - now > 12 hours.
+  optional string defaultCallInCountry   = 70; // default call in country ID in user profile, default is US 
+  optional string restrictJoinUserDomains    = 71; // Only signed-in users with specified domains can join meetings, delimiter: ";"
+  optional string listenOnlyPassword         = 72; // pure digit listen only password for PAC meeting.
+  repeated AlternativeHost alternativeHost   = 73; // alternative hostEmails and hostIds
+  optional string feedBackUrl                = 74; // Webinar feed back url for attendees.
+  optional int32 hostUserType                = 75; // host user type: 1-basic,2-pro,3-corp
+  optional int32 hostAccountType             = 76; // host account type: 1-free cc,2-free,3-pro,4-active host,5-api,6-edu,7-biz,8-free trial,9-vip,10-bulk license,11-zoomrooms
+  optional string p2pPortRange               = 77; // peer to peer port range.if value "5000;5020" indicate port range is 5000 to 5020
+  optional int64  scheduleOptions2           = 78; // schedule option2 from web
+  optional string inviteHtmlEmail            = 79; // html format template outlook plugin
+  optional string vanityJoinUrl              = 80; // use PVU for PMI meeting
+  repeated TrackingField trackingField       = 81; // meeting tracking field
+  optional string customized_audio_files     = 82; // account customized_audio_files
+  optional TSPProto tsp    					 = 83; // TSP Info
+  optional string tspCallInInfo              = 84; // MC:xxx;Conference Code:xxxx;Pin:xxxx;Merge Code:xxx
+  optional int64 pingOptions                 = 85; // start/join ping options
+  optional BroadcastMeetingItem broadcast    = 86; // broadcast item
+  optional MeetingSettingForH323 mSettingsForH323    = 87;
+  optional string firstTimeUpgradeToken      = 88; // for free user to upgrade to unlimited meeting for the first time
+  optional string customDSCPVal              = 89; //for custom dscp value,55;41 means custom audio value is 55,custom video is 41
+  optional string closedCaptionUrl           = 90; // the url for 3rd party CC to send closed caption to client
+  repeated CalloutSIPTrunk calloutSIPTrunks  = 91; 
+  optional int64 identityOptions             = 92; // user identity option, e.g: one bit is: isGuestJoin
+  optional string customAccountTag           = 93; // special custom account tag, currently it's for Huawei: huawei
+  optional AvailableDialinCountry availableDialinCountry= 94; // contains all countries, selected countries, is include Tollfree
+  optional string extInfo                    = 95; //For outlook plugin save special info in web.
+  optional SplashPageForWaitingRoom splashPageForWaitingRoom = 97;  // splash Page For waiting Room
+  optional int32 linkedinSalesNavState       = 98; // Support Linkedin Sales Navigator Wedgit Plugin 
+  optional string linkedinSalesNavUrl        = 99; // Linkedin Sales Navigator Wedgit URL
+  repeated TSPAccountProto tspAccount        = 100; // tsp account info
+  optional string selectedTspAccount          = 101; // tsp1 tsp2
+  optional int32 usedUnlimitedMeetingCountForFreeUser = 102; // the used unlimited meeting count for free user to upgrade
+  optional string freeUserUpgradeUrl         = 103; // https://zoom.us/buy
+  optional int32 billedType					 = 104; // billed type 0 for billed annually 1 for billed monthy
+  optional int32 isRegistrationMeeting         = 105; //  1-Yes  0-NO  default value is 0
+  optional string registrationUrl              = 106;
+  optional string registrationEmail            = 107;
+  optional int32 isReturnInvitation			   = 108; // 1-Yes 0-NO default value is 0;
+  optional ExtendMeetingType newExtType = 109; // extend meeting type for PMI, Webinar,
+  optional string tgBridgeId                 = 110; // USTB EUTB. Tg bridge for each host,ZOOM-66757
+  optional string launchDropboxShareInMeetingUrl = 111;    // DEPRECATED!! dropbox share in meeting url for launch
+  optional FileIntegrationList shareFileInMeetingIntegrations = 112; //ZOOM-64503 deep link to share from dropbox
+  repeated KeyValOption launchExtParameters = 115; // ZOOM-75897 Add dropbox file id to the share url - initiated from Dropbox surface 
+}
+
+
+
+message CalloutSIPTrunk {
+  optional string name                       = 1;
+  optional int32 trunkId                     = 2;
+  optional string sipServerAddr              = 3;
+  optional string sipPort                    = 4;
+  optional string dnis                       = 5;
+  optional string numPrefix                  = 6;
+  optional int32 weight                      = 7;
+  optional string outboundCallID             = 8;
+  optional int64 options                     = 9; //OPTIONA_SUPPORT_DELAY_OFFER = 0x2;
+}
+message MeetingSettingForH323 {
+  optional string dtmfcmd = 1;
+  optional int32 displayNameMode = 2; //1) Only Display Active user, 2) Display All, 3) Hide All
+  optional int32 layoutMode = 3;      //1) Gallay View, 2) Full Screen, 3) Active View
+}
+message MeetingListProto {
+  repeated MeetingProto meeting = 1;
+}
+
+message FriendProto {
+  optional string friendId  = 1; // sns (facebook) user id
+  optional int32 friendType = 2; // 0 - facebook, 1 - ...
+}
+
+message FriendListProto {
+  repeated FriendProto friend = 1;
+}
+
+message UserGroup {
+  required string groupId = 1;
+  required string name    = 2;
+}
+
+message BrandingInfo {  
+  optional string backgroundImgUrl = 1;
+  optional string zrpBackgroundImgUrl = 2;
+}
+
+message FileIntegration {
+  required string type = 1; // dropbox, sharepoint, box, gdrive, onedrive
+  required string name = 2; // Dropbox, Microsoft SharePoint, Box, Google Drive, One Drive
+  optional string icon = 3;
+  optional int32 techType = 4; // 1 for previewLink
+}
+
+message FileIntegrationList {
+  required string launchUrl          = 1;
+  repeated FileIntegration instances = 2;
+}
+
+message UserProfile {
+  required string id          = 1;
+  optional string name        = 2;
+  optional string credential  = 3;
+  optional string email       = 4;
+  optional string picUrl      = 5;
+  optional string snsId       = 6; // sns id
+  optional int32 snsType      = 7; // sns type: 0-facebook, 1/2-google, 100-work email, 101-sso
+  optional string accountId   = 8; // account id
+  optional int32 role         = 9; // user role
+  optional int32 userType     = 10; // user type: 1-basic,2-paid,3-corp
+  optional int32 accountType  = 11; // account type: 1-free cc,2-free,3-pro,4-active host,5-api,6-edu,7-biz,8-free trial,9-vip,10-bulk license,11-zoomrooms
+  optional int32 canUpgrade   = 12; // can upgrade to paid user/account: 0/1
+  optional int64 pmi          = 13; // PMI meeting number
+  optional string vanityUrl   = 14; // PMI vanity Url
+  optional string firstName   = 15;
+  optional string lastName    = 16;
+  optional int32 enableColocation = 17;
+  optional string coRegion    = 18; // attendee's assigned dc region, such as SC (always return SC for US attendees), CN, HK
+  optional string roomName    = 19; // ZoomPresence resource name, such as "Room 403"
+  optional int32 bindWithMobile = 20; // bind with mobile devices for XMPP
+  optional string zoomJID       = 21; // mobile messenger or desktop IM JID for client, or webinar QA JID
+  optional string zoomXmppToken = 22; // mobile messenger or desktop IM token for client, or webinar QA token
+  repeated UserGroup group      = 23; // user groups for XMPP
+  optional string roomAddr      = 24; // ZoomPresnece address, including protocol, IP and port, such as "tcp|pkg|rlb://10.110.6.8:9090"
+  optional string roomToken     = 25; // ZoomPresence control token
+  optional string addBuddyUrl   = 26; // add-buddy URL
+  optional string addBuddyEmail = 27; // add-buddy email body
+  optional string addBuddySubject = 28; // add-buddy email subject
+  optional string roomPassword  = 29; // ZoomPresence password
+  optional int32 disablePSTN    = 30; // disable PSTN, default 0
+  optional int64 featureOptions = 31; // features enable/disable flag, use bit
+  optional string roomResourceEmail  = 32; // ZoomPresence Resource Email
+  optional string timezone      = 33; // user timezone, empty if user hasn't set on page
+  optional string otherTeleConfInfo = 34; // other teleconference info
+  optional string passcode      = 35; // passcode for BSC client
+  repeated Rooms room = 36; // ZoomPresence Room list of the user
+  optional string zpGoogleAccessToken = 37; // ZP access token for service account
+  optional string exchangeRoomEmail = 38; //email address of room/resource in Exchange system
+  optional string exchangeEMSURL = 39;  //URL of Exchange Web Service
+  optional string exchangePassword = 40; //password of the email in Exchange system, not password of the work email in Zoom system
+  optional string defaultCallinTollCountry = 41; //default call in country for toll numbers
+  optional string exchangeDomain = 42; //domain in Exchange System
+  optional BrandingInfo brandingInfo = 43;
+  optional string restrictJoinUserDomains   = 44; // The account level restrict domains, use this for default value if user first time enable this option on schedule.
+  optional int32 e2eLogoffTime     	 = 45; //e2e chat log off time
+  optional string userHostKey         = 46; //user host key
+  optional int64 featureOptions2 = 47; // features2 enable/disable flag, use bit
+  optional RoomRendererOptions roomRendererOptions = 48;
+  repeated VirtualBackground virtualBackground  = 49; //Virtual background img list
+  optional string siteVanityUrl = 50; //sso vanity url
+  optional ClientSettings clientSettings = 51; // More profile fields, currently for Zoom Rooms management settings, but may be used for normal client in the future.
+  repeated TrackingField trackingField    = 52;
+  optional string roomSupportEmail = 53;
+  optional string roomSupportPhone = 54;
+  optional int32 ssoEnforceLogoutTime  = 55;//sso enforce logout time, second granularity
+  optional OperationTime operationTime = 56;// Zoom rooms operation time
+  optional MessengerOptions messengerOptions = 57; //Zoom messenger options
+  repeated ZRAlertOptions alertOptions = 58;
+  optional int64 zrOptions1 = 59; // options1 for ZR settings, enable/disable flag, use bit
+  optional int64 zrOptions2 = 60; // options2 for ZR settings, enable/disable flag, use bit
+  optional string zrCalenderResourseId = 61; //Only for Google service calendar
+  optional string customDSCPVal = 62; //for custom dscp value,55;41 means custom audio value is 55,custom video is 41
+  optional string exchangeManageEmail = 63;
+  optional int32 zpGoogleAccessTokenRefreshInterval = 64; //client need refresh zpGoogleAccessToken after xx seconds
+  optional string attendeeLocation = 65; // attendee's ip location country code, such as US, CN, HK
+  optional string attendeeEventLog = 66;
+  repeated KeyValOption keyValOptions = 67;
+  optional int64 featureOptions3 = 68; // features3 enable/disable flag, use bit
+  optional int64 featureOptions4 = 69; // features4 feature lock flag, use bit
+  optional int64 featureOptions5 = 70; // features5 enable/disable flag, use bit
+  optional BillingStatus billingStatus = 71;
+  optional LedHZ ledHZ           = 72; // ZRP use it to indicate room free or busy status
+  optional CheckInInfo roomCheckInInfo = 73;  // for zoom room client
+  optional UpgradeInfo upgradeInfo = 74;
+  optional string defaultMeetingTopic = 75; //email subject from email template for outlook plugin
+  optional int64 opClientOptions = 76; //Client options that configured in op web system properties, key: op_client_options. Web pass it to client directly.
+  optional TSPProto tsp    		 = 77; // TSP Info
+  repeated TSPAccountProto tspAccount        = 78; // tsp account info
+  optional string ewsAccessToken = 79; //office oauth2 accessToken
+  optional int32 ewsAccessTokenRefreshInterval = 80;
+  optional ZREncryptionInfo zrEncryption = 81; // ZOOM-46999 - Encryption information for zr and zrc communication
+  optional string zrSecretKey = 82; // zoom room secret key for multi-share
+  optional string publicEventListUrl = 83; //public event list url
+  optional int32 userRegistrationType = 84; // ZOOM-44755 - Web API: Client can schedule meeting with "Registration"  0-disable 1-enable
+  optional FileIntegrationList shareFileInChatIntegrations = 85; // ZOOM-71079 Web Integration-File storage integrations (Dropbox)
+  optional FileIntegrationList saveFileInChatIntegrations  = 86; // ZOOM-71079 Web Integration-File storage integrations (Dropbox)
+  optional ZREncryptionInfo zrEncForDirectShare          = 90;  // return aesKey, aesIV to client for direct share encryption
+  optional bool isZRSupportEncForDirectShare             = 91;  // return whether zr support direct share encryption
+}
+
+message ZREncryptionInfo {
+  optional string aesKey = 1;
+  optional string aesIV = 2;
+}
+
+message UpgradeInfo{
+  optional int32 isShowUpgradeLink = 1;
+  optional string upgradeLink = 2;
+  optional string contactName = 3;
+  optional string contactEmail = 4;
+}
+message LedHZ{
+  optional bool  status  = 1;		// enabled or disabled this function		
+  optional int32 free_hz = 2;		// frequency to show color for free status, like green
+  optional int32 busy_hz = 3;		// frequency to show color for busy status, like red
+  optional int32 off_hz  = 4;		// frequency to trun off the led
+}
+message CheckInInfo {  
+	optional bool  status  = 1;		// enabled or disabled this function		
+  optional int32 timeForPriorCheckIn = 2;    // allow participants to check in {} min prior to meeting start time in seconds
+  optional int32 timeForNoCheckInRelease = 3; // release room after {} min of no check in in seconds
+  optional bool  enableNotification      = 4; // enabled or disabled check-in notifications on the TV screen
+  optional int32 countForReleaseRecurringMeetings = 5; // remove recurring meeting after {} instances
+}
+message BillingStatus{
+	required int32 status = 1; // 0: paid, 1 in freeTrial, 2: Join Only
+	optional int32 freeTrialDays = 2;
+}
+message KeyValOption{
+	//key: zrapi_passcode, digital_signage_playlist, digital_signage_settings, calendar_config_url
+	//key: app_es(es = encrypted sed)
+	optional string key                                 = 1;
+	optional string val                                 = 2;
+	optional int32 amendmentFlag                        = 3; // null or 0: update; 1: remove
+}
+message MessengerOptions{
+  optional int32 e2e_cert_expire_time = 1;		//im_certificate_expire_time, in minutes		
+  optional int32 e2e_key_expire_time = 2;		//im_ciphered_key_expire_time, in minutes	
+  optional string emoji_version = 3;			//emoji package version in json format
+  optional string giphy_key = 4;				//giphy key
+  optional string giphy_preload_list = 5;		//giphy preload list
+  optional string local_storage_time = 6;		//local storage period of time. 
+  optional int64 im_options = 7;				//IM options, enable/disable flag, use bit
+}
+
+message OperationTime {
+  //options
+  //0x01 : on/off this feature
+  //0x02 : Turn on/off TV
+  //0x04 : Dim Controller
+  //0x08 : Camera
+  //0x10 : Microphone
+  //0x20 : Speaker
+  //0x40 : Ignore High CPU
+  //0x80 : ZRC disconnection
+  //0x100 : ZRC Power
+
+  //days
+  //0x01 : Every Sunday
+  //0x02 : Every Monday
+  //0x04 : Every Tuesday
+  //0x08 : Every Wednesday
+  //0x10 : Every Thursday
+  //0x20 : Every Friday
+  //0x40 : Every Saturday
+
+  optional int64 start =     1; // ms
+  optional int64 end =       2; // ms
+  optional int64 options =   3; // enable/disable flag, use bit
+  optional int32 days =      4; // days flag, use bit
+}
+
+message ClientSettings {
+  optional int64 bitOptions = 1; // enable/disable flag, use bit
+  optional SipPhoneIntegration sipPhoneIntegration = 2; // if enabled, bitOptions set 0x1L
+  optional CloudPBX cloudPBX = 3; // CloudPBX info, if enabled, bitOptions set 0x2L
+}
+message SipPhoneIntegration {
+  optional string userName =                  1;
+  optional string domain   =                  2; // example: zoom.us
+  optional string password =                  3;
+  optional string authoriztionName =          4;
+  optional string registerServer =            5; // ip address like 10.100.1.1
+  optional string proxyServer =               6; // ip address like 10.100.1.1
+  optional int32 status =                     7; // 0: init, 1: register success, 2: connection failed  
+  optional int32 errorCode =                  8; // 0: init, 1: register success, 2: connection failed
+  optional string errorString =               9;
+  optional int32 protocol =                   10;//0: UDP, 1: TCP, 2: TLS, default is 0 UDP
+  optional int32 registrationExpiry =         11;//Registration Expiry in minutes
+  optional string voiceMail =                 12;
+  optional int32 dtmfPayloadType =            13;
+}
+
+message TrackingField {
+  optional string id =                  1;
+  optional bool required   =            2;
+  optional string trackField =          3;
+  optional string trackValue =          4;
+  optional string mtValue =          	5;
+}
+
+message ProfileAmendment {
+  required string amendmentId =               1;
+  required int64 amendmentTime =              2; // milliseconds
+  optional UserProfile userProfile =          3; // Only include Id and updated fields
+  repeated MediaDeviceSetting deviceSetting = 4;
+  repeated ChangedBits changedBits =          5;
+  optional int64 changedRepeats =             6; // Set bit for changed repeated fields. 0x1: changedBits, 0x2: deviceSetting etc
+  optional MeetingProto meeting =             7;
+  repeated AlternativeHost altHost =          8; // schedule for alternative hosts 
+}
+
+message ChangedBits {
+// 1: UserProfile.featureOptions, 2: UserProfile.featureOptions2, 3: UserProfile.ClientSettings.bitOptions, 
+// 4: UserProfile.zrOptions1, 5: UserProfile.zrOptions2
+// 20: MeetingProto.scheduleOptions, 21: MeetingProto.scheduleOptions2, 22: MeetingProto.identityOptions
+  required int32 field =                      1; 
+  required int64 changedBit =                 2; // long, bit, example 0x80000000000L
+  required bool newValue =                    3; // true: set the bit, false: unset the bit
+}
+
+message MediaDeviceSetting {
+//    enum DeviceType {
+//        MICROPHONE                              = 0;
+//        SPEAKER                                 = 1;
+//        CAMERA                                  = 2;
+//    }
+//    enum OperationType {      // Operation type will transfer to type 'ZP_PT_SETTING_OPERATION_TYPE'
+//        SET_VOLUME          = 0;
+//        SELECT_DEVICE       = 1;
+//        DISABLE_AEC         = 2;
+//        START_TEST_DEVICE   = 3;
+//        STOP_TEST_DEVICE    = 4;
+//        DISABLE_AGC         = 5;
+//        CONFIRM_MIC_COUNT   = 6;
+//        ENABLE_HRR          = 7;
+//   	  SET_PTZ_COM_ID              = 8;  // web not support
+//        TEST_RECORD_START           = 9;  // web not support 
+//        TEST_RECORD_END             = 10; // web not support 
+//        DISABLE_SUPPRESS_NOISE      = 11;
+//        SET_MIC_PICKUP_RANGE        = 12;
+//    }
+
+    optional string device_id                   = 1; //in client to web  id-1
+    optional string device_name                 = 2; //in client to web  id-2
+    optional int32 device_type                  = 3; //DeviceType
+    optional int32 operation_type               = 4; //OperationType
+    optional int32 volume                       = 5; //Only for microphone&speaker volume settings
+    optional bool is_aec_disabled               = 6;
+    optional bool is_agc_disabled               = 7;
+    optional string device_alias_name           = 8; //maybe in client to web, depends on device, camera has, other do not have. id-3
+	
+	optional bool selected_device               = 9; //in client to web
+    optional bool manually_selected_device      = 10;//in client to web, if false, warning to user
+	
+	optional bool   is_combined_device          = 11;
+    optional int32  combined_device_count       = 12;
+    optional bool is_hrr_enabled                = 13; //Highly reverberant room 
+    optional bool  is_suppress_noise_disable    = 14;   // suppress excessive noise.
+    optional int32 mic_pickup_range             = 15;   // 0 = none, 1 = small, 2 = middle, 3 = big.
+}
+
+
+
+message RemoteControlRequestProto {
+//    enum ControlEvent {
+//        RC_LEAVE_MEETING                     = 1;
+//        RC_RESTART_ZR                        = 2;
+//        RC_UPLOAD_LOGS                       = 3;
+//        RC_JOIN_DIRECT_SHARE_MEETING         = 4;
+//        RC_PROFILE_AMENDMENT                 = 5;  // 1: call back /pamendment API in a random delay in 10-70 seconds, return pAmendment in Response 
+//        RC_CALENDAR_EVENT                    = 6;
+//        RC_JOIN_MEETING                      = 7;
+//        RC_CALL_A_CONTACT                    = 8; // Start an instant meeting and invite contact, if already in meeting, do invite.
+//        RC_SCHEDULE_MEETING                  = 9;
+//        RC_CANCEL_MEETING                    = 10;
+//        RC_SET_AUTO_LOGIN                    = 11;
+
+//    }
+
+	required string rcRequestId                              = 1;
+    required int32 cEvent                                    = 2; //ControlEvent
+
+    optional RestartZRREQ restart_zr                         = 3;
+    optional LeaveMeetingREQ leave_meeting                   = 4;
+    optional UploadZoomLogsREQ upload_logs                   = 5;
+	optional JoinDirectShareMeetingREQ  join_share_meeting   = 6;
+	optional ProfileAmendmentREQ profile_amendment           = 7;
+	optional CalendarEvent calendar_event                    = 8;
+    optional JoinMeetingREQ join_meeting                     = 9;
+    optional InviteContactREQ invite_contact                 = 10;
+    optional MeetingREQ schedule_meeting                     = 11;
+    optional MeetingREQ cancel_meeting                       = 12;
+    optional int64 options                                   = 13; //0x1: need_response_when_received, 0x2: need_response_when_handled
+    optional AutoLoginREQ auto_login                         = 14;
+    optional RestartOSREQ restart_os                         = 15;
+}
+
+message RestartOSREQ {
+
+     optional bool restart                      = 1;
+}
+
+//res_code: 200: success, other failed, set res_message
+//Error_UsernamePassword = 1001, Error_DiskEncrypted = 1002, Error_NoPrivelege = 1003, 500 other unknown error.
+message AutoLoginREQ {
+	optional string user_name                   = 1;
+	optional string password                    = 2; //encrypted
+	optional string osec_password               = 3; //base64(encrypted password followd OS)
+	optional bool disable_os_auto_login         = 4; //remove client data for set OS auto login
+}
+
+message RemoteControlResponseProto {
+	required string rcRequestId                              = 1;
+	
+	//JoinMeetingREQ, InviteContactREQ: 486 Busy Here , 500 Server Internal Error
+    required int32 res_code                                  = 2; // 1: sent by web, 2: recieved by ZR, 200: success, 200+ others are defined by each request event self
+	optional string res_message                              = 3;
+	optional MeetingREQ meeting                              = 4;
+    optional int32 err_code                                  = 5; // client detail error code
+}
+
+message MeetingREQ {
+	optional string meeting_number              = 1;
+	optional string meeting_name                = 2;
+	optional string password                    = 3;
+    optional int64  start_time                  = 4;
+	optional int32  duration                    = 5; //minutes
+	optional int64 options                      = 6; 
+}
+
+message InviteContactREQ {
+    repeated string jid                        = 1;
+}
+
+message JoinMeetingREQ {
+	//If no meeting number, means start an instant meeting (maybe PMI if enabled Use PMI for instant meeting)
+	optional int64  meeting_number                            = 1;
+	optional string password                                 = 2;
+	
+	// When ZR client is already in meeting, if force, it leave inprogress meeting and join this meeting, if not force, return busy.
+	// Default value is false
+	optional bool force_accept                               = 3;
+}
+
+message CalendarEvent {
+    optional bool doRefreshMeeting                           = 1;
+}
+
+message ProfileAmendmentREQ {
+	required int32 randomDelaySecondMin                = 1;
+	required int32 randomDelaySecondMax                = 2;
+	repeated int64 longParamsCallAPI                   = 3; //bit set for fields changed
+	repeated string stringParamsCallAPI                = 4; //string name of fields changed
+	repeated ChangedField changedFields                = 5; //Replace stringParamsCallAPI and longParamsCallAPI for changed fileds
+}
+message ChangedField {
+  optional string name =                      1; // name of the changed filed, and may include the prefix for account, location, profile etc.
+  optional int64 bit =                        2; // long, bit, example 0x80000000000L
+}
+
+message RestartZRREQ {
+    optional bool restart                      = 1;
+    optional int32 delay_time                  = 2; // add for delay restart, unit is seconds.
+}
+message LeaveMeetingREQ {
+    optional bool leave_meeting                = 1;
+    optional bool end_meeting                  = 2; // default false, true means end the meeting if host is self
+}
+message JoinDirectShareMeetingREQ {
+    optional string meetingNumber              = 1;
+}
+//Log File Type define
+//  #define TYPE_ZR_RELATED_LOG_FILES             0x0001
+//  #define TYPE_SYSTEM_LOG_FILE                  0x0002
+//  #define TYPE_INSTALL_LOG_FILE                 0x0004
+//  #define TYPE_AUTO_UPGRADE_LOG_FILE            0x0008
+//  #define TYPE_ZRDAEMON_LOG_FILES               0x0010
+//  #define TYPE_SIPCALL_RELATED_LOG_FILES        0x0020
+//  #define TYPE_OS_RES_LOG_FILE                  0x0040
+//  #define TYPE_ZAAPI_RELATED_LOG_FILES          0X0100
+//  #define TYPE_ALL_BASIC_ZRLOGS_FILES           0xFFFF
+//  #define TYPE_AUDIO_RELATED_LOG_FILES          0X10000
+//  #define TYPE_AIRHOST_RELATED_LOG_FILES        0X20000
+//  #define TYPE_CRASH_DUMP_LOG_FILEs             0X40000
+//  #define TYPE_ALL_ZRLOGS_FILES                 0x7FFFFFFF
+message UploadZoomLogsREQ {
+    optional string email                       = 1; //default ZRC.PR@zoom.us, not for customer, only for login from OP
+    optional string subject                     = 2;
+    optional string body                        = 3;
+	optional int32 logType                      = 4; //only for login from OP, used by developer
+}
+
+//ZR infos update to Web when logged in or something change
+message ZRInfos {
+    optional int32 display_num                                      = 1;
+    optional ZRSettingsDeviceInfos devices_info                     = 2;
+	optional SipPhoneIntegration sipPhoneIntegration                = 3;
+	repeated ChangedBits changedBits                                = 4;
+}
+
+message ZRSettingsDeviceInfos {                    //Return all device infos together, client to web
+    repeated MediaDeviceSetting microphone         = 1;
+    repeated MediaDeviceSetting speaker            = 2;
+    repeated MediaDeviceSetting camera             = 3;
+    optional float mic_volume                   = 4;
+    optional float speaker_volume               = 5;
+    optional bool is_aec_disabled               = 6;
+    optional bool can_control_camera            = 7;
+    optional bool is_self_video_mirrored        = 8; // default true
+    optional bool is_mic_volume_adjustable      = 9; // 
+    optional bool is_speaker_volume_adjustable  = 10;
+    optional bool is_agc_disabled               = 11; //default 
+    optional bool can_switch_camera_for_video   = 12; //switch camera in meeting, only for in meeting
+    optional bool is_hrr_enabled                = 13; //Highly reverberant room 
+    optional bool is_suppress_noise_disable     = 14;
+    optional int32 mic_pickup_range             = 15; // 0 = none, 1 = small, 2 = middle, 3 = big.
+}
+
+//APP device, which should login with Zoom APP, like ZRC/ZRP, ZR/ZOOM etc.
+message DeviceInfo {
+	optional string device_id   = 1;  // UDID
+	optional string device_name = 2;  // ?
+	optional string os          = 3;  // iOS
+	optional string os_version  = 4;  // 10.3.1
+	optional int32 app_type     = 5;  // 0: ZR; 1: ZRC ; 2: ZRP; 3: Automation Controller
+	optional string app_version = 6;  // 4.1.12345.0525
+	optional string extJson     = 7;
+    optional string device_model        = 8;   //Computer model, for example Dell 7050, mac mini 2014
+    optional string gpu_info            = 9;
+    optional string cpu_info            = 10;  //CPU info string, for example: intel i7 7700T
+    optional int32  cpu_cores           = 11;
+    optional float  cpu_frequency_GHz   = 12;  //For example: 2.66
+    optional float  total_memory_GB     = 13;  //Total memory capacity, in GB
+    optional int32  memory_bank         = 14;  //Count of memory banks
+    optional float  total_disk_GB       = 15;  //In GB
+    optional float  used_disk_GB        = 16;  //In GB
+    optional int32  network_type        = 17;  //0: unknown, 1: wired, 2: wifi, 3: both
+    optional string displays_info       = 18;  //"{{0, 0}, {1920, 1080}}, {{0, 0}, {3840, 2160}}"
+    optional string serial_number       = 19;
+    optional int32  is_iot_device       = 20;  // 0: normal device; 1: IoT device
+    optional string app_display_version = 21; //4.1.1 (12345.0525)
+    optional string os_build_number    = 22; //17D47
+}
+
+message MDMDeviceInfo {
+    optional string device_id   = 1;  //mdm device id
+}
+
+message VirtualBackground {
+	optional string url = 1; //virtual background img url(cdn)
+	optional string zoomUrl = 2; //virtual background img url(zoom)
+	optional string name = 3; //virtual background img name
+	optional int32 type = 4;  //virtual background img type 0:default,1:custom
+}
+
+message Rooms {
+  optional string roomName     = 1; //zoom presence room name
+  optional string roomEmail    = 2; //zoom presence room email address
+  optional string displayName  = 3; //profile first name
+}
+
+message CallProto {
+  optional string id              = 1;
+  optional string meetingId       = 2; // not used, web will get it from token
+  optional string callingNumber   = 3;
+  optional string calledNumber    = 4;
+  optional int64 startTime        = 5;
+  optional int64 endTime          = 6;
+  optional string sipCallId       = 7;
+  optional string topMMR          = 8;
+  optional int64 callType         = 9;
+  optional string originalSBC     = 10;
+  optional string meetingNumber   = 11; // not used, web will get it from token
+  optional string telGWAddr       = 12;
+  optional string hostId          = 13; // not used, web will get it from token
+  optional string reqId           = 14; // request uuid, should be a unique uuid
+  optional string msSipCallId     = 15;
+  optional string userInputMN     = 16;
+  optional int32 endReason        = 17;
+  optional string userData        = 18;
+}
+
+message MeetingStatusProto {
+  enum Status {
+    NOT_START  = 0;
+    IN_PROCESS = 1;
+    FINISHED   = 2;
+  }
+  enum Sender {
+    MMZ = 0; // sender by MMZ ZC
+    BCZ = 1; // sender by BCS
+  }
+  required Status status   = 1;
+  required string token    = 2;
+  optional int32 attendees = 3; // meeting attendees #
+  optional int32 minutes   = 4; // meeting duration
+  optional string topMMR   = 5;
+  optional int32 meetingMinutes = 6; // actual meeting minutes
+  repeated string attendeeList  = 7; // attendee list: {"id":"userid","name":"username","join":132413413243,"duration":55}, join is unix timestamp (seconds), duration is seconds
+  repeated int32 sessions       = 8; // 1-audio, 2-AS, 3-video
+  optional int32 createByHost   = 9; // meeting is create by host or not, 1-host create, 2-attendee create
+  optional int32 attendeesViewOnly = 10; // unused
+  optional Sender sender           = 11; // event sender
+  optional string bcMtgInstanceId  = 12; // bc meeting instance uuid
+}
+
+message MeetingStatusListProto {
+  enum Event {
+    NORMAL        = 0; // normal status event
+    ZONE_FAILOVER = 1; // zone failover event
+    MMR_FAILOVER  = 2; // mmr failover event
+	SUBZONE       = 3; // sub zone join/leave event
+	NO_LICENCE    = 4; //onprem licence expired 
+    NO_CC         = 5;    //zc cannot connect CC service
+
+  }
+  repeated MeetingStatusProto status = 1; // meeting list to sync status
+  optional string zc                 = 2; // zc address
+  optional Event event               = 3; // event type
+  optional string zone               = 4; // zone name
+  optional string mmr                = 5; // top mmr address
+  optional string accountId          = 6; // account id of hybrid cloud
+  optional string signer             = 7; // ZCWebToken signer: hmac(zc+zone)
+}
+
+message TeleConfBridge {
+  required string address = 1;
+  repeated string tollCallInNumbers = 2;
+  optional string tollFreeCallInNumber = 3;
+}
+message TeleConfParams {
+  repeated TeleConfBridge teleConfBridges = 1;
+}
+
+message CreateTeleConfResult {
+  required int32 result = 1;
+  required string tollCallInNumbers = 2;
+  optional string tollFreeCallInNumber = 3;
+}
+
+message MeetingToken {
+  required string uuid            = 1; // meeting uuid
+  required int64 createTime       = 2; // token create time
+  required int32 timeToLive       = 3; // token ttl
+  required string hostId          = 4; // host user id
+  optional string hostName        = 6; // host user name
+  optional string topic           = 5; // meeting topic
+  optional int64 options          = 7; // meeting options
+  optional int32 meetingType      = 8; // meeting type: 0-free, 1-paid, ...
+  optional int32 role             = 9; // user role: 0-attendee, 1-host
+  optional int64 meetingNumber    = 10; // meeting number
+  optional int32 enablePSTN       = 11; // 0-disable PSTN, 1-enable PSTN
+  optional string teleConfParams  = 12; // tele conf params in protobuf format
+  optional int32 meetingCapacity  = 13; // capacity for max attendees per meeting, default is 25
+}
+
+/////////////////////////////
+// deprecated
+message UICommandProto {
+  required string cmdType = 1; // p1
+  required string action = 2; // p2
+  optional string p3 = 3;
+}
+message UICommandListProto {
+  optional string fid = 1;
+  repeated UICommandProto cmd = 2;
+}
+/////////////////////////////
+
+message LogProto {
+  required string logTime = 1;
+  optional string fid     = 2;
+  required string cmd     = 3;
+  required string source  = 4;
+  optional string p1      = 5;
+  optional string p2      = 6;
+  optional string p3      = 7;
+  optional string p4      = 8;
+  optional string p5      = 9;
+  optional string p6      = 10;
+  optional int32  count	  = 11;          //repeat count, default value is 0.
+  optional int32  clientSendState = 12;	 //client use only
+}
+
+message LogListProto {
+  repeated LogProto log = 1;
+}
+
+message ContactProto {
+  required string userId      = 1;
+  required string email       = 2;
+  optional string firstName   = 3;
+  optional string lastName    = 4;
+  optional string picUrl      = 5;
+  optional string jid         = 6; // used for IM:
+  optional int32 bindWithMobile = 7; // used for IM: if the contact binds with mobile device or not
+  optional int32 isSameDomain   = 8; // is in same domain shared group
+  optional int32 isSameAccount  = 9; // is in same account shared group
+  optional string sipPhone =10; // User sip phone number
+}
+
+message ContactListProto {
+  optional int32 count = 1;
+  optional string hash = 2;
+  repeated ContactProto contact = 3;
+}
+
+message PhoneProto {
+  required string phoneNumber = 1; // phone number to bind
+  required string countryCode = 2;
+  required int32 verifySMS = 3; // 0: no need to verify, 1: need to verify, default value is 0
+}
+message PhotoContactProto {
+  required string phoneNumber = 1;
+  optional string jid = 2;
+  optional string firstName = 3;
+  optional string lastName = 4;
+  optional string picUrl = 5;
+}
+message PhoneContactListProto {
+  repeated string phoneNumber = 1; // contact for 2.0 clients
+  repeated PhotoContactProto contact = 2; // contact for 2.5 or higher clients
+}
+
+message RoomConnector {
+  enum Event {
+    ON    = 0; // RC is online
+    OFF   = 1; // RC is offline
+    JOIN  = 3; // Join a meeting
+    LEAVE = 4; // Leave a meeting
+    KEEP_ALIVE = 5; // keep alive
+    SEND_CODE  = 6; // send pairing code
+    DROP_CODE  = 7; // drop pairing code
+  }
+  required Event event = 1;
+  required string rcId = 2;
+  optional string requestId = 3; // request uuid for re-send same event if timeout
+  required string ip = 4;
+  optional string version = 5;
+  optional string meetingId = 6;
+  optional int64 meetingNumber = 7;
+  optional string token = 8; // token configured in vrc, containing account id info
+  optional string pairingCode = 9;
+}
+
+
+message ZoomPresence {
+  enum Event {    
+    JOIN = 0;
+    LEAVE = 1;
+    KEEP_ALIVE = 2;     //in meeting keep a live
+    ALERT = 3;
+    ALIVE = 4;          //room keep alive
+  }
+  enum AlertName {
+    HEARTBEAT                   = 1;  // 1
+    ZRC_CONNECTION              = 2;  // INT_TYPE, value 0/1
+    MICROPHONE                  = 3;  // 0/1
+    SPEAKER                     = 4;  // 0/1
+    CAMERA                      = 5;  // 0/1
+    IM                          = 6;  // int value: 0-ok, other-problem
+    IPAD_CHARGE                 = 7;  // value: 0/1
+    IPAD_POWER                  = 8;  // value: 0-100
+    NETWORK_STATUS              = 9;  // 1
+    SELECTED_MICROPHONE_REMOVED = 10; // 0/1
+    SELECTED_SPEAKER_REMOVED    = 11; // 0/1
+    SELECTED_CAMERA_REMOVED     = 12; // 0/1
+    HIGH_CPU_USAGE              = 13; // 1
+	CONTROLLER_BATTERY_DYING    = 14; // value: 0/1 not charing and power less than 20%
+	ROBOTIC_AUDIO				= 15; // int value indicates the actions need to be taken: auto_login 2 << 0, auto_restart 2 <<1, manual_reboot = 2<<2
+	OS_ADUIO_ERROR              = 16; // 0 normal; 1 OS audio error 
+	AUTO_LOGIN_ENABLED          = 17; // 0 disabled; 1: enabled , if OS enabled auto login
+	SYSTEM_START_TIME           = 18; // running time of the room since last started (int seconds)
+	SELECTED_MICROPHONE         = 19;
+	SELECTED_SPEAKER            = 20;
+	SELECTED_CAMERA             = 21;
+	ZR_PROCESS_STATUS           = 22;
+	DEVICE_CONNECTION           = 23; // value: 0 online/1 offline
+	TOUCH_ROOM                  = 24; // value: 0 disable touch ability/1 enable ability
+	AUTO_AUDIO_TEST             = 25; // value: 0 normal, 1 failed, 2 failed likely
+	AUTO_LOGIN_USER_NAME        = 26; // STRING_TYPE value: strValue: current OS login user name
+	AUTO_LOGIN_SUPPORT_SET      = 27; // INT_TYPE    value: 0 disabled, 1: support enable auto login from Web
+	SIPPHONE_INTEGRATION        = 28; // value: 0 normal, 1 failed
+	AUDIO_ECHO_TEST             = 29; // value: 0:AEC_NOT_DETERMINE, 1:AEC_LEVEL_BAD,2:AEC_LEVEL_POOR,3:AEC_LEVEL_FAIR,4:AEC_LEVEL_GOOD,5:AEC_LEVEL_EXCELLENT
+    MICROPHONE_AUTHORIZATION    = 30; //value: 0 normal, 1 failed
+    CAMERA_AUTHORIZATION        = 31; //value: 0 normal, 1 failed
+	DISPLAY_UNPLUGGED			= 32; //value: 0 normal, 1 no tv plugged
+    ZRC_MICROPHONE_ACCESS_STATUS = 33; // 0 Unknown, 1 Not determined yet, 2 Agreed, 3 Declined, ZOOM-56888
+    DEVICE_ASAM_STATUS           = 34; // 0 - in asam, 1 - out of asam
+  }
+  enum AlertValueType {
+    INT_TYPE                 = 1;  
+    STRING_TYPE              = 2;
+  }
+  message Alert {
+    required AlertName name            = 1;
+    optional int32 value               = 2;
+	optional int64 alertTime           = 3;  //seconds of current time
+    optional AlertValueType valueType  = 4; //default INT_TYPE
+    optional string strValue           = 5;
+	
+    optional int32 appType             = 6; // 0: ZR, 1: ZRC or 2: ZRP
+    optional string deviceId           = 7; // device unique id, max len is 64
+  }
+  
+  required Event event = 1;
+  required string userId = 2;
+  optional int64 meetingNumber = 3;
+  optional string meetingId = 4;
+  optional string accountId = 5;
+  optional string roomName = 6;
+  repeated Alert alert = 7;
+  optional string skey = 8;
+}
+
+message AlternativeHost {
+  required string id = 1;
+  optional string email = 2;
+  optional string firstName = 3;
+  optional string lastName = 4;
+  optional string picUrl = 5;
+  optional int64 pmi = 6; // PMI meeting number
+  optional AvailableDialinCountry availableDialinCountry= 7;
+}
+
+message ColocationRegion {
+  required string region = 1;
+  required string vip = 2;
+}
+
+message Request {
+  optional MeetingProto meeting                         = 1;
+  optional CallProto call                               = 2;
+  optional MeetingStatusListProto statusList            = 3;
+  optional UICommandListProto commands                  = 4;
+  optional LogListProto logs                            = 5;
+  optional ContactListProto contacts                    = 6;
+  optional PhoneContactListProto phoneContacts          = 7; // phone contacts list
+  optional RoomConnector roomConnector                  = 8; // room connector
+  optional RecordingProto recordingProto                = 9; // recording
+  optional ZoomPresence zoomPresence	                = 10; //zoom presence
+  optional ZRInfos zrInfos                              = 11; //zoom room report devices settings to web
+  optional LocalRecordingListProto localRecordings      = 12; //client report local recording items to web
+  optional RemoteSessionProto remoteSessionProto      	= 13; //remote session proto
+  optional SipPhoneIntegration sipPhoneIntegration		= 14; //sip phone account registration status
+  optional DeviceInfo appDeviceInfo                     = 15;
+  repeated SubscribeData subscribeDataList              = 16; // get data, query update by version, subscribe update
+  optional RemoteControlResponseProto rcResponse        = 17; // response for remote control request
+  optional CloudPBXCallLog cloudPBXCallLog              = 18; // Cloud PBX call log
+  repeated string optionKeys        					= 19; // For API /profile/get, key to retrive the options value from Web, empty for old client
+  optional MDMDeviceInfo mdmDeviceInfo                  = 20; // mdm device info
+  repeated string userIds                               = 21; // can hold user id as parameter
+}                                                       
+                                                        
+message SSODomain {                                     
+  required string url       = 1;                        
+  optional string name		= 2;                        
+}                                                       
+                                                        
+message ServerDomain {                                  
+  optional string xmpp            = 1; // xmpp server domain for phone
+  optional string nos             = 2; // nos server non-SSL domain
+  optional string nosSSL          = 3; // nos server SSL domain
+  optional string file            = 4; // file server domain
+  optional string xmppDesktop     = 5;  // xmpp server domain for desktop IM
+  optional string xmppMobile      = 6;  // xmpp server domain for mobile messenger
+  optional string pollingService  = 7;  // polling service server domain
+  optional string zpAlert         = 8;  // domain for ZR report monitoring status
+  repeated SSODomain ssoDomains   = 9;                  
+  optional string fileImage       = 10; // file server domain for images and audio files
+  optional string async           = 11; // async server domain for images and audio files
+  
+  optional string webDomain       = 12; // zoom.us, web domain, replace conf.webserver in Zoom.us.ini
+  optional string logDomain       = 13; // log.zoom.us, mem log, crash log
+  optional string meetingDomain   = 14; // www3.zoom.us
+  optional string monitorDomain   = 15; // logfile.zoom.us, monitor user behavior data
+  optional string contactDomain   = 16; // Private Address book for PBX, contact server domain
+  optional string pbxWebDomain    = 17; // pbx web server domain
+}                                                       
+
+//{"notifyZrcDisconnect":true,"notifyDeviceDisconnect":true, "notifyZrHeartbeat":true,"notifyZrcNotCharging":true, "notifyAudioIssue":true ???}
+message ZRAlertOptions {
+	optional string key      = 1;
+	optional int32 minutes   = 2;
+}
+                                                      
+message RCUserStub {                                    
+  required string uid       = 1;                        
+  optional string phone		= 2;                        
+  optional string ext		= 3;                        
+}                                                       
+                                                        
+message RCUsers{                                        
+  repeated RCUserStub rcuser = 1;                       
+}       
+
+message SDKAuthResp{
+  optional int64 featureoptions 	= 1;
+  optional string clientuuid 		= 2;
+  optional int64 expiredtime 		= 3;
+}                                                
+                                                        
+message Response {                                      
+  required int32 result                                 = 1;
+  optional string errorMessage                          = 2;
+  optional MeetingProto meeting                         = 3;
+  optional MeetingListProto meetings                    = 4;  // upcoming meetings
+  optional UserProfile profile                          = 5;
+  optional FriendListProto friends                      = 6;
+  optional string options                               = 7;
+  optional int32 forceUpdate                            = 8;
+  optional string nosToken                              = 9;
+  optional string clientVersion                         = 10; // client version in release notes API; airhost version in join meeting and start instant meeting API
+  optional string releaseNotes                          = 11;
+  optional string autoUpdate                            = 12; // for client auto-update
+  optional string zoomToken                             = 13; // zoom login token for client auto login
+  optional string recommendSubject                      = 14; // recommend email subject
+  optional string recommendBody                         = 15; // recommend email body
+  optional MeetingListProto previousMeetings            = 16; // previous meetings
+  optional ContactListProto contacts                    = 17;
+  optional string ssoLogoutUrl                          = 18; // sso logout url, should be called in client side
+  optional PhoneContactListProto phoneContacts           = 19; // phone contacts list
+  optional PhoneProto phone                             = 20; // phone info
+  optional string jid                                   = 21; // phone JID
+  optional string xmppToken                             = 22; // phone xmpp token
+  repeated AlternativeHost altHost                      = 23; // schedule for alternative hosts 
+  repeated ColocationRegion coRegion                    = 24; // colocation regions for client to ping to choose the faster one as user's region
+  optional string deviceUserId                          = 25; // device user id on phone
+  optional string fsPVK                                 = 26; // file server private key
+  optional ServerDomain serverDomain                    = 27;
+  optional string oldPhoneJID                           = 28; // old 2.5 phone JID
+  optional CountryCodeListProto countryCodes            = 29; // Country codes list for call out
+  optional RecordMeetingListProto recordings            = 30; // recorded meeting list.
+  optional string ssoVanityUrl                          = 31; // sso vanity url to redirect to sso login
+  optional string buddyJid		                        = 32; // invite buddy's jid
+  optional PACInfo pacInfo                              = 33; //PAC info for outlook plugin.
+  optional RCUsers rcusers                              = 34; //Ringcentral use only
+  optional string calloutBlockNumbers		            = 35; //biz/pro accout's callout block numbers
+  repeated NumberProto numbers                          = 36; //all toll and toll-free number configured in web DB
+  optional string encryptedSignature		            = 37; // user signature encrypted by server private key, Base64 encoded
+  optional IPInfo ipInfo		                        = 38;	//client ip info
+  optional string ZRKey    	                            = 39;	//ZR key for get room IP
+  optional string microServiceEndpoint	                = 40;  //microservice endpoint
+  optional CMRStorage cmrStroage      	                = 41;  //Cloud Meeting Recording storage status
+  optional ProfileAmendment pAmendment                  = 42;  //get amendment of profile or meeting
+  optional AllDailinNumbersProto dailinNumbers          = 43;
+  optional string ZRKeyChars   	                        = 44;  //ZR key QWERTYUIOP to represent 1234567890
+  optional SDKAuthResp sdkAuthResp						= 45;
+  optional int64 statusCode                             = 46;  //free status code, define by each API self, 0 is no meaning.
+  optional int64 serverTime                             = 47; // Server timestamp in milliseconds
+  repeated SubscribeData subscribeDataList              = 48; // get data, query update by version, subscribe update
+  optional AvailableDialinCountry availableDialinCountry= 49; // contains all countries, selected countries, is include Tollfree
+  optional string pnsServiceEndpoint	                = 50;  //Push Notification Server endpoint, wss://zpns.zoom.us/ws 
+  optional int64 supportFeatureOptions					= 51; // Current version Web supported features
+  optional string callinBlockNumbers		            = 52; //callin block numbers ZOOM-30911
+  optional int32 timeToLive								= 53; // zr pairing code expired time, unit seconds
+  repeated KeyValOption keyValOptions 					= 54; // key: zr_calendars, zr_locations, calendar_parse_json_template
+  optional string entCalloutBlockNumbers		        = 55; //enterprice accout's callout block numbers
+  optional string rcMessageAttachmentUri 				= 56; // message attachment uri in RC
+  optional PBXSyncResponse pbxSyncResponse 				= 57; // return pbx sync record
+  optional Marketplace  marketplace              =58;  //The marketplace related information
+  repeated string optionKeys                            = 59; // for client callback identify, e.g:/profile/get api
+  optional string zpnsNotifyUrl                           = 60;  //web push zpns notify url,except zr
+}
+
+message Marketplace {
+	optional string homeUrl = 1;
+}
+
+message SubscribeData {
+	required string subscribeName                       = 1;
+	repeated SubscribeConfig configList                 = 2; // sort by key alpha char ASC, in request and respose
+	optional string keyhash                             = 3; // sort by key alpha char ASC, BASE64(SHA2(keykey...)), in request only
+	optional string verhash                             = 4; // BASE64(SHA2(verver...)), in request only
+}
+message SubscribeConfig {
+	optional string ver                                 = 1;
+	optional string key                                 = 2;
+	optional string val                                 = 3;
+}
+
+message CMRStorage{                                     
+	required int64 totalStorageSize                     = 1; // byte of total storage size (plan capacity + free), 0 means no CMR plan
+	required int64 usedStorageSize                      = 2; // byte of used storage size
+	required bool isFreeTrialPlan                       = 3; // Deprecated
+	required bool allowExceedStorage                    = 4; // if allow, even exceed total storage, still be able to do new recording; otherwise, the cloud recording should be disabled for new meeting.
+}                                                       
+message IPInfo{                                         
+  optional string ip = 1;                               
+  optional string country = 2;                          
+}                                                       
+                                                        
+                                                        
+message NumberProto{                                    
+  required string number =1;                            
+}                                                       
+/////////////////////////////                           
+// client use-only                                      
+                                                        
+message ProxyServer {                                   
+  required int32 type = 1;                              
+  optional string host = 2;                             
+  optional string uname = 3;                            
+  optional string upsw = 4;                             
+  optional int32 port = 5;                              
+  optional int32 authtype = 6;                          
+}                                                       
+                                                        
+message ProxyServerMap {                                
+  required string host = 1;	                            
+  repeated ProxyServer server = 2;                      
+}                                                       
+                                                        
+message SDKContext{                                     
+  repeated ProxyServerMap proxyservers = 1;	            
+}        
+
+message LCPRecordItem {                                   
+  optional string key = 1;                             
+  optional string value = 2;
+  optional string section = 3;                         
+}                                                 
+                                                        
+message LaunchConfParameter                             
+{                                                       
+	optional int32 launchReason 			          	= 1;		//Launch conference reason: preload, start, join, reconnect, ...
+  optional int64 launchConfOption			=           30; //Last.
+		                                                
+	optional MeetingProto meeting 			=           2; 		//Init meeting object, it may be EMPTY (only stored limited information)
+	                                                    
+	//user profile information                          
+	optional string userName 				          		= 3;
+	optional string userZoomId 				          	= 4;
+	optional string userSnsId 				          	= 5;
+	optional int32 userSnsType 				          	= 6;
+	optional string userBigPicUrl 			=           7;
+	optional string userLocalBigPic 		=           8;
+	optional string userSmallPicUrl 		=           9;
+	optional string userEmail 				          	= 10;
+	                                                    
+	//client GUID or relative                           
+	optional string clientGUID 				          	= 11;
+	optional string confUserUUID 			          	= 12; 		//used for recovery.
+	optional string clientDeviceID 			=           13;
+	optional string clientDeviceInfo 		=           14;
+	                                                    
+	//p2p information                                   
+	optional int32 p2pNatType 				          	= 15;
+	optional string p2pPublicIp 			          	= 16;
+	optional string p2pUpnpSupport 			=           17;
+	optional string p2pLocalIp 				          	= 18;
+	optional string p2pExternIp 			          	= 19;
+	optional int32 p2pUpnpPort 				          	= 20;
+	optional string p2pPingIp 				          	= 21;
+	                                                    
+	//invitation information                            
+	optional int32 inviteeCount 			          	= 22;
+	optional string callBuddyName 			=           23;
+	optional string callBuddyLocalPic 	= 24;           
+	optional string callBuddyLocalSmallPic	=           26;
+	optional string callBuddyPhoneNumber	          	= 27;	
+	                                                    
+	optional string recordingPath			          	= 25;
+	                                                    
+	//New added for recovery log                        
+	optional int32  reconnectReason			=           28;
+	optional int32  reconnectErrorCode	= 29;           
+	                                                    
+	optional string appContext 				          	= 31;	//Application level context, 30 is used by launchConfOption
+	optional string panalistkey				          	= 32;	//for webinar support.
+	                                                    
+	optional string callBuddySessionID		          	= 33;
+	optional string webinarToken			          	= 34;	//for webinar.
+	                                                    
+	optional string webinarJID				          	= 35;	//webinar attendee JID.
+	optional string webinarXmppToken		=           36;	//webinar token.
+	optional string webinarXmppServer	= 37;          	//webinar Xmpp server, ther port should always be 443.
+	                                                    
+	optional int64 userOptions				          	= 38;
+	optional string keepVoip				          		= 39;	//For Android SDK only.
+	optional string browserType				          	= 40;		//This parameter is transferred from web, used for Windows only; if no web join/start/..., it's empty.
+	optional string nosConnectionState                    = 41;		//NOS connection state.
+	optional int64  zoomFeatureControl                  = 42;			//ZC parameter from web.
+	optional int64  cmrIndex				          	        = 43;			//For reconveryCMR.
+	optional string messageToShare			 =           44;			//For BBM specified task..., if we have such string, we'll join meeting and send out message ...	
+	optional string boID = 45;		//BO ID             
+	optional string boToken = 46;	//BO meeti          ng token
+	optional string boTitle = 47;	//BO meeti          ng title
+	optional bool	boHost = 48;	//BO host           or not
+	optional string webinarPollingServer	=           49;	//webinar polling server, ther port should like polling.zoom.us.
+	optional bool boOriginalHost = 50;	//is H          ost in master coference before join/leave BO
+	optional string boAssignData = 51; //save           BO assign data to PT to fix MMR crash issue
+	optional SDKContext sdkcontext = 52;                
+	optional int64 userOptions2		= 53;               
+	optional string vanityMeetID    = 54;	            
+	                                                    
+	optional ServerDomain serverDomain  = 55;           
+	                                                    
+	optional string directJoinParamsFromWeb =           56;
+	optional int32 directJoinParamsIsFull = 57          ;
+	optional int32 isMeetingParamFull = 58;	          	//for partial parameter, we'd try to make this flag as 1.
+	optional int32 accountType = 59;		          	//account type, from user profile.
+	                                                    
+	optional int32 boJoinReason = 60;	//reas          signed by host after BO started
+	optional string paring_code = 61;	//join           meeting with paring code is also supported.
+	optional string tokenforenforcelogin = 62;          
+	optional string participantid4joinmeeting           = 63;
+	optional string trackingCode = 64; //https          ://zoomvideo.atlassian.net/browse/ZOOM-6458
+	                                                    
+	optional int32  prev_phone_id = 65;     
+	repeated LCPRecordItem appRecords = 66;            //app records, key-value-section structure.           
+	optional string launchapp = 67;						//Dropbox Integration,web browser name such as chrome|firefox|safari or app name
+	optional string launchapptitle = 68;				//Dropbox Integration,the title of the web page
+	optional string meetingNonce = 69;					// ZOOM-75897 used for getting ext parameters for monitor log case, when request conf/j
+}                                                       
+//                                                      
+/////////////////////////////                           
+                                                        
+message RecordingProto {                                
+  required string meeting_id	= 1; // meetin          g instance id of the recording
+  required int64 start	= 2; // recording star          t time, 1+2 will be unique
+  optional int64 end	= 3; // recording end           time
+  optional int32  status	= 4; // recording           status, 1: start, 200 completed (encode, upload to s3 etc.)
+  repeated int64 file_size	= 5; // file size           in byte
+  repeated string file_name	= 6; // s3://zoomd          ev-log/cmr/<meeting-number>/<meeting-id>-<meeting_topic>/xxx.mp4
+  optional string video_poster	= 7; // width:           160px, height: 90px  s3://zoomdev-log/cmr/<meeting-number>/<meeting-id>-<meeting_topic>/xxx.jpg
+  optional int32  video_width	= 8; // video           size width in px
+  optional int32  video_height	= 9; // video           size height in px
+  repeated string zoomfs_file_id = 10; // ZOOM-62569 file id generated by zoom fileserver, keting 2018-11-28
+}                                                       
+                                                        
+message RecordMeetingListProto {                        
+  repeated RecordMeetingProto meeting = 1;              
+}                                                       
+message RecordMeetingProto {                            
+  required string id                     = 1;           //meeting instance id
+  optional int64  meetingNumber          = 2;           
+  optional string topic                  = 3;           
+  optional int64  startTime              = 4;           //actual start time
+  optional int32  duration               = 5;           //minutes
+  required string recordingUrl  = 6; //https:/          /rocky.zoom.us/recording/<id>
+}                                                       
+message LocalRecordingProto {                           
+  required string machineId              = 1;           // unique id for the computer of local recording saved, should be readable and display on page, max len 64
+  optional string machineName            = 2;           // Readable and display on page, max len 64
+  optional int64  meetingNumber          = 3;           
+  optional int64  startTime              = 4;           // meeting start time
+  optional string topic                  = 5;           
+  optional string location               = 6;           // Local file path, like C:\Users\work\Documents\zoom\2016-11-25 09.33.53 rocky fu's personal meeting room 3685516500
+  optional int32  filesCount             = 7;           // C of all files for user, like mp4, m4a, chat, cc etc. Do not included temp files, script for transcoding. Not for 1st version
+  optional int64  filesSize              = 8;           // Total size of all files for user, like mp4, m4a, chat, cc etc. Do not included temp files, script for transcoding. Not for 1st version
+}                                                       
+message LocalRecordingListProto {                       
+  repeated LocalRecordingProto recordings = 1;          
+}                                                       
+                                                        
+message PACInfo {                                       
+  repeated PACMeeting pacMeetings = 1;                  
+}                                                       
+                                                        
+message PACMeeting {                                    
+  optional int64 pacMeetingNumber = 1;                  
+  repeated CountryCodeProto tollNumberList = 2          ;
+  repeated CountryCodeProto tollFreeNumberList           = 3;
+  optional string invitationEmail = 4;                  
+  optional string invitationHtmlEmail = 5; //           for outlook plugin use
+  optional string dedicatedDailinNumber = 6;
+}                                                       
+message RoomRendererOptions {                           
+  required RendererGlobalOption   global    =           1;
+  repeated RendererOption rendererByScreen  =           2;
+}                                                       
+message RendererGlobalOption {                          
+  optional int64    bitOption               =           1;
+  optional string   strOption               =           2; // key:value;key:value
+}                                                       
+message RendererOption {                                
+  required int32 numberOfScreens                        = 1;
+  required int32 numberOfParticipants                   = 2;
+  required bool isAnyoneSharing                         = 3;
+  required int32 screenIndex                            = 4;
+  required int32 rendererType                           = 5; // 1:fullscreen video; 2:share content; 3:gallery view; 4:Background view
+  optional int32 rendererSubType                        = 6; // only use for fullscreen/floating video now; 1:self; 2:active; 3:pin
+  required bool isFloatingView                          = 7;
+  optional string ext                                   = 8; // key:value;key:value
+}                                                       
+message AllDailinNumbersProto {                         
+  repeated AllDailinNumbers allDailinNumbers =           1;
+}                                                       
+message AllDailinNumbers {                              
+	required string number					            = 1; // contain toll numbers, toll free numbers and dids
+	optional int32 type				  	  	  = 2; // 0:toll, 1:toll free, 10:Premium
+	optional bool is_shared				                = 3; 
+	optional bool is_did				                = 4; 
+	optional string customized_audio_files	            = 5; // welcome|value,hold|value
+	optional string language_list		                = 6; //en-US,zh-CN  (default: en-US)
+}
+message TSPProto {
+	optional string serviceProvider			  = 1; //Telephony service provider, example: InterCall
+	optional string adaptorURL				  = 2; //Adaptor URL,example:https://xxxxxxx,https://xxxxxxx
+	optional string appSign			  		  = 3; //appSign = timestamp + "." +base64encode(MD5(appkey + timestamp + meetingNumber))
+	optional string mergeCode			      = 4; //Merge code, input the code with participant ID
+	optional bool isSupportHybridAudio		  = 5; //Support hybrid audio(TSP audio with voip)
+	optional string hostPasscode			  = 6;
+	optional string participantPasscode		  = 7;
+	optional int32 passcodeType				  = 8; //default is 1:conference code + leader pin
+  optional CountryCodeListProto mediaNumber         = 9; //ATT media link phone number
+}
+
+message TSPAccountProto {
+	optional string tspAccountIndex			  = 1; //Tsp Account Index, example: tsp1 tsp2
+	optional string hostPasscode			  = 2; //
+	optional string participantPasscode		  = 3; //
+	optional int32 passcodeType			  	  = 4; //
+	repeated string tspNumber      			  = 5;
+}
+
+message BroadcastMeetingItem{
+  repeated BroadcastChannel channelList   = 1; // broacast channel list
+  optional string                liveToken    = 2; // own this token, can broadcast
+  optional int32                 maxwallusers    = 3; // can support number of wall view 
+}
+
+message BroadcastChannel{
+	optional string key                   = 1;  // broacast channel, such as facebook, youtube
+	optional string name                  = 2;  // channel name to UI.
+}                                                  
+
+message RemoteSessionProto {
+	required string meetingId		= 1; // meeting instance id of remote session
+	optional string controllerId		= 2; // remote controller id
+	optional string controllerName	= 3; // remote controller name
+	optional string controllerEmail	= 4; // remote controller email
+	optional string remoteId			= 5; // remote controlled attendee id
+	optional string remoteName		= 6; // remote controlled attendee name
+	optional string remoteEmail		= 7; // remote controlled attendee email
+	required int64 sessionStart		= 8; // session start time
+	required int64 sessionEnd		= 9; // session end time
+	required int64 sessionRequest	= 10; // session request time
+}  
+
+message RemoteSessionResponse {
+  required int32 result                       = 1;
+  optional string errorMessage                = 2;
+} 
+
+message BroadcastStatus{
+	required string meeting_id	= 1 ; //meeting id 
+	required string channelKey	= 2 ; //BroadcastChannel key
+	required int32   status     = 3 ; // broadcast status
+	optional string  message    = 4 ; // error message if existing
+}   
+
+message AvailableDialinCountry {
+	required string hash   		   	   		   = 1; // the current hash of Dial-in country
+	repeated string countries   		   	   = 2; // all countries
+	repeated string selectedCountries   	   = 3; // selected countries
+	optional bool includeTollfree   		   = 4; // is include tollfree number
+	optional bool enableShowIncludeTollfree    = 5; // enable/disable flag for "Include Toll-free number" option
+}
+message CloudPBX {
+  optional string rcSettingsLink =            1; // click to login RC setting page
+  repeated string directNumber   =            2; // (080) 123-2345
+  optional string mainCompanyNumber   =       3; // (080) 123-2345
+  optional string extension =                 4; // 010
+  optional string countryCode =               5; // local dialing country code, sample: +1
+  optional string countryName =               6; // local dialing country name, sample: United States
+  optional string areaCode =                  7; // local dialing area code
+  optional string voiceMailLink =             8; // click to login RC voice mail page
+  repeated PBXNumber callerID =               9; // include directNumber, mainCompanyNumber, ......
+  optional SipPhoneIntegration sipPhoneIntegration =                 10; // PBX sip phone integration
+  optional int32 type =                 11; // PBX source from 0-RC, 1-Zoom
+}
+message PBXNumber {
+  optional string name  =               1; // number description
+  optional string number   =            2; // (080) 123-2345
+}
+message CloudPBXCallLog {
+  enum CallLogAction {
+    INCOMING_CALL  = 1;
+    ACCEPT   = 2;
+    TRANSFER  = 3;
+    HANG_UP  = 4;
+    CALL_OUT  = 5;
+  }
+  optional string userId =            1; // user id
+  optional CallLogAction action   =            2; // log action, sample: incomingCall, accept, transfer, hangUp, callOut
+  optional PBXNumber callerID   =       3; // current user PBX info
+  optional string incomingNumber   =       4; // incoming number, (080) 123-2345
+  optional string extension =                 5; // 010
+  optional int64 clientTime =                 6; // client log time, milliseconds
+  optional string remark =                 7; // remark info for this log
+  optional string companyNumber =                 8; // 
+}
+message PBXSyncResponse {
+  repeated PBXCallLog callLog =            1; // call Log list
+  repeated PBXVoiceMail voiceMail =            2; // voice message list
+  optional string syncToken   =   3; // sync token, used for ISync request
+  optional int32 forceFSync   =   4; // 0-don't care, 1-must clear local DB first and use FSync 
+}
+
+message PBXCallLog {
+  required string id =            1; 
+  optional string startTime =            2; // example:2017-09-04T12:03:24.842Z
+  optional int32 duration = 3 ; // unit second.
+  optional string type = 4; // 'Voice'
+  optional string direction = 5; // Outbound, Inbound
+  optional string action = 6; // stay
+  optional string result = 7; // 'Missed'
+  optional string toPhoneNumber = 8; 
+  optional string toName = 9; // display name
+  optional string toLocation = 10; // city name + state name
+  optional string fromPhoneNumber = 11;
+  optional string fromName = 12;
+  optional string fromLocation = 13; // city name + state name
+  optional PBXAttachment recording = 14;
+  optional PBXVoiceMail voiceMail = 15;
+}
+
+message PBXVoiceMail {
+  required string id =            1; 
+  optional string createTime =            2; // example:2017-09-04T12:03:24.842Z
+  optional string toName = 3; // name
+  optional string toPhoneNumber = 4; 
+  optional string fromPhoneNumber = 5;
+  optional string fromName = 6;
+  optional string type= 7; // 'VoiceMail'
+  optional string readStatus= 8;// Read, Unread
+  optional string priority= 9; // Normal, High
+  optional string direction= 10; // Inbound
+  optional string availability= 11;// 'Alive' | 'Deleted'
+  optional string messageStatus= 12; // 'Received'
+  optional string vmTranscriptionStatus= 13; // stay
+  repeated PBXAttachment attachment = 14; // attachment  list
+}
+message PBXAttachment {
+  required string id =            1; 
+  optional string uri = 2; // client  access this uri can download message, and client need contains seesion id to support authentication
+  optional string type= 3; // voicemail-AudioRecording, recording-Automatic|OnDemand
+  optional string contentType= 4;// audio/x-wav
+  optional string priority= 5; // Normal, High. just for voice mail
+  optional int32 duration= 6; // unit second
+}
+
+message SplashPageForWaitingRoom {
+  enum WaitingRoomLayout {
+	WaitingRoomLayoutType_Default = 0;
+    WaitingRoomLayoutType_Simple = 1;
+  }
+  optional WaitingRoomLayout pageLayout        = 1;    // page layout
+  optional string contentTitle                 = 2;    // title for page content
+  optional string contentData                  = 3;    // page content 
+  optional string imagePath                    = 4;    // image path
+  optional string ssoVanityUrl                 = 5;    // ZOOM-86210 : sso vanity url for non-login guest participant to login IM
+  optional int32  options                      = 6;    // ZOOM-86210 : waiting room options
+}

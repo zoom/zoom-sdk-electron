@@ -1,0 +1,26 @@
+{
+  "name": "test1",
+  "version": "1.0.0",
+  "description": "test",
+  "main": "main.js",
+  "scripts": {
+    "start": "./node_modules/.bin/electron .",
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "packager-win": "electron-packager ./ zoomsdkapp --ia32 --out ./OutApp --version 1.4.0 --overwrite --icon=./app.ico",
+    "packager-mac": "electron-packager ./ zoomsdkapp --platform=darwin --arch=x64 --out ./OutApp --electron-version=5.0.2 --overwrite --icon=./app.icns&& yes|cp -R  -H ../lib ./OutApp/zoomsdkapp-darwin-x64/zoomsdkapp.app/Contents/Resources/ && rm -rf ../sdk/win32 && rm -rf ../sdk/win64 && yes|cp -R  -H ../sdk ./OutApp/zoomsdkapp-darwin-x64/zoomsdkapp.app/Contents/Resources/ &&yes|cp -R  -H ../sdk/mac/Plugins ./OutApp/zoomsdkapp-darwin-x64/zoomsdkapp.app/Contents/ && yes|cp -R  -H ../sdk/mac/Resources ./OutApp/zoomsdkapp-darwin-x64/zoomsdkapp.app/Contents/&& yes|cp -R  -H ../sdk/mac/ZoomSDK/* ./OutApp/zoomsdkapp-darwin-x64/zoomsdkapp.app/Contents/Frameworks",
+    "postinstall-mac": "yes|cp -R  -H ../sdk/mac/Plugins ./node_modules/electron/dist/Electron.app/Contents/&& yes|cp -R  -H ../sdk/mac/Resources ./node_modules/electron/dist/Electron.app/Contents/ && yes|cp -R  -H ../sdk/mac/ZoomSDK/ ./node_modules/electron/dist/Electron.app/Contents/Frameworks"
+  },
+  "author": "",
+  "license": "ISC",
+  "gypfile": true,
+  "devDependencies": {
+    "electron-packager": "^12.0.0",
+    "electron-rebuild": "^1.5.10",
+    "electron": "^5.0.2"
+  },
+  "dependencies": {
+    "electron": "^5.0.2",
+    "electron-rebuild": "^1.5.10",
+    "electron-packager": "^12.0.0"
+  }
+}

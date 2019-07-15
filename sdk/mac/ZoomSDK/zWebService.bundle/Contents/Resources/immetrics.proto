@@ -1,0 +1,41 @@
+package com.saasbee.webapp.proto;
+
+option java_package = "com.saasbee.webapp.proto";
+option java_outer_classname = "MetricsProtos";
+option optimize_for = LITE_RUNTIME;
+
+message IMMetricsData {
+    required string jid = 1;     // jid of the account
+    required int64 timeStart = 2;      // start of the counter
+    required int64 timeEnd = 3;      // end of the counter
+    required int64 imSent = 4;      // im msgs sent
+    required int64 imRcvd = 5;     // im msgs received
+    required int64 emojiSent = 6;    // emojis sent
+    required int64 emojiRcvd = 7;     // emojis received
+    required int64 fileSent = 8;     // files sent
+    required int64 fileRcvd = 9;    // files received
+    required int64 imgSent = 10;    // images sent
+    required int64 imgRcvd = 11;   // images received
+    required int64 voiceSent = 12;   // voice msg sent
+    required int64 voiceRcvd = 13;   // voice msg received
+    required int64 videoSent = 14;    // video msg sent
+    required int64 videoRcvd = 15;  // video msg rcvd
+	required int64 groupImSent = 16;  // group im sent
+	required int64 groupImRcvd = 17;  // group im rcvd
+	required int64 e2eImSent = 18;  // e2e im sent
+	required int64 e2eImRcvd = 19;  // e2e im rcvd
+	required int64 login = 20;    // login count
+	required int64 logout = 21;   // logout count
+	required int64 callSent = 22;    // meeting call sent from IM
+	required int64 callRcvd = 23;   //  meeting call received from IM
+	required string osInfo = 24;   // system OS information
+}
+ 
+message IMMetricsDataList  {
+    repeated IMMetricsData imMetricsData    = 1;
+}
+
+message IMMetricsResponse {
+  required int32 result                       = 1;
+  optional string errorMessage                = 2;
+}

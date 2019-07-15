@@ -1,0 +1,1210 @@
+/* No need to translate string "\r\n", keep where it is in the localized file  */
+
+/* Invite message */
+/* 1st %s: user name. 2nd %s: URL. */
+"INVITE_MESSAGE" = "%s ti sta chiamando da BBM Meetings, fai clic sul collegamento per partecipare.\r\n%s";
+/* %@: user name */
+"INVITE_NOTI_1" = "%@ è stato invitato.";
+"INVITE_NOTI_2" = "%@ e %@ sono stati invitati.";
+"INVITE_NOTI_3" = "%@, %@ e un'altra persona sono stati invitati.";
+"INVITE_NOTI_MORE" = "%@, %@ e altri %d sono stati invitati.";
+"INVITE_TIP" = "Fai clic per invitare i partecipanti";
+"IVITET_COPY_URL_TIP" = "L'URL di invito è stato copiato negli appunti";
+
+/* Notification in chat window */
+"INVITE_NOTI_INVITE_YOU" = "%@ ti ha invitato a partecipare a una riunione.";
+"INVITE_NOTI_YOU_INVITE" = "Hai invitato %@ a partecipare a una riunione.";
+
+
+/* Message in CMD window */
+"CALLING_IS" = "sta chiamando...";
+"CALLING_ARE" = "stanno chiamando...";
+"CALLING_ARE_ALREADY" = "ti stanno chiamando. Sei già presente in questa riunione.";
+"CALLING_IS_ALREADY" = "ti sta chiamando. Sei già presente in questa riunione.";
+"CALLING_ARE_ALREADY_ANOTHER" = "ti stanno chiamando. Sei già impegnato in un'altra riunione; desideri abbandonare questa riunione e partecipare all'altra?";
+"CALLING_IS_ALREADY_ANOTHER" = "ti sta chiamando. Sei già impegnato in un'altra riunione; desideri abbandonare questa riunione e partecipare all'altra?";
+
+/* Online offline notification */
+/* A user name is concatenated with this string. Example: "Cindy Smith came online" */
+"ONLINE_NOTI" = "è in linea";
+"OFFLINE_NOTI" = "non è in linea";
+
+
+/* Main window menu text */
+"BTN_START_CALL" = "Avvia con video";
+"BTN_START_SHARING" = "Avvia senza video";
+"BTN_LEAVE_CALL" = "Abbandona riunione";
+"BTN_BACK_CALL" = "Torna alla riunione";
+"BTN_START_CALL_TIP" = "Audio e video del computer vengono avviati automaticamente";
+"BTN_BACK_CALL_TIP" = "Torna alla riunione";
+
+
+/* Main window menu text */
+"MENU_RETURN_ZOOM" = "Torna alla riunione";
+"MENU_INVITE_ZOOM" = "Invita alla riunione";
+"MENU_START_ZOOM" = "Avvia videoconferenza";
+"CHAT_START_ZOOM" = "Riunione video";
+"MENU_VIEW_PROFILE" = "Visualizza profilo";
+"MENU_JOIN_ZOOM" = "Partecipa alla riunione...";
+
+/* Main Menu */
+"MAIN_MENU_LOG_OUT" = "Disconnetti";
+"MAIN_MENU_LOG_IN" = "Accedi";
+
+"MAIN_IM_TAB_FACEBOOK" = "Facebook IM";
+"MAIN_IM_TAB_GOOGLE" = "Google IM";
+"MAIN_IM_TAB_IM_GENERAL" = "Messaggio istantaneo";
+"MAIN_IM_TAB_FAVORITES" = "Contatti";
+"MAIN_IM_TAB_CHATS" = "Chat";
+"MAIN_TELLOTHERS_FACEBOOK" = "Parla di BBM Meetings";
+"MAIN_TELLOTHERS_GOOGLE" = "Parla di BBM Meetings";
+"MAIN_TELLOTHERS_ZOOM" = "Parla di BBM Meetings";
+"MAIN_IM_TAB_HOME" = "Home";
+"MAIN_IM_TAB_MYMEETINGS" = "Riunioni";
+
+/* Chat window */
+"CHAT_IS_TYPING" = "%@ sta scrivendo...";
+
+
+/* Login status */
+"LOGIN_STATUS_LOGIN" = "Accedi";
+"LOGIN_STATUS_CONN" = "Connessione in corso...";
+"LOGIN_STATUS_AUTH" = "Autenticazione in corso...";
+"LOGIN_STATUS_NEGO" = "Negoziazione in corso...";
+
+/* Login error */
+"LOGIN_FACEBOOK_ERROR" = "Verifica la connessione di rete. Quindi fai clic su Riprova per riconnetterti.";
+"LOGIN_GOOGLE_ERROR" = "Verifica la connessione di rete. Quindi fai clic su Riprova per riconnetterti.";
+"LOGIN_ZOOMUS_ERROR" = "Impossibile ottenere le informazioni relative ai tuoi contatti preferiti. Verifica la connessione di rete.";
+"LOGIN_SSO_ERROR" = "Impossibile ottenere le informazioni relative ai tuoi contatti preferiti. Verifica la connessione di rete.";
+"LOGIN_FACEBOOK_CANCELLED" = "L'accesso a Facebook è stato annullato.";
+
+/* Login links */
+"LOGIN_LINK_NO_ACCOUNT" = "Registrati";
+"LOGIN_LINK_FORGOT_PASSWORD" = "Password dimenticata?";
+
+/* Setting */
+"SETTING_GENERAL" = "Generale";
+"SETTING_AUDIO" = "Audio";
+"SETTING_FEEDBACK" = "Feedback";
+"SETTING_RECORD" = "Registrazioni";
+"SETTING_ACCOUNT" = "Account";
+"SETTING_VIDEO" = "Video";
+"Statistics" = "Statistics";
+"SETTING_DISKSPACE_SMALL" = "Lo spazio su disco disponibile è inferiore a 1 GB. Seleziona un'altra cartella o elimina alcuni file";
+"SETTING_DISKSPACE_AVAILABLE" = "%.2f GB rimanenti";
+"SETTING_WORKEMAIL" = "E-mail (lavoro)";
+"SETTING_GOOGLE_ACCOUNT" = "Account Gmail";
+"SETTING_FACEBOOK_ACCOUNT" = "Account Facebook";
+"SETTING_SSO_ACCOUNT" = "Accesso singolo";
+"SETTING_UPGRADETOPRO" = "Esegui aggiornamento a versione Pro";
+"SETTING_CHANGEPLAN" = "Modifica piano abbonamento";
+
+/* Meeting info */
+/* 1st %@: URL. 2nd %@: meeting ID */
+"MEETING_INFO" = "1. Accedi a %@\r\n2. Immetti l'ID: %@";
+"MEETING_URL_COPYED" = "L'URL dell'invito è stato copiato negli appunti.";
+"MEETING_INVITATION_EMAIL_COPYED" = "L'e-mail di invito è stata copiata negli appunti.";
+
+/* About window */
+/* Software version */
+"VERSION_NUMBER" = "Versione:%@";
+"FEEDBACK_SEND" = "Invia feedback";
+"FEEDBACK_SENDING" = "Invio in corso...";
+"FEEDBACK_SENDFAIL" = "Impossibile inviare il feedback. Riprova in seguito.";
+"FEEDBACK_SENDOK" = "Grazie per il tuo feedback.\r\n\r\nLa tua opinione è molto importante per noi e la nostra azienda è alla costante ricerca di modi per migliorare il servizio.";
+
+"MAILTO_SUBJECT" = "Partecipa alla riunione BBM in corso";
+/* %@: URL */
+"MAILTO_BODY" = "Partecipa alla mia riunione.\r\n%@";
+
+/* In meeting */
+"CONF_MEETING_WINDOW_TITLE" = "ID riunione BBM Meeting:%@ ID partecipante: %d";
+"CONF_FREE_MEETING_WINDOW_TITLE" = "ID riunione di %d minuti con BBM Meeting: ID partecipante %@: %d";
+"CONF_VIEWONLY_WINDOW_TITLE" = "ID riunione BBM Meeting: %@";
+"CONF_ROLE_USER_COUNT" = "Conferenziere (%d) Uditore (%d)";
+"CONF_CONNECTING" = "Connessione...";
+"CONF_WAITING" = "In attesa dell'accesso di %s...";
+"CONF_INVITE_MORE" = "Utilizza il pulsante Invita per invitare altre persone";
+"CONF_INVITE_TIPS" = "Non è necessario che gli invitati installino BBM Meetings per accettare l'invito alla riunione.";
+"CONF_INVITE_URL" = "URL: ";
+"CONF_INVITE_TITLE" = "Invita qualcuno a partecipare a una riunione";
+"CONF_ZOOM_NUMBER" = "Numero BBM Meeting: %@";
+"CONF_COPY" = "Copia";
+"CONF_WINDOW_TITLE" = "BBM Meetings";
+"CONF_MEETING_ID" = "ID riunione";
+
+"CONF_BIN_STOP_SCREEN_SHARE" = "Interrompi condivisione schermo";
+"CONF_BTN_STOP_SHARE" = "Interrompi condivisione";
+"CONF_BTN_SHARE_SCREEN" = "Condividi schermo";
+"CONG_BIN_SHARE" = "Condividi";
+"CONF_BIN_SHARE_A_NEW_WINDOW" = "Condividi una nuova finestra";
+"CONF_BTN_INVITE" = "Invita";
+"CONF_BIN_PARTICIPANTS_CHAT" = "Partecipanti e chat";
+"CONF_BIN_PARTICIPANTS" = "Partecipanti";
+"CONF_BIN_MANAGE_PARTICIPANTS" = "Gestisci partecipanti";
+"CONF_BTN_CHAT" = "Chat";
+"CONF_CHAT_WITH_ALL_TEXT" = "Chatta con tutti";
+"CONF_BTN_PEOPLE" = "Persone (%d)";
+"CONF_BTN_LEAVE" = "Abbandona";
+"CONF_BIN_END" = "Fine";
+"CONF_BTN_SETTING" = "Impostazioni";
+"CONF_BIN_ENABLE_PROJECT_MODE" = "Nascondi riquadro video";
+"CONF_BIN_DISABLE_PROJECT_MODE" = "Mostra riquadro video";
+"CONF_EXIT_FULLSCREEN_TIP" = "Esci dalla modalità schermo intero. ID riunione:%@";
+"CONF_ENTER_FULLSCREEN_TIP" = "Attiva modalità schermo intero";
+"CONF_GALLERY_VIEW_TITLE" = "Visualizzazione galleria";
+"CONF_SPEAKER_VIEW_TITLE" = "Visualizzazione relatore";
+"CONF_ENTER_MINIMAL_VIEW" = "Attiva visualizzazione minima";
+"CONF_EXIT_MINIMAL_VIEW" = "Esci dalla visualizzazione minima";
+"CONF_ENTER_FULLSCREEN" = "Attiva modalità schermo intero";
+"CONF_EXIT_FULLSCREEN" = "Esci dalla modalità schermo intero";
+"CONF_GALLERY_VIEW_TIP" = "Visualizzazione galleria";
+"CONF_SPEAKER_VIEW_TIP" = "Visualizzazione relatore";
+"CONF_BIN_RENAME" = "Rinomina";
+"CONF_BIN_MORE" = "Altro";
+"CONF_BIN_MEETINGINFO" = "Informazioni riunione";
+"CONF_MEETING_MENU_TITLE" = "Riunione";
+"CONF_ENTER_SILENT_MODE" = "Avvia partecipante in attesa";
+"CONF_LEAVE_SILENT_MODE" = "Interrompi partecipante in attesa";
+"CONF_SILENT_MODE_PROMPT" = "Sei in attesa";
+"CONF_SILENT_ON_HOLD" = "In attesa";
+"CONF_SILENT_SOTPHODE" = "Interrompi l'attesa";
+"CONF_RAISE_HAND" = "Alza la mano";
+"CONF_LOWER_HAND" = "Abbassa la mano";
+"CONF_LOWER_ALL_HANDS" = "Abbassa tutte le mani";
+"CONF_IS_TALKING" = "sta parlando...";
+"CONF_NO_VIDEO_USER" = "Partecipanti non video totali:";
+"CONF_BIN_CONNECTED" = "Connesso";
+"CONF_BIN_CALLING" = "Chiamata in corso...";
+"CONF_BIN_RINGING" = "Chiamata in corso...";
+"CONF_BIN_CALL_ACCEPTED" = "Chiamata accettata";
+"CONF_BIN_FAILED_TO_CALL" = "Chiamata non riuscita";
+"CONF_BIN_SUCCESS" = "Operazione riuscita";
+"CONF_BIN_DISCONNECTION_CALL" = "Disconnessione chiamata";
+
+/* Audio */
+"CONF_BIN_MUTE_ALL" = "Disattiva audio per tutti";
+"CONF_BIN_UNMUTE_ALL" = "Riattiva audio per tutti";
+"CONF_BTN_UNMUTE_AUDIO" = "Attiva audio";
+"CONF_BTN_MUTE_AUDIO" = "Disattiva audio";
+"CONF_BTN_AUDIO" = "Audio";
+"CONF_BTN_UNMUTE_TELEPHONE" = "Attiva l'audio del telefono";
+"CONF_BTN_TELEPHONE" = "Disattiva l'audio del telefono";
+"CONF_BIN_MUTE" = "Disattiva audio";
+"CONF_BIN_UNMUTE" = "Attiva audio";
+"CONF_BIN_MUTED" = "audio disattivato";
+"CONF_BIN_MUTE_ON_ENTRY" = "Muto in entrata";
+"CONF_BIN_PLAY_CHIME" = "Riproduci chime in entrata/uscita";
+"CONF_BIN_MUTE_REMINDER" = "Ora l'audio è disattivato. Premi Command+MAIUSC+A per attivare il microfono se desideri intervenire.";
+"CONF_BIN_AUDIO_SWITCH_TO_VOIP" = "Stai utilizzando l'audio del computer";
+"CONF_BIN_AUDIO_SWITCH_TO_TELE" = "Stai utilizzando il telefono";
+"CONF_BIN_JOIN_TELECONFERENCE" = "Partecipa alla teleconferenza";
+"CONF_BIN_HOST_MUTE_ALL" = "L'audio di tutti i nuovi partecipanti è disattivato";
+"CONF_BIN_HOST_UNMUTE_ALL" = "L'audio di tutti i partecipanti è attivato";
+"CONF_BIN_MUTE_BY_HOST" = "L'host ha disattivato il tuo audio";
+"CONF_BIN_UNMUTE_BY_HOST" = "L'host ha attivato il tuo audio";
+"CONF_BIN_MUTE_BY_HOST_MUTEALL" = "L'host ha disattivato l'audio di tutti i partecipanti";
+"CONF_BIN_UNMUTE_BY_HOST_UNMUTEALL" = "L'host ha attivato l'audio di tutti i partecipanti";
+"CONF_BIN_AUDIO_USE_VOIP" = "Stai utilizzando il microfono e l'altoparlante del computer";
+"CONF_BIN_AUDIO_USE_TELE" = "Stai utilizzando il telefono";
+"CONF_BIN_AUDIO_MUTE_MYAUDIO" = "Disattiva il mio audio";
+"CONF_BIN_AUDIO_UNMUTE_MYAUDIO" = "Attiva il mio audio";
+"CONF_BIN_AUDIO_MUTE_MYPHONE" = "Disattiva l'audio del mio telefono";
+"CONF_BIN_AUDIO_UNMUTE_MYPHONE" = "Attiva l'audio del mio telefono";
+"CONF_BIN_JOIN_VOIP" = "Partecipa all'audioconferenza tramite microfono e altoparlante";
+"CONF_BIN_LEAVE_VOIP" = "Abbandona audioconferenza";
+"CONF_BIN_DISCONNECT_VOIP" = "Disconnesso";
+"CONF_BIN_AUDIO_BUTTON_TIP" = "Premi Command-MAIUSC-A per attivare o disattivare l'audio";
+"CONF_BIN_AUDIOWIZARD_TIP" = "Fai clic per controllare le opzioni relative all'audioconferenza";
+"CONF_BIN_AUDIO_OPTIONS" = "Opzioni audio";
+"CONF_BIN_AUDIO_CONFERENCE" = "Audioconferenza";
+"CONF_BIN_AUDIO_SETTINGS" = "Impostazioni audio";
+"CONF_BIN_CALL_USING_COMPUTER" = "Utilizza il microfono e l'altoparlante del computer";
+"CONF_BIN_CALL_USING_PHONE" = "Utilizza il telefono";
+"CONF_BIN_NO_AUDIO" = "Non hai ancora effettuato l'accesso all'audioconferenza.";
+"CONF_BIN_AUDIO_FEEDBACK_ERROR" = "L'audio del tuo computer è stato disconnesso perché è stata rilevata un'eco.";
+"CONF_BIN_VOIP_CONNECTED" = "Audio computer connesso";
+"CONF_BIN_TELE_CONNECTED" = "Telefono collegato";
+"CONF_BIN_TEST_AUDIO" = "Prova microfono e altoparlante";
+"CONF_BIN_AUDIO_UPLINK_QUILITY_BAD" = "I partecipanti alla riunione potrebbero avere problemi a sentire il tuo audio.\nPotresti considerare di utilizzare il telefono.";
+"CONF_BIN_AUDIO_DOWNLICK_QUILITY_BAD" = "Potresti avere problemi a sentire l'audio degli altri partecipanti alla riunione.\nPotresti considerare di utilizzare il telefono.";
+"CONF_BIN_AUDIO_CALLIN_LISTENER" = "Totale %d ascoltatore telefonata";
+"CONF_BIN_AUDIO_CALLIN_LISTENERS" = "Totale %d ascoltatori telefonata";
+
+//close audio without join audio dialog
+"No Audio" = "Nessun audio";
+"Do you want to continue without audio?" = "Continuare senza audio?";
+"You won't be able to hear other participants in the meeting, nor will they hear you." = "Non potrai sentire gli altri partecipanti alla riunione, né loro sentiranno te.";
+"Join Audio" = "Partecipa con audio";
+"Leave Audio" = "Leave Audio";
+
+/* Video */
+"CONF_BTN_START_VIDEO" = "Avvia video";
+"CONF_BTN_STOP_VIDEO" = "Interrompi video";
+"CONF_BTN_VIDEO" = "Video";
+"CONF_BIN_VIDEOWIZARD_TIP" = "Fai clic per controllare le opzioni relative alla videoconferenza";
+"CONF_BIN_VIDEO_MUTE_BY_HOST" = "L'host ha interrotto il tuo video";
+
+"CONF_BTN_RESUME" = "Riprendi";
+"CONF_BTN_STOP_SHARE" = "Interrompi condivisione";
+"CONF_BIN_TALKING" = "Sta parlando: ";
+
+"CONF_BIN_LOCK_MEETING" = "Blocca riunione";
+"CONF_BIN_UNLOCK_MEETING" = "Sblocca riunione";
+"CONF_BIN_LOCK_SHARE" = "Blocca condivisione schermo";
+"CONF_BIN_UNLOCK_SHARE" = "Sblocca condivisione schermo";
+"CONF_BIN_START_RECORDING" = "Avvia registrazione";
+"CONF_BIN_STOP_RECORDING" = "Arresta registrazione";
+"CONF_BIN_ALLOW_RECORD" = "Consenti registrazione";
+"CONF_BIN_FORBID_RECORD" = "Non consentire registrazione";
+"CONF_BIN_MAKE_HOST" = "Crea host";
+"CONF_BIN_EXPEL" = "Rimuovi";
+"CONF_BIN_PAUSE_SHARE" = "Sospendi condivisione";
+"CONF_BIN_RESUME_SHARE" = "Riprendi condivisione";
+"CONF_BIN_SELECT_WINDOW" = "Seleziona finestra";
+"CONF_BIN_PAUSE" = "Pausa";
+"CONF_BIN_ANNOTATE" = "Annota";
+"CONF_BIN_GIVE_CONTROL" = "Condividi controllo in";
+"CONG_BIN_CANCEL_CONTROL" = "Annulla controllo remoto";
+"CONF_BIN_ENABLE_ATTENDEE_ANNOTATE" = "Attiva annotazione partecipante";
+"CONF_BIN_DISABLE_ATTENDEE_ANNOTATE" = "Disattiva annotazione partecipante";
+"Change Role to Attendee" = "Change Role to Attendee";
+"%@ will be rejoining the webinar as an attendee" = "%@ will be rejoining the webinar as an attendee";
+"%@ will be rejoining the webinar as a panelist" = "%@ will be rejoining the webinar as a panelist";
+
+"CONF_BIN_SHOW_CALLIN_USERS" = "Mostra utenti chiamanti";
+"CONF_BIN_HIDE_CALLIN_USERS" = "Nascondi utenti chiamanti";
+
+"CONF_BIN_LEAVE_MEETING_TITLE" = "Abbandona riunione";
+"CONF_BIN_LEAVE_MEETING" = "Desideri abbandonare la riunione?";
+"CONF_BIN_END_MEETING_TITLE" = "Termina riunione";
+"CONF_BIN_END_MEETING" = "Se desideri che la riunione prosegua, nomina un altro Host prima di fare clic su Abbandona riunione.";
+"CONF_BIN_END_SHAREONLY" = "\nFai clic su Annulla per far proseguire la riunione.";
+"CONF_DOUBLECLICK_ENTER_FULLSCREEN" = "Fai doppio clic per attivare la modalità schermo intero.";
+"CONF_DOUBLECLICK_EXIT_FULLSCREEN" = "Premi ESC o fai doppio clic per uscire dalla modalità schermo intero";
+"CONF_BIN_CLAIM_HOST" = "Accedi come host";
+"Join webinar as a panelist" = "Join webinar as a panelist";
+"Start your webinar" = "Start your webinar";
+
+/* In meeting chat */
+"CONF_CHAT_ALL" = "Tutti";
+"CONF_CHAT_TO_PRIVATE" = "a %@ (privatamente)";
+"CONF_CHAT_FROM_PRIVATE" = "da %@ (privatamente)";
+"CONF_CHAT_FROM" = "da %@ a Tutti";
+"CONF_CHAT_HOST" = "Host";
+"CONF_CHAT_ME" = "me";
+"CONF_PARTICIPANT_ID" = "ID partecipante";
+
+/* Error in meeting */
+"CONF_FAIL_EXCEPTION" = "Si è verificato un problema nella riunione. Codice errore: %d";
+"CONF_FAIL_MEETING_NOT_EXIST" = "Questo ID riunione non è valido. Controlla e riprova.";
+"CONF_FAIL_MEETING_OVER" = "Questa riunione è terminata.";
+"CONF_FAIL_MMR_ERR" = "Al momento il nostro servizio è occupato. Riprova in seguito.";
+"CONF_FAIL_NO_MMR" = "Al momento il nostro servizio è occupato. Riprova in seguito.";
+"CONF_FAIL_NETWORK_ERR" = "Impossibile collegarsi al nostro servizio. Verifica la connessione di rete e riprova.";
+"CONF_FAIL_NETWORK_ERRID" = "Impossibile collegarsi al nostro servizio. Verifica la connessione di rete e riprova. Codice errore %d";
+"CONF_FAIL_CONF_USER_FULL" = "Il numero massimo di partecipanti alla riunione, %d, è stato raggiunto. Riprova in seguito.";
+"CONF_FAIL_MEETING_LOCKED" = "L'host ha bloccato la riunione.";
+"CONF_FAIL_IN_ANOTHER_MEETING" = "Una riunione è attualmente in corso. Per avviare una nuova riunione, è necessario terminarla.";
+"CONF_FAIL_HOST_IN_ANOTHER_MEETING" = "L'host ha una riunione attualmente in corso. Una volta terminata la riunione, potrai partecipare a quest'altra riunione.";
+"CONF_FAIL_WEBINAR_FULL" = "We're sorry; the registration for this webinar has reached its maximum.";
+"CONF_FAIL_HOST_SHOULD_NOT_REIGISTER" = "Someone try to use host’ email to register the webinar";
+"If you are the host, please sign in to start the webinar." = "If you are the host, please sign in to start the webinar.";
+"If you were invited as a panelist, please join the webinar from the link in your email invitation." = "If you were invited as a panelist, please join the webinar from the link in your email invitation.";
+
+"CONF_END_KICK_BY_HOST" = "L'host ti ha rimosso.";
+"CONF_END_BY_HOST" = "L'host ha terminato la riunione.";
+"CONF_END_JBH_TIMEOUT" = "Il tempo è scaduto prima della partecipazione dell'host.";
+"CONF_END_FREE_TIMEOUT" = "Non c'è più tempo libero disponibile.";
+"CONF_END_OTHER_MEETING" = "Termina tutte le altre riunioni";
+"CONF_END_START_ANOTHER_MEETING" = "Questa riunione è terminata perché qualcuno ha avviato una nuova riunione con questo account.";
+"CONF_END_CAUSE_NO_ATTENDEE" = "La riunione è terminata dopo 40 minuti di inattività.";
+
+/* Meeting share */
+"CONF_SHARE_WINDOW_TIP" = "ID:%@   Schermo: In onda";
+"CONF_SHARE_DESKTOP_TIP" = "ID:%@   Desktop: In onda";
+"CONF_SHARE_TIP_PAUSED" = "Condivisione schermo in pausa";
+"CONF_SHARE_VIEW_SCREEN" = "Stai visualizzando lo schermo di %@";
+"CONF_SHARE_VIEW_SCREEN_WITHOUT_S" = "Stai visualizzando lo schermo di %@";
+"CONF_SHARE_CONTROL_SCREEN" = "Stai controllando lo schermo di %@";
+"CONF_SHARE_WINDOW_MINIMIZED_TIP" = "Condivisione sospesa. Porta in primo piano la finestra condivisa";
+"CONF_SHARE_WINDOW_CORVERED_TIP" = "Condivisione sospesa. Porta in primo piano la finestra condivisa";
+"CONF_SHARE_TIP_SWITCH_APP" = "Seleziona una finestra da condividere";
+"CONF_SHARE_TIP_FIT_TO_WINDOW" = "Fai clic qui per modificare la visualizzazione della finestra";
+"CONF_SHARE_TIP_ONE_TO_ONE" = "Fai clic qui per passare alla visualizzazione 1:1";
+"CONF_SHARE_FIT_TO_WINDOW" = "Adatta alla finestra";
+"CONF_SHARE_ORIGINAL_SIZE" = "Dimensioni originali";
+"CONF_SHARE_VIEW_MODE" = "Modalità di visualizzazione";
+"CONF_SHARE_SELECT_SHARE_WINDOW" = "Seleziona una finestra da condividere";
+"CONF_SHARE_ASSIGN_CONTROL" = "Concedi controllo da mouse/tastiera a";
+"CONF_SHARE_STOP_CONTROL" = "Annulla controllo da mouse/tastiera";
+"CONF_SELECT_SHARE_TIP" = "Scegli cosa desideri condividere";
+"CONF_CLICK_TO_SHARE_TIP" = "Fai clic per condividere lo schermo";
+
+/* Audio Share */
+"CONF_AUDIO_SHARE_ENABLE" = "Condividi audio computer durante condivisione schermo";
+"CONF_AUDIO_SHARE_DISABLE" = "Disattiva audio computer durante condivisione schermo";
+"CONF_AUDIO_SHARE_MUTE_PRESENTER" = "Il microfono è stato disattivato per consentire agli altri utenti di sentire l'audio remoto durante la condivisione dello schermo.";
+"CONF_AUDIO_SHARE_MUTE_ATTENDEE" = "Il microfono è disattivato, quindi puoi sentire l'audio remoto durante la condivisione dello schermo.";
+"CONF_AUDIO_SHARE_UNMUTE" = "Il microfono è attivato. La condivisione dello schermo con audio remoto è terminata.";
+"CONF_AUDIO_SHARE_UNMUTE_FORBIN" = "Non puoi attivare autonomamente il tuo audio perché l'host ha disattivato l'audio di tutti i partecipanti.";
+"CONF_AUDIO_SHARE_MUTE_VOIP_WHEN_AUDIOSHARE" = "Il tuo altoparlante è disattivato per la condivisione audio. Verrà attivato nuovamente al termine della condivisione audio.";
+"CONF_AUDIO_SHARE_INSTALL_DEVICE_PROMPT" = "Per condivide l'audio del tuo computer, installa il dispositivo audio di Zoom.\n\n";
+
+/* Lead Mode */
+"CONF_LEADER_MODE_ENABLE" = "Il microfono è stato disattivato in modo che sia possibile concentrarsi su %@ come video in evidenza.";
+"CONF_LEADER_MODE_DISABLE" = "Il microfono è attivato. Il video in evidenza è terminato.";
+
+/* */
+"CONF_MYSELF_ON_VIDEO" = "Io";
+"CONF_PIN_VIDEO" = "Blocca video";
+"CONF_SWITCH_VIDEO" = "Passa all'altoparlante attivo";
+"CONF_PIN_VIDEO_FIRST_SCREEN" = "Blocca video nel primo schermo";
+"CONF_SWITCH_VIDEO_FIRST_SCREEN" = "Passa all'altoparlante attivo sul primo schermo";
+"CONF_PIN_VIDEO_SECOND_SCREEN" = "Blocca video nel secondo schermo";
+"CONF_SWITCH_VIDEO_SECOND_SCREEN" = "Passa all'altoparlante attivo sul secondo schermo";
+
+"DEVICE_MSG_CONF_NEW_MIC_MSG" = "Il microfono predefinito è stato impostato su %@ e non verrà utilizzato.";
+"DEVICE_MSG_CONF_NEWDEVICE_AUDIO" = "Il dispositivo audio predefinito è stato modificato";
+"DEVICE_MSG_CONF_SPKERROR_AUDIO" = "L'altoparlante %@ non funziona. Accedi a Impostazioni per provarne un altro.";
+"DEVICE_STRING_SPK_ERROR" = "Errore altoparlante";
+"DEVICE_STRING_MIC_ERROR" = "Errore microfono";
+"DEVICE_STRING_MIC_PROBLEM" = "Stato microfono";
+"DEVICE_MSG_CONF_MICERROR_AUDIO" = "Il microfono %@ non funziona. Accedi a Impostazioni per provarne un altro.";
+"DEVICE_MSG_CONF_NOMICERR_AUDIO" = "BBM Meetings non è in grado di rilevare il tuo microfono. Verifica la configurazione del microfono.";
+"DEVICE_MSG_CONF_NOSPKERR_AUDIO" = "BBM Meetings non è in grado di rilevare il tuo altoparlante. Verifica la configurazione dell'altoparlante.";
+"DEVICE_MSG_CONF_MICNOIPUTERR_AUDIO" = "BBM Meetings non è in grado di rilevare l'audio del tuo microfono %@.";
+"DEVICE_STRING_SPK_CHANGED" = "L'altoparlante predefinito è stato impostato su %@ e non verrà utilizzato.";
+"DEVICE_MSG_CONF_NEWDEVICE_AUDIO" = "Il dispositivo audio predefinito è stato modificato";
+
+/* Schedule Email Body */
+"SCHEDULE_RESULT_TITLE" = "La riunione è stata pianificata.";
+"SCHEDULE_RESULT_TITLE_RECURRING" = "Le riunioni ricorrenti sono state pianificate.";
+"SCHEDULE_EDIT_RESULT_TITLE" = "La riunione è stata aggiornata.";
+"SCHEDULE_EDIT_RESULT_TITLE_RECURRING" = "Le riunioni ricorrenti sono state aggiornate.";
+"SCHEDULE_EMAIL_BODY_MEETING_URL" = "Partecipa alla mia riunione pianificata.\r\n%@\r\n\r\n";
+//at %@.\r\n%@\r\n\r\nMeeting password: %@\r\nMeeting ID: %@\r\n\r\nZoom®\r\nWe can see clearly now™";
+"SCHEDULE_EMAIL_BODY_MEETING_PASSWORD" = "Password riunione: %@\r\n";
+"SCHEDULE_EMAIL_BODY_MEETING_TIME" = "Ora riunione: %@ alle %@\r\n";
+"SCHEDULE_EMAIL_BODY_MEETING_TIME_REPEAT" = "Ora riunione: Ricorrente\r\n";
+"SCHEDULE_EMAIL_BODY_MEETING_ID" = "ID riunione: %@\r\n";
+"SCHEDULE_ERROR_TIMEOUT" = "Impossibile pianificare la riunione. Verifica la connessione di rete e riprova.";
+"SCHEDULE_ERROR_UNKNOWN" = "Impossibile pianificare la riunione. Codice errore: %d";
+"SCHEDULE_EMAIL_TOPIC" = "Invito alla riunione BBM - %@";
+"STRING_UPDATE_MEETING_ITEM_ERROR" = "Errore di aggiornamento informazioni sulla riunione per l'ID riunione: %@, codice errore: %d.";
+
+"SCHEDULE_FOR_EDIT_PROMPT" = "Questa riunione è pianificata per %@";
+"PMI_APPLY_ID_OCCUPYED" = "ID riunione già in uso. Scegli un altro ID.";
+"PMI_APPLY_ID_REJECTED" = "La tua richiesta è stata rifiutata.";
+"PMI_APPLY_ID_TIMEOUT" = "Impossibile collegarsi al nostro servizio. Verifica la connessione di rete e riprova.";
+"PMI_APPLY_ID_UNKNOWN" = "Impossibile applicare l'ID riunione personale. Errore sconosciuto.";
+"PMI_APPLY_ID_ERRORCODE" = "Impossibile applicare l'ID riunione personale. Codice errore: %d.";
+"PMI_APPLY_ID_IN_PROGRESS" = "Impossibile modificare l'ID riunione mentre la riunione è in corso.";
+
+/* Join Schedule Meeting */
+"JOIN_SCHEDULE_VERIFY_PASSWORD" = "Verifica della password in corso...";
+"JOIN_SCHEDULE_WAITING_RECURRING" = "Questa è una riunione ricorrente.";
+"JOIN_SCHEDULE_WINDOW_TITLE" = "In attesa dell'Host %@";
+
+"PT_SCHEDULE_MEETING_DEFAULT_TITLE" = "La mia riunione";
+"PT_SCHEDULE_MEETING_APPENDIX_NORMAL" = "Riunione BBM Meeting di";
+"PT_SCHEDULE_MEETING_APPENDIX_NO_S" = "Riunione BBM Meeting di";
+
+/* Subscribe Buddy */
+"SUBSCRIBE_BUDDY_REQUEST_MESSAGE" = "%@ desidera avviare una chat con te. Accetti l'invito?";
+"SUBSCRIBE_BUDDY_SUCCESS" = "L'invito è stato inviato correttamente.";
+"SUBSCRIBE_BUDDY_FAIL" = "L'invito non è stato inviato correttamente.";
+"REMOVE_BUDDY_ALERT" = "%@ verrà rimosso dall'elenco IM.";
+"REMOVE_ZOOM_BUDDY_ALERT" = "%@ verrà rimosso dall'elenco dei preferiti.";
+"SETTING_SPEAKER_TEST_START" = "Prova altoparlante";
+"SETTING_SPEAKER_TEST_STOP" = "Interrompi";
+"STR_YOUR_STRING" = "Tuo";
+"STR_CONNECTOR" = "di";
+"STR_FORMAT_BANDWIDTH" = "La larghezza di banda di %@ è bassa.";
+
+
+/*Timeout Dialog*/
+"DIALOG_UPGRADE_ACCOUNT_TITLE" = "Esegui aggiornamento a versione Pro";
+"DIALOG_UPGRADE_ACCOUNT_CONTENT" = "La riunione gratuita terminerà tra 10 minuti; per ottenere minuti illimitati, passa a un account a pagamento al costo di $9,99 al mese.";
+"DIALOG_REMINDER_TITLE" = "Avviso riunione";
+"DIALOG_REMINDER_CONTENT" = "La riunione gratuita terminerà tra 10 minuti. Per ottenere minuti illimitati, l'host della riunione dovrà passare a un account a pagamento al costo di $9,99 al mese.";
+"DIALOG_REMINDER_NOHOST" = "Questa riunione terminerà tra %d minuti, poiché l'host non si è ancora presentato.";
+"DIALOG_FREE_MEETINT_END" = "La riunione gratuita HD è terminata. Grazie per aver scelto BBM Meetings!";
+"DIALOG_MEETING_END_NO_HOST" = "La riunione è terminata perché l'host non si è presentato.";
+"DIALOG_EXPELLED_FROM_MEETING" = "Sei stato rimosso dalla riunione.";
+"DIALOG_MEETING_END_BY_HOST" = "L'host ha terminato la riunione.";
+"DIALOG_MEETING_UPGRADE_ACCOUNT" = "Desideri eseguire l'aggiornamento del tuo account?";
+"DIALOG_CHANGE_HOST" = "Desideri assegnare il ruolo di host a %@?";
+"DIALOG_EXPEL_USER" = "Desideri rimuovere %@?";
+"DIALOG_ASK_LOCK_MEETING" = "Nessun nuovo partecipante può partecipare alla riunione una volta che questa è bloccata.";
+"DIALOG_ASK_UNLOCK_MEETING" = "Una volta sbloccata la riunione nuovi partecipanti potranno parteciparvi.";
+"DIALOG_LEAVE_MEETING_BY_MYSELF" = "Hai abbandonato la riunione.";
+"UPDATE_COUNT" = "Aggiorna account";
+"OK" = "OK";
+"CANCEL" = "Annulla";
+"UPGRADE" = "Aggiorna";
+"CONF_REMAIN_TIME" = "Tempo rimanente prima della fine della riunione:";
+
+/*Record*/
+"RECORD_GET_PRIVILEGE" = "L'host acconsente alla registrazione della riunione.";
+"RECORD_LOSE_PRIVILEGE" = "L'host non acconsente alla registrazione della riunione.";
+"RECORD_STOP_FOR_DISK_FULL" = "La tua registrazione è stata interrotta. Lo spazio su disco è insufficiente.";
+"RECORD_STOP_TIP" = "Il file registrato verrà convertito in mp4 al termine della riunione.";
+"RECORD_REQUEST_PRIVILEGE" = "Richiedi all'host della riunione l'autorizzazione alla registrazione.";
+"RECORD_NO_SPEAKER_DETECTED" = "Nessun altoparlante rilevato per la registrazione in corso. Verifica le impostazioni degli altoparlanti.";
+"Record on Cloud" = "Record on Cloud";
+"Record on Local" = "Record on Local";
+"Connecting to cloud server..." = "Connecting to cloud server...";
+"Failed to connect cloud server." = "Failed to connect cloud server.";
+"You will get an email notification when the cloud recording is ready." = "You will get an email notification when the cloud recording is ready.";
+
+//transcode
+"Zoom - Converting meeting recording" = "ZOOM Meetings - Conversione della registrazione di una riunione";
+"You have a recording that needs to be converted before viewing" = "È presente una registrazione che deve essere convertita prima della visualizzazione";
+"You may convert your recording later by double clicking .zoom file located in the recording folder." = "È possibile convertire la registrazione in un secondo momento facendo doppio clic sul file .zoom nella cartella delle registrazioni.";
+"Save my recordings at:" = "Salva le mie registrazioni in:";
+"Choose a new location..." = "Selezionare una nuova posizione...";
+"Save" = "Salva";
+"Transcode will be stopped. Would you like to continue?" = "La conversione verrà interrotta. Continuare?";
+"Quit" = "Esci";
+
+//
+"NO_MEETING_ITEMS_RPMPT_TITLE" = "Nessuna riunione imminente";
+"NO_MEETING_ITEMS_RPMPT_CONTENT" = "Le riunioni pianificate verranno elencate qui.";
+"NO_RECORDING_ITEMS_RPOMPT_TITLE" = "Nessun file registrato";
+"NO_RECORDING_ITEMS_RPMPT_CONTENT" = "I file registrati verranno elencati qui.";
+"NO_ONLINE_BUDDIES_PTOMPT" = "Nessun amico online";
+"NO_FAVORITE_CONTACTS_PROMPT" = "Nessun contatto preferito";
+"PT_AVATAR_PROFILE_TITLE" = "Connessione in corso...";
+"PT_AVATAR_PROFILE_TITLE_FREE" = "Account gratuito";
+"PT_AVATAR_PROFILE_TITLE_PRO" = "Account Pro";
+"PT_MY_PROFILE_MENU_PROFILE" = "Profilo personale";
+"PT_CHANGE_PICTURE_MENU_PROFILE" = "Cambia immagine";
+
+//warning
+"CONF_MUTEALL_WARNING" = "L'audio dei partecipanti verrà disattivato per consentire a tutti di sentire l'audio del computer remoto.";
+"CONF_UNMUTEALL_WARNING" = "Questa azione attiverà l'audio di tutti i partecipanti. Desideri continuare?";
+"CONF_HOSTUPGRADE_WARNING" = "L'upgrade dell'account è stato eseguito correttamente. La tua riunione non ha più limiti di tempo.";
+"CONF_ATTENDEEUPGRADE_WARNING" = "L'host della riunione ha eseguito l'aggiornamento a un account Pro. Questa riunione non ha più limiti di tempo.";
+"CONF_SHARE_LOCKED_WARNING" = "L'host ha disattivato la condivisione dello schermo del partecipante.";
+"CONF_SHARE_ASK_LOCK" = "Solo l'host può condividere lo schermo una volta che questo è bloccato.";
+"CONF_SHARE_ASK_UNLOCK" = "Lo schermo è sbloccato; il partecipante può ora condividerlo.";
+"CONF_SHARE_IN_PROGRESS_WARNING" = "Non puoi avviare la condivisione dello schermo mentre l'altro partecipante lo sta condividendo.";
+
+/* Annotation */
+"CONF_ANNOTATION_MOUSE" = "Mouse";
+"CONF_ANNOTATION_PEN" = "Penna";
+"CONF_ANNOTATION_HIGHLIGHTER" = "Evidenziatore";
+"CONF_ANNOTATION_SPOTLIGHT" = "In evidenza";
+"CONF_ANNOTATION_ARROW" = "Freccia";
+"CONF_ERASE_ALL" = "Cancella tutto";
+"CONF_ANNOTATION_CLEAR" = "Cancella";
+"CONF_ANNOTATION_CLEAR_ALL_DRAWING" = "Cancella tutti i disegni";
+"CONF_ANNOTATION_CLEAR_MY_DRAWING" = "Cancella i miei disegni";
+"CONF_ANNOTATION_CLEAR_OTHER_DRAWING" = "Cancella i disegni degli altri utenti";
+"CONF_ERASE" = "Gomma";
+"CONF_CHOSE_COLOR" = "Seleziona colore";
+"CONF_COLOR" = "Colore";
+"CONF_ANNOTATION_DRAW" = "Disegno";
+"CONF_ANNOTATION_UNDO" = "Annulla";
+"CONF_ANNOTATION_REDO" = "Ripristina";
+
+/* Remote Control */
+"CONF_RC_CONTROL"= "Remote Control";
+"CONF_RC_CANCEL" = "Annulla controllo remoto";
+"CONF_RC_CLICKTOSTART" = "Fai clic per avviare il controllo remoto dello schermo condiviso";
+"CONF_RC_ISREQUESTING" = "%@ richiede il controllo remoto.";
+"CONF_RC_REQUEST" = "Richiedi controllo remoto";
+"CONF_RC_GIVEUP" = "Concedi diritto di controllo remoto";
+
+"CONF_WARNING_RECORDING_SWITCH_TO_WALLVIEW" = "Il passaggio alla visualizzazione galleria ridurrà la qualità di registrazione. Desideri continuare?";
+"CONF_WARNING_RECORDING_SWITCH_FROM_WALLVIEW" = "Il passaggio alla visualizzazione relatore migliorerà la qualità di registrazione. Desideri continuare?";
+"CONF_CANNOT_MINIMIZE_WARNING" = "Impossibile ridurre BBM Meetings a icona durante la registrazione della riunione.";
+"CONF_SETTING_DUALMONITOR_DISABLED_TIP" = "Per attivare il dual stream è necessario possedere un computer che garantisce prestazioni superiori.";
+
+"PT_DELETE_MEETING_LIST_ITEM" = "Desideri eliminare questa riunione?";
+"PT_DELETE_MEETING_HISTORY_ITEM" = "Desideri eliminare questo file registrato?";
+"CONF_SHARING_WINDOW_CLOSED_WARNING" = "La condivisione dello schermo è stata interrotta perché la finestra condivisa è stata chiusa.";
+"PT_SETTINGS_SPEAKER_TEST_INDICATOR" =  "Fai clic su Prova altoparlante per assicurarti di sentire gli altri utenti";
+"PT_SETTINGS_SPEAKER_SELECT_INDICATOR" =  "Se non riesci a sentire il suono di prova, scegli un altro altoparlante.";
+"PT_SETTINGS_TELECONFERENCE_INDICATOR" = "Se non riesci a far funzionare l'altoparlante o il microfono, fai clic su Partecipa alla teleconferenza";
+"STRING_INVITATION_URL_COPIED_TO_CLIPBOARD" = "L'invito è stato copiato negli appunti.";
+"CONT_RC_BEING_CONTROLED" = "%@ sta controllando il tuo schermo";
+"PT_SETTINGS_ACCOUNT_PROMPT" = "Click below to change your picture and name.";
+
+/* PT */
+"PLAY_VIDEO" = "Riproduci video";
+"CONVERT" = "Converti";
+
+"CONF_FLOATING_MINIMIZED_VIEW" = "Nascondi miniatura video";
+"CONF_FLOATING_SINGLE_VIEW" = "Mostra video con altoparlante attivo";
+"CONF_FLOATING_SINGLE_SMALL_VIEW" = "Mostra video di dimensioni ridotte con altoparlante attivo";
+"CONF_FLOATING_SINGLE_LARGE_VIEW" = "Mostra video di grandi dimensioni con altoparlante attivo";
+"CONF_FLOATING_LIST_VIEW" = "Mostra miniatura video";
+"CONF_FLOATING_PREVIOUS_PAGE" = "Pagina precedente";
+"CONF_FLOATING_NEXT_PAGE" = "Pagina successiva";
+"PT_START_MEETING" = "Avvia una riunione";
+"PT_START_GROUP_MEETING" = "Avvia una riunione di gruppo";
+"STRING_DELETE_MEETING_ITEM_ERROR" = "Impossibile eliminare questa riunione. Codice errore: %d.";
+
+//AT&T
+"LOGIN_RINGCENTRAL_ERROR" = "Verifica la connessione di rete. Quindi fai clic su Riprova per connettere nuovamente.";
+//"ATT_MAILTO_SUBJECT" = "Partecipa a una riunione Web RingCentral in corso";
+//"ATT_CONF_INVITE_TIPS" = "Non è necessario che gli invitati installino RingCentral per accettare l'invito alla riunione.";
+//"ATT_CONF_ZOOM_NUMBER" = "Numero RingCentral: %@";
+//"ATT_CONF_WINDOW_TITLE" = "Office@Hand Meetings";
+//"ATT_DEVICE_MSG_CONF_NOMICERR_AUDIO" = "RingCentral non è in grado di rilevare il tuo microfono. Verifica la configurazione del microfono.";
+//"ATT_DEVICE_MSG_CONF_NOSPKERR_AUDIO" = "RingCentral non è in grado di rilevare il tuo altoparlante. Verifica la configurazione dell'altoparlante.";
+//"ATT_DEVICE_MSG_CONF_MICNOIPUTERR_AUDIO" = "RingCentral non è in grado di rilevare l'audio del tuo microfono %@.";
+//"ATT_SCHEDULE_EMAIL_TOPIC" = "Invito riunione Web RingCentral - %@";
+//"ATT_DIALOG_FREE_MEETINT_END" = "La riunione gratuita HD è terminata. Grazie per aver scelto RingCentral!";
+//"ATT_CONF_CANNOT_MINIMIZE_WARNING" = "Impossibile ridurre a icona RingCentral durante la registrazione della riunione.";
+//"STR_RINGCENTRAL_NO_ZOOM" = "Questo servizio non è disponibile per il tuo piano. Contatta il responsabile delle vendite per ulteriori informazioni.";
+//"STR_RINGCENTRAL_LOGIN_FAILED" = "Accesso non riuscito. Si è verificato un errore nella combinazione tra numero di telefono e password. Riprova.";
+
+//"ATT_PT_SCHEDULE_TITLE" = "ZOOM Cloud Meetings - Pianifica una riunione";
+//"ATT_PT_ABOUT_MENU" = "Informazioni su Office@Hand Meetings";
+//"ATT_MEETING_WINDOW_TITLE" = "ID riunione Office@Hand: %@ ID partecipante: %d";
+//"ATT_FREE_MEETING_WINDOW_TITLE" = "ID riunione %d minuti Office@Hand: %@ ID partecipante: %d";
+//"ATT_VIEWONLY_WINDOW_TITLE" = "ID riunione Office@Hand: %@";
+//"ATT_SCHEDULE_MEETING_APPENDIX_NORMAL" = "Riunione Office@Hand di";
+//"ATT_SCHEDULE_MEETING_APPENDIX_NO_S" = "Riunione Office@Hand di";
+//"ATT_CHATINMEETING_TITLES" = "Chat di gruppo di Office@Hand";
+
+"PT_MAIN_WINDOW_TITLE" = "BBM Meetings";
+"PT_SCHEDULE_WINDOW_TITLE" = "BBM Meetings - Pianifica una riunione";
+
+//PT MENUS STARTS
+"PT_ABOUT_MENU" = "Informazioni su BBM Meetings";
+"PT_MENU_PREFERENCES" = "Preferenze...";
+"PT_MENU_FEEDBACK" = "Invia un feedback su BBM Meetings...";
+"PT_MENU_CHECK_UPDATE" = "Cerca aggiornamenti...";
+"PT_MENU_JOIN_MEETING" = "Partecipa alla riunione...";
+"PT_MENU_HIDEAPP" = "Nascondi BBM Meetings";
+"PT_MENU_HIDEOTHERS" = "Nascondi altre";
+"PT_MENU_SHOWALL" = "Mostra tutte";
+"PT_MENU_SWITCH_ACCOUNT" = "Cambia account";
+"PT_MENU_LOGOUT" = "Esci";
+"PT_MENU_QUITAPP" = "Esci da BBM Meetings";
+
+"PT_MENU_EDIT_TITLE" = "Modifica";
+"PT_MENU_EDIT_UNDO" = "Annulla";
+"PT_MENU_EDIT_REDO" = "Ripristina";
+"PT_MENU_EDIT_CUT" = "Taglia";
+"PT_MENU_EDIT_COPY" = "Copia";
+"PT_MENU_EDIT_PASTE" = "Incolla";
+"PT_MENU_EDIT_PASTE_MATCH" = "Incolla e mantieni lo stile";
+"PT_MENU_EDIT_DELETE" = "Elimina";
+"PT_MENU_EDIT_SELECT_ALL" = "Seleziona tutto";
+"PT_MENU_EDIT_FIND" = "Trova";
+"PT_MENU_EDIT_FIND_FIND" = "Trova…";
+"PT_MENU_EDIT_FIND_REPLACE" = "Trova e sostituisci…";
+"PT_MENU_EDIT_FIND_NEXT" = "Trova successivo";
+"PT_MENU_EDIT_FIND_PREVIOUS" = "Trova precedente";
+"PT_MENU_EDIT_FIND_USE_SELECTION" = "Usa selezione per cercare";
+"PT_MENU_EDIT_FIND_JUMP_TO_SELECTION" = "Passa alla selezione";
+
+"PT_MENU_WINDOW_TITLE" = "Finestra";
+"PT_MENU_WINDOW_MINIMIZE" = "Riduci a icona";
+"PT_MENU_WINDOW_CLOSE" = "Chiudi";
+"PT_MENU_WINDOW_ZOOM" = "Zoom";
+"PT_MENU_WINDOW_BRING_ALL_TO_FRONT" = "Porta tutto in primo piano";
+
+"PT_MENU_HELP_TITLE" = "Guida";
+"PT_MENU_HELP_RECO" = "Consiglia BBM Meetings agli amici";
+"PT_MENU_HELP_HELP" = "Guida";
+//PT MENUS ENDS
+
+"CHAT_IN_MEETING_TITLE" = "Chat di gruppo BBM Meetings";
+"NEW_VERSION_UPDATE_TITLE" = "Aggiornamento di BBM Meetings";
+"NEW_VERSION_UPDATE_INFO" = "È disponibile una nuova versione di BBM Meetings.";
+"FORCE_UPDATE_STRING_INFO" = "È disponibile una nuova versione di BBM Meetings. Aggiorna ora.";
+"ZM_LEAVE_CONF_SEND_FEEDBACK" =  "Desidero inviare il mio feedback a BBM Meetings";
+"SETTINGS_FEEDBACK_TITLE_INFO" = "Accogliamo con piacere qualsiasi idea, richiesta o commento relativi a BBM Meetings.\nInserisci il tuo feedback qui:";
+"ZOOM_UPDATE_UPDATED_INFO" = "BBM Meetings è aggiornato.";
+
+//PT About Window starts
+"ZOOM_ABOUT_WINDOW_TITLE" = "Informazioni su BBM Meetings";
+"PT_ABOUT_WINDOW_RIGHTS" = " All rights reserved.";
+"PT_ABOUT_WINDOW_TERMS" = " Terms";
+"PT_ABOUT_WINDOW_POLICY" = "Privacy Policy";
+//PT About Window ends
+
+
+"PT_AVATAR_PROFILE_TITLE_CONNECT" = "Connessione in corso...";
+
+//Q&A
+"QA_STREAM_CONFLICT" = "Hai effettuato l'accesso da un altro dispositivo. La tua sessione D&R non è attiva.";
+"QA_TITLE" = "D&R";
+"QA_QUESTIONS_AND_ANSWERS" = "Domande e risposte";
+"QA_SEND_ANONYMOUSLY" = "Invia in modo anonimo";
+"QA_SEND" = "Invia";
+"QA_NO_QUESTION" = "Non hai domande.";
+"QA_ALL" = "Tutti";
+"QA_OPEN" = "Apri";
+"QA_ANSWERED" = "Risposta fornita";
+"QA_ANSWERED2" = " con risposta:";
+"QA_INPUT_YOUR_QUESTION" = "Immetti la domanda";
+"QA_ANSWER_BY_TEXT" = "Rispondi tramite messaggio";
+"QA_ANSWER_LIVE" = "Rispondi dal vivo";
+"QA_SUBMIB" = "Invia";
+"QA_SEND_PRIVATELY" = "Invia in privato";
+"QA_IF_ANSWER_LIVE" = "Desideri rispondere a questa domanda dal vivo.";
+"QA_DONE" = "Fine";
+"QA_ANONYMOUS_ATTENDEE" = "Partecipante anonimo";
+"QA_YOU" = "Tu";
+"QA_ASKED" = " chiedi:";
+"QA_ANSWERED_PRIVATELY" = " con risposta (in privato):";
+"QA_YOU_HAVE" = "Hai";
+"QA_HAS" = " ha";
+"QA_ANSWERED_THIS_QUESTION_LIVE" = " risposto a questa domanda dal vivo.";
+"QA_IS_GOING_TO_ANSWER_LIVE" = " risponderà a questa domanda dal vivo.";
+
+//Polling
+"Polling" = "Polling";
+
+"CONF_SPOTLIGHT_VIDEO" = "Video in evidenza";
+"CONF_CANCEL_SPOTLIGHT_VIDEO" = "Annulla video in evidenza";
+"CONF_YOUR_ARE_HOST" = "Ora sei tu l'host";
+"CONF_OTHER_IS_HOST" = "Ora l'host è %@";
+"CONF_INVITE_OTHERS" = "Invita altri";
+"CONF_LESS_THAN_A_MINUTE" = "meno di un minuto";
+"CONF_REMAIN_TIME" = "Tempo rimanente prima della fine della riunione";
+"CONF_BIN_PARTICIPANTS2" = "partecipanti";
+"CONF_RAISED_HAND" = "ha alzato la mano";
+"CONF_PARTICIPANT_RAISED_HAND" = "partecipanti hanno alzato la mano";
+"CONF_SHOW_NOVIDEO_USERS" = "Mostra partecipanti non video";
+"CONF_HIDE_NOVIDEO_USERS" = "Nascondi partecipanti non video";
+"CONF_VIDEO_COLLAPSE_ACTIVE_VIDEO" = "Comprimi video in esecuzione";
+"CONF_VIDEO_EXIT_MINIMAL_VIDEO" = "Esci dalla visualizzazione ridotta del video";
+"CONF_MUTE_VIDEO" = "Disattiva audio video";
+"CONF_SHARE_ID" = "ID";
+"CONF_SHARE_S_SCREEN" = "Schermo di ";
+"CONF_SHARE_DOUBLE_CLICK_TO_ENTER_FULLSCREEN" = " ha iniziato a condividere lo schermo\n\nFai doppio clic per attivare la modalità schermo intero";
+"CONF_SHARE_HAS_STARTED" = " ha iniziato a condividere lo schermo";
+"Share computer sound" = "Share computer sound";
+"Optimize for full-screen video clip" = "Optimize for full-screen video clip";
+"Advanced Options" = "Advanced Options";
+"Other participants will be able to hear the audio running on your computer as well as see your shared screen." = "Other participants will be able to hear the audio running on your computer as well as see your shared screen.";
+"Optimize the screen sharing for the best full-screen video clip viewing experience." = "Optimize the screen sharing for the best full-screen video clip viewing experience.";
+
+"CONF_RC_FORBIN_RC" = "Non consentire controllo remoto";
+"CONF_RC_ALLOW_RC" = "Consenti controllo remoto";
+
+//quick start
+"CONF_QUICKSTART_INVITATION_URL" = "URL dell'invito:";
+"CONF_QUICKSTART_HOST_NAME" = "Nome host:";
+"CONF_QUICKSTART_MEETING_TOPIC" = "Argomento riunione:";
+"CONF_QUICKSTART_COPY_URL" = "Copia URL";
+
+//H323
+"CONF_H323_DEVICE_CONNECTED" = "Dispositivo connesso.";
+"CONF_H323_MEETING_NOT_EXISTED" = "La riunione non esiste o è scaduta.";
+"CONF_H323_INVILAD_PAIRING_CODE" = "Codice di associazione non valido";
+"CONF_H323_MEETING_NOT_SUBSCRIBED" = "L'host della riunione non è abbonato ad H.323/SIP Room Connector Plan.";
+"CONF_H323_PAIR_CODE_ERROR" = "Associazione codice non riuscita. Errore:%d";
+"IP address or E.164 number" = "IP address or E.164 number";
+"IP address or URL" = "IP address or URL";
+
+
+//join meeting dialog
+"CONF_JOIN_MEETING" = "Partecipa a riunione";
+"CONF_JOIN_MEETING_ENTER_MEETINGID_AND_NAME" = "Immetti l'ID della riunione e il tuo nome.";
+"CONF_JOIN_MEETING_YOUR_NAME" = "Nome";
+"CONF_JOIN_MEETING_INVALID_ID" = "ID videoconferenza non valido!";
+"CONF_JOIN_MEETING_NAME_PLACEHOLD" = "Immetti qui il nome del tuo schermo";
+"CONF_JOIN_WEB_ENTER_YOUR_NAME_HERE" = "Immetti il nome.";
+
+//leave meeting dialog
+"CONF_LEAVE_ENTER_FEEDBACK" = "Immetti il tuo feedback qui";
+"CONF_END_MEETING_FOR_ALL" = "Termina riunione per tutti";
+"CONF_STOP_SHARING" = "Interrompi condivisione";
+
+//join schedual meeting dialog
+"CONF_JOIN_ENTER_PASSWORD" = "Immetti la password della riunione";
+"CONF_JOIN_PASSWORD" = "Password";
+"CONF_JOIN_PASSWORD_ERROR" = "Errore password!";
+"CONF_JOIN_WAIT_HOST" = "Attendi che l'host avvii la riunione";
+"CONF_JOIN_MEETING_DETAIL" = "Dettagli riunione";
+"CONF_JOIN_CHECK_SETTING" = "Durante l'attesa, verificare le impostazioni audio e video.";
+"CONF_JOIN_LOGIN_TO_START_MEETING" = "Se sei l'host, accedi per avviare questa riunione";
+"CONF_JOIN_TOPIC" = "Argomento";
+"CONF_JOIN_TIME" = "Ora";
+"CONF_JOIN_DATE" = "Data";
+"CONF_SHARE_FAILED" = "Impossibile avviare la condivisione dello schermo. Riprova in seguito.";
+
+"JOIN" = "Partecipa";
+"CHECK" = "Controllo";
+"LOGIN" = "Accedi";
+"CLOSE" = "Chiudi";
+"CONTINUE" = "Continua";
+"REQUEST" = "Richiesta";
+"SELECT" = "Select";
+"SEARCH" = "Cerca";
+
+"CONF_CLAIM_HOST" = "Richiedi host";
+"CONF_ATTENDEE_LIST" = "Elenco partecipanti";
+"Allow attendees to view the participant counts" = "Allow attendees to view the participant counts";
+
+"CONF_BIN_ALLOW_ATTENDEE_UNMUTE" = "Consenti ai partecipanti di riattivare da soli l'audio";
+"CONF_AUDIO_DETECT_POOR_AUDIO_CONNECTION" = "Rilevata connessione audio scadente";
+"CONF_AUDIO_SUGGEST_SWITCH_TO_PHONE" = "I partecipanti alla riunione potrebbero avere problemi a sentire il tuo audio. Potresti considerare di utilizzare il telefono";
+"CONF_AUDIO_I_AM_FINE" = "Va bene";
+"CONF_AUDIO_SWITCH_TO_PHONE" = "Passa al telefono";
+"To hear others, please join audio" = "To hear others, please join audio";
+"Join by Computer" = "Join by Computer";
+"Join by Phone" = "Join by Phone";
+
+"CONF_CHAT_SEND_TO" = "Invia a:";
+"CONF_START_SHARE" = "Avvia condivisione";
+"CONF_START_SHAR_WILL_STOP_OTHER_SHARE" = "In questo modo la condivisione dello schermo dell'altra persona verrà interrotta. Desideri continuare?";
+"CONF_SELECT_APP_TO_SHARE" = "Seleziona una finestra o un'applicazione da condividere";
+"CONF_SHARE_SCREEN_WITH_AUDIO" = "Condividi schermo con audio computer";
+"CONF_SHARE_SCREEN_ONLY" = "Mostra solo schermo";
+"CONF_CLAIM_HOST_WITH_NAME" = "L'host %@ non è presente alla riunione; effettua l'accesso come %@ per richiedere il ruolo di host.";
+"CONF_CLAIM_HOST_WITHOUT_NAME" = "L'host non è presente alla riunione; effettua l'accesso come host per richiedere il ruolo di host";
+"CONF_ENTER_NEW_NAME_HERE" = "Inserisci qui il nuovo nome:";
+"CONF_CLICK_OK_TO_REGISTER_WEBINAR" = "Finish registration to join the webinar.";
+"Join Webinar" = "Join Webinar";
+
+"CONF_RC_STOP_WHEN_EXIT_FULLSCREEN" = "La disattivazione dalla modalità schermo intero interromperà il controllo remoto. Desideri continuare?";
+"CONF_RC_REQUEST_CONTROL_YOUR_SHARE" = "%@ richiede il controllo remoto dei tuoi contenuti condivisi.";
+"CONF_RC_APPROVE_CONTROL_ORNOT" = "Se approvi la richiesta, %@ avrà accesso a tutti i tuoi contenuti condivisi. Puoi riprendere il controllo in qualunque momento facendo clic in un punto qualsiasi dello schermo.";
+"CONF_RC_DECLINE" = "Rifiuta";
+"CONF_RC_APPROVE" = "Approva";
+"CONF_RC_REMOTE_CONTROL_REQUEST" = "Richiesta di controllo remoto";
+"CONF_RC_YOU_REQUEST_RC" = "Stai per richiedere il controllo remoto dei contenuti condivisi di %@.";
+"CONF_RC_WAIT_FOR_APPROVAL" = "e attendi l'approvazione di%@.\n";
+"CONF_RC_IF_YOU_DONOT_SEND_REQUEST" = "se non desideri inviare alcuna richiesta.";
+"CONF_RC_REQUEST_REMOTE_CONTROL" = "Richiedi controllo remoto";
+"CONF_RC_SELECT_REQUEST_TO_TRY_AGAIN" = "Seleziona Richiesta per riprovare.";
+"CONF_RC_TO_TRY_AGAIN" = "per riprovare";
+"CONF_RC_DECLINE_YOUR_REQUEST" = "%@ ha rifiutato la tua richiesta.";
+
+"CONF_BIN_COMPUTER_AUDIO" = "Audio computer";
+"CONF_BIN_AUDIO_DIAL_IN" = "Componi";
+"CONF_BIN_AUDIO_CALL_ME" = "Chiamami";
+"CONF_BIN_AUDIO_HANG_UP" = "Chiudi";
+"CONF_BIN_AUDIO_AUTO_JOIN_AUDIO" = "Partecipa automaticamente all'audioconferenza con microfono e altoparlante al momento dell'accesso a una riunione";
+"Automatically join audio by computer when joining a meeting" = "Automatically join audio by computer when joining a meeting";
+"CONF_BIN_AUDIO_ALREADY_ON_THE_AUDIO" = "Sei già impegnato nell'audioconferenza? Premi ";
+"on your phone." = "sul telefono.";
+"CONF_BIN_AUDIO_DIAL" = "Componi";
+"CONF_BIN_AUDIO_TOLL_FREE" = "Numero verde";
+"CONF_BIN_AUDIO_US_OR_CANADA_ONLY" = "(solo Stati Uniti o Canada)";
+"CONF_BIN_AUDIO_CALL_ME_PLACEHOLDER" = "Il numero a cui vuoi essere contattato";
+"CONF_BIN_AUDIO_CALL_ME_REMEMBER_NUMBER" = "Memorizza il numero in questo computer";
+"CONF_BIN_AUDIO_FAILD_TO_DiSCONNECT_CALL" = "Impossibile disconnettere la chiamata";
+"CONF_BIN_AUDIO_DETECT_ECHO" = "L'audio del tuo computer è stato disconnesso perché è stata rilevata un'eco.";
+"CONF_BIN_AUDIO_3rd_PARTY_INSTRUCTIONS" = "Segui le istruzioni sotto per accedere all'audio.";
+"CONF_PARTICIPANT_ID_2" = "ID partecipante:";
+
+//audio error for record
+"AUDIO_ERROR_FOR_RECORD_WINDOW_TITLE" = "Errore audio";
+"AUDIO_ERROR_FOR_RECORD_CONTENT" = "Nessun audio rilevato. Verifica le impostazioni audio o continua a registrare senza audio.";
+"AUDIO_ERROR_FOR_RECORD_CHECK_AUDIO" = "Controlla audio";
+"AUDIO_ERROR_FOR_RECORD_CONTINUE" = "Continua a registrare";
+
+//add by Ryan for IM
+"You have been removed from this group." = "Sei stato rimosso dal gruppo.";
+"Chat History" = "Cronologia chat";
+"Clear chat history on this computer?" = "Cancellare la cronologia chat in questo computer?";
+"Clear" = "Cancella";
+"Leave this group?" = "Lasciare il gruppo?";
+"This will also clear your chat history in this group." = "Questa operazione comporterà anche la cancellazione della cronologia chat di questo gruppo.";
+"This will also clear your chat history with this user." = "Questa operazione comporterà anche la cancellazione della cronologia chat con l'utente in questione.";
+"Leave" = "Abbandona";
+"You cleared all past messages." = "I messaggi precedenti sono stati cancellati.";
+"With Video On" = "Con video attivo";
+"With Video Off" = "Con video disattivo";
+"Capture Screen" = "Acquisisci schermata";
+"Send Image..." = "Invia immagine...";
+"Edit Group" = "Modifica gruppo";
+"Invite others" = "Invita altri";
+"Clear History" = "Cancella cronologia";
+"Leave Group" = "Lascia gruppo";
+"Invite others" = "Invita altri";
+"Delete Contact" = "Elimina contatto";
+"On Desktop" = "Su desktop";
+"On Mobile" = "Su cellulare";
+"Desktop" = "Desktop";
+"Mobile" = "Cellulare";
+"Away" = "Assente";
+"Busy" = "Occupato";
+"You have reached the Maximum number of group members." = "È stato raggiunto il numero massimo di membri del gruppo.";
+"Group Members" = "Membri del gruppo";
+"%@'s group chat" = "Chat di gruppo di %@";
+"Save Changes" = "Salva modifiche";
+"Invite" = "Invita";
+"Create Group" = "Crea gruppo";
+"Can't create a new group, please check your network." = "Impossibile creare un nuovo gruppo, verificare la rete.";
+"Can't edit the group, please check your network." = "Impossibile modificare il gruppo, verificare la rete.";
+"Voice Message" = "Messaggio vocale";
+"Your message \"%@\" send failed.   Resend" = "L'invio del messaggio \"%@\" non è riuscito.   Invia di nuovo";
+"Your message \"%@...\" send failed.   Resend" = "L'invio del messaggio \"%@...\" non è riuscito.   Invia di nuovo";
+"Resend" = "Invia di nuovo";
+"You have %d new %@" = "Hai %d nuovo/i %@";
+"message" = "messaggio";
+"messages" = "messaggi";
+"%@ is typing..." = "%@ sta scrivendo...";
+"Contacts" = "Contatti";
+"No results" = "Nessun risultato";
+"You have logged in from another device. Messenger is now inactive." = "Hai eseguito l'accesso da un altro dispositivo. Messenger non è attivo al momento.";
+"Available" = "Disponibile";
+"(Admin)" = "(Ammin)";
+"Not in Contacts" = "Non presente tra i contatti";
+"(Invite)" = "(Invita)";
+"Add to Contacts List" = "Aggiungi all'elenco dei contatti";
+"1 contact request" = "1 richiesta di contatto";
+"%d contact requests" = "%d richieste di contatto";
+"Your request has been sent successfully!" = "La richiesta è stata inviata correttamente.";
+"New Group Chat" = "Nuova chat di gruppo";
+"Favorites" = "Preferiti";
+"Company, Phone, and Other Contacts" = "Contatti società, contatti telefonici e altri contatti";
+"Company and Phone Contacts" = "Contatti società e contatti telefonici";
+"Company and Other Contacts" = "Contatti società e altri contatti";
+"Company Contacts" = "Contatti società";
+"Phone and Other Contacts" = "Contatti telefonici e altri contatti";
+"Phone Contacts" = "Contatti telefono";
+"Contacts" = "Contatti";
+"Right-click a contact to add to Favorites." = "Fai clic con il tasto destro su un contatto per aggiungerlo ai Preferiti.";
+
+
+//PT Invite Dialog begin
+"PT_CONF_INVITE_INVITE_BY_EMAIN_TAB" = "Invita tramite e-mail";
+"PT_CONF_INVITE_INVITE_BY_EMAIN_TITLE_INFO" = "Seleziona il servizio e-mail da utilizzare per inviare l'invito";
+"PT_CONF_INVITE_INVITE_BY_EMAIN_DEFAULT_EMAIL" = "E-mail predefinita";
+"PT_CONF_INVITE_INVITE_BY_EMAIN_GMAIL" = "Gmail";
+"PT_CONF_INVITE_INVITE_BY_EMAIN_YAHOO_MAIL" = "Yahoo Mail";
+
+"PT_CONF_INVITE_INVITE_FACEBOOK_FRIENDS_TAB" = "Amici di Facebook";
+"PT_CONF_INVITE_INVITE_FACEBOOK_GROUP_TAB" = "Gruppo Facebook";
+
+"PT_CONF_INVITE_INVITE_BY_PHONE_TAB" = "Invita tramite telefono";
+"PT_CONF_INVITE_INVITE_BY_PHONE_CALLING" = "Chiamata";
+"PT_CONF_INVITE_INVITE_BY_PHONE_INVITEE_NAME" = "Nome invitato:";
+"PT_CONF_INVITE_INVITE_BY_PHONE_INVITEE_PLACEHOLDER" = " Nome da visualizzare nella riunione";
+"PT_CONF_INVITE_INVITE_BY_PHONE_PHONE_NUMBER" = "Numero di telefono:";
+"PT_CONF_INVITE_INVITE_BY_PHONE_NUMBER_PLACEHOLDER" = " Inserisci il numero da chiamare";
+"PT_CONF_INVITE_INVITE_BY_PHONE_INVITE" = "Invita";
+
+"PT_CONF_INVITE_INVITE_ROOM_TAB" = "Invita un Room System";
+"PT_CONF_INVITE_INVITE_ROOM_PAIR_CODE" = "Immetti il codice di associazione sotto riportato";
+"PT_CONF_INVITE_INVITE_ROOM_OR_PAIR_CODE" = "Oppure immetti il codice di associazione sotto riportato";
+"PT_CONF_INVITE_INVITE_ROOM_INVITE" = "Invita";
+
+"PT_CONF_INVITE_COPY_URL" = "Copia URL";
+"PT_CONF_INVITE_COPY_INVITATION" = "Copia invito";
+"PT_CONF_INVITE_INVITE_START" = "Invita";
+"PT_CONF_INVITE_COPY_URL_TIP" = "Copia l'URL negli appunti";
+"PT_CONF_INVITE_COPY_INVITATION_TIP" = "Copia invito negli appunti";
+
+"PT_CONF_INVITE_CALLOUT_STATUS_CALLING" = "Chiamata in corso...";
+"PT_CONF_INVITE_CALLOUT_STATUS_RINGING" = "Chiamata in corso...";
+"PT_CONF_INVITE_CALLOUT_STATUS_ACCEPTED" = "Chiamata accettata";
+"PT_CONF_INVITE_CALLOUT_STATUS_BUSY" = "Occupato";
+"PT_CONF_INVITE_CALLOUT_STATUS_FAILED" = "Chiamata non riuscita";
+"PT_CONF_INVITE_CALLOUT_STATUS_SUCCESS" = "Operazione riuscita";
+"PT_CONF_INVITE_CALLOUT_STATUS_CANCEL_CALL" = "Disconnessione chiamata";
+"PT_CONF_INVITE_CALLOUT_STATUS_CALL_CACELED" = "Impossibile disconnettere la chiamata";
+"PT_CONF_INVITE_CALLOUT_STATUS_CANCEL_CALL_FAILED" = "Impossibile disconnettere la chiamata";
+"PT_CONF_INVITE_CALLOUT_CALLOUT_CALL" = "Chiama";
+"PT_CONF_INVITE_CALLOUT_CALLOUT_CANCEL" = "Annulla";
+
+"PT_CONF_INVITE_DIAL_INFO_ROOM_SYSTEM" = "Da H.323/SIP Room System";
+"PT_CONF_INVITE_DIAL_INFO_DIAL" = "Componi";
+"PT_CONF_INVITE_DIAL_INFO_MEETING_ID" = "Immetti ID riunione: ";
+"PT_CONF_INVITE_DIAL_INFO_MEETING_PASSWORD" = "Immetti password riunione: ";
+
+"INVITE_FACEBOOK_FRIENDS" = "Amici di Facebook";
+"INVITE_GOOGLE_FRIENDS" = "Amici di Google";
+"INVITE_ZOOM_FAVORITES" = "Invita tramite messaggio istantaneo";
+//PT Invite Dialog end
+
+//add by Ryan for L10;
+"Upcoming" = "Imminente";
+"Recorded" = "Registrato";
+"Join" = "Partecipa";
+"Open" = "Apri";
+"Schedule" = "Pianifica";
+"Update" = "Aggiorna";
+"Help" = "Guida";
+"Switch Account" = "Cambia account";
+"Exit" = "Esci";
+"Check for Updates..." = "Cerca aggiornamenti...";
+"Please check your network connection. Then click Retry to re-connect." = "Verifica la connessione di rete. Quindi fai clic su Riprova per riconnetterti.";
+"Manual Update" = "Aggiornamento manuale";
+"Retry" = "Riprova";
+"Downloading file" = "Download del file in corso";
+"Updating" = "Aggiornamento";
+"Thanks for joining a Zoom video call!\n\nYou can login to start your own Zoom video call." = "Grazie per aver partecipato alla videochiamata BBM Meetings!\n\nEffettua l'accesso per avviare la tua videochiamata BBM Meetings.";
+"Don't remind me again" = "Non visualizzare più questo messaggio";
+"Your invitees do not need to have Zoom pre-installed to accept your meeting invitation" = "Non è necessario che gli invitati installino Zoom per accettare l'invito alla riunione";
+"Did you know?" = "Suggerimenti e trucchi";
+"Later" = "In seguito";
+"Update now" = "Aggiorna ora";
+"Release Notes:" = "Note sulla versione:";
+"Join Video Call" = "Partecipa alla videochiamata";
+"You are already in another video call, do you want to leave and then join this one?" = "Sei già impegnato in un'altra videochiamata; desideri abbandonare questa riunione e partecipare all'altra?";
+"NO" = "NO";
+"YES" = "SÌ";
+"Camera:" = "Fotocamera:";
+"Enable mirror effect for my video" = "Attiva effetto speculare per il video";
+"Always show name on video window" = "Mostra sempre il nome nella finestra video";
+"Store my recordings at:" = "Salva registrazioni in:";
+"Choose a location for recorded files when meeting ends" = "Scegli il percorso in cui salvare i file registrati al termine della riunione";
+"Open Recordings in Finder" = "Apri le registrazioni in Finder";
+"Choose a new location..." = "Selezionare una nuova posizione...";
+"Speaker" = "Altoparlante";
+"Microphone" = "Microfono";
+"Output Level:" = "Livello di output:";
+"Output Volume:" = "Volume output:";
+"Input Level:" = "Livello di input:";
+"Input Volume:" = "Volume input:";
+"Please speak to your microphone. If you can not see the volume indicator blinking, select a different mic." = "Parla nel microfono. Se non riesci a vedere l'indicatore del volume che lampeggia, seleziona un altro microfono.";
+"Select Mic" = "Seleziona microfono";
+"Automatically adjust microphone settings" = "Regola automaticamente le impostazioni del microfono";
+"Automatically join audio conference via Mic & Speaker when joining a meeting" = "Partecipa automaticamente all'audioconferenza con microfono e altoparlante al momento dell'accesso a una riunione";
+"Alert me when friends go online" = "Avvisami quando gli amici si connettono";
+"Alert me when friends go offline" = "Avvisami quando gli amici si disconnettono";
+"Pop out the chat window when I receive a chat message" = "Visualizza finestra chat alla ricezione di un messaggio chat";
+"Show offline contacts" = "Mostra contatti non in linea";
+"Enter full screen mode automatically when viewing the shared screen" = "Attiva schermo intero durante la visualizzazione schermo condiviso";
+"Play sound when I receive a chat message" = "Emetti un segnale acustico alla ricezione di un messaggio di chat";
+"Enter full screen mode automatically when starting video" = "Attiva automaticamente modalità schermo intero all'avvio del video";
+"Enable dual stream for dual monitor" = "Attiva dual stream per doppio monitor";
+"Fit to window automatically when viewing the shared screen" = "Adatta alla finestra durante la visualizzazione schermo condiviso";
+"Automatically copy Invitation URL to Clipboard after meeting starts" = "Copia URL invito negli appunti dopo l'inizio del meeting";
+"Meeting Option" = "Opzioni riunione";
+"Instant Message" = "Messaggio istantaneo";
+"For technical support, please visit " = "Per ottenere assistenza tecnica, visita ";
+"Support." = "Supporto.";
+"Always use PMI for instant meetings on this computer" = "Utilizza sempre PMI per le riunioni istantanee in questo computer";
+"Delete" = "Elimina";
+"Start" = "Avvia";
+"Edit" = "Modifica";
+"Play Video" = "Riproduci video";
+"Copy" = "Copia";
+"Play Audio Only" = "Riproduci solo audio";
+"Accept" = "Accetta";
+"Checking for updates..." = "Controllo aggiornamenti in corso...";
+"What's new?" = "Novità";
+"Network error!" = "Errore di rete";
+
+//hard code string
+"Install" = "Installa";
+"Download failed, please try it again" = "Download non riuscito. Riprova.";
+"Download failed" = "Download non riuscito";
+"Choose" = "Scegli";
+"Personal Meeting ID (PMI)" = "ID riunione personale (PMI)";
+"Today" = "Oggi";
+"Recurring - %@" = "Ricorrente - %@";
+"Topic: %@\n" = "Argomento: %@\n";
+"Meeting ID: %@\n" = "ID riunione: %@\n";
+"Meeting Password: %@\n" = "Password riunione: %@\n";
+"%@ to %@" = "Da %@ a %@";
+"Duration: %d minutes" = "Durata: %d minuti";
+"Meeting ID: %@" = "ID riunione: %@";
+"Meeting Password: %@" = "Password riunione: %@";
+"New version is available!" = "È disponibile una nuova versione.";
+"New version available!" = "È disponibile una nuova versione.";
+
+"Last Name" = "Cognome";
+"First Name" = "Nome";
+"Change" = "Modifica";
+"Enter your own audio conference information" = "Enter your own audio conference information";
+
+//PT Login Dialog begin
+"PT_LOGIN_LOGIN_TITLE" = "Accedi";
+"PT_LOGIN_LOGIN_OR_SIGNUP" = "(o";
+"PT_LOGIN_LOGIN_SIGNUP" = "Registrati";
+"PT_LOGIN_LOGIN_EMAIL_TIP" = "E-mail";
+"PT_LOGIN_LOGIN_PASSWORD_TIP" = "Password";
+"PT_LOGIN_LOGIN_ERROR_INFO" = "Errore relativo all'e-mail o alla password.";
+"PT_LOGIN_LOGIN_REMEMBER_ME" = "Memorizza profilo utente";
+"PT_LOGIN_LOGIN_BUTTON" = "Accedi";
+"PT_LOGIN_LOGIN_NO_PASSWORD" = "Password dimenticata?";
+"PT_LOGIN_BACK_BUTTON" = "Indietro";
+"PT_LOGIN_CANCEL_BUTTON" = "Annulla";
+"PT_LOGIN_LOGIN_RIGHT_OR" = "Oppure";
+"PT_LOGIN_LOGIN_GOOGLE" = "Accedi con Google";
+"PT_LOGIN_LOGIN_FB" = "Accedi con Facebook";
+"PT_LOGIN_LOGIN_SSO" = "Accedi con SSO";
+
+"PT_LOGIN_ERROR_TITLE" = "Connessione non riuscita.";
+"PT_LOGIN_ERROR_CANCEL" = "Annulla";
+"PT_LOGIN_ERROR_RETRY" = "Riprova";
+
+"PT_LOGIN_PRE_LOGIN_JOIN" = "Partecipa a riunione";
+"PT_LOGIN_PRE_LOGIN_SIGNIN" = "Accedi";
+
+"PT_LOGIN_BBM_ENTITLED_INFO" = "Per pianificare una riunione BBM, è necessario eseguire l'upgrade a un abbonamento a pagamento. Puoi ancora accedere alla riunione BBM.";
+"PT_LOGIN_BBM_ENTITLED_CANCEL_BUTTON" = "Annulla";
+"PT_LOGIN_BBM_ENTITLED_UPGRADE_BUTTON" = "Aggiorna";
+"PT_LOGIN_BBM_ENTITLED_OK_BUTTON" = "OK";
+"PT_LOGIN_BBM_UPGRADE_PROMPT_TITLE" = "Upgrade to BBM Meetings";
+
+//PT Login Dialog end
+
+
+//PT Exit&Update Dialog begin
+"PT_EXITUPDATE_RELEASE_TITLE" = "Note sulla versione:";
+"PT_EXITUPDATE_UPDATE_LATER" = "In seguito";
+"PT_EXITUPDATE_UPDATE_NOW" = "Aggiorna ora";
+//PT Exit&Update Dialog end
+
+
+//PT Show Info Dialog begin
+"PT_ERROR_INFO_TITLE" = "Abbandona la riunione";
+"PT_ERROR_INFO_CLOSE" = "Abbandona";
+//PT Show Info Dialog end
+
+
+//PT Meeting Item Deleting Dialog begin
+"PT_ERROR_MEETING_ITEM_DELETE_YES" = "Sì";
+"PT_ERROR_MEETING_ITEM_DELETE_NO" = "No";
+//PT Meeting Item Deleting Dialog end
+
+
+//PT Normal Info Dialog begin
+"PT_NORMAL_INFO_OK" = "OK";
+//PT Normal Info Dialog end
+
+
+//PT SSO Login Dialog begin
+"PT_SSO_LOGIN_WINDOW_TITLE" = "Login SSO";
+"PT_SSO_LOGIN_IN_PROMPT" = "https://companyname.zoom.us";
+"PT_SSO_LOGIN_IN_LABEL" = "URL SSO:";
+"PT_SSO_LOGIN_IN_CONTINUE" = "Continua";
+//PT SSO Login Dialog end
+
+
+//PT Proxy Auth Dialog begin
+"PT_PROXY_AUTH_NAME_LABEL" = "Nome:";
+"PT_PROXY_AUTH_PASSWORD_LABEL" = "Password:";
+"PT_PROXY_AUTH_OK_BUTTON" = "OK";
+"PT_PROXY_AUTH_CANCEL_BUTTON" = "Annulla";
+//PT Proxy Auth Dialog end
+
+//copy right string
+"PT_ABOUT_COPYRIGHT_INFO" = "Copyright ©2012-2014 Zoom Video Communications, Inc.";
+
+//Help url string
+"APP_HELP_URL_STRING" = "http://support.zoom.us/";
+
+
+//PT Schedule Dialog begin
+"PT_SCHEDULE_MAIN_TOPIC" = "Argomento:";
+"PT_SCHEDULE_MAIN_WHEN_BOX" = "Data";
+"PT_SCHEDULE_MAIN_WHEN_START" = "Inizio:";
+"PT_SCHEDULE_MAIN_WHEN_DURATION" = "Durata:";
+"PT_SCHEDULE_MAIN_WHEN_HOUR" = "h";
+"PT_SCHEDULE_MAIN_WHEN_MINUTE" = "Min";
+"PT_SCHEDULE_MAIN_WHEN_TIMEZONE" = "Fuso orario:";
+"PT_SCHEDULE_MAIN_WHEN_RECURRING_TIP" = "Ricorda di verificare la ricorrenza o la ripetizione nell'invito in calendario inviato ai partecipanti. ";
+"PT_SCHEDULE_MAIN_WHEN_RECURRING_BUTTON" = "Riun. ricorrente";
+"PT_SCHEDULE_MAIN_VIDEO_HOST" = "Host:";
+"PT_SCHEDULE_MAIN_VIDEO_PARTICIPANTS" = "Partecipante:";
+"PT_SCHEDULE_MAIN_VIDEO_OPTION_BOX" = "Video (quando partecipi a una riunione)";
+"PT_SCHEDULE_MAIN_VIDEO_OPTION_ON" = "Attivo";
+"PT_SCHEDULE_MAIN_VIDEO_OPTION_OFF" = "Non attivo";
+"PT_SCHEDULE_MAIN_AUDIO_OPTION_BOX" = "Opzioni audio";
+"PT_SCHEDULE_MAIN_AUDIO_TELEPHONY_ONLY" = "Solo telefono";
+"PT_SCHEDULE_MAIN_AUDIO_VOIP_ONLY" = "Solo VoIP";
+"PT_SCHEDULE_MAIN_AUDIO_BOTH" = "Entrambi";
+"PT_SCHEDULE_MAIN_AUDIO_3RD_AUDIO" = "Audio di terzi";
+"PT_SCHEDULE_MAIN_MEETING_OPTION_BOX" = "Opzioni riunione";
+"PT_SCHEDULE_MAIN_MEETING_NEEDPASSWORD_BUTTON" = "Richiedi la password della riunione";
+"PT_SCHEDULE_MAIN_MEETING_ENABLE_JBH_BUTTON" = "Consenti ai partecipanti di accedere prima dell'host";
+"PT_SCHEDULE_MAIN_MEETING_CALENDAR_BOX" = "Calendario";
+"PT_SCHEDULE_MAIN_OPTION_ICAL" = "iCal";
+"PT_SCHEDULE_MAIN_OPTION_GOOGLE" = "Google Calendar";
+"PT_SCHEDULE_MAIN_OPTION_OTHER_CAL" = "Altri calendari";
+"PT_SCHEDULE_MAIN_SCHEDULE_FOR_TITLE" = "Pianifica per:";
+"PT_SCHEDULE_MAIN_SCHEDULE_BUTTON_SCHEDULE" = "Pianifica";
+"PT_SCHEDULE_MAIN_SCHEDULE_BUTTON_EDIT" = "Edit Meeting";
+"PT_SCHEDULE_LOADING_SCHEDULING" = "Pianificazione...";
+"PT_SCHEDULE_ERROR_OK_BUTTON" = "OK";
+"PT_SCHEDULE_COPY_PROMPT_INFO" = "Fai clic sul pulsante in basso per copiare l'invito negli appunti.";
+"PT_SCHEDULE_COPY_CLIPBOARD_BUTTON" = "Copia negli appunti";
+"PT_SCHEDULE_COPY_CLOSE_BUTTON" = "Chiudi";
+//PT Schedule Dialog end
+
+
+//PT Edit PMI Dialog begin
+"PT_EDITPMI_MAIN_TOPIC_BOX" = "ID riunione personale";
+"PT_EDITPMI_MAIN_SUCCESS_INFO" = "Il tuo ID riunione personale è stato modificato.";
+"PT_EDITPMI_MAIN_UPGRADE_PRO" = "Passa a un account Pro per modificare il tuo ID riunione personale";
+"PT_EDITPMI_MAIN_CHANGE_PMI" = "Modifica il tuo ID riunione personale";
+
+"PT_EDITPMI_MAIN_VIDEO_BOX" = "Video (quando partecipi a una riunione)";
+"PT_EDITPMI_MAIN_VIDEO_HOST" = "Host:";
+"PT_EDITPMI_MAIN_VIDEO_PARTICIPANT" = "Partecipante:";
+"PT_EDITPMI_MAIN_VIDEO_ON" = "Attivo";
+"PT_EDITPMI_MAIN_VIDEO_OFF" = "Non attivo";
+
+"PT_EDITPMI_MAIN_AUDIO_OPTION_BOX" = "Opzioni audio";
+"PT_EDITPMI_MAIN_AUDIO_TELEPHONY_ONLY" = "Solo telefono";
+"PT_EDITPMI_MAIN_AUDIO_VOIP_ONLY" = "Solo VoIP";
+"PT_EDITPMI_MAIN_AUDIO_BOTH" = "Entrambi";
+"PT_EDITPMI_MAIN_AUDIO_3RD_AUDIO" = "Audio di terzi";
+
+"PT_EDITPMI_MAIN_MEETING_OPTION_BOX" = "Opzioni riunione";
+"PT_EDITPMI_MAIN_MEETING_PASSWORD" = "Richiedi la password della riunione";
+"PT_EDITPMI_MAIN_MEETING_ENABLE_JBH" = "Consenti ai partecipanti di accedere prima dell'host";
+"PT_EDITPMI_MAIN_CLOSE_BUTTON" = "Chiudi";
+"PT_EDITPMI_MAIN_SAVE_BUTTON" = "Salva";
+
+"PT_EDITPMI_LOADING_CONNECTING" = "Connessione in corso...";
+
+"PT_EDITPMI_APPLY_ID_TITLE" = "Scegli il tuo ID da 10 cifre:";
+"PT_EDITPMI_APPLY_ID_RULE" = "* Il tuo ID riunione personale non può iniziare con 0 o 1.";
+"PT_EDITPMI_APPLY_ID_APPLY_BUTTON" = "Applica";
+"PT_EDITPMI_APPLY_ID_BACK_BUTTON" = "Indietro";
+
+"PT_EDITPMI_UPDATE_FAILED_INFO" = "Impossibile collegarsi al nostro servizio. Verifica la connessione di rete e riprova.";
+"PT_EDITPMI_UPDATE_FAILED_BACK_BUTTON" = "Indietro";
+
+"PT_EDITPMI_UPDATE_SUCCESS_INFO" = "Le opzioni della riunione personale sono state aggiornate.";
+"PT_EDITPMI_UPDATE_SUCCESS_CLOSE_BUTTON" = "Chiudi";
+
+"PT_EDITPMI_UPGRADE_INFO" = "Solo gli utenti Pro possono personalizzare l'ID riunione personale preferito. Desideri effettuare l'upgrade a un account Pro?";
+"PT_EDITPMI_UPGRADE_NO_BUTTON" = "NO";
+"PT_EDITPMI_UPGRADE_YES_BUTTON" = "SÌ";
+//PT Edit PMI Dialog end
+
+"CONF_BIN_AUDIO_RESTART_AUDIO_SERVICE_PROMPT" = "BBM ha rilavato un problema con il tuo audio. Proveremo a riattivare il tuo servizio audio per risolvere il problema.\n\n";
+"CONF_BIN_AUDIO_3rd_FOLLOW_INSTRUCTIONS" = "Segui le istruzioni riportate di seguito per partecipare all'audioconferenza.";
+"PT_EDITPMI_UPDATE_UPGRADE_NO_BUTTON" = "NO";
+"PT_EDITPMI_UPDATE_UPGRADE_YES_BUTTON" = "SÌ";
+"Update to PRO" = "Esegui aggiornamento a versione Pro";
+
+"PT_MEETING_LIST_RECORDING_PATH" = "Recording Path:";
+
+//air host
+"Share an iPhone/iPad screen" = "Share an iPhone/iPad screen";
+"A plugin is required to share an iPhone/iPad screen." = "A plugin is required to share an iPhone/iPad screen.";
+"Installation failed, please check your network and try again. Or " = "Installation failed, please check your network and try again. Or ";
+"download manually" = "download manually";
+
+
+//Conference Remote Camera Control Window
+"CONF_REMOTE_CAMERA_CONTROL_INFO_REQUEST" = "Waiting for %@ to approve your request.";
+"CONF_REMOTE_CAMERA_CONTROL_REQUEST_BUTTON" = "Request";
+"CONF_REMOTE_CAMERA_CONTROL_CANCEL_BUTTON" = "Cancel";
+"CONF_REMOTE_CAMERA_CONTROL_INFO_ANSWER" = "%@ requested to control your camera.";
+"CONF_REMOTE_CAMERA_CONTROL_APPROVE_BUTTON" = "Approve";
+"CONF_REMOTE_CAMERA_CONTROL_DECLINE_BUTTON" = "Decline";
+"CONF_REMOTE_CAMERA_CONTROL_INFO_DECLINED" = "%@ declined your request of camera control.";
+"CONF_REMOTE_CAMERA_CONTROL_INFO_APPROVED" = "Request approved. You can now control %@'s camera.";
+"CONF_REMOTE_CAMERA_CONTROL_CLOSE_BUTTON" = "Close";
+"CONF_REMOTE_CAMERA_CONTROL_INFO_GAVEUP" = "%@ no longer controls your camera.";
+
+// for accessibility feature
+"ZOOM_LOGO" = "Zoom Logo";
+"BTN_STATUS" = "Status Menu";
+"BTN_REFRESH_MEETING_LIST" = "Refresh Meeting List";
+"BTN_ADD_CONTACT" = "Add Contact";
+"DESCRIPTION_BUTTON" = "button";
+"LN_Audio_Tsp_Both_45801" = "Both";

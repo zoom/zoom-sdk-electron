@@ -5,15 +5,18 @@
 
 ## Latest SDK Notifications
 1. We have merged and unified the `windows-electron-sdk` and the `mac-electron-sdk` into one single SDK.
+The new Electron SDK has a brand new structure, consist of the node-interface and the node-core:
+
+* Node-interface: contains all the implementations by V8 engine
+* Node-core: contains all the uniform interfaces for both Windows and Mac
+Due to the open source nature of this SDK, **you will be able to configure and compile the new Zoom Electron SDK with any versions of Electron.**
+
 
 2. Our brand new [Zoom Developer Community Forum](https://devforum.zoom.us/) is now online!!! Check it out! We are here to help! :D
 
 ## Full Documentation && Community Support
 You can find the full Zoom Electron SDK documentation and the community support forum here:
 <div align="center">
-   <a target="_blank" href="https://marketplace.zoom.us/docs/sdk/hybrid-frameworks/electron" style="text-decoration:none">
-   <img src="https://s3-us-west-1.amazonaws.com/sdk.zoom.us/Doc-button.png" width="350px" max-height="350px" style="margin:1vh 1vw;"/>
-   </a>
    <a target="_blank" href="https://devforum.zoom.us/c/desktop-sdk" style="text-decoration:none">
    <img src="https://s3-us-west-1.amazonaws.com/sdk.zoom.us/Forum-button.png" width="350px" max-height="350px" style="margin:1vh 1vw;"/>
    </a>
@@ -26,7 +29,6 @@ You can find the full Zoom Electron SDK documentation and the community support 
 ## Getting Started
 
 The following instructions will get you a copy of the project up and running on your local machine for development and testing purposes.
-* For detailed instructions, please refer to our documentation website: [https://marketplace.zoom.us/docs/sdk/hybrid-frameworks/electron](https://marketplace.zoom.us/docs/sdk/hybrid-frameworks/electron);
 * If you need support or assistance, please visit our [Zoom Developer Community Forum](https://devforum.zoom.us/);
 
 ### Prerequisites
@@ -60,15 +62,15 @@ build_nodeaddon_mac.sh / build_nodeaddon_win_ia32.bat
 ### Rebuilding zoom node file and running Zoom Electron SDK demo
 We recommend you to **REBUILD** the zoom node file on your own machine because the Electron version you use may not be the same as Zoom does.
 
-Please make sure that you have config your development environment successfully. If not, please refer to part 3(win) / part 4(mac) for building the development environment.
+**Due to the open source nature of this SDK, you will be able to configure and compile the new Zoom Electron SDK with any versions of Electron.**
+
+Please make sure that you have configured your development environment successfully. The following guidance could be helpful for your configuration:
 
 #### For Win Platform
-If you have all the files in ./sdk folder, you can skip step 1 and step 2.
 
-1. Download Zoom Windows SDK: https://github.com/zoom/zoom-sdk-windows
-3. Run `build_nodeaddon_win_ia32.bat` to rebuild the node file.    
-4. Run `run_demo_win.bat` to run the zoom demo.
-5. Please make sure after building the .node file, save the .pdb file for trouble shooting.
+1. Run `build_nodeaddon_win_ia32.bat` to rebuild the node file.    
+2. Run `run_demo_win.bat` to run the zoom demo.
+3. Please make sure after building the .node file, save the .pdb file for trouble shooting.
 
 #### For MAC Platform
 1. Run `sh build_nodeaddon_mac.sh` to rebuild the node file.
@@ -102,11 +104,6 @@ If you have all the files in ./sdk folder, you can skip step 1 and step 2.
 
 4. run `npm install bindings -g` to install bindings
 
-
-
-## Documentation
-
-Please visit [[https://marketplace.zoom.us/docs/sdk/hybrid-frameworks/electron](https://marketplace.zoom.us/docs/sdk/hybrid-frameworks/electron)] for details of each features and functions.
 
 ## Versioning
 

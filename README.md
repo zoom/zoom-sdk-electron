@@ -14,8 +14,8 @@ Due to the open source nature of this SDK, **you will be able to configure and c
 
 2. Our brand new [Zoom Developer Community Forum](https://devforum.zoom.us/) is now online!!! Check it out! We are here to help! :D
 
-## Full Documentation && Community Support
-You can find the full Zoom Electron SDK documentation and the community support forum here:
+## Community Support
+You can find the community support forum here:
 <div align="center">
    <a target="_blank" href="https://devforum.zoom.us/c/desktop-sdk" style="text-decoration:none">
    <img src="https://s3-us-west-1.amazonaws.com/sdk.zoom.us/Forum-button.png" width="350px" max-height="350px" style="margin:1vh 1vw;"/>

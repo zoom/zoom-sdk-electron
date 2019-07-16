@@ -39,6 +39,70 @@ Before you try out our SDK, you would need the following to get started:
   * Mac OS: MacOS 10.6 or later.
   * Windows: Windows XP or later. Currently Windows 10 UWP is not supported.
 
+## Installing
+
+### Structure of Zoom Electron SDK
+```
+├── [sdk]
+	├── [mac] <-- Node file built by Zoom for mac
+	├── [win32] <-- Node file built by Zoom for win
+├── binding.gyp 
+├── build_nodeaddon_mac.sh <-- use to rebuild node file for mac
+├── build_nodeaddon_win_ia32.bat <-- use to rebuild node file for win
+├── readme.txt / readme.md
+├── run_demo_mac.sh
+├── run_demo_win.bat <-- use to run demo for win
+├── [demo] <-- demo app is inside
+└── [lib] <-- js files and source code of Zoom Electron SDK
+build_nodeaddon_mac.sh / build_nodeaddon_win_ia32.bat 
+```
+
+### Rebuilding zoom node file and running Zoom Electron SDK demo
+We recommend you to **REBUILD** the zoom node file on your own machine because the Electron version you use may not be the same as Zoom does.
+
+Please make sure that you have config your development environment successfully. If not, please refer to part 3(win) / part 4(mac) for building the development environment.
+
+#### For Win Platform
+If you have all the files in ./sdk folder, you can skip step 1 and step 2.
+
+1. Download Zoom Windows SDK: https://github.com/zoom/zoom-sdk-windows
+3. Run `build_nodeaddon_win_ia32.bat` to rebuild the node file.    
+4. Run `run_demo_win.bat` to run the zoom demo.
+5. Please make sure after building the .node file, save the .pdb file for trouble shooting.
+
+#### For MAC Platform
+1. Run `sh build_nodeaddon_mac.sh` to rebuild the node file.
+
+2. Run `sh run_demo_mac.sh` to run the zoom demo.
+
+### Development environment configuration for Windows
+	Note that Windows electron add-on is 32bit. 
+1. Install electron and node.js
+	* how to install node.js 12.0.0 version，download url: https://nodejs.org/download/release/v12.0.0/
+	* install electron 5.0.2 version,use command run `npm install --arch=ia32 --save-dev electron@5.0.2 -g` 
+	
+2. run `npm install node-gyp -g` to install node-gyp
+
+3. run `npm install bindings -g` to install bindings
+
+4. make sure you installed msvc-2015 and python 2.7
+
+5. `npm config set msvs_version 2015`
+   `npm config set python python2.7`
+   `npm config set npm_config_arch ia32`
+   `npm config set npm_config_target_arch ia32`
+
+### Development environment configuration for Mac 
+1. Install node.js 12.0.0 version，download url: https://nodejs.org/download/release/v12.0.0/.
+   also can run `ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)" ` and `sudo brew install node` to install node.js
+
+2. Install electron 5.0.2 version，use command run `npm install  --save-dev electron@5.0.2 -g` 
+
+3. run `npm install node-gyp -g` to install node-gyp
+
+4. run `npm install bindings -g` to install bindings
+
+
 
 ## Documentation
 

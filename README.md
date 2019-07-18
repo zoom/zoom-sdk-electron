@@ -38,8 +38,8 @@ Before you try out our SDK, you would need the following to get started:
 * **A Zoom Account**: If you do not have one, you can sign up at [https://zoom.us/signup](https://zoom.us/signup).
   * Once you have your Zoom Account, sign up for a 60-days free trial at [https://marketplace.zoom.us/](https://marketplace.zoom.us/)
 * **A device with Mac OS or Windows OS**:
-  * Mac OS: MacOS 10.6 or later.
-  * Windows: Windows XP or later. Currently Windows 10 UWP is not supported.
+  * Mac OS: MacOS 10.10 or later.
+  * Windows: Windows 7 or later. Currently Windows 10 UWP is not supported.
 
 ## Installing
 

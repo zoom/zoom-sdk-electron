@@ -1,0 +1,927 @@
+<html>
+<head>
+  <link rel="stylesheet" type="text/css" href="./css/style.css" />
+  <script src="./js/CanvasRender.js"></script>
+</head>
+
+<title>Zoom Electron Demo</title>
+<body>
+	<div class="center">
+		<img class="logo" src="./images/fte_Logo.png" />
+  </div> 
+  <br>
+  <div class="main-content">
+    <div class="user-content left">
+      <div>
+        <div class="section">User List</div>
+          <ul></ul>
+        </div>
+        <div>
+          <div>
+            <div class="section">Video</div>
+            <div class="handle-section">
+              <!-- <select id="videoCBOption">
+                <option value="0" selected>Main Process</option>
+                <option value="1">Render Process</option>
+              </select>
+              <button type="button" class="button-small" onclick="setVideoRawDataCB()">Set VideoRawDataCB</button> -->
+              <button type="button" class="button-small button-disabled" onclick="startVideoRawData(event)" disabled id="startVideoRawDataBtn">Start Video RawData</button>
+            </div>
+            <div class="handle-section">
+              <input name="videoNodeID" placeholder="nodeID" class="input-width input-disabled" disabled id="videoNodeID" />
+              <select id="videoRawDataResolution">
+                <option value="0" selected>90P</option>
+                <option value="1">180P</option>
+                <option value="2">360P</option>
+                <option value="3">720P</option>
+              </select>
+              <select id="videoReceverHandle">
+                <option value="0">recever_handle_0</option>
+                <option value="1">recever_handle_1</option>
+                <option value="2">recever_handle_2</option>
+                <option value="3" selected>recever_handle_3</option>
+              </select>
+              <button type="button" class="button-small button-disabled" onclick="subscribeVideo(event)" disabled id="subscribeVideoBtn">Subscribe Video</button>
+            </div>
+            <div class="handle-section">
+              <input name="videoNodeID1" placeholder="nodeID" class="input-width input-disabled" disabled id="videoNodeID1" />
+              <select id="videoReceverHandle1">
+                <option value="0" selected>recever_handle_0</option>
+                <option value="1">recever_handle_1</option>
+                <option value="2">recever_handle_2</option>
+                <option value="3">recever_handle_3</option>
+              </select>
+              <button type="button" class="button-small button-disabled" onclick="unSubscribeVideo()" disabled id="unsubscribeVideoBtn">UnSubscribe Video</button>
+            </div>
+            <div class="handle-section">
+              <button type="button" class="button-small" onclick="stopVideo()" id="stopVideoBtn">Stop Video</button>
+            </div>
+          </div>
+          <div>
+            <div class="section">Share</div>
+            <ul id='shareUl' style="display: none">
+            </ul>
+            <div class="handle-section">
+              <!-- <select id="shareCBOption">
+                <option value="0" selected>Main Process</option>
+                <option value="1">Render Process</option>
+              </select>
+              <button type="button" class="button-small" onclick="setShareRawDataCB()">Set ShareRawDataCB</button> -->
+              <button type="button" class="button-small button-disabled" onclick="startShareRawData(event)" disabled id="startShareRawDataBtn">Start Share RawData</button>
+            </div>
+            <div class="handle-section">
+              <input name="shareNodeID" placeholder="nodeID" class="input-width input-disabled" disabled id="shareNodeID" />
+              <select id="shareRawDataResolution">
+                <option value="0" selected>90P</option>
+                <option value="1">180P</option>
+                <option value="2">360P</option>
+                <option value="3">720P</option>
+              </select>
+              <!-- <select id="shareReceverHandle">
+                <option value="0" selected>recever_handle_0</option>
+                <option value="1">recever_handle_1</option>
+                <option value="2">recever_handle_2</option>
+                <option value="3">recever_handle_3</option>
+              </select> -->
+              <button type="button" class="button-small button-disabled" onclick="subscribeShare(event)" disabled id="subscribeShareBtn">Subscribe Share</button>
+            </div>
+            <div class="handle-section">
+              <input name="shareNodeID1" placeholder="nodeID" class="input-width input-disabled" disabled id="shareNodeID1" />
+              <!-- <select id="shareReceverHandle1">
+                <option value="0" selected>recever_handle_0</option>
+                <option value="1">recever_handle_1</option>
+                <option value="2">recever_handle_2</option>
+                <option value="3">recever_handle_3</option>
+              </select> -->
+              <button type="button" class="button-small button-disabled" onclick="unSubscribeShare()" disabled id="unsubscribeShareBtn">UnSubscribe Share</button>
+            </div>
+            <div class="handle-section">
+              <button type="button" class="button-small" onclick="stopShare()" id="stopShareBtn">Stop Share</button>
+            </div>
+          </div>
+          <div>
+            <div class="section">Audio</div>
+            <div class="handle-section">
+              <!-- <select id="audioCBOption">
+                <option value="0" selected>Main Process</option>
+                <option value="1">Render Process</option>
+              </select> -->
+              <!-- <button type="button" class="button-small" onclick="setAudioRawDataCB()">Set AudioRawDataCB</button> -->
+              <button type="button" class="button-small" onclick="startAudioRawData()" id="startAudioRawDataBtn">start Audio RawData</button>
+            </div>
+            <div class="handle-section">
+              <button type="button" class="button-small button-disabled" disabled onclick="stopAudio()" id="stopAudioBtn">Stop Audio</button>
+            </div>
+          </div>
+      </div>
+    </div>
+    <div class="yuv-content">
+      <div>
+        <div class="section">Share Render</div>
+        <canvas width="605" height="341" id="canvasShare"></canvas>
+      </div>
+      <div class="section">Video Render</div>
+      <div class="width-630" id="canvasVideo">
+        <div class="canvas">
+          <canvas width="300" height="168.75"></canvas>
+          <div></div>
+        </div>
+        <div class="canvas">
+          <canvas width="300" height="168.75"></canvas>
+          <div></div>
+        </div>
+        <div class="canvas">
+          <canvas width="300" height="168.75"></canvas>
+          <div></div>
+        </div>
+        <div class="canvas">
+          <canvas width="300" height="168.75"></canvas>
+          <div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
+<script>
+  const {ipcRenderer, remote} = require('electron');
+
+  let startCBOption = remote.getGlobal('startCBOption');
+  // let videoCBOption = document.getElementById("videoCBOption");
+  let videoNodeID = document.getElementById("videoNodeID");
+  let videoRawDataResolution = document.getElementById("videoRawDataResolution");
+  let videoReceverHandle = document.getElementById("videoReceverHandle");
+  let videoNodeID1 = document.getElementById("videoNodeID1");
+  let videoReceverHandle1 = document.getElementById("videoReceverHandle1");
+  let subscribeVideoBtn = document.getElementById("subscribeVideoBtn");
+  let unsubscribeVideoBtn = document.getElementById("unsubscribeVideoBtn");
+  let stopVideoBtn = document.querySelector('#stopVideoBtn');
+
+  // let shareCBOption = document.getElementById("shareCBOption");
+  let shareUl = document.querySelector('#shareUl');
+  let shareNodeID = document.getElementById("shareNodeID");
+  let shareRawDataResolution = document.getElementById("shareRawDataResolution");
+  let shareReceverHandle = document.getElementById("shareReceverHandle");
+  let shareNodeID1 = document.getElementById("shareNodeID1");
+  let shareReceverHandle1 = document.getElementById("shareReceverHandle1");
+  let subscribeShareBtn = document.getElementById("subscribeShareBtn");
+  let unsubscribeShareBtn = document.getElementById("unsubscribeShareBtn");
+  let stopShareBtn = document.querySelector('#stopShareBtn');
+
+  // let audioCBOption = document.getElementById('audioCBOption');
+  let stopAudioBtn = document.querySelector('#stopAudioBtn');
+
+  let startVideoRawDataBtn = document.querySelector('#startVideoRawDataBtn');
+  let startShareRawDataBtn = document.querySelector('#startShareRawDataBtn');
+  let startAudioRawDataBtn = document.querySelector('#startAudioRawDataBtn');
+
+  let userList = [];
+  let videoList = [];
+  let nameList = [];
+  let shareList = [];
+  let subscribeName = '';
+  let shareBackupList = [];
+
+  let ul = document.querySelector('ul');
+
+  let drawVideo;
+  let canvasList = [];
+  let displayList = [];
+  let retList = [];
+  let ctxList = [];
+  var buffer = [];
+
+  let canvasShare = document.querySelector('#canvasShare');
+  let drawShare = new CanvasRender(canvasShare);
+  drawShare.clear();
+
+  for (let i = 0; i < 4; i++) {
+    canvasList[i] = document.querySelector('#canvasVideo').children[i].children[0];
+    displayList[i] = new CanvasRender(canvasList[i]);
+    displayList[i].clear();
+    nameList[i] = document.querySelector('#canvasVideo').children[i].children[1];
+    nameList[i].innerHTML = '';
+  }
+
+  let croppingParams = {
+    top: 0,
+    left: 0,
+    width: 1280,
+    height: 720
+  }
+
+  function checkExist(obj, list, flag) {
+    for (let i = 0; i < list.length; i++) {
+      if (list[i] && list[i][flag] && obj[flag] && list[i][flag] == obj[flag]) {
+        return i;
+      }
+    }
+    return false;
+  }
+  
+  function onUserVideoStatusChange(videoStatus) {
+    console.log('onUserVideoStatusChange', videoStatus)
+    for (let k = 0; k < ul.children.length; k++) {
+      if (ul.children[k].userid == videoStatus.userId) {
+        let oldLi = ul.children[k].innerHTML.split('|')[0];
+        let newVideo = videoStatus.videoStatus == 0 ? 'VideoOn' : 'VideoOff';
+        ul.children[k].innerHTML = `${oldLi} | ${newVideo}`;
+      }
+    }
+  }
+
+  function setMeetingVideoStatusCB () {
+    let ret = remote.app.zoommeeting.GetMeetingVideo().SetMeetingVideoStatusCB(onUserVideoStatusChange);
+    console.log('setMeetingVideoStatusCB', ret);
+  }
+
+  setMeetingVideoStatusCB();
+
+  function onSubscribedVideoUserDataOn (videoOn) {
+    console.log('onSubscribedVideoUserDataOn', getUint64FromUint8Array(videoOn, 0))
+  }
+
+  function SetRawDataVideoUserDataOnCB() {
+    let ret = remote.app.zoomvideorawdata.SetRawDataVideoUserDataOnCB(onSubscribedVideoUserDataOn);
+  }
+
+  SetRawDataVideoUserDataOnCB();
+
+  function onSubscribedVideoUserDataOff (videoOff) {
+    let length = videoOff.length / 8;
+    for (let i = 0; i< length; i++) {
+      let videoOffIndex = getUint64FromUint8Array(videoOff, i);
+      console.log('onSubscribedVideoUserDataOff', videoOffIndex);
+      if (videoList[videoOffIndex] && videoList[videoOffIndex].nodeID) {
+        ipcRenderer.send('asynchronous-message', 'unsubscribeVideo', videoList[videoOffIndex].nodeID, videoList[videoOffIndex].recever_handle);
+        for (let j = 0; j< videoReceverHandle.options.length; j++) {
+        	if (videoReceverHandle.options[j].value == videoList[videoOffIndex].recever_handle) {
+        	  videoReceverHandle.options[j].disabled = false;
+        	}
+        }
+        setTimeout(() => {
+          videoList[videoOffIndex] ? displayList[videoList[videoOffIndex].recever_handle].clear(): null;
+          videoList[videoOffIndex] = null;
+          nameList[videoOffIndex].innerHTML = '';
+          subVideoBtnCheck();
+        }, 50);
+      }
+    }
+  }
+
+  function SetRawDataVideoUserDataOffCB() {
+    let ret = remote.app.zoomvideorawdata.SetRawDataVideoUserDataOffCB(onSubscribedVideoUserDataOff);
+  }
+
+  SetRawDataVideoUserDataOffCB();
+
+  function onSubscribedVideoUserLeft (userLeft) {
+    let length = userLeft.length / 8;
+    for (let i = 0; i< length; i++) {
+      let userLeftIndex = getUint64FromUint8Array(userLeft, i);
+      console.log('onSubscribedVideoUserLeft', userLeftIndex);
+      if (videoList[userLeftIndex] && videoList[userLeftIndex].nodeID) {
+        ipcRenderer.send('asynchronous-message', 'unsubscribeVideo', videoList[userLeftIndex].nodeID, videoList[userLeftIndex].recever_handle);
+        for (let j = 0; j< videoReceverHandle.options.length; j++) {
+        	if (videoReceverHandle.options[j].value == videoList[userLeftIndex].recever_handle) {
+        	  videoReceverHandle.options[j].disabled = false;
+        	}
+        }
+        setTimeout(() => {
+          videoList[userLeftIndex] ? displayList[videoList[userLeftIndex].recever_handle].clear(): null;
+          videoList[userLeftIndex] = null;
+          nameList[userLeftIndex].innerHTML = '';
+          subVideoBtnCheck();
+        }, 50);
+      }
+    }
+  }
+
+  function SetRawDataVideoUserLeftCB() {
+    let ret = remote.app.zoomvideorawdata.SetRawDataVideoUserLeftCB(onSubscribedVideoUserLeft);
+  }
+
+  SetRawDataVideoUserLeftCB();
+
+  function initRawData () {
+    setVideoRawDataCB();
+    startVideoRawData();
+    startPreviewDevice();
+    setShareRawDataCB();
+    startShareRawData();
+    setAudioRawDataCB();
+  }
+
+  initRawData();
+
+  function startVideoRawData(e) {
+    ipcRenderer.send('asynchronous-message', 'startVideoRawData', 1);
+    stopVideoBtn.disabled = false;
+    stopVideoBtn.classList.remove('button-disabled');
+    startVideoRawDataBtn.disabled = 'disabled';
+    startVideoRawDataBtn.classList.add("button-disabled");
+    subVideoBtnCheck();
+  }
+
+  function startPreviewDevice () {
+    ipcRenderer.send('asynchronous-message', 'subscribeVideo', 0, 3, videoReceverHandle.value);
+  }
+
+  function subscribeVideo() {
+    let obj = {
+      userid: videoNodeID.value,
+      nodeID: videoNodeID.value,
+      RawDataResolution: videoRawDataResolution.value,
+      recever_handle: videoReceverHandle.value
+    }
+    let flag = checkExist(obj, videoList, 'recever_handle');
+    if (flag === false) {
+      videoList[obj.recever_handle] = obj;
+    }
+    let ret = remote.app.zoomvideorawdata.Subscribe(obj);
+    console.log('subscribeVideo', ret)
+    if (ret == 0 || ret == 10) {
+      nameList[obj.recever_handle].innerHTML = subscribeName;
+      videoNodeID1.value = videoNodeID.value;
+      videoReceverHandle1.value = videoReceverHandle.value;
+      for (let i = 0; i< videoReceverHandle.options.length; i++) {
+        if (videoReceverHandle.options[i].value == videoReceverHandle.value) {
+          videoReceverHandle.options[i].disabled = true;
+        }
+      }
+    }
+  }
+
+  videoReceverHandle1.addEventListener('change', changeVideoReceverHandle1);
+   
+  function changeVideoReceverHandle1(e) {
+    e.target.recever_handle = e.target.value;
+    let flag = checkExist(e.target, videoList, 'recever_handle');
+    if (flag === false) {
+      videoNodeID1.value = '';
+    } else {
+      videoNodeID1.value = videoList[flag].nodeID;
+    }
+  }
+
+  function unSubscribeVideo() {
+    let obj = {
+      nodeID: videoNodeID1.value,
+      recever_handle: videoReceverHandle1.value
+    }
+    let ret = remote.app.zoomvideorawdata.UnSubscribe(obj);
+    console.log('unSubscribeVideo', ret, obj);
+    if (ret == 0) {
+      // ipcRenderer.send('asynchronous-message', 'unsubscribeVideo', videoNodeID1.value, videoReceverHandle1.value);
+      let obj = {
+        recever_handle: videoReceverHandle1.value
+      }
+      let index = checkExist(obj, videoList, 'recever_handle');
+      if (index !== false) {
+        videoList[index] = null;
+        nameList[index].innerHTML = '';
+      }
+      for (let i = 0; i< videoReceverHandle1.options.length; i++) {
+        if (videoReceverHandle1.options[i].value == videoReceverHandle1.value) {
+          videoReceverHandle.options[i].disabled = false;
+        }
+      }
+      setTimeout(() => {
+        displayList[videoReceverHandle1.value].clear();
+        subVideoBtnCheck();
+      }, 50);
+    }
+  }
+
+  function stopVideo() {
+    ipcRenderer.send('asynchronous-message', 'stopVideo');
+    for (let i = 0; i < 4; i++) {
+      videoReceverHandle.options[i].disabled = false;
+      setTimeout(() => {
+        displayList[i].clear();
+        nameList[i].innerHTML = '';
+      }, 50);
+    }
+    startVideoRawDataBtn.disabled = false;
+    startVideoRawDataBtn.classList.remove("button-disabled");
+    stopVideoBtn.disabled = 'disabled';
+    stopVideoBtn.classList.add('button-disabled');
+    subscribeVideoBtn.disabled = 'disabled';
+    subscribeVideoBtn.classList.add('button-disabled');
+    videoList = [];
+  }
+
+  function subVideoBtnCheck() {
+    subscribeVideoBtn.disabled = 'disabled';
+    subscribeVideoBtn.classList.add('button-disabled');
+    if (startVideoRawDataBtn.disabled) {
+      for (let i=0; i<4; i++) {
+        if (!videoReceverHandle.options[i].disabled) {
+          subscribeVideoBtn.disabled = false;
+          subscribeVideoBtn.classList.remove('button-disabled');
+          break;
+        }
+      }
+    }
+  }
+
+  function subShareBtnCheck() {
+    if (!startShareRawDataBtn.disabled) {
+      subscribeShareBtn.disabled = 'disabled';
+      subscribeShareBtn.classList.add('button-disabled');
+      unsubscribeShareBtn.disabled = 'disabled';
+      unsubscribeShareBtn.classList.add('button-disabled');
+    } else {
+      subscribeShareBtn.disabled = false;
+      subscribeShareBtn.classList.remove('button-disabled');
+      unsubscribeShareBtn.disabled = 'disabled';
+      unsubscribeShareBtn.classList.add('button-disabled');
+      for (let i=0; i<shareBackupList.length; i++) {
+        if (shareBackupList[i] !== null) {
+          subscribeShareBtn.disabled = 'disabled';
+          subscribeShareBtn.classList.add('button-disabled');
+          unsubscribeShareBtn.disabled = false;
+          unsubscribeShareBtn.classList.remove('button-disabled');
+          break;
+        }
+      }
+    }
+  }
+
+  function startShareRawData(e) {
+    ipcRenderer.send('asynchronous-message', 'startShareRawData', 1);
+    startShareRawDataBtn.disabled = 'disabled';
+    startShareRawDataBtn.classList.add("button-disabled");
+    stopShareBtn.disabled = false;
+    stopShareBtn.classList.remove('button-disabled');
+    subShareBtnCheck();
+  }
+
+  function subscribeShare(e) {
+    let obj = {
+      userid: shareNodeID.value,
+      nodeID: shareNodeID.value,
+      RawDataResolution: shareRawDataResolution.value,
+      recever_handle: shareReceverHandle ? shareReceverHandle.value : 0
+    }
+    if (checkExist(obj, shareList, 'recever_handle') === false) {
+      shareList[obj.recever_handle] = obj;
+      shareBackupList[obj.recever_handle] = obj;
+    }
+    ipcRenderer.send('asynchronous-message', 'subscribeShare', shareNodeID.value, shareRawDataResolution.value, shareReceverHandle ? shareReceverHandle.value : 0);
+    subShareBtnCheck();
+  }
+
+  function unSubscribeShare() {
+    let obj = {
+      nodeID: shareNodeID1.value
+    }
+    let index = checkExist(obj, shareList, 'nodeID');
+    if (index !== false) {
+      shareList[index] = null;
+      shareBackupList[index] = null;
+    }
+    let e = {
+      target: {
+        value: shareNodeID1.value
+      }
+    }
+    ipcRenderer.send('asynchronous-message', 'unsubscribeShare', shareNodeID1.value, shareReceverHandle1 ? shareReceverHandle1.value : 0);
+    subShareBtnCheck();
+    setTimeout(() => {
+      drawShare.clear();
+    }, 50);
+  }
+
+  function stopShare() {
+    ipcRenderer.send('asynchronous-message', 'stopShareRawdata');
+    startShareRawDataBtn.disabled = false;
+    startShareRawDataBtn.classList.remove("button-disabled");
+    stopShareBtn.disabled = 'disabled';
+    stopShareBtn.classList.add('button-disabled');
+    subscribeShareBtn.disabled = 'disabled';
+    subscribeShareBtn.classList.add('button-disabled');
+    unsubscribeShareBtn.disabled = 'disabled';
+    unsubscribeShareBtn.classList.add('button-disabled');
+    shareList = [];
+    shareBackupList = [];
+    setTimeout(() => {
+      drawShare.clear();
+    }, 50);
+  }
+
+  function onSubscribedShareUserDataOn (shareOn) {
+    let shareOnIndex = getUint64FromUint8Array(shareOn, 0);
+    console.log('onSubscribedShareUserDataOn', shareOnIndex);
+  }
+
+  function SetRawDataShareUserDataOnCB() {
+    let ret = remote.app.zoomsharerawdata.SetRawDataShareUserDataOnCB(onSubscribedShareUserDataOn);
+  }
+
+  SetRawDataShareUserDataOnCB();
+
+  function onSubscribedShareUserDataOff (shareOff) {
+    let shareOffIndex = getUint64FromUint8Array(shareOff, 0);
+    console.log('onSubscribedShareUserDataOff', shareOffIndex)
+    if (shareBackupList[shareOffIndex] && shareBackupList[shareOffIndex].nodeID == shareNodeID.value) {
+      ipcRenderer.send('asynchronous-message', 'unsubscribeShare', shareBackupList[shareOffIndex].nodeID, shareBackupList[shareOffIndex].recever_handle);
+      shareBackupList[shareOffIndex] = null;
+    }
+  }
+
+  function SetRawDataShareUserDataOffCB() {
+    let ret = remote.app.zoomsharerawdata.SetRawDataShareUserDataOffCB(onSubscribedShareUserDataOff);
+  }
+
+  SetRawDataShareUserDataOffCB();
+
+  function onSubscribedShareUserLeft (userLeft) {
+    let userLeftIndex = getUint64FromUint8Array(userLeft, 0);
+    console.log('onSubscribedShareUserLeft', userLeftIndex);
+    if (shareBackupList[userLeftIndex]) {
+      ipcRenderer.send('asynchronous-message', 'unsubscribeShare', shareBackupList[userLeftIndex].nodeID, shareBackupList[userLeftIndex].recever_handle);
+      shareBackupList[userLeftIndex] = null;
+    }
+  }
+
+  function SetRawDataShareUserLeftCB() {
+    let ret = remote.app.zoomsharerawdata.SetRawDataShareUserLeftCB(onSubscribedShareUserLeft);
+  }
+
+  SetRawDataShareUserLeftCB();
+
+  function getParticipantsList() {
+    let zoommeeting = remote.app.zoommeeting;
+    userList = zoommeeting.GetParticipantsList();
+    for (let i = 0; i < userList.length; i++) {
+      let userObj = zoommeeting.GetUserInfoByUserID(userList[i].userid);
+      if (userObj.userName && userObj.userID) {
+        let li = document.createElement("li"); 
+        li.innerHTML = userObj && userObj.isVideoOn ?  `${userObj.userName} (${userObj.userID}) | VideoOn` : `${userObj.userName} (${userObj.userID}) | VideoOff`;
+        li.userid = userObj.userID;
+        ul.appendChild(li);
+      }
+    }
+  }
+
+  getParticipantsList();
+
+  function onUserJoin(userId_List) {
+    console.log('onUserJoin', userId_List)
+    for (let i = 0; i < userId_List.length; i++) {
+      if (checkExist(userId_List[i], ul.children, 'userid') === false) {
+        let userObj = remote.app.zoommeeting.GetUserInfoByUserID(userId_List[i].userid);
+        if (userObj.userName && userObj.userID) {
+          let li = document.createElement("li"); 
+          li.innerHTML = userObj && userObj.isVideoOn ?  `${userObj.userName} (${userObj.userID}) | VideoOn` : `${userObj.userName} (${userObj.userID}) | VideoOff`;
+          li.userid = userObj.userID;
+          ul.appendChild(li);
+        }
+      }
+    }
+  }
+
+  function SetMeetingUserJoinCB() {
+    remote.app.zoommeeting.SetMeetingUserJoinCB(onUserJoin);
+  }
+
+  SetMeetingUserJoinCB();
+
+  function onUserLeft(userId_List) {
+    console.log('onUserLeft', userId_List);
+    for (let i = 0; i < userId_List.length; i++) {
+      for (let k = 0; k < ul.children.length; k++) {
+        if (ul.children[k].userid == userId_List[i].userid) {
+          ul.children[k].remove();
+        }
+      }
+    }
+    for (let i = 0; i < userId_List.length; i++) {
+      for (let j = 0; j < videoList.length; j++) {
+        if (videoList[j] && videoList[j].userid == userId_List[i].userid) {
+          ipcRenderer.send('asynchronous-message', 'unsubscribeVideo', videoList[j].nodeID, videoList[j].recever_handle);
+          let e = {
+            target: {
+              value: videoList[j].userid
+            }
+          }
+          videoReceverHandle.options[videoList[j].recever_handle].disabled = false;
+          setTimeout(() => {
+            videoList[j] ? displayList[videoList[j].recever_handle].clear(): null;
+            videoList[j] = null;
+            nameList[j].innerHTML = '';
+            subVideoBtnCheck();
+          }, 50);
+        }
+      }
+    }
+    for (let i = 0; i < userId_List.length; i++) {
+      for (let j = 0; j < shareList.length; j++) {
+        if (shareList[j] && shareList[j].userid == userId_List[i].userid) {
+          ipcRenderer.send('asynchronous-message', 'unsubscribeShare', shareList[j].nodeID, shareList[j].recever_handle);
+          shareNodeID.value = '';
+          shareNodeID1.value = '';
+          let e = {
+            target: {
+              value: shareList[j].userid
+            }
+          }
+          setTimeout(() => {
+            drawShare.clear();
+            shareList[j] = null;
+            subShareBtnCheck();
+          }, 50);
+        }
+      }
+    }
+
+    for (let i = 0; i < userId_List.length; i++) {
+      for (let j = 0; j < shareUl.children.length; j++) {
+        if (userId_List[i].userid == shareUl.children[j].userId) {
+          shareUl.children[j].remove();
+        }
+      }
+    }
+  }
+
+  ul.addEventListener('click', function(e) {
+    for (let i = 0; i < ul.children.length; i++) {
+      ul.children[i].removeAttribute("style");
+    }
+    e.target.value = e.target.userid; 
+
+    let ulIndex = checkExist(e.target, ul.children, 'userid');
+    if (ulIndex !== false) {
+      ul.children[ulIndex].style = "color: red";
+    }
+
+    subscribeName = e.target.textContent ? e.target.textContent.split('(')[0]: null;
+    let videoIndex = checkExist(e.target, videoList, 'userid');
+    if (videoIndex === false) {
+      videoNodeID.value = e.target.userid;
+      for (let i = 0; i< videoReceverHandle.options.length; i++) {
+        if (!videoReceverHandle.options[i].disabled) {
+          videoReceverHandle.value = videoReceverHandle.options[i].value;
+          break;
+        }
+      }
+      subVideoBtnCheck();
+    } else {
+      videoNodeID.value = videoList[videoIndex].nodeID;
+      videoRawDataResolution.value = videoList[videoIndex].RawDataResolution;
+      videoReceverHandle.value = videoList[videoIndex].recever_handle;
+    }
+  })
+
+  shareUl.addEventListener('click', function(e) {
+    for (let i = 0; i < shareUl.children.length; i++) {
+      shareUl.children[i].removeAttribute("style");
+    }
+
+    let shareUlIndex = checkExist(e.target, shareUl.children, 'userId');
+    if (shareUlIndex !== false) {
+      shareUl.children[shareUlIndex].style = "color: red";
+    }
+
+    shareNodeID.value = e.target.userId;
+    shareNodeID1.value = e.target.userId;
+    subShareBtnCheck();
+  })
+
+  function SetMeetingUserLeftCB() {
+    remote.app.zoommeeting.SetMeetingUserLeftCB(onUserLeft);
+  }
+
+  SetMeetingUserLeftCB();
+
+  function onSharingStatus (status) {
+    console.log('onSharingStatus', status);
+    if (status.ShareStatus == 3) {
+      let userObj = remote.app.zoommeeting.GetUserInfoByUserID(status.userId);
+      if (userObj.userName) {
+        shareUl.style = 'display: block';
+        let shareLi = document.createElement("li"); 
+        shareLi.innerHTML = `${userObj.userName} is sharing`;
+        shareLi.userId = status.userId;
+        shareUl.appendChild(shareLi);
+      }
+    } else if (status.ShareStatus == 4) {
+      for (let i = 0; i < shareList.length; i++) {
+        if (shareList[i] && (status.userId == shareList[i].userid)) {
+          ipcRenderer.send('asynchronous-message', 'unsubscribeShare', shareNodeID1.value, shareReceverHandle1 ? shareReceverHandle1.value : 0);
+          shareList[i] = null;
+          setTimeout(() => {
+            drawShare.clear();
+            shareNodeID.value = '';
+            shareNodeID1.value = '';
+          }, 50);
+        }
+        break;
+      }
+
+      for (let i = 0; i < shareUl.children.length; i++) {
+        console.log(status.userId, shareUl.children[i].userId, 12)
+        if (status.userId == shareUl.children[i].userId) {
+          shareUl.children[i].remove();
+          break;
+        }
+      }
+
+      if (shareUl.children.length == 0) {
+        shareUl.style = 'display: none';
+        subscribeShareBtn.disabled = 'disabled';
+        subscribeShareBtn.classList.add("button-disabled");
+        unsubscribeShareBtn.disabled = 'disabled';
+        unsubscribeShareBtn.classList.add("button-disabled");
+      }
+    }
+    subShareBtnCheck();
+  }
+
+  function SetOnSharingStatusCB() {
+    remote.app.zoommeeting.GetMeetingShare().SetOnSharingStatusCB(onSharingStatus);
+  }
+
+  SetOnSharingStatusCB();
+  
+  function onHostChangeNotification(userid) {
+    console.log('onHostChangeNotification', userid);
+  }
+
+  function SetMeetingHostChangeCB() {
+    remote.app.zoommeeting.SetMeetingHostChangeCB(onHostChangeNotification);
+  }
+
+  SetMeetingHostChangeCB();
+
+  ipcRenderer.on('main-process-meetingstatus', (event, arg) => {
+    let data = arg;
+    if (data == 'connecting') {
+      startVideoRawDataBtn.disabled = 'disabled';
+      startVideoRawDataBtn.classList.add("button-disabled");
+      subscribeVideoBtn.disabled = 'disabled';
+      subscribeVideoBtn.classList.add("button-disabled");
+      unsubscribeVideoBtn.disabled = 'disabled';
+      unsubscribeVideoBtn.classList.add("button-disabled");
+      startShareRawDataBtn.disabled = 'disabled';
+      startShareRawDataBtn.classList.add("button-disabled");
+      subscribeShareBtn.disabled = 'disabled';
+      subscribeShareBtn.classList.add("button-disabled");
+      unsubscribeShareBtn.disabled = 'disabled';
+      unsubscribeShareBtn.classList.add("button-disabled");
+      startAudioRawDataBtn.disabled = 'disabled';
+      startAudioRawDataBtn.classList.add("button-disabled");
+      stopVideoBtn.disabled = 'disabled';
+      stopVideoBtn.classList.add('button-disabled');
+      stopShareBtn.disabled = 'disabled';
+      stopShareBtn.classList.add('button-disabled');
+      stopAudioBtn.disabled = 'disabled';
+      stopAudioBtn.classList.add('button-disabled');
+    } else if (data == 'inmeeting') {
+      subscribeVideoBtn.disabled = false;
+      subscribeVideoBtn.classList.remove("button-disabled");
+      unsubscribeVideoBtn.disabled = false;
+      unsubscribeVideoBtn.classList.remove("button-disabled");
+      stopVideoBtn.disabled = false;
+      stopVideoBtn.classList.remove('button-disabled');
+      stopShareBtn.disabled = false;
+      stopShareBtn.classList.remove('button-disabled');
+      startAudioRawDataBtn.disabled = false;
+      startAudioRawDataBtn.classList.remove("button-disabled");
+      stopAudioBtn.disabled = 'disabled';
+      stopAudioBtn.classList.add('button-disabled');
+
+      ipcRenderer.send('asynchronous-message', 'unsubscribeVideo', 0, videoReceverHandle.value);
+      setTimeout(() => {
+        displayList[videoReceverHandle.value].clear();
+        videoReceverHandle.value = '0';
+      }, 50);
+      subVideoBtnCheck();
+    } else if (data == 'ended') {
+      stopVideo();
+      stopShare();
+      stopAudio();
+    }
+  });
+
+  function getUint64FromUint8Array(array, index) {
+    let uint64 = 0;
+    let begin_pos = index * 8;
+    let end_pos = begin_pos + 8;
+    while (begin_pos < end_pos) {
+      let int8 = array[begin_pos];
+      uint64 |= int8;
+      begin_pos++;
+    }
+    return uint64;
+  }
+
+  ipcRenderer.on('main-process-videomessages', (event, arg) => {
+    let data = arg;
+    let formatList = data.format.split(';');
+    croppingParams.width = formatList[2];
+    croppingParams.height = formatList[3];
+    croppingParams.rotation = formatList[4];
+    let length = data.receivers.length / 8;
+    for (let i = 0; i < length; i++) {
+      let renderIndex = getUint64FromUint8Array(data.receivers, i);
+      displayList[renderIndex].drawNextOuptutPictureGL(croppingParams.width, croppingParams.height, croppingParams, data.databuf, croppingParams.rotation, 1);
+    }
+  });
+
+  function onVideoRawDataReceived(databuf, format, receivers) {
+    let formatList = format.split(';');
+    croppingParams.width = formatList[2];
+    croppingParams.height = formatList[3];
+    croppingParams.rotation = formatList[4];
+    let length = receivers.length / 8;
+    for (let i = 0; i < length; i++) {
+      let renderIndex = getUint64FromUint8Array(receivers, i);
+      displayList[renderIndex].drawNextOuptutPictureGL(croppingParams.width, croppingParams.height, croppingParams, databuf, croppingParams.rotation, 1);
+    }
+  }
+
+  function setVideoRawDataCB() {
+    if (startCBOption == 0) {
+      ipcRenderer.send('asynchronous-message', 'setVideoRawDataCB');
+    } else {
+      let ret = remote.app.zoomvideorawdata.SetRawDataCB(onVideoRawDataReceived);
+      console.log('setVideoRawDataCB', ret);
+    }
+    startVideoRawDataBtn.disabled = false;
+    startVideoRawDataBtn.classList.remove("button-disabled");
+  }
+
+  ipcRenderer.on('main-process-sharemessages', (event, arg) => {
+    let data = arg;
+    let formatList = data.format.split(';');
+    croppingParams.width = formatList[2];
+    croppingParams.height = formatList[3];
+    croppingParams.rotation = formatList[4];
+    drawShare.drawNextOuptutPictureGL(croppingParams.width, croppingParams.height, null, data.databuf, croppingParams.rotation, 1);
+  });
+
+  function onShareRawDataReceived(databuf, format, receivers) {
+    let formatList = format.split(';');
+    croppingParams.width = formatList[2];
+    croppingParams.height = formatList[3];
+    croppingParams.rotation = formatList[4];
+    drawShare.drawNextOuptutPictureGL(croppingParams.width, croppingParams.height, null, databuf, croppingParams.rotation, 1);
+  }
+
+  function setShareRawDataCB() {
+    if (startCBOption == 0) {
+      ipcRenderer.send('asynchronous-message', 'setShareRawDataCB');
+    } else {
+      let ret = remote.app.zoomsharerawdata.SetRawDataCB(onShareRawDataReceived);
+      console.log('setShareRawDataCB', ret);
+    }
+    startShareRawDataBtn.disabled = false;
+    startShareRawDataBtn.classList.remove("button-disabled");
+  }
+
+  function setAudioRawDataCB() {
+    if (startCBOption == 0) {
+      ipcRenderer.send('asynchronous-message', 'setAudioRawDataCB');
+    } else {
+      let ret = remote.app.zoomaudiorawdata.SetRawDataCB(onMixedAudioRawDataReceived, onOneWayAudioRawDataReceived);
+      console.log('setAudioRawDataCB', ret);
+    }
+    startAudioRawDataBtn.disabled = false;
+    startAudioRawDataBtn.classList.remove("button-disabled");
+  }
+
+  ipcRenderer.on('main-process-mixaudiomessages', (event, arg) => {
+    let data = arg;
+  });
+
+  ipcRenderer.on('main-process-onewayaudiomessages', (event, arg) => {
+    let data = arg;
+  });
+
+  function onMixedAudioRawDataReceived(databuf, data_format) {
+    console.log('onMixedAudioRawDataReceived', databuf, data_format);
+  }
+
+  function onOneWayAudioRawDataReceived(databuf, data_format, nodeid) {
+    console.log('onOneWayAudioRawDataReceived', databuf, data_format, nodeid);
+  }
+
+  function startAudioRawData() {
+    ipcRenderer.send('asynchronous-message', 'startAudioRawData', 1);
+    stopAudioBtn.disabled = false;
+    stopAudioBtn.classList.remove('button-disabled');
+    startAudioRawDataBtn.disabled = 'disabled';
+    startAudioRawDataBtn.classList.add("button-disabled");
+  }
+
+  function stopAudio() {
+    ipcRenderer.send('asynchronous-message', 'stopAudio');
+    startAudioRawDataBtn.disabled = false;
+    startAudioRawDataBtn.classList.remove("button-disabled");
+    stopAudioBtn.disabled = 'disabled';
+    stopAudioBtn.classList.add('button-disabled');
+  }
+
+</script>

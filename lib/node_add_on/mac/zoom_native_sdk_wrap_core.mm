@@ -9,7 +9,7 @@ ZNSDKError ZNativeSDKWrap::InitSDK(ZNInitParam &initParam){
     nativeErrorTypeHelp help;
     NSString *lanStr = help.ZNSDKLanaguageChanage(initParam.langid);
     NSArray *language = [[ZoomSDK sharedSDK]getLanguageArray];
-    if ([language  containsObject:lanStr]) {
+    if (language != nil && [language  containsObject:lanStr]) {
         [[ZoomSDK sharedSDK] setPreferLanguage:lanStr];
     }
     [[ZoomSDK sharedSDK]enableDefaultLog:initParam.enable_log fileSize:5];
@@ -22,6 +22,7 @@ ZNSDKError ZNativeSDKWrap::InitSDK(ZNInitParam &initParam){
     _z_auth_service_wrap.Init();
     _z_meeting_service_wrap.Init();
     _z_setting_service_wrap.Init();
+    _z_premeeting_service_wrap.Init();
     return ZNSDKERR_SUCCESS;
 }
 
@@ -46,6 +47,17 @@ ZCustomizedResourceWrap &ZNativeSDKWrap::GetCustomizedResourceWrap(){
     return _z_customized_resource_wrap;
 }
 
+ZPremeetingServiceWrap &ZNativeSDKWrap::GetPremeetingServiecWrap(){
+    
+    return _z_premeeting_service_wrap;
+    
+}
+
+ZDirectShareHelperWrap &ZAuthServiceWrap::GetDirectShareHelper(){
+    
+    return m_direct_share_helper;
+}
+
 ZNativeSDKWrap::ZNativeSDKWrap()
 {
     
@@ -55,5 +67,7 @@ ZNativeSDKWrap::~ZNativeSDKWrap()
 {
     _z_auth_service_wrap.Uninit();
     _z_meeting_service_wrap.Uninit();
+    _z_premeeting_service_wrap.Uninit();
+    _z_setting_service_wrap.Uninit();
 }
 

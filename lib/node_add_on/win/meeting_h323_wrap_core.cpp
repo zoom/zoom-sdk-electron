@@ -39,7 +39,7 @@ ZMeetingH323Wrap::~ZMeetingH323Wrap()
 }
 void ZMeetingH323Wrap::Init()
 {
-	ZOOM_SDK_NAMESPACE::CSDKWrap::GetInst().GetMeetingServiceWrap().T_GetH323Helper().Init_Wrap(&g_meeting_service_wrap);
+	
 	ZOOM_SDK_NAMESPACE::CSDKWrap::GetInst().GetMeetingServiceWrap().T_GetH323Helper().SetEvent(&g_meeting_h323_ctrl_event);
 }
 void ZMeetingH323Wrap::Uninit()
@@ -47,7 +47,7 @@ void ZMeetingH323Wrap::Uninit()
 	ZOOM_SDK_NAMESPACE::CSDKWrap::GetInst().GetMeetingServiceWrap().T_GetH323Helper().SetEvent(NULL);
 	ZOOM_SDK_NAMESPACE::CSDKWrap::GetInst().GetMeetingServiceWrap().T_GetH323Helper().Uninit_Wrap();
 }
-void ZMeetingH323Wrap::SetSink(IZNativeSDKMeetingH323WrapSink* pSink)
+void ZMeetingH323Wrap::SetSink(ZNativeSDKMeetingH323WrapSink* pSink)
 {
 	m_pSink = pSink;
 }
@@ -87,7 +87,7 @@ ZNList<ZoomSTRING> ZMeetingH323Wrap::GetH323Address()
 		for (int i = 0; i < count; i++)
 		{
 			ZoomSTRING address = pH323AddressList->GetItem(i);
-			zn_h323AddressList.add(address);
+			zn_h323AddressList.push_back(address);
 		}
 	}
 	return zn_h323AddressList;
@@ -130,7 +130,7 @@ ZNList<ZNH323DeviecInfo> ZMeetingH323Wrap::GetCalloutH323DviceList()
 			}
 			zn_deviceInfo.h323_DeviceType = Map2WrapDefine(pH323Device->GetDeviceType());
 
-			zn_h323DeviceInfoLst.add(zn_deviceInfo);
+			zn_h323DeviceInfoLst.push_back(zn_deviceInfo);
 		}
 	}
 	return zn_h323DeviceInfoLst;
@@ -140,5 +140,9 @@ ZNList<ZNH323DeviecInfo> ZMeetingH323Wrap::GetCalloutH323DviceList()
 
 void ZMeetingH323Wrap::onH323CalloutStatusNotify(ZNH323CalloutStatus status)
 {
-	m_pSink->onH323CalloutStatusNotify(status);
+	if (m_pSink)
+	{
+		m_pSink->onH323CalloutStatusNotify(status);
+	}
+	
 }

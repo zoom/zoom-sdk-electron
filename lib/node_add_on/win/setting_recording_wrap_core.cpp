@@ -3,8 +3,6 @@
 #include "wrap/sdk_wrap.h"
 #include "zoom_native_to_wrap.h"
 
-
-
 ZSettingRecordingWrap::ZSettingRecordingWrap()
 {
 

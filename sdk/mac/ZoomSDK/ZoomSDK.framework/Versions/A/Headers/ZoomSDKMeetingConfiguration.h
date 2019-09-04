@@ -16,7 +16,7 @@
     NSPoint            _floatVideoPoint;
     //The visibility of toolbar when sharing.
     BOOL               _shareToolBarVisible;
-    //The visibility of main toolbar in the meeting. 
+    //The visibility of main toolbar in the meeting. not support since version 4.4
     BOOL               _mainToolBarVisible;
     //The location of main interface of meeting.
     NSPoint            _mainVideoPoint;
@@ -84,6 +84,14 @@
     BOOL                _hideInviteInMeetingH323CallInTab;
 	//Hide the h323 call out tab on invite window.
     BOOL                _hideInviteInMeetingH323CallOutTab;
+    //Hide meeting static warning of bad network.
+    BOOL                _hideMeetingStaticBadNetWorkWaring;
+    //Hide meeting static warning of system busy.
+    BOOL                _hideMeetingStaticSystemBusyWaring;
+    //Hide switch camera button when sharing camera.
+    BOOL                _hideSwitchCameraButton;
+    //Disable opening recording file when meeting end.
+    BOOL                _disableOpenRecordFileWhenMeetingEnd;
 }
 @property(nonatomic, assign)CGDirectDisplayID displayAppID;
 @property(nonatomic, assign)CGDirectDisplayID monitorID;
@@ -121,6 +129,10 @@
 @property(nonatomic, assign)BOOL disableFreeMeetingRemainTimeNotify;
 @property(nonatomic, assign)BOOL hideInviteInMeetingH323CallInTab;
 @property(nonatomic, assign)BOOL hideInviteInMeetingH323CallOutTab;
+@property(nonatomic, assign)BOOL hideMeetingStaticBadNetWorkWaring;
+@property(nonatomic, assign)BOOL hideMeetingStaticSystemBusyWaring;
+@property(nonatomic, assign)BOOL hideSwitchCameraButton;
+@property(nonatomic, assign)BOOL disableOpenRecordFileWhenMeetingEnd;
 
 - (ZoomSDKError)prefillWebinarUserName:(NSString*)userName Email:(NSString*)email;
 - (ZoomSDKError)hideSDKButtons:(BOOL)hide ButtonType:(SDKButton)button;

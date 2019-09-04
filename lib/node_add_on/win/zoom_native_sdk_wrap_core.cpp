@@ -34,10 +34,15 @@
 #include "wrap/meeting_service_components_wrap/meeting_webinar_ctrl_wrap.cpp"
 #include "wrap/meeting_service_components_wrap/meeting_closedcaption_ctrl_wrap.cpp"
 #include "wrap/customized_ui_components_wrap/customized_ui_mgr_wrap.cpp"
-//
-#include "zoom_native_to_wrap.h"
 
-#define APP_ICON_ID 100
+
+
+#include "wrap/directshare_helper_wrap.cpp"
+#include "wrap/outlook_plugin_integration_helper_wrap.cpp"
+#include "zoom_native_to_wrap.h"
+#include "../resource.h"
+
+
 std::string wsTOs(const ZoomSTRING& s)
 {
 
@@ -66,8 +71,8 @@ ZNSDKError ZNativeSDKWrap::InitSDK(ZNInitParam& initParam)
 
 
 	HMODULE hRes = NULL;
-	param.uiWindowIconSmallID = APP_ICON_ID;
-	param.uiWindowIconBigID = APP_ICON_ID;
+	param.uiWindowIconSmallID = IDI_SDK_ICON;
+	param.uiWindowIconBigID = IDI_SDK_BIG_ICON;
 	GetModuleHandleEx(GET_MODULE_HANDLE_EX_FLAG_FROM_ADDRESS, (LPCSTR)DummyFunc, &hRes);
 	param.hResInstance = hRes;
 	FreeLibrary(hRes);
@@ -80,7 +85,8 @@ ZNSDKError ZNativeSDKWrap::InitSDK(ZNInitParam& initParam)
 		_z_auth_service_wrap.Init();
 		_z_meeting_service_wrap.Init();
 		_z_setting_service_wrap.Init();
-		_z_customized_resource_wrap.Init();
+		_z_premeeting_service_wrap.Init();
+		//_z_customized_resource_wrap.Init();
 	}
 	return err;
 }
@@ -106,6 +112,10 @@ ZMeetingServiceWrap& ZNativeSDKWrap::GetMeetingServiceWrap()
 ZSettingServiceWrap& ZNativeSDKWrap::GetSettingServiceWrap()
 {
 	return _z_setting_service_wrap;
+}
+ZPremeetingServiceWrap& ZNativeSDKWrap::GetPremeetingServiecWrap()
+{
+	return _z_premeeting_service_wrap;
 }
 ZCustomizedResourceWrap& ZNativeSDKWrap::GetCustomizedResourceWrap()
 {

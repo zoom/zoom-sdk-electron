@@ -86,7 +86,6 @@ void ZoomNodeCustomizedResourceWrap::AddCustomizedURLResource(const v8::Function
 	ZoomSTRING zn_strCustomizeURL;
 	zoom_v8toc(args[1].As<v8::String>(), zn_strCustomizeURL);
 
-
 	ZNSDKError err = _g_native_wrap.GetCustomizedResourceWrap().AddCustomizedURLResource(zn_type, zn_strCustomizeURL);
 	v8::Local<v8::Integer> bret = v8::Integer::New(isolate, (int32_t)err);
 	args.GetReturnValue().Set(bret);

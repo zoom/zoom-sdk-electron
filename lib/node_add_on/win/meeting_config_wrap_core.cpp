@@ -5,6 +5,59 @@
 #include "zoom_native_to_wrap.h"
 
 extern ZOOM_SDK_NAMESPACE::IMeetingServiceWrap& g_meeting_service_wrap;
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+class FreeMeetingReminderHandler
+{
+public:
+	static FreeMeetingReminderHandler& GetInst()
+	{
+		static FreeMeetingReminderHandler inst;
+		return inst;
+	}
+	void SetHandler(ZOOM_SDK_NAMESPACE::IFreeMeetingEndingReminderHandler *handler)
+	{
+		m_pHandler = handler;
+	}
+	ZNFreeMeetingEndingReminderType GetType()
+	{
+		ZOOM_SDK_NAMESPACE::IFreeMeetingEndingReminderHandler::FreeMeetingEndingReminderType winDefinedType = ZOOM_SDK_NAMESPACE::IFreeMeetingEndingReminderHandler::FreeMeetingEndingReminder_NONE;
+		int nMapToMACDefinedType = 5;
+		if (m_pHandler)
+			winDefinedType = m_pHandler->GetType();
+		return Map2WrapDefine(winDefinedType);
+	}
+
+	ZOOM_SDK_NAMESPACE::SDKError UpgradeMeeting()
+	{
+		ZOOM_SDK_NAMESPACE::SDKError err = ZOOM_SDK_NAMESPACE::SDKERR_WRONG_USEAGE;
+		if (m_pHandler)
+			err = m_pHandler->UpgradeMeeting();
+		m_pHandler = NULL;
+		return err;
+	}
+
+	ZOOM_SDK_NAMESPACE::SDKError UpgradeAccount()
+	{
+		ZOOM_SDK_NAMESPACE::SDKError err = ZOOM_SDK_NAMESPACE::SDKERR_WRONG_USEAGE;
+		if (m_pHandler)
+			err = m_pHandler->UpgradeAccount();
+		m_pHandler = NULL;
+		return err;
+	}
+
+	ZOOM_SDK_NAMESPACE::SDKError Cancel()
+	{
+		ZOOM_SDK_NAMESPACE::SDKError err = ZOOM_SDK_NAMESPACE::SDKERR_WRONG_USEAGE;
+		if (m_pHandler)
+			err = m_pHandler->Cancel();
+		m_pHandler = NULL;
+		return err;
+	}
+private:
+	FreeMeetingReminderHandler() {}
+	ZOOM_SDK_NAMESPACE::IFreeMeetingEndingReminderHandler* m_pHandler;
+};
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 class ZMeetingConfigCtrlWrapFreeMeetingEvent : public ZOOM_SDK_NAMESPACE::IMeetingConfigurationEvent
 {
 public:
@@ -17,6 +70,7 @@ public:
 	}
 	virtual void onFreeMeetingEndingReminderNotification(ZOOM_SDK_NAMESPACE::IFreeMeetingEndingReminderHandler* handler_)
 	{
+		FreeMeetingReminderHandler::GetInst().SetHandler(handler_);
 	}
 	virtual void onFreeMeetingNeedToUpgrade(ZOOM_SDK_NAMESPACE::IMeetingConfigurationFreeMeetingEvent::FreeMeetingNeedUpgradeType type_, const wchar_t* gift_url)
 	{
@@ -67,54 +121,6 @@ static ZMeetingConfigCtrlWrapFreeMeetingEvent g_meeting_config_ctrl_event;
 
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-class FreeMeetingReminderHandler
-{
-public:
-	static FreeMeetingReminderHandler& GetInst()
-	{
-		static FreeMeetingReminderHandler inst;
-		return inst;
-	}
-	ZNFreeMeetingEndingReminderType GetType()
-	{
-		ZOOM_SDK_NAMESPACE::IFreeMeetingEndingReminderHandler::FreeMeetingEndingReminderType winDefinedType = ZOOM_SDK_NAMESPACE::IFreeMeetingEndingReminderHandler::FreeMeetingEndingReminder_NONE;
-		int nMapToMACDefinedType = 5;
-		if (m_pHandler)
-			winDefinedType = m_pHandler->GetType();
-		return Map2WrapDefine(winDefinedType);
-	}
-
-	ZOOM_SDK_NAMESPACE::SDKError UpgradeMeeting()
-	{
-		ZOOM_SDK_NAMESPACE::SDKError err = ZOOM_SDK_NAMESPACE::SDKERR_WRONG_USEAGE;
-		if (m_pHandler)
-			err = m_pHandler->UpgradeMeeting();
-		m_pHandler = NULL;
-		return err;
-	}
-
-	ZOOM_SDK_NAMESPACE::SDKError UpgradeAccount()
-	{
-		ZOOM_SDK_NAMESPACE::SDKError err = ZOOM_SDK_NAMESPACE::SDKERR_WRONG_USEAGE;
-		if (m_pHandler)
-			err = m_pHandler->UpgradeAccount();
-		m_pHandler = NULL;
-		return err;
-	}
-
-	ZOOM_SDK_NAMESPACE::SDKError Cancel()
-	{
-		ZOOM_SDK_NAMESPACE::SDKError err = ZOOM_SDK_NAMESPACE::SDKERR_WRONG_USEAGE;
-		if (m_pHandler)
-			err = m_pHandler->Cancel();
-		m_pHandler = NULL;
-		return err;
-	}
-private:
-	FreeMeetingReminderHandler() {}
-	ZOOM_SDK_NAMESPACE::IFreeMeetingEndingReminderHandler* m_pHandler;
-};
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 ZMeetingConfigWrap::ZMeetingConfigWrap()
 {
@@ -129,7 +135,7 @@ ZMeetingConfigWrap::~ZMeetingConfigWrap()
 }
 void ZMeetingConfigWrap::Init()
 {
-	ZOOM_SDK_NAMESPACE::CSDKWrap::GetInst().GetMeetingServiceWrap().T_GetMeetingConfiguration().Init_Wrap(&g_meeting_service_wrap);
+	
 	ZOOM_SDK_NAMESPACE::CSDKWrap::GetInst().GetMeetingServiceWrap().T_GetMeetingConfiguration().SetEvent(&g_meeting_config_ctrl_event);
 	
 }
@@ -138,7 +144,7 @@ void ZMeetingConfigWrap::Uninit()
 	ZOOM_SDK_NAMESPACE::CSDKWrap::GetInst().GetMeetingServiceWrap().T_GetMeetingConfiguration().SetEvent(NULL);
 	ZOOM_SDK_NAMESPACE::CSDKWrap::GetInst().GetMeetingServiceWrap().T_GetMeetingConfiguration().Uninit_Wrap();
 }
-void ZMeetingConfigWrap::SetSink(IZNativeSDKMeetingConfigWrapFreeMeetingSink* pSink)
+void ZMeetingConfigWrap::SetSink(ZNativeSDKMeetingConfigWrapFreemeetingSink* pSink)
 {
 	m_pSink = pSink;
 }
@@ -186,10 +192,9 @@ void ZMeetingConfigWrap::HideMeetingInfoFromMeetingUITitle(bool bHide)
 {
 	ZOOM_SDK_NAMESPACE::CSDKWrap::GetInst().GetMeetingServiceWrap().T_GetMeetingConfiguration().HideMeetingInfoFromMeetingUITitle(bHide);
 }
-void ZMeetingConfigWrap::SetMeetingIDForMeetingUITitle(ZoomSTRING meetingNumber)
+void ZMeetingConfigWrap::SetMeetingIDForMeetingUITitle(unsigned long long meetingNumber)
 {
-	UINT64	sdk_meetingNumber = _wtoi64(meetingNumber.c_str());
-	ZOOM_SDK_NAMESPACE::CSDKWrap::GetInst().GetMeetingServiceWrap().T_GetMeetingConfiguration().SetMeetingIDForMeetingUITitle(sdk_meetingNumber);
+	ZOOM_SDK_NAMESPACE::CSDKWrap::GetInst().GetMeetingServiceWrap().T_GetMeetingConfiguration().SetMeetingIDForMeetingUITitle(meetingNumber);
 }
 void ZMeetingConfigWrap::DisablePopupMeetingWrongPSWDlg(bool bDisable)
 {

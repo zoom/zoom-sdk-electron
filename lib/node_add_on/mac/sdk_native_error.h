@@ -37,6 +37,9 @@ public:
     
     ZNFreeMeetingEndingReminderType ZoomSDKFreeMeetingEndReminderType(SDKReminderType &type);
     ZNFreeMeetingNeedUpgradeType  ZoomSDKFreeMeetingNeedUpgradeType(FreeMeetingNeedUpgradeType &type);
-    
+    ZNPremeetingAPIResult  ZNSDKPreMeetingError(ZoomSDKPremeetingError &error);
+    ZNDirectShareStatus   ZNSDKDirectShareStatus(DirectShareStatus &status);
+    ZNShareStatus  ZNSDKShareStatus(ZoomSDKShareStatus &status);
+    ZNUserRole ZNSDKUserRole(UserRole &role);
 };
 

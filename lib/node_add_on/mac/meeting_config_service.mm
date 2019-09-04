@@ -12,11 +12,11 @@ ZMeetingConfigWrap &ZMeetingServiceWrap::GetMeetingConfigCtrl(){
 
 
 ZMeetingConfigWrap::ZMeetingConfigWrap(){
-    
+    m_pSink = 0;
 }
 
 ZMeetingConfigWrap::~ZMeetingConfigWrap(){
-    
+    m_pSink = 0;
     
 }
 
@@ -30,7 +30,7 @@ void ZMeetingConfigWrap::Uninit(){
     
 }
 
-void ZMeetingConfigWrap::SetSink(IZNativeSDKMeetingConfigWrapFreeMeetingSink *pSink){
+void ZMeetingConfigWrap::SetSink(ZNativeSDKMeetingConfigWrapFreemeetingSink *pSink){
     
     m_pSink = pSink;
 }
@@ -39,6 +39,9 @@ void ZMeetingConfigWrap::SetSink(IZNativeSDKMeetingConfigWrapFreeMeetingSink *pS
 ZNSDKError ZMeetingConfigWrap::EnableInviteButtonOnMeetingUI(bool bEnable){
     
     ZoomSDKMeetingService *service = [[ZoomSDK sharedSDK]getMeetingService];
+    if (!service){
+        return ZNSDKERR_SERVICE_FAILED;
+    }
     ZoomSDKMeetingConfiguration *config = [service getMeetingConfiguration];
     bool enable = bEnable;
     if (service && config) {
@@ -98,13 +101,15 @@ void ZMeetingConfigWrap::SetMeetingUIPos(ZNWndPosition position){
     
 }
 
-void ZMeetingConfigWrap::SetMeetingIDForMeetingUITitle(ZoomSTRING meetingNumber){
+void ZMeetingConfigWrap::SetMeetingIDForMeetingUITitle(unsigned long long meetingNumber){
     
     ZoomSDKMeetingService *service = [[ZoomSDK sharedSDK]getMeetingService];
+    if (!service) {
+        return;
+    }
     ZoomSDKMeetingConfiguration *config = [service getMeetingConfiguration];
-    if (service && config) {
-        NSString *ID = [NSString stringWithCString:meetingNumber.c_str() encoding:NSUTF8StringEncoding];
-        config.newMeetingID = ID.intValue;
+    if (service && config && meetingNumber) {
+        config.newMeetingID = (unsigned int)meetingNumber;
     }
     
 }
@@ -211,7 +216,7 @@ ZNFreeMeetingEndingReminderType ZMeetingConfigWrap::GetReminderType(){
 
 ZNSDKError ZMeetingConfigWrap::UpgradeMeeting(){
     
-    ZoomSDKUpgradeAccountHelper *pre = [[ZoomSDKUpgradeAccountHelper alloc]init];
+    ZoomSDKUpgradeAccountHelper *pre = [[[ZoomSDKUpgradeAccountHelper alloc]init] autorelease];
     ZoomSDKError ret = [pre  upgradeAccount];
     return Help_type.ZoomSDKErrorType(ret);
     
@@ -219,7 +224,7 @@ ZNSDKError ZMeetingConfigWrap::UpgradeMeeting(){
 
 ZNSDKError ZMeetingConfigWrap::UpgradeAccount(){
     
-    ZoomSDKUpgradeAccountHelper *pre = [[ZoomSDKUpgradeAccountHelper alloc]init];
+    ZoomSDKUpgradeAccountHelper *pre = [[[ZoomSDKUpgradeAccountHelper alloc]init] autorelease];
     ZoomSDKError ret = [pre  upgradeAccountFreeTrial];
     return Help_type.ZoomSDKErrorType(ret);
     

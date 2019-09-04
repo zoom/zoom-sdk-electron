@@ -779,6 +779,8 @@ typedef enum
     ToolBarVideoButton,
     //Swap share and video button: swap to display share or video.
     SwapShareContentAndVideoButton,
+    //Chat button: manage in-meeting chat of the current user.
+    ChatButton,
 }SDKButton;
 
 /**

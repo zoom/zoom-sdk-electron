@@ -16,7 +16,7 @@ IOutlookPluginIntegrationHelper* InitIOutlookPluginIntegrationHelperFunc(IOutloo
 	return NULL;
 }
 
-void UninitIDirectShareServiceHelperFunc(IOutlookPluginIntegrationHelper* obj)
+void UninitIOutlookPluginIntegrationHelperFunc(IOutlookPluginIntegrationHelper* obj)
 {
 	if (obj)
 	{

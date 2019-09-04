@@ -12,12 +12,8 @@ public:
 	virtual void onUserVideoStatusChange(unsigned int userId, ZOOM_SDK_NAMESPACE::VideoStatus status)
 	{
 		if (owner_) {
-			UINT64 userid = userId;
-			wchar_t temp[1024];
-			int radix = 10;
-			_ui64tow(userid, temp, radix);
-			ZoomSTRING zn_userid = temp;
-			owner_->onUserVideoStatusChange(zn_userid, Map2WrapDefine(status));
+			
+			owner_->onUserVideoStatusChange(userId, Map2WrapDefine(status));
 		}
 	}
 	virtual void onSpotlightVideoChangeNotification(bool bSpotlight, unsigned int userid)
@@ -30,11 +26,15 @@ public:
 	}
 	virtual void onActiveSpeakerVideoUserChanged(unsigned int userid)
 	{
-
+		if (owner_) {
+			owner_->onActiveSpeakerVideoUserChanged(userid);
+		}
 	}
 	virtual void onActiveVideoUserChanged(unsigned int userid)
 	{
-
+		if (owner_) {
+			owner_->onActiveVideoUserChanged(userid);
+		}
 	}
 private:
 	ZMeetingVideoWrap* owner_;
@@ -56,7 +56,7 @@ ZMeetingVideoWrap::~ZMeetingVideoWrap()
 }
 void ZMeetingVideoWrap::Init()
 {
-	ZOOM_SDK_NAMESPACE::CSDKWrap::GetInst().GetMeetingServiceWrap().T_GetMeetingVideoController().Init_Wrap(&g_meeting_service_wrap);
+	
 	ZOOM_SDK_NAMESPACE::CSDKWrap::GetInst().GetMeetingServiceWrap().T_GetMeetingVideoController().SetEvent(&g_meeting_video_ctrl_event);
 }
 void ZMeetingVideoWrap::Uninit()
@@ -64,27 +64,55 @@ void ZMeetingVideoWrap::Uninit()
 	ZOOM_SDK_NAMESPACE::CSDKWrap::GetInst().GetMeetingServiceWrap().T_GetMeetingVideoController().SetEvent(NULL);
 	ZOOM_SDK_NAMESPACE::CSDKWrap::GetInst().GetMeetingServiceWrap().T_GetMeetingVideoController().Uninit_Wrap();
 }
-void ZMeetingVideoWrap::SetSink(IZNativeSDKMeetingVideoWrapSink* pSink)
+void ZMeetingVideoWrap::SetSink(ZNativeSDKMeetingVideoWrapSink* pSink)
 {
 	m_pSink = pSink;
 }
-ZNSDKError ZMeetingVideoWrap::MuteVideo()
+ZNSDKError ZMeetingVideoWrap::MuteVideo(unsigned int userId)
 {
-	return Map2WrapDefine(ZOOM_SDK_NAMESPACE::CSDKWrap::GetInst().GetMeetingServiceWrap().T_GetMeetingVideoController().MuteVideo());
+	bool zn_is_myself = false;
+	ZOOM_SDK_NAMESPACE::IUserInfo* userinfo = ZOOM_SDK_NAMESPACE::CSDKWrap::GetInst().GetMeetingServiceWrap().T_GetMeetingParticipantsController().GetUserByUserID(userId);
+	if (userinfo)
+	{
+		zn_is_myself = userinfo->IsMySelf();
+	}
+		
+	if (userId != 0 && !zn_is_myself)
+	{
+		return Map2WrapDefine(ZOOM_SDK_NAMESPACE::CSDKWrap::GetInst().GetMeetingServiceWrap().T_GetMeetingVideoController().StopAttendeeVideo(userId));
+	}
+	else
+	{
+		return Map2WrapDefine(ZOOM_SDK_NAMESPACE::CSDKWrap::GetInst().GetMeetingServiceWrap().T_GetMeetingVideoController().MuteVideo());
+	}
 }
-ZNSDKError ZMeetingVideoWrap::UnMuteVideo()
+ZNSDKError ZMeetingVideoWrap::UnMuteVideo(unsigned int userId)
 {
-	return Map2WrapDefine(ZOOM_SDK_NAMESPACE::CSDKWrap::GetInst().GetMeetingServiceWrap().T_GetMeetingVideoController().UnmuteVideo());
+	bool zn_is_myself = false;
+	ZOOM_SDK_NAMESPACE::IUserInfo* userinfo = ZOOM_SDK_NAMESPACE::CSDKWrap::GetInst().GetMeetingServiceWrap().T_GetMeetingParticipantsController().GetUserByUserID(userId);
+	if (userinfo)
+	{
+		zn_is_myself = userinfo->IsMySelf();
+	}
+	if (userId != 0 && !zn_is_myself)
+	{
+		return Map2WrapDefine(ZOOM_SDK_NAMESPACE::CSDKWrap::GetInst().GetMeetingServiceWrap().T_GetMeetingVideoController().AskAttendeeToStartVideo(userId));
+	}
+	else
+	{
+		return Map2WrapDefine(ZOOM_SDK_NAMESPACE::CSDKWrap::GetInst().GetMeetingServiceWrap().T_GetMeetingVideoController().UnmuteVideo());
+	}
+	
 }
-ZNSDKError ZMeetingVideoWrap::PinVideo(bool bPin, bool bFirstView, ZoomSTRING userId)
+ZNSDKError ZMeetingVideoWrap::PinVideo(bool bPin, bool bFirstView, unsigned int userId)
 {
-	unsigned int sdk_userid = (unsigned int)_wtoi(userId.c_str());
-	return Map2WrapDefine(ZOOM_SDK_NAMESPACE::CSDKWrap::GetInst().GetMeetingServiceWrap().T_GetMeetingVideoController().PinVideo(bPin, bFirstView, sdk_userid));
+	
+	return Map2WrapDefine(ZOOM_SDK_NAMESPACE::CSDKWrap::GetInst().GetMeetingServiceWrap().T_GetMeetingVideoController().PinVideo(bPin, bFirstView, userId));
 }
-ZNSDKError ZMeetingVideoWrap::SpotlightVideo(bool bSpotlight, ZoomSTRING userId)
+ZNSDKError ZMeetingVideoWrap::SpotlightVideo(bool bSpotlight, unsigned int userId)
 {
-	unsigned int sdk_userid = (unsigned int)_wtoi(userId.c_str());
-	return Map2WrapDefine(ZOOM_SDK_NAMESPACE::CSDKWrap::GetInst().GetMeetingServiceWrap().T_GetMeetingVideoController().SpotlightVideo(bSpotlight, sdk_userid));
+	
+	return Map2WrapDefine(ZOOM_SDK_NAMESPACE::CSDKWrap::GetInst().GetMeetingServiceWrap().T_GetMeetingVideoController().SpotlightVideo(bSpotlight, userId));
 }
 ZNSDKError ZMeetingVideoWrap::HideOrShowNoVideoUserOnVideoWall(bool bHide)
 {
@@ -92,7 +120,24 @@ ZNSDKError ZMeetingVideoWrap::HideOrShowNoVideoUserOnVideoWall(bool bHide)
 }
 
 
-void ZMeetingVideoWrap::onUserVideoStatusChange(ZoomSTRING userId, ZNVideoStatus status)
+void ZMeetingVideoWrap::onUserVideoStatusChange(unsigned int userId, ZNVideoStatus status)
 {
-	m_pSink->onUserVideoStatusChange(userId, status);
+	if (m_pSink)
+	{
+		m_pSink->onUserVideoStatusChange(userId, status);
+	}
+}
+void ZMeetingVideoWrap::onActiveSpeakerVideoUserChanged(unsigned int userId)
+{
+	if (m_pSink)
+	{
+		m_pSink->onActiveSpeakerVideoUserChanged(userId);
+	}
+}
+void ZMeetingVideoWrap::onActiveVideoUserChanged(unsigned int userId)
+{
+	if (m_pSink)
+	{
+		m_pSink->onActiveVideoUserChanged(userId);
+	}
 }

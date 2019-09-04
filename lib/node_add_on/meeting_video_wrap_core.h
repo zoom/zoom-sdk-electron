@@ -1,12 +1,7 @@
 #pragma once
 #include "zoom_native_sdk_wrap_core_def.h"
+#include "zoom_sinks_wrap_class.h"
 
-class IZNativeSDKMeetingVideoWrapSink
-{
-public:
-	//
-	virtual void onUserVideoStatusChange(ZoomSTRING userId, ZNVideoStatus status) = 0;
-};
 class ZMeetingVideoWrap
 {
 public:
@@ -14,18 +9,20 @@ public:
 	virtual ~ZMeetingVideoWrap();
 	void Init();
 	void Uninit();
-	void SetSink(IZNativeSDKMeetingVideoWrapSink* pSink);
+	void SetSink(ZNativeSDKMeetingVideoWrapSink* pSink);
 
-	ZNSDKError MuteVideo();
-	ZNSDKError UnMuteVideo();
-	ZNSDKError PinVideo(bool bPin, bool bFirstView, ZoomSTRING userId);
-	ZNSDKError SpotlightVideo(bool bSpotlight, ZoomSTRING userId);
+	ZNSDKError MuteVideo(unsigned int userId);
+	ZNSDKError UnMuteVideo(unsigned int userId);
+	ZNSDKError PinVideo(bool bPin, bool bFirstView, unsigned int userId);
+	ZNSDKError SpotlightVideo(bool bSpotlight, unsigned int userId);
 	ZNSDKError HideOrShowNoVideoUserOnVideoWall(bool bHide);
 
 	//callback
-	void onUserVideoStatusChange(ZoomSTRING userId, ZNVideoStatus status);
+	void onUserVideoStatusChange(unsigned int userId, ZNVideoStatus status);
+	void onActiveSpeakerVideoUserChanged(unsigned int userid);
+	void onActiveVideoUserChanged(unsigned int userid);
 
 private:
-	IZNativeSDKMeetingVideoWrapSink* m_pSink;
+	ZNativeSDKMeetingVideoWrapSink* m_pSink;
 
 };

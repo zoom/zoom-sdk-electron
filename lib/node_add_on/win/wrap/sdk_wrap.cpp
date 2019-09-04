@@ -113,6 +113,19 @@ ICustomizedResourceHelperWrap& CSDKExtWrap::GetCustomizedResourceHelperWrap()
 	return ICustomizedResourceHelperWrap::GetInst();
 }
 
+IAudioRawDataChannelWrap& CSDKExtWrap::GetAudioRawDataChannelWrap()
+{
+	return IAudioRawDataChannelWrap::GetInst();
+}
+IVideoRawDataChannelWrap& CSDKExtWrap::GetVideoRawDataChannelWrap()
+{
+	return IVideoRawDataChannelWrap::GetInst();
+}
+IShareRawDataChannelWrap& CSDKExtWrap::GetShareRawDataChannelWrap()
+{
+	return IShareRawDataChannelWrap::GetInst();
+}
+
 /////////////////////////////////////////////////////////////////////
 CSDKCustomizedUIWrap::CSDKCustomizedUIWrap()
 {

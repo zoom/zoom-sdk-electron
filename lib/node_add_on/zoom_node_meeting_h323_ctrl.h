@@ -13,11 +13,33 @@ private:
 	ZoomNodeMeetingH323CtrlWrap();
 	~ZoomNodeMeetingH323CtrlWrap();
 public:
+	/// \brief Call out with the assigned H.323 device.
+	/// \param 1. deviceName(string) Specifies the device name.
+	/// \param 2. deviceIP(string) Specifies the device ip.  To get extended information,see \link ZNH323DeviceType \endlink enum.
+	/// \param 3. deviceE164num(string) Specifies the device E164 number.
+	/// \param 4. type(number) Specifies the H.323 device type.
+	/// \return If the function succeeds, the return value is ZNSDKERR_SUCCESS. 
+	///Otherwise failed. To get extended error information, see \link ZNSDKError \endlink enum.
 	static void CallOutH323(const v8::FunctionCallbackInfo<v8::Value>& args);
+	/// \brief Cancel current outgoing call.
+	/// \return If the function succeeds, the return value is ZNSDKERR_SUCCESS.
+	///Otherwise failed. To get extended error information, see \link ZNSDKError \endlink enum.
 	static void CancelCallOutH323(const v8::FunctionCallbackInfo<v8::Value>& args);
+	/// \brief Get the list of H.323 call-in number supported by the current meeting.
+	/// \return If the function succeeds, the return value is the array of the call-in number. Otherwise failed, the return value is an empty array.
 	static void GetH323Address(const v8::FunctionCallbackInfo<v8::Value>& args);
+	/// \brief Get the H.323 password for the current meeting.
+	/// \return If the function succeeds, the return value is the H.323 meeting connect password. Otherwise failed, the return value is an empty string.
 	static void GetH323Password(const v8::FunctionCallbackInfo<v8::Value>& args);
+	/// \brief Get the list of the call-out devices supported by the current meeting.
+	/// \return If the function succeeds, the return value is the array of devices which includes deviceName, deviceIP, deviceE164num, deviceType. 
+	///Otherwise failed, the return value is an empty array. 
 	static void GetCalloutH323DviceList(const v8::FunctionCallbackInfo<v8::Value>& args);
+	/// \brief Set the callback when the calling status of H.323 device changes.
+	/// \param 1. callback(function)  The callback when the calling status of H.323 device changes, onCalloutStatusNotify. 
+	///To get extended calling status information, see \link ZNH323CalloutStatus \endlink enum.
+	/// \return If the function succeeds, the return value is ZNSDKERR_SUCCESS.
+	///Otherwise failed. To get extended error information, see \link ZNSDKError \endlink enum.
 	static void SetH323CallOutStatusCB(const v8::FunctionCallbackInfo<v8::Value>& args);
 
 
@@ -45,30 +67,4 @@ static v8::Persistent<v8::Function>* GetConstructor<ZoomNodeMeetingH323CtrlWrap 
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-class ZNativeSDKMeetingH323WrapSink : public IZNativeSDKMeetingH323WrapSink
-{
-public:
-	virtual void onH323CalloutStatusNotify(ZNH323CalloutStatus status)
-	{
-		if (ZoomNodeSinkHelper::GetInst().onH323CalloutStatusNotify.IsEmpty())
-		return;
-		
-		auto isolate = v8::Isolate::GetCurrent();
-		v8::HandleScope scope(isolate);
-		auto context = isolate->GetCurrentContext();
-		auto global = context->Global();
-
-		v8::Local<v8::Integer> v8_h323CalloutStatus = v8::Integer::New(isolate, (int32_t)status);
-		int argc = 1;
-		v8::Local<v8::Value> argv[1] = { v8_h323CalloutStatus };
-		auto fn = v8::Local<v8::Function>::New(isolate, ZoomNodeSinkHelper::GetInst().onH323CalloutStatusNotify);
-
-		fn->Call(context, global, argc, argv);
-	}
-};
-
-static ZNativeSDKMeetingH323WrapSink _g_node_meetingH323_cb;
-
-
-
 #endif

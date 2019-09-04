@@ -63,7 +63,7 @@ void ZMeetingServiceWrap::Uninit()
 	ZOOM_SDK_NAMESPACE::CSDKWrap::GetInst().GetMeetingServiceWrap().SetEvent(NULL);
 	ZOOM_SDK_NAMESPACE::CSDKWrap::GetInst().GetMeetingServiceWrap().Uninit_Wrap();
 }
-void ZMeetingServiceWrap::SetSink(IZNativeSDKMeetingWrapSink* pSink)
+void ZMeetingServiceWrap::SetSink(ZNativeSDKMeetingWrapSink* pSink)
 {
 	m_pSink = pSink;
 }
@@ -71,7 +71,7 @@ ZNSDKError ZMeetingServiceWrap::Start(ZNStartParam startParam)
 {
 	ZOOM_SDK_NAMESPACE::StartParam param;
 	param.userType = Map2SDKDefine(startParam.userType);
-	param.param.normaluserStart.meetingNumber = _wtoi64(startParam.meetingNumber.c_str());
+	param.param.normaluserStart.meetingNumber = startParam.meetingNumber;
 	swscanf_s(startParam.hDirectShareAppWnd.c_str(), L"%x", &param.param.normaluserStart.hDirectShareAppWnd);
 	param.param.normaluserStart.participantId = startParam.participantId.c_str();
 	param.param.normaluserStart.isVideoOff = startParam.isVideoOff;
@@ -89,7 +89,7 @@ ZNSDKError ZMeetingServiceWrap::Start_WithoutLogin(ZNStartParam startParam)
 	param.param.withoutloginStart.userZAK = startParam.userZAK.c_str();
 	param.param.withoutloginStart.userName = startParam.username.c_str();
 	param.param.withoutloginStart.zoomuserType = Map2SDKDefine(startParam.zoomUserType);
-	param.param.withoutloginStart.meetingNumber = _wtoi64(startParam.meetingNumber.c_str());
+	param.param.withoutloginStart.meetingNumber = startParam.meetingNumber;
 	if (!startParam.sdkVanityID.empty())
 	{
 		param.param.withoutloginStart.vanityID = startParam.sdkVanityID.c_str();
@@ -107,7 +107,7 @@ ZNSDKError ZMeetingServiceWrap::Join(ZNJoinParam joinParam)
 {
 	ZOOM_SDK_NAMESPACE::JoinParam param;
 	param.userType = Map2SDKDefine(joinParam.userType);
-	param.param.normaluserJoin.meetingNumber = _wtoi64(joinParam.meetingNumber.c_str());
+	param.param.normaluserJoin.meetingNumber = joinParam.meetingNumber; 
 	swscanf_s(joinParam.hDirectShareAppWnd.c_str(), L"%x", &param.param.normaluserJoin.hDirectShareAppWnd);
 	param.param.normaluserJoin.participantId = joinParam.participantId.c_str();
 	param.param.normaluserJoin.isVideoOff = joinParam.isVideoOff;
@@ -127,7 +127,7 @@ ZNSDKError ZMeetingServiceWrap::Join_WithoutLogin(ZNJoinParam joinParam)
 {
 	ZOOM_SDK_NAMESPACE::JoinParam param;
 	param.userType = Map2SDKDefine(joinParam.userType);
-	param.param.withoutloginuserJoin.meetingNumber = _wtoi64(joinParam.meetingNumber.c_str());
+	param.param.withoutloginuserJoin.meetingNumber = joinParam.meetingNumber;
 	if (!joinParam.vanityID.empty())
 	{
 		param.param.withoutloginuserJoin.vanityID = joinParam.vanityID.c_str();
@@ -213,50 +213,99 @@ ZNConnectionQuality ZMeetingServiceWrap::GetAudioConnQuality()
 ////////////////////////////////////////////////////////////////////////////////////////////////
 ZoomSTRING ZMeetingInfoWrap::GetMeetingTopic()
 {
-	ZoomSTRING meetingTopic = ZOOM_SDK_NAMESPACE::CSDKWrap::GetInst().GetMeetingServiceWrap().GetMeetingInfo()->GetMeetingTopic();
+	ZoomSTRING meetingTopic;
+	ZOOM_SDK_NAMESPACE::IMeetingInfo* pMeetingInfo = ZOOM_SDK_NAMESPACE::CSDKWrap::GetInst().GetMeetingServiceWrap().GetMeetingInfo();
+	if (pMeetingInfo)
+	{
+		meetingTopic = pMeetingInfo->GetMeetingTopic();
+	}
+	
 	return meetingTopic;
 }
 ZNMeetingType ZMeetingInfoWrap::GetMeetingType()
 {
-	return Map2WrapDefine(ZOOM_SDK_NAMESPACE::CSDKWrap::GetInst().GetMeetingServiceWrap().GetMeetingInfo()->GetMeetingType());
+	ZNMeetingType zn_type = ZNMEETING_TYPE_NONE;
+	ZOOM_SDK_NAMESPACE::IMeetingInfo* pMeetingInfo = ZOOM_SDK_NAMESPACE::CSDKWrap::GetInst().GetMeetingServiceWrap().GetMeetingInfo();
+	if (pMeetingInfo)
+	{
+		zn_type = Map2WrapDefine(pMeetingInfo->GetMeetingType());
+	}
+	return zn_type;
 }
-ZoomSTRING ZMeetingInfoWrap::GetMeetingNumber()
+unsigned long long ZMeetingInfoWrap::GetMeetingNumber()
 {
-	UINT64 num = ZOOM_SDK_NAMESPACE::CSDKWrap::GetInst().GetMeetingServiceWrap().GetMeetingInfo()->GetMeetingNumber();
-	wchar_t temp[1024];
-	int radix = 10;
-	_ui64tow(num, temp, radix);
-	ZoomSTRING meetingNumber = temp;
+	UINT64 meetingNumber;
+	ZOOM_SDK_NAMESPACE::IMeetingInfo* pMeetingInfo = ZOOM_SDK_NAMESPACE::CSDKWrap::GetInst().GetMeetingServiceWrap().GetMeetingInfo();
+	if (pMeetingInfo)
+	{
+		meetingNumber = pMeetingInfo->GetMeetingNumber();
+	}
 	return meetingNumber;
 }
 ZoomSTRING ZMeetingInfoWrap::GetMeetingID()
 {
-	ZoomSTRING meetingID = ZOOM_SDK_NAMESPACE::CSDKWrap::GetInst().GetMeetingServiceWrap().GetMeetingInfo()->GetMeetingID();
+	ZoomSTRING meetingID;
+	ZOOM_SDK_NAMESPACE::IMeetingInfo* pMeetingInfo = ZOOM_SDK_NAMESPACE::CSDKWrap::GetInst().GetMeetingServiceWrap().GetMeetingInfo();
+	if (pMeetingInfo)
+	{
+		meetingID = pMeetingInfo->GetMeetingID();
+	}
+	
 	return meetingID;
 }
 ZoomSTRING ZMeetingInfoWrap::GetInviteEmailTeamplate()
 {
-	ZoomSTRING inviteEmailTeamplate = ZOOM_SDK_NAMESPACE::CSDKWrap::GetInst().GetMeetingServiceWrap().GetMeetingInfo()->GetInviteEmailTeamplate();
+	ZoomSTRING inviteEmailTeamplate;
+	ZOOM_SDK_NAMESPACE::IMeetingInfo* pMeetingInfo = ZOOM_SDK_NAMESPACE::CSDKWrap::GetInst().GetMeetingServiceWrap().GetMeetingInfo();
+	if (pMeetingInfo)
+	{
+		inviteEmailTeamplate = pMeetingInfo->GetInviteEmailTeamplate();
+	}
+	
 	return inviteEmailTeamplate;
 }
 ZoomSTRING ZMeetingInfoWrap::GetInviteEmailTitle()
 {
-	ZoomSTRING inviteEmailTitle = ZOOM_SDK_NAMESPACE::CSDKWrap::GetInst().GetMeetingServiceWrap().GetMeetingInfo()->GetInviteEmailTitle();
+	ZoomSTRING inviteEmailTitle;
+	ZOOM_SDK_NAMESPACE::IMeetingInfo* pMeetingInfo = ZOOM_SDK_NAMESPACE::CSDKWrap::GetInst().GetMeetingServiceWrap().GetMeetingInfo();
+	if (pMeetingInfo)
+	{
+		inviteEmailTitle = pMeetingInfo->GetInviteEmailTitle();
+	}
+	
 	return inviteEmailTitle;
 }
 ZoomSTRING ZMeetingInfoWrap::GetJoinMeetingUrl()
 {
-	ZoomSTRING joinMeetingUrl = ZOOM_SDK_NAMESPACE::CSDKWrap::GetInst().GetMeetingServiceWrap().GetMeetingInfo()->GetJoinMeetingUrl();
+	ZoomSTRING joinMeetingUrl;
+	ZOOM_SDK_NAMESPACE::IMeetingInfo* pMeetingInfo = ZOOM_SDK_NAMESPACE::CSDKWrap::GetInst().GetMeetingServiceWrap().GetMeetingInfo();
+	if (pMeetingInfo)
+	{
+		joinMeetingUrl = pMeetingInfo->GetJoinMeetingUrl();
+	}
+	
 	return joinMeetingUrl;
 }
 ZoomSTRING ZMeetingInfoWrap::GetMeetingHostTag()
 {
-	ZoomSTRING meetingHostTag = ZOOM_SDK_NAMESPACE::CSDKWrap::GetInst().GetMeetingServiceWrap().GetMeetingInfo()->GetMeetingHostTag();
+	ZoomSTRING meetingHostTag;
+	ZOOM_SDK_NAMESPACE::IMeetingInfo* pMeetingInfo = ZOOM_SDK_NAMESPACE::CSDKWrap::GetInst().GetMeetingServiceWrap().GetMeetingInfo();
+	if (pMeetingInfo)
+	{
+		meetingHostTag = pMeetingInfo->GetMeetingHostTag();
+	}
+	
 	return meetingHostTag;
 }
 bool ZMeetingInfoWrap::CheckingIsInternalMeeting()
 {
-	bool bDisable = ZOOM_SDK_NAMESPACE::CSDKWrap::GetInst().GetMeetingServiceWrap().GetMeetingInfo()->IsInternalMeeting();
+	bool bDisable;
+	ZOOM_SDK_NAMESPACE::IMeetingInfo* pMeetingInfo = ZOOM_SDK_NAMESPACE::CSDKWrap::GetInst().GetMeetingServiceWrap().GetMeetingInfo();
+	if (pMeetingInfo)
+	{
+		bDisable = pMeetingInfo->IsInternalMeeting();
+	}
+	
 	return bDisable;
 }
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -296,7 +345,7 @@ ZMeetingUICtrlWrap::~ZMeetingUICtrlWrap()
 }
 void ZMeetingUICtrlWrap::Init()
 {
-	ZOOM_SDK_NAMESPACE::CSDKWrap::GetInst().GetMeetingServiceWrap().T_GetUIController().Init_Wrap(&g_meeting_service_wrap);
+	
 	ZOOM_SDK_NAMESPACE::CSDKWrap::GetInst().GetMeetingServiceWrap().T_GetUIController().SetEvent(&g_meeting_ui_controller_event);
 }
 void ZMeetingUICtrlWrap::Uninit()
@@ -304,7 +353,7 @@ void ZMeetingUICtrlWrap::Uninit()
 	ZOOM_SDK_NAMESPACE::CSDKWrap::GetInst().GetMeetingServiceWrap().T_GetUIController().SetEvent(NULL);
 	ZOOM_SDK_NAMESPACE::CSDKWrap::GetInst().GetMeetingServiceWrap().T_GetUIController().Uninit_Wrap();
 }
-void ZMeetingUICtrlWrap::SetSink(IZNativeSDKMeetingUICtrlWrapSink* pSink)
+void ZMeetingUICtrlWrap::SetSink(ZNativeSDKMeetingUICtrlWrapSink* pSink)
 {
 	m_pSink = pSink;
 }
@@ -316,7 +365,7 @@ void ZMeetingUICtrlWrap::onInviteBtnClicked(bool& bHandled)
 ZNSDKError ZMeetingUICtrlWrap::ShowChatDlg(ZNShowChatDlgParam showChatDlgParam)
 {
 	ZOOM_SDK_NAMESPACE::ShowChatDlgParam param;
-	swscanf_s(showChatDlgParam.hParent.c_str(), L"x%", &param.hParent);
+	swscanf_s(showChatDlgParam.hParent.c_str(), L"%x", &param.hParent);
 	param.rect.top = _wtoi64(showChatDlgParam.rect_top.c_str());
 	param.rect.bottom = _wtoi64(showChatDlgParam.rect_bottom.c_str());
 	param.rect.left = _wtoi64(showChatDlgParam.rect_left.c_str());

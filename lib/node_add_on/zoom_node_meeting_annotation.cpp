@@ -57,8 +57,7 @@ void ZoomNodeMeetingAnnotationWrap::StopAnnotation(const v8::FunctionCallbackInf
 		return;
 	}
 
-	if (!args[0]->IsNumber()
-		)
+	if (!args[0]->IsNumber())
 	{
 		isolate->ThrowException(v8::Exception::TypeError(
 			v8::String::NewFromUtf8(isolate, "Wrong arguments")));
@@ -190,7 +189,6 @@ void ZoomNodeMeetingAnnotationWrap::SetColor(const v8::FunctionCallbackInfo<v8::
 	ZoomSTRING color;
 	zoom_v8toc(args[1].As<v8::String>(), color);
 
-
 	ZNSDKError err = _g_native_wrap.GetMeetingServiceWrap().GetMeetingAnnotation().SetColor(zn_sdk_view_type, color);
 	v8::Local<v8::Integer> bret = v8::Integer::New(isolate, (int32_t)err);
 	args.GetReturnValue().Set(bret);
@@ -242,8 +240,7 @@ void ZoomNodeMeetingAnnotationWrap::Undo(const v8::FunctionCallbackInfo<v8::Valu
 		return;
 	}
 
-	if (!args[0]->IsNumber()
-		)
+	if (!args[0]->IsNumber())
 	{
 		isolate->ThrowException(v8::Exception::TypeError(
 			v8::String::NewFromUtf8(isolate, "Wrong arguments")));
@@ -276,8 +273,7 @@ void ZoomNodeMeetingAnnotationWrap::Redo(const v8::FunctionCallbackInfo<v8::Valu
 		return;
 	}
 
-	if (!args[0]->IsNumber()
-		)
+	if (!args[0]->IsNumber())
 	{
 		isolate->ThrowException(v8::Exception::TypeError(
 			v8::String::NewFromUtf8(isolate, "Wrong arguments")));

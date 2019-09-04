@@ -22,6 +22,7 @@
 #import "ZoomSDKUpgradeAccountHelper.h"
 #import "ZoomSDKWebinarController.h"
 #import "ZoomSDKCloseCaptionController.h"
+#import "ZoomSDKRawDataController.h"
 
 @interface ZoomSDKSecuritySessionKey : NSObject
 {
@@ -120,6 +121,7 @@
     ZoomSDKMeetingRecordController*  _recordController;
     ZoomSDKWebinarController*        _webinarController;
     ZoomSDKCloseCaptionController*   _closeCaptionController;
+    ZoomSDKRawDataController*        _rawDataController;
 }
 /**
  * Callback of receiving meeting events.
@@ -202,6 +204,13 @@
  * @return If the function succeeds, it will return a ZoomSDKCloseCaptionController object which you can use to handle close caption in meeting.
  */
 - (ZoomSDKCloseCaptionController*)getCloseCaptionController;
+
+/**
+ * @brief Get object of controller ZoomSDKRawDataController.
+ * @return If the function succeeds, it will return a ZoomSDKRawDataController object which you can use to handle raw data in meeting.
+ */
+- (ZoomSDKRawDataController*)getRawDataController;
+
 /**
  * @brief Start a ZOOM meeting with meeting number.
  * @note userId\userToken\username is for API user.

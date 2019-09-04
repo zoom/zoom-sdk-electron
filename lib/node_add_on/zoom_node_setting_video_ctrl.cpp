@@ -47,12 +47,12 @@ void ZoomNodeSettingVideoCtrlWrap::GetCameraList(const v8::FunctionCallbackInfo<
 
 	v8::HandleScope scope(isolate);
 	v8::Local<v8::Array> nodes = v8::Array::New(isolate);
-	for (int i = 0; i < zn_cameraInfoLst.getLength(); ++i) {
+	for (unsigned int i = 0; i < zn_cameraInfoLst.size(); ++i) {
 		v8::HandleScope scope(isolate);
 		v8::Local<v8::Object> node = v8::Object::New(isolate);
-		node->Set(v8::String::NewFromUtf8(isolate, "deviceId"), v8::String::NewFromUtf8(isolate, zs2s(zn_cameraInfoLst.get(i).deviceId).c_str()));
-		node->Set(v8::String::NewFromUtf8(isolate, "deviceName"), v8::String::NewFromUtf8(isolate, zs2s(zn_cameraInfoLst.get(i).deviceName).c_str()));
-		node->Set(v8::String::NewFromUtf8(isolate, "isSelected"), v8::Boolean::New(isolate, zn_cameraInfoLst.get(i).isSelectedDevice));
+		node->Set(v8::String::NewFromUtf8(isolate, "deviceId"), v8::String::NewFromUtf8(isolate, zs2s(zn_cameraInfoLst[i].deviceId).c_str()));
+		node->Set(v8::String::NewFromUtf8(isolate, "deviceName"), v8::String::NewFromUtf8(isolate, zs2s(zn_cameraInfoLst[i].deviceName).c_str()));
+		node->Set(v8::String::NewFromUtf8(isolate, "isSelected"), v8::Boolean::New(isolate, zn_cameraInfoLst[i].isSelectedDevice));
 		nodes->Set(i, node);
 	}
 

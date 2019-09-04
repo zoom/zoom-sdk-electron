@@ -14,8 +14,6 @@ ZMeetingAudioWrap::ZMeetingAudioWrap(){
 }
 
 ZMeetingAudioWrap::~ZMeetingAudioWrap(){
-    
- 
     m_pSink = 0;
 }
 
@@ -27,46 +25,50 @@ void ZMeetingAudioWrap::Uninit(){
     
 }
 
-void ZMeetingAudioWrap::SetSink(IZNativeSDKMeetingAudioWrapSink *pSink){
+void ZMeetingAudioWrap::SetSink(ZNativeSDKMeetingAudioWrapSink *pSink){
  
     m_pSink= pSink;
 }
 
-ZNSDKError ZMeetingAudioWrap::MuteAudio(ZoomSTRING userid, bool allowUnmuteBySelf){
+ZNSDKError ZMeetingAudioWrap::MuteAudio(unsigned int userid, bool allowUnmuteBySelf){
     
     ZoomSDKMeetingService *service = [[ZoomSDK sharedSDK]getMeetingService];
+    if (!service){
+        return ZNSDKERR_SERVICE_FAILED;
+    }
     ZoomSDKMeetingActionController *action = [service getMeetingActionController];
-    if (service && action) {
-        NSString *ID = [NSString stringWithCString:userid.c_str() encoding:NSUTF8StringEncoding];
-        if (ID == nil) {
-            return ZNSDKERR_INVALID_PARAMETER;
-        }
-        ZoomSDKError ret = [action actionMeetingWithCmd:ActionMeetingCmd_MuteAudio userID:ID.intValue onScreen:ScreenType_First];
-        
-        if (ret == ZoomSDKError_Success) {
+    if (action) {
+        ZoomSDKError ret(ZoomSDKError_UnKnow);
+        if (userid == 0) {
+            ret = [action actionMeetingWithCmd:ActionMeetingCmd_MuteAll userID:userid onScreen:ScreenType_First];
+        }else{
+            ret = [action actionMeetingWithCmd:ActionMeetingCmd_MuteAudio userID:userid onScreen:ScreenType_First];
             if (allowUnmuteBySelf == true) {
-                ret = [action actionMeetingWithCmd:ActionMeetingCmd_EnableUnmuteBySelf userID:ID.intValue onScreen:ScreenType_First];
+                ret = [action actionMeetingWithCmd:ActionMeetingCmd_EnableUnmuteBySelf userID:userid onScreen:ScreenType_First];
             }else{
-                ret = [action actionMeetingWithCmd:ActionMeetingCmd_DisableUnmuteBySelf userID:ID.intValue onScreen:ScreenType_First];
+                ret = [action actionMeetingWithCmd:ActionMeetingCmd_DisableUnmuteBySelf userID:userid onScreen:ScreenType_First];
             }
-            
         }
-        return Help_type.ZoomSDKErrorType(ret);
+         return Help_type.ZoomSDKErrorType(ret);
     }
     return ZNSDKERR_SERVICE_FAILED;
 }
 
 
-ZNSDKError ZMeetingAudioWrap::UnMuteAudio(ZoomSTRING userid){
+ZNSDKError ZMeetingAudioWrap::UnMuteAudio(unsigned int userid){
     
     ZoomSDKMeetingService *service = [[ZoomSDK sharedSDK]getMeetingService];
+    if (!service){
+        return ZNSDKERR_SERVICE_FAILED;
+    }
     ZoomSDKMeetingActionController *action = [service getMeetingActionController];
-    if (service && action) {
-        NSString *ID = [NSString stringWithCString:userid.c_str() encoding:NSUTF8StringEncoding];
-        if (ID == nil) {
-            return ZNSDKERR_INVALID_PARAMETER;
+    if (action) {
+        ZoomSDKError ret(ZoomSDKError_UnKnow);
+        if (userid == 0) {
+            ret = [action actionMeetingWithCmd:ActionMeetingCmd_UnmuteAll userID:userid onScreen:ScreenType_First];
+        }else{
+            ret = [action actionMeetingWithCmd:ActionMeetingCmd_UnMuteAudio userID:userid onScreen:ScreenType_First];
         }
-        ZoomSDKError ret = [action actionMeetingWithCmd:ActionMeetingCmd_UnMuteAudio userID:ID.intValue onScreen:ScreenType_First];
         return Help_type.ZoomSDKErrorType(ret);
     }
     return ZNSDKERR_SERVICE_FAILED;
@@ -75,8 +77,11 @@ ZNSDKError ZMeetingAudioWrap::UnMuteAudio(ZoomSTRING userid){
 ZNSDKError ZMeetingAudioWrap::JoinVoip(){
     
     ZoomSDKMeetingService *service = [[ZoomSDK sharedSDK]getMeetingService];
+    if (!service){
+        return ZNSDKERR_SERVICE_FAILED;
+    }
     ZoomSDKMeetingActionController *action = [service getMeetingActionController];
-    if (service && action) {
+    if (action) {
         ZoomSDKError ret = [action actionMeetingWithCmd:ActionMeetingCmd_JoinVoip userID:0 onScreen:ScreenType_First];
         return Help_type.ZoomSDKErrorType(ret);
     }
@@ -86,8 +91,11 @@ ZNSDKError ZMeetingAudioWrap::JoinVoip(){
 ZNSDKError ZMeetingAudioWrap::LeaveVoip(){
     
     ZoomSDKMeetingService *service = [[ZoomSDK sharedSDK]getMeetingService];
+    if (!service){
+        return ZNSDKERR_SERVICE_FAILED;
+    }
     ZoomSDKMeetingActionController *action = [service getMeetingActionController];
-    if (service && action) {
+    if (action) {
 
         ZoomSDKError ret = [action actionMeetingWithCmd:ActionMeetingCmd_LeaveVoip userID:0 onScreen:ScreenType_First];
         return Help_type.ZoomSDKErrorType(ret);
@@ -100,7 +108,12 @@ ZNSDKError ZMeetingAudioWrap::LeaveVoip(){
 void ZMeetingAudioWrap::onUserAudioStatusChange(ZNList<ZNUserAudioStatus> lstAudioStatusChange, ZoomSTRING strAudioStatusList){
     
     if (m_pSink) {
-        
         m_pSink->onUserAudioStatusChange(lstAudioStatusChange, strAudioStatusList);
+    }
+}
+
+void ZMeetingAudioWrap::onUserActiveAudioChange(ZNList<unsigned int> lstActiveAudio){
+    if (m_pSink) {
+        m_pSink->onUserActiveAudioChange(lstActiveAudio);
     }
 }

@@ -44,6 +44,10 @@ void CSDKImpl::Reset()
 	m_fnRetrieveCustomizedResouceHelper = NULL;
 	m_fnCreateCustomizedUIMgr = NULL;
 	m_fnDestroyCustomizedUIMgr = NULL;
+	m_fnRetrieveAudioRawDataChannel = NULL;
+	m_fnRetrieveVideoRawDataChannel = NULL;
+	m_fnRetrieveShareRawDataChannel = NULL;
+	m_fnHasRawDataLicense = NULL;
 	m_hSdk = NULL;
 }
 
@@ -133,6 +137,11 @@ bool CSDKImpl::ConfigSDKModule(std::wstring& path)
 		m_fnCreateCustomizedUIMgr = (fnCreateCustomizedUIMgr)GetProcAddress(m_hSdk, "CreateCustomizedUIMgr");
 		m_fnDestroyCustomizedUIMgr = (fnDestroyCustomizedUIMgr)GetProcAddress(m_hSdk, "DestroyCustomizedUIMgr");
 
+		m_fnRetrieveAudioRawDataChannel = (fnRetrieveAudioRawDataChannel)GetProcAddress(m_hSdk, "RetrieveAudioRawDataChannel");
+		m_fnRetrieveVideoRawDataChannel = (fnRetrieveVideoRawDataChannel)GetProcAddress(m_hSdk, "RetrieveVideoRawDataChannel");
+		m_fnRetrieveShareRawDataChannel = (fnRetrieveShareRawDataChannel)GetProcAddress(m_hSdk, "RetrieveShareRawDataChannel");
+		m_fnHasRawDataLicense = (fnHasRawDataLicense)(GetProcAddress(m_hSdk, "HasRawDataLicense"));
+
 		if (NULL == m_fnInitSDK
 			|| NULL == m_fnCleanUPSDK
 			|| NULL == m_fnCreateAuthService
@@ -153,7 +162,11 @@ bool CSDKImpl::ConfigSDKModule(std::wstring& path)
 			|| NULL == m_fnRetrieveUIHooker
 			|| NULL == m_fnRetrieveCustomizedResouceHelper
 			|| NULL == m_fnCreateCustomizedUIMgr
-			|| NULL == m_fnDestroyCustomizedUIMgr)
+			|| NULL == m_fnDestroyCustomizedUIMgr
+			|| NULL == m_fnRetrieveAudioRawDataChannel
+			|| NULL == m_fnRetrieveVideoRawDataChannel
+			|| NULL == m_fnRetrieveShareRawDataChannel
+			|| NULL == m_fnHasRawDataLicense)
 		{
 			break;
 		}
@@ -406,7 +419,45 @@ ZOOM_SDK_NAMESPACE::SDKError(CSDKImpl::DestroyCustomizedUIMgr)(ZOOM_SDK_NAMESPAC
 	return ret;
 }
 
+ZOOM_SDK_NAMESPACE::SDKError(CSDKImpl::RetrieveAudioRawDataChannel)(ZOOM_RAWDATA_NAMESPACE::IAudioRawDataChannel** ppAudioRawDataChannel)
+{
+	ZOOM_RAWDATA_NAMESPACE::SDKRawDataError ret(ZOOM_RAWDATA_NAMESPACE::SDKRawDataError_UNINITIALIZED);
+	if (m_fnRetrieveAudioRawDataChannel)
+	{
+		ret = m_fnRetrieveAudioRawDataChannel(ppAudioRawDataChannel);
+	}
+	return error_Internal_map(ret);
+}
 
+ZOOM_SDK_NAMESPACE::SDKError(CSDKImpl::RetrieveVideoRawDataChannel)(ZOOM_RAWDATA_NAMESPACE::IVideoRawDataChannel** ppVideoRawDataChannel)
+{
+	ZOOM_RAWDATA_NAMESPACE::SDKRawDataError ret(ZOOM_RAWDATA_NAMESPACE::SDKRawDataError_UNINITIALIZED);
+	if (m_fnRetrieveVideoRawDataChannel)
+	{
+		ret = m_fnRetrieveVideoRawDataChannel(ppVideoRawDataChannel);
+	}
+	return error_Internal_map(ret);
+}
+
+ZOOM_SDK_NAMESPACE::SDKError(CSDKImpl::RetrieveShareRawDataChannel)(ZOOM_RAWDATA_NAMESPACE::IShareRawDataChannel** ppShareRawDataChannel)
+{
+	ZOOM_RAWDATA_NAMESPACE::SDKRawDataError ret(ZOOM_RAWDATA_NAMESPACE::SDKRawDataError_UNINITIALIZED);
+	if (m_fnRetrieveShareRawDataChannel)
+	{
+		ret = m_fnRetrieveShareRawDataChannel(ppShareRawDataChannel);
+	}
+	return error_Internal_map(ret);
+}
+
+ZOOM_SDK_NAMESPACE::SDKError(CSDKImpl::HasRawDataLicense)()
+{
+	ZOOM_RAWDATA_NAMESPACE::SDKRawDataError ret(ZOOM_RAWDATA_NAMESPACE::SDKRawDataError_UNINITIALIZED);
+	if (m_fnHasRawDataLicense)
+	{
+		ret = m_fnHasRawDataLicense();
+	}
+	return error_Internal_map(ret);
+}
 
 #if (!defined CSHARP_WRAP && !defined _LIB)
 BOOL APIENTRY DllMain(HMODULE hModule,

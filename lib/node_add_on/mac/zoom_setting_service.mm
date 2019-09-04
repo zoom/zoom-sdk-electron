@@ -42,8 +42,11 @@ void ZSettingServiceWrap::Uninit(){
 
 ZNSDKError ZSettingServiceWrap::ShowSettingDlg(ZNShowSettingDlgParam param){
     ZoomSDKMeetingService *service = [[ZoomSDK sharedSDK]getMeetingService];
+    if (!service){
+        return ZNSDKERR_SERVICE_FAILED;
+    }
     ZoomSDKMeetingUIController *controller = [service getMeetingUIController];
-    if (service && controller) {
+    if (controller) {
         ZoomSDKError ret = [controller showMeetingComponent:MeetingComponent_Setting window:nil show:YES InPanel:YES frame:NSZeroRect];
         return Help_type.ZoomSDKErrorType(ret);
     }
@@ -52,8 +55,11 @@ ZNSDKError ZSettingServiceWrap::ShowSettingDlg(ZNShowSettingDlgParam param){
 
 ZNSDKError ZSettingServiceWrap::HideSettingDlg(){
     ZoomSDKMeetingService *service = [[ZoomSDK sharedSDK]getMeetingService];
+    if (!service){
+        return ZNSDKERR_SERVICE_FAILED;
+    }
     ZoomSDKMeetingUIController *controller = [service getMeetingUIController];
-    if (service && controller) {
+    if (controller) {
         ZoomSDKError ret = [controller showMeetingComponent:MeetingComponent_Setting window:nil show:NO InPanel:NO frame:NSZeroRect];
         return Help_type.ZoomSDKErrorType(ret);
     }

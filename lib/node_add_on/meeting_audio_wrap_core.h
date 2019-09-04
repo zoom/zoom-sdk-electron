@@ -1,12 +1,7 @@
 #pragma once
 #include "zoom_native_sdk_wrap_core_def.h"
+#include "zoom_sinks_wrap_class.h"
 
-class IZNativeSDKMeetingAudioWrapSink
-{
-public:
-	//
-	virtual void onUserAudioStatusChange(ZNList<ZNUserAudioStatus> lstAudioStatusChange, ZoomSTRING strAudioStatusList) = 0;
-};
 class ZMeetingAudioWrap
 {
 public:
@@ -14,17 +9,18 @@ public:
 	virtual ~ZMeetingAudioWrap();
 	void Init();
 	void Uninit();
-	void SetSink(IZNativeSDKMeetingAudioWrapSink* pSink);
+	void SetSink(ZNativeSDKMeetingAudioWrapSink* pSink);
 
-	ZNSDKError MuteAudio(ZoomSTRING userid, bool allowUnmuteBySelf);
-	ZNSDKError UnMuteAudio(ZoomSTRING userid);
+	ZNSDKError MuteAudio(unsigned int userid, bool allowUnmuteBySelf);
+	ZNSDKError UnMuteAudio(unsigned int userid);
 	ZNSDKError JoinVoip();
 	ZNSDKError LeaveVoip();
 
 	//callback
 	void onUserAudioStatusChange(ZNList<ZNUserAudioStatus> lstAudioStatusChange, ZoomSTRING strAudioStatusList);
+	void onUserActiveAudioChange(ZNList<unsigned int > lstActiveAudio);
 
 private:
-	IZNativeSDKMeetingAudioWrapSink* m_pSink;
+	ZNativeSDKMeetingAudioWrapSink* m_pSink;
 
 };

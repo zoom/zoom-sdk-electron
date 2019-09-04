@@ -22,13 +22,16 @@ void ZSettingVideoWrap::Uninit(){
 ZNSDKError  ZSettingVideoWrap::SelectCamera(ZoomSTRING deviceId){
     
     ZoomSDKSettingService *service = [[ZoomSDK sharedSDK]getSettingService];
+    if (!service){
+        return ZNSDKERR_SERVICE_FAILED;
+    }
     ZoomSDKVideoSetting *video = [service getVideoSetting];
     NSString *ID = [NSString stringWithCString:deviceId.c_str() encoding:NSUTF8StringEncoding];
     if (ID == nil) {
         return ZNSDKERR_INVALID_PARAMETER;
     }
     
-    if(service && video){
+    if(video){
         ZoomSDKError ret = [video selectCamera:ID];
         return Help_type.ZoomSDKErrorType(ret);
     }
@@ -38,10 +41,14 @@ ZNSDKError  ZSettingVideoWrap::SelectCamera(ZoomSTRING deviceId){
 
 ZNList<ZNCameraInfo> ZSettingVideoWrap::GetCameraList(){
     
-    ZoomSDKSettingService *service = [[ZoomSDK sharedSDK]getSettingService];
-    ZoomSDKVideoSetting *video = [service getVideoSetting];
     ZNList<ZNCameraInfo> list;
-    if(service && video){
+    ZoomSDKSettingService *service = [[ZoomSDK sharedSDK]getSettingService];
+    if (!service){
+        return list;
+    }
+    ZoomSDKVideoSetting *video = [service getVideoSetting];
+    
+    if(video){
         NSArray *cameraList = [video getCameraList];
         ZNCameraInfo  cameraInfo;
         if (!cameraList || cameraList.count == 0) {
@@ -54,7 +61,7 @@ ZNList<ZNCameraInfo> ZSettingVideoWrap::GetCameraList(){
             cameraInfo.deviceId = DeviceID.UTF8String;
             cameraInfo.deviceName = DeviceName.UTF8String;
             cameraInfo.isSelectedDevice = isSelected;
-            list.add(cameraInfo);
+            list.push_back(cameraInfo);
         }
         
         return list;
@@ -65,12 +72,15 @@ ZNList<ZNCameraInfo> ZSettingVideoWrap::GetCameraList(){
 ZNSDKError  ZSettingVideoWrap::EnableVideoMirrorEffect(bool bEnable){
     
     ZoomSDKSettingService *service = [[ZoomSDK sharedSDK]getSettingService];
+    if (!service){
+        return ZNSDKERR_SERVICE_FAILED;
+    }
     ZoomSDKVideoSetting *video = [service getVideoSetting];
     bool isEnable = this->IsVideoMirrorEffectEnable();
     if (isEnable == bEnable) {
         return ZNSDKERR_WRONG_USEAGE;
     }
-    if(service && video){
+    if(video){
         ZoomSDKError ret = [video enableMirrorEffect:bEnable];
         return Help_type.ZoomSDKErrorType(ret);
     }
@@ -80,12 +90,15 @@ ZNSDKError  ZSettingVideoWrap::EnableVideoMirrorEffect(bool bEnable){
 ZNSDKError ZSettingVideoWrap::EnableFaceBeautyEffect(bool bEnable){
     
     ZoomSDKSettingService *service = [[ZoomSDK sharedSDK]getSettingService];
+    if (!service){
+        return ZNSDKERR_SERVICE_FAILED;
+    }
     ZoomSDKVideoSetting *video = [service getVideoSetting];
     bool isEnable = this->IsFaceBeautyEffectEnabled();
     if (isEnable == bEnable) {
         return ZNSDKERR_WRONG_USEAGE;
     }
-    if(service && video){
+    if(video){
         ZoomSDKError ret = [video enableBeautyFace:bEnable];
         return Help_type.ZoomSDKErrorType(ret);
     }
@@ -96,8 +109,11 @@ ZNSDKError ZSettingVideoWrap::EnableFaceBeautyEffect(bool bEnable){
 bool ZSettingVideoWrap::IsVideoMirrorEffectEnable(){
     
     ZoomSDKSettingService *service = [[ZoomSDK sharedSDK]getSettingService];
+    if (!service){
+        return ZNSDKERR_SERVICE_FAILED;
+    }
     ZoomSDKVideoSetting *video = [service getVideoSetting];
-    if(service && video){
+    if(video){
         
         return [video isMirrorEffectEnabled];
     }
@@ -109,8 +125,11 @@ bool ZSettingVideoWrap::IsVideoMirrorEffectEnable(){
 bool ZSettingVideoWrap::IsFaceBeautyEffectEnabled(){
     
     ZoomSDKSettingService *service = [[ZoomSDK sharedSDK]getSettingService];
+    if (!service){
+        return ZNSDKERR_SERVICE_FAILED;
+    }
     ZoomSDKVideoSetting *video = [service getVideoSetting];
-    if(service && video){
+    if(video){
         
         return [video isBeautyFaceEnabled];
     }

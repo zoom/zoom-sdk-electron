@@ -13,8 +13,28 @@ private:
 	ZoomNodeCustomizedResourceWrap();
 	~ZoomNodeCustomizedResourceWrap();
 public:
+	///\brief Add the custom photo files, currently, support only PNG format.
+	///\param 1. strPNGID(string) Resource ID corresponding to the custom resource.
+	///\param 2. strPNGPath(string) The location of the customized resource file must be an absolute path and include the file name with suffix.
+	/// \return If the function succeeds, the return value is ZNSDKERR_SUCCESS.
+	///Otherwise failed. To get extended error information, see \link ZNSDKError \endlink enum.
+	/// \remarks You must call the function first before calling InitSDK(), or no, it won't work.
 	static void AddCustomizedPictureResource(const v8::FunctionCallbackInfo<v8::Value>& args);
+	/// \brief Use the custom string to replace the specified string item.
+	/// \param 1. customizedType(number) Specify the string item type. For more information, see \link ZNSDKCustomizedStringType \endlink enum.
+	/// \param 2. customizedString(string) Specify the custom string.
+	/// \return If the function succeeds, the return value is ZNSDKERR_SUCCESS.
+	///Otherwise failed. To get extended error information, see \link ZNSDKError \endlink enum.
+	/// \remarks If customizedString is empty, the return value is ZNSDKERR_INVALID_PARAMETER.
+	/// \remarks You must call the function first before calling InitSDK(), or no, it won't work.
 	static void AddCustomizedStringResource(const v8::FunctionCallbackInfo<v8::Value>& args);
+	/// \brief Use the custom URL to replace the specified URL.
+	/// \param 1. customizedType(number) Specify the URL type. For more information, see \link ZNSDKCustomizedURLType \endlink enum.
+	/// \param 2. customizedUrl(string) Specify the custom URL. 
+	/// \return If the function succeeds, the return value is ZNSDKERR_SUCCESS.
+	///Otherwise failed. To get extended error information, see \link ZNSDKError \endlink enum.
+	/// \remarks If customizedString is empty, the return value is ZNSDKERR_INVALID_PARAMETER.
+	/// \remarks You must call the function first before calling InitSDK(), or no, it won't work.
 	static void AddCustomizedURLResource(const v8::FunctionCallbackInfo<v8::Value>& args);
 	
 	static v8::Persistent<v8::Function> constructor;

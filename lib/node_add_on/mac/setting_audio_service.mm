@@ -24,6 +24,9 @@ void ZSettingAudioWrap::Uninit(){
 ZNSDKError ZSettingAudioWrap::SelectMic(ZoomSTRING deviceId, ZoomSTRING deviceName){
     
     ZoomSDKSettingService *service = [[ZoomSDK sharedSDK]getSettingService];
+    if (!service){
+        return ZNSDKERR_SERVICE_FAILED;
+    }
     ZoomSDKAudioSetting *audio = [service getAudioSetting];
     NSString  *ID = [NSString stringWithCString:deviceId.c_str() encoding:NSUTF8StringEncoding];
     NSString  *name = [NSString stringWithCString:deviceName.c_str() encoding:NSUTF8StringEncoding];
@@ -31,7 +34,7 @@ ZNSDKError ZSettingAudioWrap::SelectMic(ZoomSTRING deviceId, ZoomSTRING deviceNa
         
         return ZNSDKERR_INVALID_PARAMETER;
     }
-    if(service && audio){
+    if(audio){
         ZoomSDKError ret = [audio selectAudioDevice:YES DeviceID:ID DeviceName:name];
         return Help_type.ZoomSDKErrorType(ret);
     }
@@ -40,10 +43,13 @@ ZNSDKError ZSettingAudioWrap::SelectMic(ZoomSTRING deviceId, ZoomSTRING deviceNa
 
 
 ZNList<ZNMicInfo> ZSettingAudioWrap::GetMicList(){
-   
-    ZoomSDKSettingService *service = [[ZoomSDK sharedSDK]getSettingService];
-    ZoomSDKAudioSetting *audio = [service getAudioSetting];
+    
     ZNList<ZNMicInfo> list;
+    ZoomSDKSettingService *service = [[ZoomSDK sharedSDK]getSettingService];
+    if (!service){
+        return list;
+    }
+    ZoomSDKAudioSetting *audio = [service getAudioSetting];
     if(service && audio){
         NSArray *micList = [audio getAudioDeviceList:YES];
         ZNMicInfo  micInfo;
@@ -57,7 +63,7 @@ ZNList<ZNMicInfo> ZSettingAudioWrap::GetMicList(){
             micInfo.deviceId = DeviceID.UTF8String;
             micInfo.deviceName = DeviceName.UTF8String;
             micInfo.isSelectedDevice = isSelected;
-            list.add(micInfo);
+            list.push_back(micInfo);
         }
         
         return list;
@@ -69,6 +75,9 @@ ZNList<ZNMicInfo> ZSettingAudioWrap::GetMicList(){
 ZNSDKError ZSettingAudioWrap::SelectSpeaker(ZoomSTRING deviceId, ZoomSTRING deviceName){
     
     ZoomSDKSettingService *service = [[ZoomSDK sharedSDK]getSettingService];
+    if (!service){
+        return ZNSDKERR_SERVICE_FAILED;
+    }
     ZoomSDKAudioSetting *audio = [service getAudioSetting];
     NSString  *ID = [NSString stringWithCString:deviceId.c_str() encoding:NSUTF8StringEncoding];
     NSString  *name = [NSString stringWithCString:deviceName.c_str() encoding:NSUTF8StringEncoding];
@@ -86,9 +95,12 @@ ZNSDKError ZSettingAudioWrap::SelectSpeaker(ZoomSTRING deviceId, ZoomSTRING devi
 
 ZNList<ZNSpeakerInfo> ZSettingAudioWrap::GetSpeakerList(){
     
-    ZoomSDKSettingService *service = [[ZoomSDK sharedSDK]getSettingService];
-    ZoomSDKAudioSetting *audio = [service getAudioSetting];
     ZNList<ZNSpeakerInfo> list;
+    ZoomSDKSettingService *service = [[ZoomSDK sharedSDK]getSettingService];
+    if (!service){
+        return list;
+    }
+    ZoomSDKAudioSetting *audio = [service getAudioSetting];
     if(service && audio){
         NSArray *speakList = [audio getAudioDeviceList:NO];
         ZNSpeakerInfo  speakInfo;
@@ -102,7 +114,7 @@ ZNList<ZNSpeakerInfo> ZSettingAudioWrap::GetSpeakerList(){
             speakInfo.deviceId = DeviceID.UTF8String;
             speakInfo.deviceName = DeviceName.UTF8String;
             speakInfo.isSelectedDevice = isSelected;
-            list.add(speakInfo);
+            list.push_back(speakInfo);
         }
         
         return list;
@@ -113,6 +125,9 @@ ZNList<ZNSpeakerInfo> ZSettingAudioWrap::GetSpeakerList(){
 bool ZSettingAudioWrap::IsAutoJoinAudioEnabled(){
     
     ZoomSDKSettingService *service = [[ZoomSDK sharedSDK]getSettingService];
+    if (!service){
+        return false;
+    }
     ZoomSDKAudioSetting *audio = [service getAudioSetting];
     if(service && audio){
         
@@ -124,6 +139,9 @@ bool ZSettingAudioWrap::IsAutoJoinAudioEnabled(){
 bool ZSettingAudioWrap::IsAutoAdjustMicEnabled(){
     
     ZoomSDKSettingService *service = [[ZoomSDK sharedSDK]getSettingService];
+    if (!service){
+        return false;
+    }
     ZoomSDKAudioSetting *audio = [service getAudioSetting];
     if(service && audio){
         
@@ -135,6 +153,9 @@ bool ZSettingAudioWrap::IsAutoAdjustMicEnabled(){
 ZNSDKError ZSettingAudioWrap::EnableAutoJoinAudio(bool bEnable){
     
     ZoomSDKSettingService *service = [[ZoomSDK sharedSDK]getSettingService];
+    if (!service){
+        return ZNSDKERR_SERVICE_FAILED;
+    }
     ZoomSDKAudioSetting *audio = [service getAudioSetting];
     bool isJoin = this->IsAutoJoinAudioEnabled();
     if (isJoin == bEnable) {
@@ -152,6 +173,9 @@ ZNSDKError ZSettingAudioWrap::EnableAutoJoinAudio(bool bEnable){
 ZNSDKError ZSettingAudioWrap::EnableAutoAdjustMic(bool bEnable){
     
     ZoomSDKSettingService *service = [[ZoomSDK sharedSDK]getSettingService];
+    if (!service){
+        return ZNSDKERR_SERVICE_FAILED;
+    }
     ZoomSDKAudioSetting *audio = [service getAudioSetting];
     bool isJoin = this->IsAutoAdjustMicEnabled();
     if (isJoin == bEnable) {

@@ -11,140 +11,170 @@ nativeErrorTypeHelp::~nativeErrorTypeHelp(){
 }
 #pragma mark  zoom error
 ZNSDKError nativeErrorTypeHelp::ZoomSDKErrorType(ZoomSDKError &error){
-    if (error == ZoomSDKError_Success) {
-        return ZNSDKERR_SUCCESS;
+    switch (error) {
+            case ZoomSDKError_Success:
+                return ZNSDKERR_SUCCESS;
+                break;
+            case ZoomSDKError_Failed:
+                return ZNSDKERR_MEMORY_FAILED;
+                break;
+            case ZoomSDKError_UnKnow:
+                return ZNSDKERR_UNKNOWN;
+                break;
+            case ZoomSDKError_Uninit:
+                return ZNSDKERR_UNINITIALIZE;
+                break;
+            case ZoomSDKError_ServiceFailed:
+                return ZNSDKERR_SERVICE_FAILED;
+                break;
+            case ZoomSDKError_WrongUsage:
+                return ZNSDKERR_WRONG_USEAGE;
+                break;
+            case ZoomSDKError_InvalidPrameter:
+                return ZNSDKERR_INVALID_PARAMETER;
+                break;
+            case ZoomSDKError_NoPermission:
+                return ZNSDKERR_NO_PERMISSION;
+                break;
+            case ZoomSDKError_NoRecordingInProgress:
+                return ZNSDKERR_NORECORDINGINPROCESS;
+                break;
+            case ZoomSDKError_TooFrequentCall:
+                return ZNSDKERR_TOO_FREQUENT_CALL;
+                break;
+            
+        default:
+            break;
     }
-    if (error == ZoomSDKError_Failed) {
-        return ZNSDKERR_MEMORY_FAILED;
-    }
-    if (error == ZoomSDKError_UnKnow) {
-        return ZNSDKERR_UNKNOWN;
-    }
-    
-    if (error == ZoomSDKError_Uninit) {
-        return ZNSDKERR_UNINITIALIZE;
-    }
-    if (error == ZoomSDKError_ServiceFailed) {
-        return ZNSDKERR_SERVICE_FAILED;
-    }
-    if (error == ZoomSDKError_WrongUsage) {
-        return ZNSDKERR_WRONG_USEAGE;
-    }
-    if (error == ZoomSDKError_InvalidPrameter) {
-        return ZNSDKERR_INVALID_PARAMETER;
-    }
-    if (error == ZoomSDKError_NoPermission) {
-        return ZNSDKERR_NO_PERMISSION;
-    }
-    if (error == ZoomSDKError_NoRecordingInProgress) {
-        return ZNSDKERR_NORECORDINGINPROCESS;
-    }
-    
-    if (error == ZoomSDKError_UnKnow) {
-        return ZNSDKERR_UNKNOWN;
-    }
-    return ZNSDKERR_UNKNOWN;
 }
+
 #pragma mark  auth error
 ZNAuthResult nativeErrorTypeHelp::ZoomSDKAuthErrorTpye(ZoomSDKAuthError &error){
-    if (error == ZoomSDKAuthError_Success) {
-        return ZNAUTHRET_SUCCESS;
+
+    switch (error) {
+            case ZoomSDKAuthError_Success:
+                return ZNAUTHRET_SUCCESS;
+                break;
+            case ZoomSDKAuthError_KeyOrSecretWrong:
+                return ZNAUTHRET_KEYORSECRETWRONG;
+                break;
+            case ZoomSDKAuthError_AccountNotSupport:
+                return ZNAUTHRET_ACCOUNTNOTSUPPORT;
+                break;
+            case ZoomSDKAuthError_AccountNotEnableSDK:
+                return ZNAUTHRET_ACCOUNTNOTENABLESDK;
+                break;
+            case ZoomSDKAuthError_Unknown:
+                return ZNAUTHRET_UNKNOWN;
+                break;
+            case ZoomSDKAuthError_Timeout:
+                return ZNAUTHRET_OVERTIME;
+                break;
+            case ZoomSDKAuthError_NetworkIssue:
+                return ZNAUTHRET_NETWORKISSUE;
+                break;
+            
+        default:
+            break;
     }
-    if (error == ZoomSDKAuthError_KeyOrSecretWrong) {
-        return ZNAUTHRET_KEYORSECRETWRONG;
-    }
-    if (error == ZoomSDKAuthError_AccountNotSupport) {
-        return ZNAUTHRET_ACCOUNTNOTSUPPORT;
-    }
-    if (error == ZoomSDKAuthError_AccountNotEnableSDK) {
-        return ZNAUTHRET_ACCOUNTNOTENABLESDK;
-    }
-    if (error == ZoomSDKAuthError_Unknown) {
-        return ZNAUTHRET_UNKNOWN;
-    }
-    return ZNAUTHRET_UNKNOWN;
 }
 
 #pragma mark  login status
 ZNLOGINSTATUS nativeErrorTypeHelp::ZoomSDKLoginStatusType(ZoomSDKLoginStatus &status){
-    if (status == ZoomSDKLoginStatus_Idle) {
-        return ZNLOGIN_IDLE;
+    
+    switch (status) {
+            case ZoomSDKLoginStatus_Idle:
+                return ZNLOGIN_IDLE;
+                break;
+            case ZoomSDKLoginStatus_Success:
+                return ZNLOGIN_SUCCESS;
+                break;
+            case ZoomSDKLoginStatus_Failed:
+                return ZNLOGIN_FAILED;
+                break;
+            case ZoomSDKLoginStatus_Processing:
+                return ZNLOGIN_PROCESSING;
+                break;
+        default:
+            break;
     }
-    if (status == ZoomSDKLoginStatus_Success){
-        return ZNLOGIN_SUCCESS;
-    }
-    if (status == ZoomSDKLoginStatus_Failed) {
-        return ZNLOGIN_FAILED;
-    }
-    if (status == ZoomSDKLoginStatus_Processing){
-        return ZNLOGIN_PROCESSING;
-    }
-    return ZNLOGIN_FAILED;
 }
 #pragma mark user type
 ZNSDKUserType nativeErrorTypeHelp::ZoomSDKUserTypeChange(ZoomSDKUserType &type){
-    if (type == ZoomSDKUserType_APIUser) {
-        return ZNSDK_UT_APIUSER;
+
+    switch (type) {
+            case ZoomSDKUserType_APIUser:
+                return ZNSDK_UT_APIUSER;
+                break;
+            case ZoomSDKUserType_ZoomUser:
+                return ZNSDK_UT_NORMALUSER;
+                break;
+            case ZoomSDKUserType_SSOUser:
+                return ZNSDK_UT_WITHOUT_LOGIN;
+                break;
+            
+        default:
+            break;
     }
-    if (type == ZoomSDKUserType_ZoomUser) {
-        return ZNSDK_UT_NORMALUSER;
-    }
-    if (type == ZoomSDKUserType_SSOUser) {
-        return ZNSDK_UT_WITHOUT_LOGIN;
-    }
-    
-    return ZNSDK_UT_NORMALUSER;
 }
 
 ZoomSDKUserType nativeErrorTypeHelp::ZNSDKUserTypeChange(ZNSDKUserType &type){
-    if (type == ZNSDK_UT_WITHOUT_LOGIN) {
-        return ZoomSDKUserType_SSOUser;
+
+    switch (type) {
+            case ZNSDK_UT_WITHOUT_LOGIN:
+                return ZoomSDKUserType_SSOUser;
+                break;
+            case ZNSDK_UT_NORMALUSER:
+                return ZoomSDKUserType_ZoomUser;
+                break;
+            case ZNSDK_UT_APIUSER:
+                return ZoomSDKUserType_APIUser;
+                break;
+            
+        default:
+            break;
     }
-    
-    if (type == ZNSDK_UT_NORMALUSER) {
-        return ZoomSDKUserType_ZoomUser;
-    }
-    if (type == ZNSDK_UT_APIUSER) {
-        return ZoomSDKUserType_APIUser;
-    }
-    
-    return ZoomSDKUserType_ZoomUser;
 }
 
 SDKUserType  nativeErrorTypeHelp::SDKUserTypeChange(ZNZoomUserType &type){
     
-    if (type == ZNZoomUserType_APIUSER) {
-        return SDKUserType_APIUser;
+    switch (type) {
+            case ZNZoomUserType_APIUSER:
+                return SDKUserType_APIUser;
+                break;
+            case ZNZoomUserType_EMAIL_LOGIN:
+                return SDKUserType_EmailLogin;
+                break;
+            case ZNZoomUserType_FACEBOOK:
+                return SDKUserType_FaceBook;
+                break;
+            case ZNZoomUserType_GoogleOAuth:
+                return SDKUserType_GoogleOAuth;
+                break;
+            case ZNZoomUserType_SSO:
+                return SDKUserType_SSO;
+                break;
+            case ZNZoomUserType_Unknown:
+                return SDKUserType_Unknown;
+                break;
+            
+        default:
+            break;
     }
-    if (type == ZNZoomUserType_EMAIL_LOGIN) {
-        return SDKUserType_EmailLogin;
-    }
-    if (type == ZNZoomUserType_FACEBOOK) {
-        return SDKUserType_FaceBook;
-    }
-    if (type == ZNZoomUserType_GoogleOAuth) {
-        return SDKUserType_GoogleOAuth;
-    }
-    if (type == ZNZoomUserType_SSO) {
-        return SDKUserType_SSO;
-    }
-    if (type == ZNZoomUserType_Unknown) {
-        return SDKUserType_Unknown;
-    }
-    return SDKUserType_Unknown;
 }
 
 LeaveMeetingCmd nativeErrorTypeHelp::ZoomSDKLeaveMeetingCmd(ZNLeaveMeetingCmd &cmd){
-    if (cmd == ZNLEAVE_MEETING) {
-        
-        return LeaveMeetingCmd_Leave;
+
+    switch (cmd) {
+            case ZNLEAVE_MEETING:
+                return LeaveMeetingCmd_Leave;
+                break;
+            case ZNEND_MEETING:
+                return LeaveMeetingCmd_End;
+                break;
+        default:
+            break;
     }
-    
-    if (cmd == ZNEND_MEETING) {
-        return LeaveMeetingCmd_End;
-    }
-    
-    return LeaveMeetingCmd_End;
 }
 
 #pragma mark meeting status
@@ -177,7 +207,6 @@ ZNMeetingStatus  nativeErrorTypeHelp::ZNSDKMeetingStatus(ZoomSDKMeetingStatus &s
         case ZoomSDKMeetingStatus_AudioReady:
             return ZNMEETING_STATUS_AUDIO_READY;
             break;
-            
         case ZoomSDKMeetingStatus_OtherMeetingInProgress:
             return ZNMEETING_STATUS_OTHER_MEETING_INPROGRESS;
             break;
@@ -193,6 +222,7 @@ ZNMeetingStatus  nativeErrorTypeHelp::ZNSDKMeetingStatus(ZoomSDKMeetingStatus &s
         case ZoomSDKMeetingStatus_Webinar_Depromote:
             return ZNMEETING_STATUS_WEBINAR_DEPROMOTE;
             break;
+            
         default:
             break;
     }
@@ -227,7 +257,6 @@ ZoomSDKMeetingStatus nativeErrorTypeHelp::ZoomSDKMeetingStatusC(ZNMeetingStatus 
         case ZNMEETING_STATUS_AUDIO_READY:
             return ZoomSDKMeetingStatus_AudioReady;
             break;
-            
         case ZNMEETING_STATUS_OTHER_MEETING_INPROGRESS:
             return ZoomSDKMeetingStatus_OtherMeetingInProgress;
             break;
@@ -243,6 +272,7 @@ ZoomSDKMeetingStatus nativeErrorTypeHelp::ZoomSDKMeetingStatusC(ZNMeetingStatus 
         case ZNMEETING_STATUS_WEBINAR_DEPROMOTE:
             return ZoomSDKMeetingStatus_Webinar_Depromote;
             break;
+            
         default:
             break;
     }
@@ -546,4 +576,127 @@ ZNFreeMeetingNeedUpgradeType nativeErrorTypeHelp::ZoomSDKFreeMeetingNeedUpgradeT
             break;
     }
     
+}
+
+ZNPremeetingAPIResult nativeErrorTypeHelp::ZNSDKPreMeetingError(ZoomSDKPremeetingError &error){
+    
+    switch (error) {
+        case ZoomSDKPremeetingError_Success:
+            return ZN_PREMETAPIRET_SUCCESS;
+            break;
+        case ZoomSDKPremeetingError_Failed:
+            return ZN_PREMETAPIRET_UNKNOW;
+            break;
+        case ZoomSDKPremeetingError_TimeOut:
+            return ZN_PREMETAPIRET_UNKNOW;
+            break;
+        case ZoomSDKPremeetingError_Unknown:
+            return ZN_PREMETAPIRET_UNKNOW;
+            break;
+        default:
+            break;
+    }
+}
+
+ZNDirectShareStatus nativeErrorTypeHelp::ZNSDKDirectShareStatus(DirectShareStatus &status){
+    
+    switch (status) {
+        case DirectShareStatus_None:
+            return ZN_DirectShare_Unknown;
+            break;
+        case DirectShareStatus_Connecting:
+            return ZN_DirectShare_Connecting;
+            break;
+        case DirectShareStatus_InProgress:
+            return ZN_DirectShare_In_Direct_Share_Mode;
+            break;
+        case DirectShareStatus_Ended:
+            return ZN_DirectShare_Ended;
+            break;
+        case DirectShareStatus_NeedMeetingIDOrSharingKey:
+            return ZN_DirectShare_Need_MeetingID_Or_PairingCode;
+            break;
+        case DirectShareStatus_WrongMeetingIDOrSharingKey:
+            return ZN_DirectShare_WrongMeetingID_Or_SharingKey;
+            break;
+        case DirectShareStatus_NetworkError:
+            return ZN_DirectShare_NetWork_Error;
+            break;
+        case DirectShareStatus_Unknow:
+            return ZN_DirectShare_Other_Error;
+            break;
+        default:
+            break;
+    }
+}
+
+ZNShareStatus nativeErrorTypeHelp::ZNSDKShareStatus(ZoomSDKShareStatus &status){
+    switch (status) {
+        case ZoomSDKShareStatus_None:
+            return ZN_Sharing_None;
+            break;
+        case ZoomSDKShareStatus_SelfBegin:
+            return ZN_Sharing_Self_Send_Begin;
+            break;
+        case ZoomSDKShareStatus_SelfEnd:
+            return ZN_Sharing_Self_Send_End;
+            break;
+        case ZoomSDKShareStatus_OtherBegin:
+            return ZN_Sharing_Other_Share_Begin;
+            break;
+        case ZoomSDKShareStatus_OtherEnd:
+            return ZN_Sharing_Other_Share_End;
+            break;
+        case ZoomSDKShareStatus_ViewOther:
+            return ZN_Sharing_View_Other_Sharing;
+            break;
+        case ZoomSDKShareStatus_Pause:
+            return ZN_Sharing_Pause;
+            break;
+        case ZoomSDKShareStatus_Resume:
+            return ZN_Sharing_Resume;
+            break;
+        case ZoomSDKShareStatus_ContentTypeChange:
+            return ZN_Sharing_ContentTypeChange;
+            break;
+        case ZoomSDKShareStatus_SelfStartAudioShare:
+            return ZN_Sharing_SelfStartAudioShare;
+            break;
+        case ZoomSDKShareStatus_SelfStopAudioShare:
+            return ZN_Sharing_SelfStopAudioShare;
+            break;
+        case ZoomSDKShareStatus_OtherStartAudioShare:
+            return ZN_Sharing_OtherStartAudioShare;
+            break;
+        case ZoomSDKShareStatus_OtherStopAudioShare:
+            return ZN_Sharing_OtherStopAudioShare;
+            break;
+        default:
+            break;
+    }
+}
+
+ZNUserRole nativeErrorTypeHelp::ZNSDKUserRole(UserRole &role){
+    switch (role) {
+        case UserRole_None:
+            return ZN_USERROLE_NONE;
+            break;
+        case UserRole_Host:
+            return ZN_USERROLE_HOST;
+            break;
+        case UserRole_CoHost:
+            return ZN_USERROLE_COHOST;
+            break;
+        case UserRole_Attendee:
+            return ZN_USERROLE_ATTENDEE;
+            break;
+        case UserRole_Panelist:
+            return ZN_USERROLE_PANELIST;
+            break;
+        case UserRole_BreakoutRoom_Moderator:
+            return ZN_USERROLE_BREAKOUTROOM_MODERATOR;
+            break;
+        default:
+            break;
+    }
 }

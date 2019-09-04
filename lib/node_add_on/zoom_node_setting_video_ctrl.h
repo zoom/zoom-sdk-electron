@@ -13,11 +13,30 @@ private:
 	ZoomNodeSettingVideoCtrlWrap();
 	~ZoomNodeSettingVideoCtrlWrap();
 public:
+	/// \brief Select camera device.
+	/// \param 1. deviceId(string) Specify a device to be selected.
+	/// \return If the function succeeds, the return value is ZNSDKERR_SUCCESS.
+	///Otherwise failed. To get extended error information, see \link ZNSDKError \endlink enum.
 	static void SelectVideoCamera(const v8::FunctionCallbackInfo<v8::Value>& args);
+	/// \brief Get camera device list.
+	/// \return If the function succeeds, the return value is a camera device list.
+	///Otherwise failed, returns an empty array.
 	static void GetCameraList(const v8::FunctionCallbackInfo<v8::Value>& args);
+	/// \brief Enable or disable video mirror effect.
+	/// \param 1. bEnable(bool) TRUE indicates to enable the video mirror effect.
+	/// \return If the function succeeds, the return value is ZNSDKERR_SUCCESS.
+	///Otherwise failed. To get extended error information, see \link ZNSDKError \endlink enum.
 	static void EnableVideoMirrorEffect(const v8::FunctionCallbackInfo<v8::Value>& args);
+	/// \brief Enable or disable the video facial beauty effect.
+	/// \param 1. bEnable(bool) TRUE indicates to enable the video facial beauty effect.
+	/// \return If the function succeeds, the return value is ZNSDKERR_SUCCESS.
+	///Otherwise failed. To get extended error information, see \link ZNSDKError \endlink enum.
 	static void EnableFaceBeautyEffect(const v8::FunctionCallbackInfo<v8::Value>& args);
+	/// \brief Get the flag to enable/disable the video mirror effect.
+	/// \return Enabled(TRUE) or disabled(FALSE).
 	static void IsMirrorEffectEnabled(const v8::FunctionCallbackInfo<v8::Value>& args);
+	/// \brief Get the flag to enable/disable the video facial beauty effect.
+	/// \return Enabled(TRUE) or disabled(FALSE).
 	static void IsFaceBeautyEffectEnabled(const v8::FunctionCallbackInfo<v8::Value>& args);
 	
 	static v8::Persistent<v8::Function> constructor;

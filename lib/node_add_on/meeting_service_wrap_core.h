@@ -7,19 +7,7 @@
 #include "meeting_share_wrap_core.h"
 #include "meeting_h323_wrap_core.h"
 #include "meeting_config_wrap_core.h"
-
-class IZNativeSDKMeetingWrapSink
-{
-public:
-	
-	virtual void onMeetingStatusChanged(ZNMeetingStatus meetingStatus, int iResult) = 0;
-};
-class IZNativeSDKMeetingUICtrlWrapSink
-{
-public:
-
-	virtual void onInviteBtnClicked(bool& bHandled) = 0;
-};
+#include "zoom_sinks_wrap_class.h"
 
 class ZMeetingInfoWrap
 {
@@ -29,7 +17,7 @@ public:
 
 	ZoomSTRING GetMeetingTopic();
 	ZNMeetingType GetMeetingType();
-	ZoomSTRING GetMeetingNumber();
+	unsigned long long GetMeetingNumber();
 	ZoomSTRING GetMeetingID();
 	ZoomSTRING GetInviteEmailTeamplate();
 	ZoomSTRING GetInviteEmailTitle();
@@ -45,7 +33,7 @@ public:
 	virtual ~ZMeetingUICtrlWrap();
 	void Init();
 	void Uninit();
-	void SetSink(IZNativeSDKMeetingUICtrlWrapSink* pSink);
+	void SetSink(ZNativeSDKMeetingUICtrlWrapSink* pSink);
 
 	ZNSDKError ShowChatDlg(ZNShowChatDlgParam showChatDlgParam);
 	ZNSDKError HideChatDlg();
@@ -71,7 +59,7 @@ public:
 	//callback
 	void onInviteBtnClicked(bool& bHandled);
 private:
-	IZNativeSDKMeetingUICtrlWrapSink* m_pSink;
+	ZNativeSDKMeetingUICtrlWrapSink* m_pSink;
 };
 class ZMeetingServiceWrap
 {
@@ -80,7 +68,7 @@ public:
 	virtual ~ZMeetingServiceWrap();
 	void Init();
 	void Uninit();
-	void SetSink(IZNativeSDKMeetingWrapSink* pSink);
+	void SetSink(ZNativeSDKMeetingWrapSink* pSink);
 	
 	ZNSDKError Start(ZNStartParam startParam);
 	ZNSDKError Start_WithoutLogin(ZNStartParam startParam);
@@ -107,7 +95,7 @@ public:
 	//callback
 	void onMeetingStatusChanged(ZNMeetingStatus meetingStatus, int iResult);
 private:
-	IZNativeSDKMeetingWrapSink* m_pSink;
+	ZNativeSDKMeetingWrapSink* m_pSink;
 	ZMeetingInfoWrap m_meeting_info;
 	ZMeetingUICtrlWrap m_meeting_ui_ctrl;
 	ZMeetingAnnotationWrap m_meeting_annotation;

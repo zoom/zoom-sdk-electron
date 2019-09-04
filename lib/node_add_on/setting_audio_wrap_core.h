@@ -1,7 +1,6 @@
 #pragma once
 #include "zoom_native_sdk_wrap_core_def.h"
 
-
 class ZSettingAudioWrap
 {
 public:

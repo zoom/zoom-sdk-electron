@@ -15,13 +15,17 @@ typedef ZOOM_SDK_NAMESPACE::SDKError(*fnCreateNetworkConnectionHelper)(ZOOM_SDK_
 typedef ZOOM_SDK_NAMESPACE::SDKError(*fnDestroyNetworkConnectionHelper)(ZOOM_SDK_NAMESPACE::INetworkConnectionHelper* pNetworkHelper);
 typedef const wchar_t*(*fnGetVersion)();
 typedef ZOOM_SDK_NAMESPACE::SDKError(*fnCleanUPSDK)();
-
 typedef ZOOM_SDK_NAMESPACE::SDKError(*fnCreateEmbeddedBrowser)(ZOOM_SDK_NAMESPACE::IEmbeddedBrowser** ppEmbeddedBrowser, HWND hwnd);
 typedef ZOOM_SDK_NAMESPACE::SDKError(*fnDestroyEmbeddedBrowser)(ZOOM_SDK_NAMESPACE::IEmbeddedBrowser* pEmbeddedBrowser);
 typedef ZOOM_SDK_NAMESPACE::SDKError(*fnRetrieveUIHooker)(ZOOM_SDK_NAMESPACE::IUIHooker** ppUIHooker);
 typedef ZOOM_SDK_NAMESPACE::SDKError(*fnRetrieveCustomizedResourceHelper)(ZOOM_SDK_NAMESPACE::ICustomizedResourceHelper** ppCustomizedResourceHelper);
 typedef ZOOM_SDK_NAMESPACE::SDKError(*fnCreateCustomizedUIMgr)(ZOOM_SDK_NAMESPACE::ICustomizedUIMgr** ppCustomizedUIMgr);
 typedef ZOOM_SDK_NAMESPACE::SDKError(*fnDestroyCustomizedUIMgr)(ZOOM_SDK_NAMESPACE::ICustomizedUIMgr* pCustomizedUIMgr);
+
+typedef ZOOM_RAWDATA_NAMESPACE::SDKRawDataError(*fnRetrieveAudioRawDataChannel)(ZOOM_RAWDATA_NAMESPACE::IAudioRawDataChannel** ppAudioRawDataChannel);
+typedef ZOOM_RAWDATA_NAMESPACE::SDKRawDataError(*fnRetrieveVideoRawDataChannel)(ZOOM_RAWDATA_NAMESPACE::IVideoRawDataChannel** ppVideoRawDataChannel);
+typedef ZOOM_RAWDATA_NAMESPACE::SDKRawDataError(*fnRetrieveShareRawDataChannel)(ZOOM_RAWDATA_NAMESPACE::IShareRawDataChannel** ppShareRawDataChannel);
+typedef ZOOM_RAWDATA_NAMESPACE::SDKRawDataError(*fnHasRawDataLicense)();
 
 class CSDKImpl
 {
@@ -54,6 +58,10 @@ public:
 	virtual ZOOM_SDK_NAMESPACE::SDKError(CreateCustomizedUIMgr)(ZOOM_SDK_NAMESPACE::ICustomizedUIMgr** ppCustomizedUIMgr);
 	virtual ZOOM_SDK_NAMESPACE::SDKError(DestroyCustomizedUIMgr)(ZOOM_SDK_NAMESPACE::ICustomizedUIMgr* pCustomizedUIMgr);
 
+	virtual ZOOM_SDK_NAMESPACE::SDKError(RetrieveAudioRawDataChannel)(ZOOM_RAWDATA_NAMESPACE::IAudioRawDataChannel** ppAudioRawDataChannel);
+	virtual ZOOM_SDK_NAMESPACE::SDKError(RetrieveVideoRawDataChannel)(ZOOM_RAWDATA_NAMESPACE::IVideoRawDataChannel** ppVideoRawDataChannel);
+	virtual ZOOM_SDK_NAMESPACE::SDKError(RetrieveShareRawDataChannel)(ZOOM_RAWDATA_NAMESPACE::IShareRawDataChannel** ppShareRawDataChannel);
+	virtual ZOOM_SDK_NAMESPACE::SDKError(HasRawDataLicense)();
 private:
 	CSDKImpl();
 	void Reset();
@@ -81,4 +89,9 @@ private:
 	fnRetrieveCustomizedResourceHelper m_fnRetrieveCustomizedResouceHelper;
 	fnCreateCustomizedUIMgr m_fnCreateCustomizedUIMgr;
 	fnDestroyCustomizedUIMgr m_fnDestroyCustomizedUIMgr;
+
+	fnRetrieveAudioRawDataChannel m_fnRetrieveAudioRawDataChannel;
+	fnRetrieveVideoRawDataChannel m_fnRetrieveVideoRawDataChannel;
+	fnRetrieveShareRawDataChannel m_fnRetrieveShareRawDataChannel;
+	fnHasRawDataLicense	m_fnHasRawDataLicense;
 };

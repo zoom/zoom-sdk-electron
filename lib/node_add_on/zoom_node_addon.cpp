@@ -1,22 +1,27 @@
 
 #include "zoom_node_addon.h"
-#include "zoom_v8_to_c.cpp"
-#include "zoom_node_meeting_annotation.cpp"
-#include "zoom_node_meeting_audio_ctrl.cpp"
-#include "zoom_node_meeting_video_ctrl.cpp"
-#include "zoom_node_meeting_participants_ctrl.cpp"
-#include "zoom_node_meeting_share_ctrl.cpp"
-#include "zoom_node_meeting_h323_ctrl.cpp"
-#include "zoom_node_meeting_config_ctrl.cpp"
-#include "zoom_node_setting_video_ctrl.cpp"
-#include "zoom_node_setting_audio_ctrl.cpp"
-#include "zoom_node_setting_general_ctrl.cpp"
-#include "zoom_node_setting_recording_ctrl.cpp"
-#include "zoom_node_customized_resource.cpp"
-
+#include "zoom_v8_to_c.h"
+#include "zoom_node_meeting_annotation.h"
+#include "zoom_node_meeting_audio_ctrl.h"
+#include "zoom_node_meeting_video_ctrl.h"
+#include "zoom_node_meeting_participants_ctrl.h"
+#include "zoom_node_meeting_share_ctrl.h"
+#include "zoom_node_meeting_h323_ctrl.h"
+#include "zoom_node_meeting_config_ctrl.h"
+#include "zoom_node_setting_video_ctrl.h"
+#include "zoom_node_setting_audio_ctrl.h"
+#include "zoom_node_setting_general_ctrl.h"
+#include "zoom_node_setting_recording_ctrl.h"
+#include "zoom_node_customized_resource.h"
+#include "zoom_node_direct_share_helper.h"
+#include "zoom_node_video_raw_data.h"
+#include "zoom_node_audio_raw_data.h"
+#include "zoom_node_share_raw_data.h"
+#include "zoom_raw_data_wrap.h"
+#include "run_task_to_main_thread.h"
+#include "zoom_node_raw_data_license.h"
 
 ZNativeSDKWrap _g_native_wrap;
-
 void CreateObject(const v8::FunctionCallbackInfo<v8::Value>& args) {
 	ZoomNodeWrap::NewInstance(args);
 }
@@ -26,7 +31,7 @@ void InitAll(v8::Local<v8::Object> exports, v8::Local<v8::Object> module) {
 	ZoomNodeAuthWrap::Init(exports->GetIsolate());
 	ZoomNodeMeetingWrap::Init(exports->GetIsolate());
 	ZoomNodeSettingWrap::Init(exports->GetIsolate());
-	
+	ZoomNodePremeetingWrap::Init(exports->GetIsolate());
 	ZoomNodeCustomizedResourceWrap::Init(exports->GetIsolate());
 	ZoomNodeMeetingInfoWrap::Init(exports->GetIsolate());
 	ZoomNodeMeetingUICtrlWrap::Init(exports->GetIsolate());
@@ -37,12 +42,15 @@ void InitAll(v8::Local<v8::Object> exports, v8::Local<v8::Object> module) {
 	ZoomNodeMeetingShareCtrlWrap::Init(exports->GetIsolate());
 	ZoomNodeMeetingH323CtrlWrap::Init(exports->GetIsolate());
 	ZoomNodeMeetingConfigCtrlWrap::Init(exports->GetIsolate());
-
 	ZoomNodeSettingVideoCtrlWrap::Init(exports->GetIsolate());
 	ZoomNodeSettingAudioCtrlWrap::Init(exports->GetIsolate());
 	ZoomNodeSettingGeneralCtrlWrap::Init(exports->GetIsolate());
 	ZoomNodeSettingRecordingCtrlWrap::Init(exports->GetIsolate());
-	
+	ZoomNodeDirectShareHelperWrap::Init(exports->GetIsolate());
+	ZoomNodeVideoRawDataWrap::Init(exports->GetIsolate());
+	ZoomNodeAudioRawDataWrap::Init(exports->GetIsolate());
+	ZoomNodeShareRawDataWrap::Init(exports->GetIsolate());
+	ZoomNodeRawDataLicenseWrap::Init(exports->GetIsolate());
 	NODE_SET_METHOD(module, "exports", CreateObject);
 }
 
@@ -52,7 +60,7 @@ v8::Persistent<v8::Function> ZoomNodeWrap::constructor;
 v8::Persistent<v8::Function> ZoomNodeAuthWrap::constructor;
 v8::Persistent<v8::Function> ZoomNodeMeetingWrap::constructor;
 v8::Persistent<v8::Function> ZoomNodeSettingWrap::constructor;
-
+v8::Persistent<v8::Function> ZoomNodePremeetingWrap::constructor;
 v8::Persistent<v8::Function> ZoomNodeCustomizedResourceWrap::constructor;
 v8::Persistent<v8::Function> ZoomNodeMeetingInfoWrap::constructor;
 v8::Persistent<v8::Function> ZoomNodeMeetingUICtrlWrap::constructor;
@@ -63,19 +71,28 @@ v8::Persistent<v8::Function> ZoomNodeMeetingParticipantsCtrlWrap::constructor;
 v8::Persistent<v8::Function> ZoomNodeMeetingShareCtrlWrap::constructor;
 v8::Persistent<v8::Function> ZoomNodeMeetingH323CtrlWrap::constructor;
 v8::Persistent<v8::Function> ZoomNodeMeetingConfigCtrlWrap::constructor;
-
 v8::Persistent<v8::Function> ZoomNodeSettingVideoCtrlWrap::constructor;
 v8::Persistent<v8::Function> ZoomNodeSettingAudioCtrlWrap::constructor;
 v8::Persistent<v8::Function> ZoomNodeSettingGeneralCtrlWrap::constructor;
 v8::Persistent<v8::Function> ZoomNodeSettingRecordingCtrlWrap::constructor;
+v8::Persistent<v8::Function> ZoomNodeDirectShareHelperWrap::constructor;
+v8::Persistent<v8::Function> ZoomNodeVideoRawDataWrap::constructor;
+v8::Persistent<v8::Function> ZoomNodeAudioRawDataWrap::constructor;
+v8::Persistent<v8::Function> ZoomNodeShareRawDataWrap::constructor;
+v8::Persistent<v8::Function> ZoomNodeRawDataLicenseWrap::constructor;
 
 ///////////////////////////////////////////////////////////////////////////
 ////////////////////////////////////////////////////////////////////////////
 
 void ZoomNodeWrap::InitSDK(const v8::FunctionCallbackInfo<v8::Value>& args){
 	
+#if (defined _WIN32)
+	Init_MainThread_RunLoop(GetCurrentThreadId());
+#else
+	Init_MainThread_RunLoop(0);
+#endif
 	v8::Isolate* isolate = args.GetIsolate();
-	if (args.Length() < 6 || !args[0]->IsString()) {
+	if (args.Length() < 6) {
 		isolate->ThrowException(v8::Exception::TypeError(
 			v8::String::NewFromUtf8(isolate, "ZoomNodeWrap::InitSDK-Wrong number of arguments")));
 		return;
@@ -112,6 +129,11 @@ void ZoomNodeWrap::InitSDK(const v8::FunctionCallbackInfo<v8::Value>& args){
 }
 
 void ZoomNodeWrap::CleanUPSDK(const v8::FunctionCallbackInfo<v8::Value>& args) {
+#if (defined _WIN32)
+	Uninit_MainThread_RunLoop();
+#else
+	Uninit_MainThread_RunLoop();
+#endif
 	v8::Isolate* isolate = args.GetIsolate();
 	ZNSDKError err = _g_native_wrap.CleanUPSDK();
 	v8::Local<v8::Integer> bret = v8::Integer::New(isolate, (int32_t)err);
@@ -127,80 +149,29 @@ void ZoomNodeWrap::GetMeetingObj(const v8::FunctionCallbackInfo<v8::Value>& args
 void ZoomNodeWrap::GetSetObj(const v8::FunctionCallbackInfo<v8::Value>& args) {
 	ZoomNodeSettingWrap::NewInstance(args);
 }
-
+void ZoomNodeWrap::GetPremeetingObj(const v8::FunctionCallbackInfo<v8::Value>& args) {
+	ZoomNodePremeetingWrap::NewInstance(args);
+}
 void ZoomNodeWrap::GetCustomizedResourceObj(const v8::FunctionCallbackInfo<v8::Value>& args) {
 	ZoomNodeCustomizedResourceWrap::NewInstance(args);
 }
+void ZoomNodeWrap::GetVideoRawDataObj(const v8::FunctionCallbackInfo<v8::Value>& args) {
+	ZoomNodeVideoRawDataWrap::NewInstance(args);
+}
+void ZoomNodeWrap::GetAudioRawDataObj(const v8::FunctionCallbackInfo<v8::Value>& args) {
+	ZoomNodeAudioRawDataWrap::NewInstance(args);
+}
+void ZoomNodeWrap::GetShareRawDataObj(const v8::FunctionCallbackInfo<v8::Value>& args) {
+	ZoomNodeShareRawDataWrap::NewInstance(args);
+}
+void ZoomNodeWrap::GetRawDataLicenseObj(const v8::FunctionCallbackInfo<v8::Value>& args) {
+	ZoomNodeRawDataLicenseWrap::NewInstance(args);
+}
 ////////////////////////////////////////////////////////////////////////////
-class ZNativeSDKAuthWrapSink : public IZNativeSDKAuthWrapSink
-{
-public:
-	virtual void onAuthenticationReturn(ZNAuthResult authResult)
-	{
-		if (ZoomNodeSinkHelper::GetInst().onAuthenticationReturn.IsEmpty())
-			return;
-
-		auto isolate = v8::Isolate::GetCurrent();
-		v8::HandleScope scope(isolate);
-		auto context = isolate->GetCurrentContext();
-		auto global = context->Global();
-
-		v8::Local<v8::Integer> v8_authresult = v8::Integer::New(isolate, (int32_t)authResult);
-		int argc = 1;
-		v8::Local<v8::Value> argv[1] = { v8_authresult };
-		auto fn = v8::Local<v8::Function>::New(isolate, ZoomNodeSinkHelper::GetInst().onAuthenticationReturn);
-
-		fn->Call(context, global, argc, argv);
-	}
-	virtual void onLoginRet(ZNLOGINSTATUS ret)
-	{
-		if (ZoomNodeSinkHelper::GetInst().onLoginRet.IsEmpty())
-			return;
-
-		auto isolate = v8::Isolate::GetCurrent();
-		v8::HandleScope scope(isolate);
-		auto context = isolate->GetCurrentContext();
-		auto global = context->Global();
-
-		v8::Local<v8::Integer> v8_loginstatus = v8::Integer::New(isolate, (int32_t)ret);
-		int argc = 1;
-		v8::Local<v8::Value> argv[1] = { v8_loginstatus };
-		auto fn = v8::Local<v8::Function>::New(isolate, ZoomNodeSinkHelper::GetInst().onLoginRet);
-		fn->Call(context, global, argc, argv);
-	}
-	virtual void onLogout()
-	{
-		if (ZoomNodeSinkHelper::GetInst().onLogout.IsEmpty())
-			return;
-
-		auto isolate = v8::Isolate::GetCurrent();
-		v8::HandleScope scope(isolate);
-		auto context = isolate->GetCurrentContext();
-		auto global = context->Global();
-
-		auto fn = v8::Local<v8::Function>::New(isolate, ZoomNodeSinkHelper::GetInst().onLogout);
-		fn->Call(context, global, 0, NULL);
-	}
-	virtual void onZoomIdentityExpired()
-	{
-		if (ZoomNodeSinkHelper::GetInst().onZoomIdentityExpired.IsEmpty())
-			return;
-
-		auto isolate = v8::Isolate::GetCurrent();
-		v8::HandleScope scope(isolate);
-		auto context = isolate->GetCurrentContext();
-		auto global = context->Global();
-
-		auto fn = v8::Local<v8::Function>::New(isolate, ZoomNodeSinkHelper::GetInst().onZoomIdentityExpired);
-		fn->Call(context, global, 0, NULL);
-	}
-};
-
-static ZNativeSDKAuthWrapSink _g_node_auth_cb;
 
 ZoomNodeAuthWrap::ZoomNodeAuthWrap()
 {
-	_g_native_wrap.GetAuthServiceWrap().SetSink(&_g_node_auth_cb);
+	_g_native_wrap.GetAuthServiceWrap().SetSink(&ZoomNodeSinkWrapMgr::GetInst().m_authServiceWrapSink);
 }
 
 ZoomNodeAuthWrap::~ZoomNodeAuthWrap()
@@ -211,15 +182,14 @@ ZoomNodeAuthWrap::~ZoomNodeAuthWrap()
 void ZoomNodeAuthWrap::Auth(const v8::FunctionCallbackInfo<v8::Value>& args)
 {
 	v8::Isolate* isolate = args.GetIsolate();
-	if (args.Length() < 3) {
+	if (args.Length() < 2) {
 		isolate->ThrowException(v8::Exception::TypeError(
 			v8::String::NewFromUtf8(isolate, "Wrong number of arguments")));
 		return;
 	}
 
 	if (!args[0]->IsString() ||
-		!args[1]->IsString() ||
-		!args[2]->IsFunction())
+		!args[1]->IsString())
 	{
 		isolate->ThrowException(v8::Exception::TypeError(
 			v8::String::NewFromUtf8(isolate, "Wrong arguments")));
@@ -230,10 +200,6 @@ void ZoomNodeAuthWrap::Auth(const v8::FunctionCallbackInfo<v8::Value>& args)
 	zoom_v8toc(args[0].As<v8::String>(), param.sdk_key);
 	zoom_v8toc(args[1].As<v8::String>(), param.sdk_secret);
 
-	v8::Local<v8::Function> cbfunc = v8::Local<v8::Function>::Cast(args[2]);
-	v8::Persistent<v8::Function, v8::CopyablePersistentTraits<v8::Function> > cb(isolate, cbfunc);
-	ZoomNodeSinkHelper::GetInst().onAuthenticationReturn = cb;
-
 	ZNSDKError err = _g_native_wrap.GetAuthServiceWrap().AuthSDK(param);
 	v8::Local<v8::Integer> bret = v8::Integer::New(isolate, (int32_t)err);
 	args.GetReturnValue().Set(bret);
@@ -241,7 +207,7 @@ void ZoomNodeAuthWrap::Auth(const v8::FunctionCallbackInfo<v8::Value>& args)
 void ZoomNodeAuthWrap::Login(const v8::FunctionCallbackInfo<v8::Value>& args)
 {
 	v8::Isolate* isolate = args.GetIsolate();
-	if (args.Length() < 3) 
+	if (args.Length() < 2) 
 	{
 		isolate->ThrowException(v8::Exception::TypeError(
 			v8::String::NewFromUtf8(isolate, "Wrong number of arguments")));
@@ -249,8 +215,7 @@ void ZoomNodeAuthWrap::Login(const v8::FunctionCallbackInfo<v8::Value>& args)
 	}
 
 	if (!args[0]->IsString() ||
-		!args[1]->IsString() ||
-		!args[2]->IsFunction())
+		!args[1]->IsString())
 	{
 		isolate->ThrowException(v8::Exception::TypeError(
 			v8::String::NewFromUtf8(isolate, "Wrong arguments")));
@@ -260,13 +225,9 @@ void ZoomNodeAuthWrap::Login(const v8::FunctionCallbackInfo<v8::Value>& args)
 	zoom_v8toc(args[0].As<v8::String>(), param.user_name);
 	zoom_v8toc(args[1].As<v8::String>(), param.psw);
 
-	v8::Local<v8::Function> cbfunc = v8::Local<v8::Function>::Cast(args[2]);
-	v8::Persistent<v8::Function, v8::CopyablePersistentTraits<v8::Function> > cb(isolate, cbfunc);
-	ZoomNodeSinkHelper::GetInst().onLoginRet = cb;
-
-	if (args.Length() == 4)
+	if (args.Length() == 3)
 	{
-		zoom_v8toc(args[3].As<v8::Boolean>(), param.remember_me);
+		zoom_v8toc(args[2].As<v8::Boolean>(), param.remember_me);
 	}
 
 	ZNSDKError err = _g_native_wrap.GetAuthServiceWrap().Login(param);
@@ -276,15 +237,14 @@ void ZoomNodeAuthWrap::Login(const v8::FunctionCallbackInfo<v8::Value>& args)
 void ZoomNodeAuthWrap::LoginWithSSOToken(const v8::FunctionCallbackInfo<v8::Value>& args)
 {
 	v8::Isolate* isolate = args.GetIsolate();
-	if (args.Length() < 2)
+	if (args.Length() < 1)
 	{
 		isolate->ThrowException(v8::Exception::TypeError(
 			v8::String::NewFromUtf8(isolate, "Wrong number of arguments")));
 		return;
 	}
 
-	if (!args[0]->IsString() ||
-		!args[1]->IsFunction())
+	if (!args[0]->IsString())
 	{
 		isolate->ThrowException(v8::Exception::TypeError(
 			v8::String::NewFromUtf8(isolate, "Wrong arguments")));
@@ -293,13 +253,9 @@ void ZoomNodeAuthWrap::LoginWithSSOToken(const v8::FunctionCallbackInfo<v8::Valu
 	ZNLoginParam param;
 	zoom_v8toc(args[0].As<v8::String>(), param.ssotoken);
 	
-	v8::Local<v8::Function> cbfunc = v8::Local<v8::Function>::Cast(args[1]);
-	v8::Persistent<v8::Function, v8::CopyablePersistentTraits<v8::Function> > cb(isolate, cbfunc);
-	ZoomNodeSinkHelper::GetInst().onLoginRet = cb;
-
-	if (args.Length() == 3)
+	if (args.Length() == 2)
 	{
-		zoom_v8toc(args[2].As<v8::Boolean>(), param.remember_me);
+		zoom_v8toc(args[1].As<v8::Boolean>(), param.remember_me);
 	}
 
 	ZNSDKError err = _g_native_wrap.GetAuthServiceWrap().LoginWithSSOToken(param);
@@ -309,22 +265,6 @@ void ZoomNodeAuthWrap::LoginWithSSOToken(const v8::FunctionCallbackInfo<v8::Valu
 void ZoomNodeAuthWrap::Logout(const v8::FunctionCallbackInfo<v8::Value>& args)
 {
 	v8::Isolate* isolate = args.GetIsolate();
-	if (args.Length() < 1)
-	{
-		isolate->ThrowException(v8::Exception::TypeError(
-			v8::String::NewFromUtf8(isolate, "Wrong number of arguments")));
-		return;
-	}
-	if (!args[0]->IsFunction())
-	{
-		isolate->ThrowException(v8::Exception::TypeError(
-			v8::String::NewFromUtf8(isolate, "Wrong arguments")));
-		return;
-	}
-	v8::Local<v8::Function> cbfunc = v8::Local<v8::Function>::Cast(args[0]);
-	v8::Persistent<v8::Function, v8::CopyablePersistentTraits<v8::Function> > cb(isolate, cbfunc);
-	ZoomNodeSinkHelper::GetInst().onLogout = cb;
-
 	ZNSDKError err = _g_native_wrap.GetAuthServiceWrap().Logout();
 	v8::Local<v8::Integer> bret = v8::Integer::New(isolate, (int32_t)err);
 	args.GetReturnValue().Set(bret);
@@ -377,8 +317,7 @@ void ZoomNodeAuthWrap::SetLogoutCB(const v8::FunctionCallbackInfo<v8::Value>& ar
 		return;
 	}
 
-	if (!args[0]->IsFunction()
-		)
+	if (!args[0]->IsFunction())
 	{
 		isolate->ThrowException(v8::Exception::TypeError(
 			v8::String::NewFromUtf8(isolate, "Wrong arguments")));
@@ -393,36 +332,63 @@ void ZoomNodeAuthWrap::SetLogoutCB(const v8::FunctionCallbackInfo<v8::Value>& ar
 	v8::Local<v8::Integer> bret = v8::Integer::New(isolate, (int32_t)err);
 	args.GetReturnValue().Set(bret);
 }
+void ZoomNodeAuthWrap::SetOnAuthReturnCB(const v8::FunctionCallbackInfo<v8::Value>& args)
+{
+	v8::Isolate* isolate = args.GetIsolate();
+	if (args.Length() < 1) {
+		isolate->ThrowException(v8::Exception::TypeError(
+			v8::String::NewFromUtf8(isolate, "Wrong number of arguments")));
+		return;
+	}
+
+	if (!args[0]->IsFunction())
+	{
+		isolate->ThrowException(v8::Exception::TypeError(
+			v8::String::NewFromUtf8(isolate, "Wrong arguments")));
+		return;
+	}
+
+	v8::Local<v8::Function> cbfunc = v8::Local<v8::Function>::Cast(args[0]);
+	v8::Persistent<v8::Function, v8::CopyablePersistentTraits<v8::Function> > cb(isolate, cbfunc);
+	ZoomNodeSinkHelper::GetInst().onAuthenticationReturn = cb;
+
+	ZNSDKError err = ZNSDKERR_SUCCESS;
+	v8::Local<v8::Integer> bret = v8::Integer::New(isolate, (int32_t)err);
+	args.GetReturnValue().Set(bret);
+}
+void ZoomNodeAuthWrap::SetOnZoomIdentityExpiredCB(const v8::FunctionCallbackInfo<v8::Value>& args)
+{
+	v8::Isolate* isolate = args.GetIsolate();
+	if (args.Length() < 1) {
+		isolate->ThrowException(v8::Exception::TypeError(
+			v8::String::NewFromUtf8(isolate, "Wrong number of arguments")));
+		return;
+	}
+
+	if (!args[0]->IsFunction())
+	{
+		isolate->ThrowException(v8::Exception::TypeError(
+			v8::String::NewFromUtf8(isolate, "Wrong arguments")));
+		return;
+	}
+
+	v8::Local<v8::Function> cbfunc = v8::Local<v8::Function>::Cast(args[0]);
+	v8::Persistent<v8::Function, v8::CopyablePersistentTraits<v8::Function> > cb(isolate, cbfunc);
+	ZoomNodeSinkHelper::GetInst().onZoomIdentityExpired = cb;
+
+	ZNSDKError err = ZNSDKERR_SUCCESS;
+	v8::Local<v8::Integer> bret = v8::Integer::New(isolate, (int32_t)err);
+	args.GetReturnValue().Set(bret);
+}
+void ZoomNodeAuthWrap::GetDirectShareHelperObj(const v8::FunctionCallbackInfo<v8::Value>& args) {
+	ZoomNodeDirectShareHelperWrap::NewInstance(args);
+}
 
 //////////////////////////////////////////////////////////////////////////////////////////////////
-class ZNativeSDKMeetingWrapSink : public IZNativeSDKMeetingWrapSink
-{
-public:
-	virtual void onMeetingStatusChanged(ZNMeetingStatus meetingStatus, int iResult)
-	{
-		if (ZoomNodeSinkHelper::GetInst().onMeetingStatusChanged.IsEmpty())
-			return;
-
-		auto isolate = v8::Isolate::GetCurrent();
-		v8::HandleScope scope(isolate);
-		auto context = isolate->GetCurrentContext();
-		auto global = context->Global();
-
-		v8::Local<v8::Integer > v8_meeting_status = v8::Integer::New(isolate, (int32_t)meetingStatus);
-		v8::Local<v8::Integer > v8_result = v8::Integer::New(isolate, (int32_t)iResult);
-		int argc = 2;
-		v8::Local<v8::Value> argv[2] = { v8_meeting_status, v8_result };
-		auto fn = v8::Local<v8::Function>::New(isolate, ZoomNodeSinkHelper::GetInst().onMeetingStatusChanged);
-
-		fn->Call(context, global, argc, argv);
-	}
-};
-
-static ZNativeSDKMeetingWrapSink _g_node_meeting_cb;
 
 ZoomNodeMeetingWrap::ZoomNodeMeetingWrap()
 {
-	_g_native_wrap.GetMeetingServiceWrap().SetSink(&_g_node_meeting_cb);
+	_g_native_wrap.GetMeetingServiceWrap().SetSink(&ZoomNodeSinkWrapMgr::GetInst().m_meetingServiceWrapSink);
 }
 
 ZoomNodeMeetingWrap::~ZoomNodeMeetingWrap()
@@ -432,20 +398,19 @@ ZoomNodeMeetingWrap::~ZoomNodeMeetingWrap()
 void ZoomNodeMeetingWrap::Start(const v8::FunctionCallbackInfo<v8::Value>& args)
 {
 	v8::Isolate* isolate = args.GetIsolate();
-	if (args.Length() < 7)
+	if (args.Length() < 6)
 	{
 		isolate->ThrowException(v8::Exception::TypeError(
 			v8::String::NewFromUtf8(isolate, "Wrong number of arguments")));
 		return;
 	}
 
-	if (!args[0]->IsString() ||
+	if (!args[0]->IsNumber() ||
 		!args[1]->IsString() ||
 		!args[2]->IsString() ||
 		!args[3]->IsBoolean() ||
 		!args[4]->IsBoolean() ||
-		!args[5]->IsBoolean() ||
-		!args[6]->IsFunction())
+		!args[5]->IsBoolean())
 	{
 		isolate->ThrowException(v8::Exception::TypeError(
 			v8::String::NewFromUtf8(isolate, "Wrong arguments")));
@@ -453,17 +418,12 @@ void ZoomNodeMeetingWrap::Start(const v8::FunctionCallbackInfo<v8::Value>& args)
 	}
 	ZNStartParam param;
 	param.userType = ZNSDK_UT_NORMALUSER;
-	zoom_v8toc(args[0].As<v8::String>(), param.meetingNumber);
+	param.meetingNumber = (unsigned long long)args[0]->NumberValue();
 	zoom_v8toc(args[1].As<v8::String>(), param.hDirectShareAppWnd);
 	zoom_v8toc(args[2].As<v8::String>(), param.participantId);
 	zoom_v8toc(args[3].As<v8::Boolean>(), param.isVideoOff);
 	zoom_v8toc(args[4].As<v8::Boolean>(), param.isAudioOff);
 	zoom_v8toc(args[5].As<v8::Boolean>(), param.isDirectShareDesktop);
-
-
-	v8::Local<v8::Function> cbfunc = v8::Local<v8::Function>::Cast(args[6]);
-	v8::Persistent<v8::Function, v8::CopyablePersistentTraits<v8::Function> > cb(isolate, cbfunc);
-	ZoomNodeSinkHelper::GetInst().onMeetingStatusChanged = cb;
 
 	ZNSDKError err = _g_native_wrap.GetMeetingServiceWrap().Start(param);
 	v8::Local<v8::Integer> bret = v8::Integer::New(isolate, (int32_t)err);
@@ -472,7 +432,7 @@ void ZoomNodeMeetingWrap::Start(const v8::FunctionCallbackInfo<v8::Value>& args)
 void ZoomNodeMeetingWrap::Start_WithoutLogin(const v8::FunctionCallbackInfo<v8::Value>& args)
 {
 	v8::Isolate* isolate = args.GetIsolate();
-	if (args.Length() < 13)
+	if (args.Length() < 12)
 	{
 		isolate->ThrowException(v8::Exception::TypeError(
 			v8::String::NewFromUtf8(isolate, "Wrong number of arguments")));
@@ -484,14 +444,13 @@ void ZoomNodeMeetingWrap::Start_WithoutLogin(const v8::FunctionCallbackInfo<v8::
 		!args[2]->IsString() ||
 		!args[3]->IsString() ||
 		!args[4]->IsNumber() ||
-		!args[5]->IsString() ||
+		!args[5]->IsNumber() ||
 		!args[6]->IsString() ||
 		!args[7]->IsString() ||
 		!args[8]->IsString() ||
 		!args[9]->IsBoolean() ||
 		!args[10]->IsBoolean() ||
-		!args[11]->IsBoolean() ||
-		!args[12]->IsFunction())
+		!args[11]->IsBoolean())
 	{
 		isolate->ThrowException(v8::Exception::TypeError(
 			v8::String::NewFromUtf8(isolate, "Wrong arguments")));
@@ -527,18 +486,13 @@ void ZoomNodeMeetingWrap::Start_WithoutLogin(const v8::FunctionCallbackInfo<v8::
 	default:
 		break;
 	}
-	zoom_v8toc(args[5].As<v8::String>(), param.meetingNumber);
+	param.meetingNumber = (unsigned long long)args[5]->NumberValue();
 	zoom_v8toc(args[6].As<v8::String>(), param.sdkVanityID);
 	zoom_v8toc(args[7].As<v8::String>(), param.hDirectShareAppWnd);
 	zoom_v8toc(args[8].As<v8::String>(), param.participantId);
 	zoom_v8toc(args[9].As<v8::Boolean>(), param.isDirectShareDesktop);
 	zoom_v8toc(args[10].As<v8::Boolean>(), param.isVideoOff);
 	zoom_v8toc(args[11].As<v8::Boolean>(), param.isAudioOff);
-
-
-	v8::Local<v8::Function> cbfunc = v8::Local<v8::Function>::Cast(args[12]);
-	v8::Persistent<v8::Function, v8::CopyablePersistentTraits<v8::Function> > cb(isolate, cbfunc);
-	ZoomNodeSinkHelper::GetInst().onMeetingStatusChanged = cb;
 
 	ZNSDKError err = _g_native_wrap.GetMeetingServiceWrap().Start_WithoutLogin(param);
 	v8::Local<v8::Integer> bret = v8::Integer::New(isolate, (int32_t)err);
@@ -547,14 +501,14 @@ void ZoomNodeMeetingWrap::Start_WithoutLogin(const v8::FunctionCallbackInfo<v8::
 void ZoomNodeMeetingWrap::Join(const v8::FunctionCallbackInfo<v8::Value>& args)
 {
 	v8::Isolate* isolate = args.GetIsolate();
-	if (args.Length() < 11)
+	if (args.Length() < 10)
 	{
 		isolate->ThrowException(v8::Exception::TypeError(
 			v8::String::NewFromUtf8(isolate, "Wrong number of arguments")));
 		return;
 	}
 
-	if (!args[0]->IsString() ||
+	if (!args[0]->IsNumber() ||
 		!args[1]->IsString() ||
 		!args[2]->IsString() ||
 		!args[3]->IsString() ||
@@ -563,8 +517,7 @@ void ZoomNodeMeetingWrap::Join(const v8::FunctionCallbackInfo<v8::Value>& args)
 		!args[6]->IsString() ||
 		!args[7]->IsBoolean() ||
 		!args[8]->IsBoolean() ||
-		!args[9]->IsBoolean() ||
-		!args[10]->IsFunction())
+		!args[9]->IsBoolean())
 	{
 		isolate->ThrowException(v8::Exception::TypeError(
 			v8::String::NewFromUtf8(isolate, "Wrong arguments")));
@@ -572,7 +525,7 @@ void ZoomNodeMeetingWrap::Join(const v8::FunctionCallbackInfo<v8::Value>& args)
 	}
 	ZNJoinParam param;
 	param.userType = ZNSDK_UT_NORMALUSER;
-	zoom_v8toc(args[0].As<v8::String>(), param.meetingNumber);
+	param.meetingNumber = (unsigned long long)args[0]->NumberValue();
 	zoom_v8toc(args[1].As<v8::String>(), param.vanityID);
 	zoom_v8toc(args[2].As<v8::String>(), param.username);
 	zoom_v8toc(args[3].As<v8::String>(), param.psw);
@@ -583,10 +536,6 @@ void ZoomNodeMeetingWrap::Join(const v8::FunctionCallbackInfo<v8::Value>& args)
 	zoom_v8toc(args[8].As<v8::Boolean>(), param.isAudioOff);
 	zoom_v8toc(args[9].As<v8::Boolean>(), param.isDirectShareDesktop);
 
-	v8::Local<v8::Function> cbfunc = v8::Local<v8::Function>::Cast(args[10]);
-	v8::Persistent<v8::Function, v8::CopyablePersistentTraits<v8::Function> > cb(isolate, cbfunc);
-	ZoomNodeSinkHelper::GetInst().onMeetingStatusChanged = cb;
-
 	ZNSDKError err = _g_native_wrap.GetMeetingServiceWrap().Join(param);
 	v8::Local<v8::Integer> bret = v8::Integer::New(isolate, (int32_t)err);
 	args.GetReturnValue().Set(bret);
@@ -595,14 +544,14 @@ void ZoomNodeMeetingWrap::Join(const v8::FunctionCallbackInfo<v8::Value>& args)
 void ZoomNodeMeetingWrap::Join_WithoutLogin(const v8::FunctionCallbackInfo<v8::Value>& args)
 {
 	v8::Isolate* isolate = args.GetIsolate();
-	if (args.Length() < 12)
+	if (args.Length() < 11)
 	{
 		isolate->ThrowException(v8::Exception::TypeError(
 			v8::String::NewFromUtf8(isolate, "Wrong number of arguments")));
 		return;
 	}
 
-	if (!args[0]->IsString() ||
+	if (!args[0]->IsNumber() ||
 		!args[1]->IsString() ||
 		!args[2]->IsString() ||
 		!args[3]->IsString() ||
@@ -612,8 +561,7 @@ void ZoomNodeMeetingWrap::Join_WithoutLogin(const v8::FunctionCallbackInfo<v8::V
 		!args[7]->IsString() ||
 		!args[8]->IsBoolean() ||
 		!args[9]->IsBoolean() ||
-		!args[10]->IsBoolean() ||
-		!args[11]->IsFunction())
+		!args[10]->IsBoolean())
 	{
 		isolate->ThrowException(v8::Exception::TypeError(
 			v8::String::NewFromUtf8(isolate, "Wrong arguments")));
@@ -621,7 +569,7 @@ void ZoomNodeMeetingWrap::Join_WithoutLogin(const v8::FunctionCallbackInfo<v8::V
 	}
 	ZNJoinParam param;
 	param.userType = ZNSDK_UT_WITHOUT_LOGIN;
-	zoom_v8toc(args[0].As<v8::String>(), param.meetingNumber);
+	param.meetingNumber = (unsigned long long)args[0]->NumberValue();
 	zoom_v8toc(args[1].As<v8::String>(), param.vanityID);
 	zoom_v8toc(args[2].As<v8::String>(), param.username);
 	zoom_v8toc(args[3].As<v8::String>(), param.psw);
@@ -632,11 +580,6 @@ void ZoomNodeMeetingWrap::Join_WithoutLogin(const v8::FunctionCallbackInfo<v8::V
 	zoom_v8toc(args[8].As<v8::Boolean>(), param.isDirectShareDesktop);
 	zoom_v8toc(args[9].As<v8::Boolean>(), param.isVideoOff);
 	zoom_v8toc(args[10].As<v8::Boolean>(), param.isAudioOff);
-	
-
-	v8::Local<v8::Function> cbfunc = v8::Local<v8::Function>::Cast(args[11]);
-	v8::Persistent<v8::Function, v8::CopyablePersistentTraits<v8::Function> > cb(isolate, cbfunc);
-	ZoomNodeSinkHelper::GetInst().onMeetingStatusChanged = cb;
 
 	ZNSDKError err = _g_native_wrap.GetMeetingServiceWrap().Join_WithoutLogin(param);
 	v8::Local<v8::Integer> bret = v8::Integer::New(isolate, (int32_t)err);
@@ -740,6 +683,8 @@ void ZoomNodeMeetingWrap::GetMeetingConfigCtrl(const v8::FunctionCallbackInfo<v8
 {
 	ZoomNodeMeetingConfigCtrlWrap::NewInstance(args);
 }
+
+
 void ZoomNodeMeetingWrap::GetSharingConnQuality(const v8::FunctionCallbackInfo<v8::Value>& args)
 {
 	v8::Isolate* isolate = args.GetIsolate();
@@ -765,7 +710,6 @@ void ZoomNodeMeetingWrap::GetAudioConnQuality(const v8::FunctionCallbackInfo<v8:
 
 void ZoomNodeMeetingInfoWrap::GetMeetingTopic(const v8::FunctionCallbackInfo<v8::Value>& args)
 {
-	
 	v8::Isolate* isolate = args.GetIsolate();
 	ZoomSTRING meeting_topic = _g_native_wrap.GetMeetingServiceWrap().GetMeetingInfo().GetMeetingTopic();
 	v8::Local<v8::String> bret = v8::String::NewFromUtf8(isolate, zs2s(meeting_topic).c_str());
@@ -781,8 +725,8 @@ void ZoomNodeMeetingInfoWrap::GetMeetingType(const v8::FunctionCallbackInfo<v8::
 void ZoomNodeMeetingInfoWrap::GetMeetingNumber(const v8::FunctionCallbackInfo<v8::Value>& args)
 {
 	v8::Isolate* isolate = args.GetIsolate();
-	ZoomSTRING meeting_number = _g_native_wrap.GetMeetingServiceWrap().GetMeetingInfo().GetMeetingNumber();
-	v8::Local<v8::String> bret = v8::String::NewFromUtf8(isolate, zs2s(meeting_number).c_str());
+	unsigned long long zn_meetingNumber = _g_native_wrap.GetMeetingServiceWrap().GetMeetingInfo().GetMeetingNumber();
+	v8::Local<v8::Number> bret = v8::Number::New(isolate, (unsigned long long)zn_meetingNumber);
 	args.GetReturnValue().Set(bret);
 }
 void ZoomNodeMeetingInfoWrap::GetMeetingID(const v8::FunctionCallbackInfo<v8::Value>& args)
@@ -795,7 +739,6 @@ void ZoomNodeMeetingInfoWrap::GetMeetingID(const v8::FunctionCallbackInfo<v8::Va
 }
 void ZoomNodeMeetingInfoWrap::GetInviteEmailTeamplate(const v8::FunctionCallbackInfo<v8::Value>& args)
 {
-
 	v8::Isolate* isolate = args.GetIsolate();
 	ZoomSTRING invite_email_teamplate = _g_native_wrap.GetMeetingServiceWrap().GetMeetingInfo().GetInviteEmailTeamplate();
 	v8::Local<v8::String> bret = v8::String::NewFromUtf8(isolate, zs2s(invite_email_teamplate).c_str());
@@ -834,34 +777,10 @@ void ZoomNodeMeetingInfoWrap::CheckingIsInternalMeeting(const v8::FunctionCallba
 	args.GetReturnValue().Set(bret);
 }
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-class ZNativeSDKMeetingUICtrlWrapSink : public IZNativeSDKMeetingUICtrlWrapSink
-{
-public:
-	virtual void onInviteBtnClicked(bool& bHandled)
-	{
-		if (ZoomNodeSinkHelper::GetInst().onInviteBtnClicked.IsEmpty())
-			return;
-
-		auto isolate = v8::Isolate::GetCurrent();
-		v8::HandleScope scope(isolate);
-		auto context = isolate->GetCurrentContext();
-		auto global = context->Global();
-
-		v8::Local<v8::Boolean > v8_bHandled = v8::Boolean::New(isolate, bHandled);
-		
-		int argc = 1;
-		v8::Local<v8::Value> argv[1] = { v8_bHandled };
-		auto fn = v8::Local<v8::Function>::New(isolate, ZoomNodeSinkHelper::GetInst().onInviteBtnClicked);
-
-		fn->Call(context, global, argc, argv);
-	}
-};
-
-static ZNativeSDKMeetingUICtrlWrapSink _g_node_meetingUICtrl_cb;
 
 ZoomNodeMeetingUICtrlWrap::ZoomNodeMeetingUICtrlWrap()
 {
-	_g_native_wrap.GetMeetingServiceWrap().GetMeetingUICtrl().SetSink(&_g_node_meetingUICtrl_cb);
+	_g_native_wrap.GetMeetingServiceWrap().GetMeetingUICtrl().SetSink(&ZoomNodeSinkWrapMgr::GetInst().m_meetingUICtrlWrapSink);
 }
 
 ZoomNodeMeetingUICtrlWrap::~ZoomNodeMeetingUICtrlWrap()
@@ -917,9 +836,7 @@ void ZoomNodeMeetingUICtrlWrap::EnterFullScreen(const v8::FunctionCallbackInfo<v
 	}
 
 	if (!args[0]->IsBoolean() ||
-		!args[1]->IsBoolean()
-		
-		)
+		!args[1]->IsBoolean())
 	{
 		isolate->ThrowException(v8::Exception::TypeError(
 			v8::String::NewFromUtf8(isolate, "Wrong arguments")));
@@ -945,8 +862,7 @@ void ZoomNodeMeetingUICtrlWrap::ExitFullScreen(const v8::FunctionCallbackInfo<v8
 	}
 
 	if (!args[0]->IsBoolean() ||
-		!args[1]->IsBoolean()
-		)
+		!args[1]->IsBoolean())
 	{
 		isolate->ThrowException(v8::Exception::TypeError(
 			v8::String::NewFromUtf8(isolate, "Wrong arguments")));
@@ -986,8 +902,7 @@ void ZoomNodeMeetingUICtrlWrap::MoveFloatVideoWnd(const v8::FunctionCallbackInfo
 	}
 
 	if (!args[0]->IsString() ||
-		!args[1]->IsString()
-		)
+		!args[1]->IsString())
 	{
 		isolate->ThrowException(v8::Exception::TypeError(
 			v8::String::NewFromUtf8(isolate, "Wrong arguments")));
@@ -1012,8 +927,7 @@ void ZoomNodeMeetingUICtrlWrap::ShowSharingToolbar(const v8::FunctionCallbackInf
 		return;
 	}
 
-	if (!args[0]->IsBoolean() 
-		)
+	if (!args[0]->IsBoolean())
 	{
 		isolate->ThrowException(v8::Exception::TypeError(
 			v8::String::NewFromUtf8(isolate, "Wrong arguments")));
@@ -1043,8 +957,7 @@ void ZoomNodeMeetingUICtrlWrap::ChangeFloatoActiveSpkVideoSize(const v8::Functio
 		return;
 	}
 
-	if (!args[0]->IsNumber()
-		)
+	if (!args[0]->IsNumber())
 	{
 		isolate->ThrowException(v8::Exception::TypeError(
 			v8::String::NewFromUtf8(isolate, "Wrong arguments")));
@@ -1091,8 +1004,7 @@ void ZoomNodeMeetingUICtrlWrap::ShowParticipantsListWnd(const v8::FunctionCallba
 		return;
 	}
 
-	if (!args[0]->IsBoolean()
-		)
+	if (!args[0]->IsBoolean())
 	{
 		isolate->ThrowException(v8::Exception::TypeError(
 			v8::String::NewFromUtf8(isolate, "Wrong arguments")));
@@ -1115,8 +1027,7 @@ void ZoomNodeMeetingUICtrlWrap::ShowBottomFloatToolbarWnd(const v8::FunctionCall
 		return;
 	}
 
-	if (!args[0]->IsBoolean()
-		)
+	if (!args[0]->IsBoolean())
 	{
 		isolate->ThrowException(v8::Exception::TypeError(
 			v8::String::NewFromUtf8(isolate, "Wrong arguments")));
@@ -1185,8 +1096,7 @@ void ZoomNodeMeetingUICtrlWrap::ShowPreOrNextPageVideo(const v8::FunctionCallbac
 		return;
 	}
 
-	if (!args[0]->IsBoolean()
-		)
+	if (!args[0]->IsBoolean())
 	{
 		isolate->ThrowException(v8::Exception::TypeError(
 			v8::String::NewFromUtf8(isolate, "Wrong arguments")));
@@ -1209,8 +1119,7 @@ void ZoomNodeMeetingUICtrlWrap::ShowSharingFrameWindows(const v8::FunctionCallba
 		return;
 	}
 
-	if (!args[0]->IsBoolean()
-		)
+	if (!args[0]->IsBoolean())
 	{
 		isolate->ThrowException(v8::Exception::TypeError(
 			v8::String::NewFromUtf8(isolate, "Wrong arguments")));
@@ -1265,8 +1174,7 @@ void ZoomNodeMeetingUICtrlWrap::SwitchSplitScreenMode(const v8::FunctionCallback
 		return;
 	}
 
-	if (!args[0]->IsBoolean()
-		)
+	if (!args[0]->IsBoolean())
 	{
 		isolate->ThrowException(v8::Exception::TypeError(
 			v8::String::NewFromUtf8(isolate, "Wrong arguments")));
@@ -1289,8 +1197,7 @@ void ZoomNodeMeetingUICtrlWrap::SetInviteButtonClickedCB(const v8::FunctionCallb
 		return;
 	}
 
-	if (!args[0]->IsFunction()
-		)
+	if (!args[0]->IsFunction())
 	{
 		isolate->ThrowException(v8::Exception::TypeError(
 			v8::String::NewFromUtf8(isolate, "Wrong arguments")));
@@ -1370,4 +1277,215 @@ void ZoomNodeSettingWrap::HideSettingDlg(const v8::FunctionCallbackInfo<v8::Valu
 	args.GetReturnValue().Set(bret);
 }
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+ZoomNodePremeetingWrap::ZoomNodePremeetingWrap()
+{
+	_g_native_wrap.GetPremeetingServiecWrap().SetSink(&ZoomNodeSinkWrapMgr::GetInst().m_premeetingServiceWrapSink);
+}
+ZoomNodePremeetingWrap::~ZoomNodePremeetingWrap()
+{
+	_g_native_wrap.GetPremeetingServiecWrap().SetSink(NULL);
+}
 
+void ZoomNodePremeetingWrap::ScheduleMeetingWithWndParams(const v8::FunctionCallbackInfo<v8::Value>& args)
+{
+	v8::Isolate* isolate = args.GetIsolate();
+	if (args.Length() < 4) {
+		isolate->ThrowException(v8::Exception::TypeError(
+			v8::String::NewFromUtf8(isolate, "Wrong number of arguments")));
+		return;
+	}
+
+	if (!args[0]->IsString() ||
+		!args[1]->IsString() ||
+		!args[2]->IsString() ||
+		!args[3]->IsString())
+	{
+		isolate->ThrowException(v8::Exception::TypeError(
+			v8::String::NewFromUtf8(isolate, "Wrong arguments")));
+		return;
+	}
+
+	ZNWndPosition zn_position;
+#if (defined _WIN32)
+	zoom_v8toc(args[0].As<v8::String>(), zn_position.z_hSelfWnd);
+	zoom_v8toc(args[1].As<v8::String>(), zn_position.z_hParent);
+#else
+	zoom_v8toc(args[0].As<v8::String>(), zn_position.z_height);
+	zoom_v8toc(args[1].As<v8::String>(), zn_position.z_width);
+#endif
+	zoom_v8toc(args[2].As<v8::String>(), zn_position.z_left);
+	zoom_v8toc(args[3].As<v8::String>(), zn_position.z_top);
+
+	ZNSDKError err = _g_native_wrap.GetPremeetingServiecWrap().ScheduleMeeting(zn_position);
+	v8::Local<v8::Integer> bret = v8::Integer::New(isolate, (int32_t)err);
+	args.GetReturnValue().Set(bret);
+}
+void ZoomNodePremeetingWrap::ScheduleMeeting(const v8::FunctionCallbackInfo<v8::Value>& args)
+{
+	v8::Isolate* isolate = args.GetIsolate();
+	ZNSDKError err = _g_native_wrap.GetPremeetingServiecWrap().ScheduleMeeting();
+	v8::Local<v8::Integer> bret = v8::Integer::New(isolate, (int32_t)err);
+	args.GetReturnValue().Set(bret);
+}
+void ZoomNodePremeetingWrap::EditMeeting(const v8::FunctionCallbackInfo<v8::Value>& args)
+{
+	v8::Isolate* isolate = args.GetIsolate();
+	if (args.Length() < 1) {
+		isolate->ThrowException(v8::Exception::TypeError(
+			v8::String::NewFromUtf8(isolate, "Wrong number of arguments")));
+		return;
+	}
+
+	if (!args[0]->IsNumber())
+	{
+		isolate->ThrowException(v8::Exception::TypeError(
+			v8::String::NewFromUtf8(isolate, "Wrong arguments")));
+		return;
+	}
+
+	unsigned long long zn_meetingUniqueID;
+	zn_meetingUniqueID = (unsigned long long)args[0]->NumberValue();
+
+	ZNSDKError err = _g_native_wrap.GetPremeetingServiecWrap().EditMeeting(zn_meetingUniqueID);
+	v8::Local<v8::Integer> bret = v8::Integer::New(isolate, (int32_t)err);
+	args.GetReturnValue().Set(bret);
+}
+void ZoomNodePremeetingWrap::EditMeetingWithWndParams(const v8::FunctionCallbackInfo<v8::Value>& args)
+{
+	v8::Isolate* isolate = args.GetIsolate();
+	if (args.Length() < 5) {
+		isolate->ThrowException(v8::Exception::TypeError(
+			v8::String::NewFromUtf8(isolate, "Wrong number of arguments")));
+		return;
+	}
+
+	if (!args[0]->IsString() ||
+		!args[1]->IsString() ||
+		!args[2]->IsString() ||
+		!args[3]->IsString() ||
+		!args[4]->IsNumber())
+	{
+		isolate->ThrowException(v8::Exception::TypeError(
+			v8::String::NewFromUtf8(isolate, "Wrong arguments")));
+		return;
+	}
+
+	ZNWndPosition zn_position;
+#if (defined _WIN32)
+	zoom_v8toc(args[0].As<v8::String>(), zn_position.z_hSelfWnd);
+	zoom_v8toc(args[1].As<v8::String>(), zn_position.z_hParent);
+#else
+	zoom_v8toc(args[0].As<v8::String>(), zn_position.z_height);
+	zoom_v8toc(args[1].As<v8::String>(), zn_position.z_width);
+#endif
+	zoom_v8toc(args[2].As<v8::String>(), zn_position.z_left);
+	zoom_v8toc(args[3].As<v8::String>(), zn_position.z_top);
+
+	unsigned long long zn_meetingUniqueID = (unsigned long long)args[4]->NumberValue();
+
+	ZNSDKError err = _g_native_wrap.GetPremeetingServiecWrap().EditMeeting(zn_position, zn_meetingUniqueID);
+	v8::Local<v8::Integer> bret = v8::Integer::New(isolate, (int32_t)err);
+	args.GetReturnValue().Set(bret);
+}
+
+void ZoomNodePremeetingWrap::ListMeeting(const v8::FunctionCallbackInfo<v8::Value>& args)
+{
+	v8::Isolate* isolate = args.GetIsolate();
+	ZNSDKError err = _g_native_wrap.GetPremeetingServiecWrap().ListMeeting();
+	v8::Local<v8::Integer> bret = v8::Integer::New(isolate, (int32_t)err);
+	args.GetReturnValue().Set(bret);
+}
+void ZoomNodePremeetingWrap::DeleteMeeting(const v8::FunctionCallbackInfo<v8::Value>& args)
+{
+	v8::Isolate* isolate = args.GetIsolate();
+	if (args.Length() < 1) {
+		isolate->ThrowException(v8::Exception::TypeError(
+			v8::String::NewFromUtf8(isolate, "Wrong number of arguments")));
+		return;
+	}
+
+	if (!args[0]->IsNumber())
+	{
+		isolate->ThrowException(v8::Exception::TypeError(
+			v8::String::NewFromUtf8(isolate, "Wrong arguments")));
+		return;
+	}
+
+	unsigned long long zn_meetingUniqueID = (unsigned long long)args[0]->NumberValue();
+
+	ZNSDKError err = _g_native_wrap.GetPremeetingServiecWrap().DeleteMeeting(zn_meetingUniqueID);
+	v8::Local<v8::Integer> bret = v8::Integer::New(isolate, (int32_t)err);
+	args.GetReturnValue().Set(bret);
+}
+void ZoomNodePremeetingWrap::SetOnScheduleOrEditMeetingCB(const v8::FunctionCallbackInfo<v8::Value>& args)
+{
+	v8::Isolate* isolate = args.GetIsolate();
+	if (args.Length() < 1) {
+		isolate->ThrowException(v8::Exception::TypeError(
+			v8::String::NewFromUtf8(isolate, "Wrong number of arguments")));
+		return;
+	}
+
+	if (!args[0]->IsFunction())
+	{
+		isolate->ThrowException(v8::Exception::TypeError(
+			v8::String::NewFromUtf8(isolate, "Wrong arguments")));
+		return;
+	}
+
+	v8::Local<v8::Function> cbfunc = v8::Local<v8::Function>::Cast(args[0]);
+	v8::Persistent<v8::Function, v8::CopyablePersistentTraits<v8::Function> > cb(isolate, cbfunc);
+	ZoomNodeSinkHelper::GetInst().onScheduleOrEditMeeting = cb;
+
+	ZNSDKError err = ZNSDKERR_SUCCESS;
+	v8::Local<v8::Integer> bret = v8::Integer::New(isolate, (int32_t)err);
+	args.GetReturnValue().Set(bret);
+}
+void ZoomNodePremeetingWrap::SetOnListMeetingCB(const v8::FunctionCallbackInfo<v8::Value>& args)
+{
+	v8::Isolate* isolate = args.GetIsolate();
+	if (args.Length() < 1) {
+		isolate->ThrowException(v8::Exception::TypeError(
+			v8::String::NewFromUtf8(isolate, "Wrong number of arguments")));
+		return;
+	}
+
+	if (!args[0]->IsFunction())
+	{
+		isolate->ThrowException(v8::Exception::TypeError(
+			v8::String::NewFromUtf8(isolate, "Wrong arguments")));
+		return;
+	}
+
+	v8::Local<v8::Function> cbfunc = v8::Local<v8::Function>::Cast(args[0]);
+	v8::Persistent<v8::Function, v8::CopyablePersistentTraits<v8::Function> > cb(isolate, cbfunc);
+	ZoomNodeSinkHelper::GetInst().onListMeeting = cb;
+
+	ZNSDKError err = ZNSDKERR_SUCCESS;
+	v8::Local<v8::Integer> bret = v8::Integer::New(isolate, (int32_t)err);
+	args.GetReturnValue().Set(bret);
+}
+void ZoomNodePremeetingWrap::SetOnDeleteMeetingCB(const v8::FunctionCallbackInfo<v8::Value>& args)
+{
+	v8::Isolate* isolate = args.GetIsolate();
+	if (args.Length() < 1) {
+		isolate->ThrowException(v8::Exception::TypeError(
+			v8::String::NewFromUtf8(isolate, "Wrong number of arguments")));
+		return;
+	}
+
+	if (!args[0]->IsFunction())
+	{
+		isolate->ThrowException(v8::Exception::TypeError(
+			v8::String::NewFromUtf8(isolate, "Wrong arguments")));
+		return;
+	}
+
+	v8::Local<v8::Function> cbfunc = v8::Local<v8::Function>::Cast(args[0]);
+	v8::Persistent<v8::Function, v8::CopyablePersistentTraits<v8::Function> > cb(isolate, cbfunc);
+	ZoomNodeSinkHelper::GetInst().onDeleteMeeting = cb;
+
+	ZNSDKError err = ZNSDKERR_SUCCESS;
+	v8::Local<v8::Integer> bret = v8::Integer::New(isolate, (int32_t)err);
+	args.GetReturnValue().Set(bret);
+}

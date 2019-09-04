@@ -52,4 +52,53 @@ extern  ZNativeSDKWrap _g_native_wrap;
 }
 
 
+#pragma mark PremeetingServic
+-(void)onListMeeting:(ZoomSDKPremeetingError)error MeetingList:(NSArray *)meetingList{
+    
+    nativeErrorTypeHelp help;
+    ZNPremeetingAPIResult result = help.ZNSDKPreMeetingError(error);
+    ZNList<unsigned long long> list;
+    if (meetingList.count == 0) {
+        return;
+    }
+    for (ZoomSDKMeetingItem *item in meetingList) {
+        long long meetingID = [item  getMeetingUniqueID];
+        list.push_back(meetingID);
+    }
+    _g_native_wrap.GetPremeetingServiecWrap().onListMeeting(result, list);
+}
+
+-(void)onScheduleOrEditMeeting:(ZoomSDKPremeetingError)error MeetingUniqueID:(long long)meetingUniqueID{
+    
+    nativeErrorTypeHelp help;
+    ZNPremeetingAPIResult result = help.ZNSDKPreMeetingError(error);
+    _g_native_wrap.GetPremeetingServiecWrap().onScheduleOrEditMeeting(result, meetingUniqueID);
+}
+
+-(void)onDeleteMeeting:(ZoomSDKPremeetingError)error{
+    
+    nativeErrorTypeHelp help;
+    ZNPremeetingAPIResult result = help.ZNSDKPreMeetingError(error);
+    _g_native_wrap.GetPremeetingServiecWrap().onDeleteMeeting(result);
+}
+
+#pragma direct share
+-(void)onDirectShareStatusReceived:(DirectShareStatus)status DirectShareReceived:(ZoomSDKDirectShareHandler *)handler{
+    
+    nativeErrorTypeHelp help;
+    ZNDirectShareStatus  ZNStatus = help.ZNSDKDirectShareStatus(status);
+    self.directStatus = status;
+    self.DirectShareHandler = handler;
+    _g_native_wrap.GetAuthServiceWrap().GetDirectShareHelper().OnDirectShareStatusUpdate(ZNStatus);
+}
+
+-(DirectShareStatus)getDirectShare{
+    return self.directStatus;
+}
+
+-(ZoomSDKDirectShareHandler *)getDirectShareHandler{
+    
+    return self.DirectShareHandler;
+}
+
 @end

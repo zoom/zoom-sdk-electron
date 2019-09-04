@@ -45,12 +45,12 @@ void ZoomNodeSettingAudioCtrlWrap::GetMicList(const v8::FunctionCallbackInfo<v8:
 
 	v8::HandleScope scope(isolate);
 	v8::Local<v8::Array> nodes = v8::Array::New(isolate);
-	for (int i = 0; i < zn_micInfoLst.getLength(); ++i) {
+	for (unsigned int i = 0; i < zn_micInfoLst.size(); ++i) {
 		v8::HandleScope scope(isolate);
 		v8::Local<v8::Object> node = v8::Object::New(isolate);
-		node->Set(v8::String::NewFromUtf8(isolate, "deviceId"), v8::String::NewFromUtf8(isolate, zs2s(zn_micInfoLst.get(i).deviceId).c_str()));
-		node->Set(v8::String::NewFromUtf8(isolate, "deviceName"), v8::String::NewFromUtf8(isolate, zs2s(zn_micInfoLst.get(i).deviceName).c_str()));
-		node->Set(v8::String::NewFromUtf8(isolate, "isSelected"), v8::Boolean::New(isolate, zn_micInfoLst.get(i).isSelectedDevice));
+		node->Set(v8::String::NewFromUtf8(isolate, "deviceId"), v8::String::NewFromUtf8(isolate, zs2s(zn_micInfoLst[i].deviceId).c_str()));
+		node->Set(v8::String::NewFromUtf8(isolate, "deviceName"), v8::String::NewFromUtf8(isolate, zs2s(zn_micInfoLst[i].deviceName).c_str()));
+		node->Set(v8::String::NewFromUtf8(isolate, "isSelected"), v8::Boolean::New(isolate, zn_micInfoLst[i].isSelectedDevice));
 		nodes->Set(i, node);
 	}
 
@@ -92,12 +92,12 @@ void ZoomNodeSettingAudioCtrlWrap::GetSpeakerList(const v8::FunctionCallbackInfo
 
 	v8::HandleScope scope(isolate);
 	v8::Local<v8::Array> nodes = v8::Array::New(isolate);
-	for (int i = 0; i < zn_speakerInfoLst.getLength(); ++i) {
+	for (unsigned int i = 0; i < zn_speakerInfoLst.size(); ++i) {
 		v8::HandleScope scope(isolate);
 		v8::Local<v8::Object> node = v8::Object::New(isolate);
-		node->Set(v8::String::NewFromUtf8(isolate, "deviceId"), v8::String::NewFromUtf8(isolate, zs2s(zn_speakerInfoLst.get(i).deviceId).c_str()));
-		node->Set(v8::String::NewFromUtf8(isolate, "deviceName"), v8::String::NewFromUtf8(isolate, zs2s(zn_speakerInfoLst.get(i).deviceName).c_str()));
-		node->Set(v8::String::NewFromUtf8(isolate, "isSelected"), v8::Boolean::New(isolate, zn_speakerInfoLst.get(i).isSelectedDevice));
+		node->Set(v8::String::NewFromUtf8(isolate, "deviceId"), v8::String::NewFromUtf8(isolate, zs2s(zn_speakerInfoLst[i].deviceId).c_str()));
+		node->Set(v8::String::NewFromUtf8(isolate, "deviceName"), v8::String::NewFromUtf8(isolate, zs2s(zn_speakerInfoLst[i].deviceName).c_str()));
+		node->Set(v8::String::NewFromUtf8(isolate, "isSelected"), v8::Boolean::New(isolate, zn_speakerInfoLst[i].isSelectedDevice));
 		nodes->Set(i, node);
 	}
 

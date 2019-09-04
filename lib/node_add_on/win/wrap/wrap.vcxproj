@@ -66,7 +66,7 @@
       <Optimization>MaxSpeed</Optimization>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <AdditionalIncludeDirectories>%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
-      <PreprocessorDefinitions>WIN32;NDEBUG;_LIB;UserInterfaceClass;%(PreprocessorDefinitions)</PreprocessorDefinitions>
+      <PreprocessorDefinitions>WIN32;NDEBUG;_LIB;JS_WRAP;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <RuntimeLibrary>MultiThreadedDLL</RuntimeLibrary>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <PrecompiledHeader />
@@ -107,6 +107,9 @@
     <ClCompile Include="network_connection_handler_wrap.cpp" />
     <ClCompile Include="outlook_plugin_integration_helper_wrap.cpp" />
     <ClCompile Include="premeeting_service_wrap.cpp" />
+    <ClCompile Include="rawdata_audio_channel_wrap.cpp" />
+    <ClCompile Include="rawdata_share_channel_wrap.cpp" />
+    <ClCompile Include="rawdata_video_channel_wrap.cpp" />
     <ClCompile Include="recording_setting_context_wrap.cpp" />
     <ClCompile Include="sdk_loader.cpp" />
     <ClCompile Include="sdk_wrap.cpp" />
@@ -147,6 +150,9 @@
     <ClInclude Include="network_connection_handler_wrap.h" />
     <ClInclude Include="outlook_plugin_integration_helper_wrap.h" />
     <ClInclude Include="premeeting_service_wrap.h" />
+    <ClInclude Include="rawdata_audio_channel_wrap.h" />
+    <ClInclude Include="rawdata_share_channel_wrap.h" />
+    <ClInclude Include="rawdata_video_channel_wrap.h" />
     <ClInclude Include="recording_setting_context_wrap.h" />
     <ClInclude Include="sdk_loader.h" />
     <ClInclude Include="sdk_wrap.h" />

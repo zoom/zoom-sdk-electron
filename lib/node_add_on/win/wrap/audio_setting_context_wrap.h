@@ -70,6 +70,10 @@ DEFINE_FUNC_0(IsEchoCancellationEnabled, bool)
 CallBack_FUNC_1(onComputerMicDeviceChanged, IList<IMicInfo*>*, pNewMicList)
 //virtual void onComputerSpeakerDeviceChanged(IList<ISpeakerInfo*>* pNewSpeakerList) = 0;
 CallBack_FUNC_1(onComputerSpeakerDeviceChanged, IList<ISpeakerInfo*>*, pNewSpeakerList)
+//virtual void onDefaultMicDeviceChanged(const wchar_t* deviceId, const wchar_t* deviceName) = 0;
+CallBack_FUNC_2(onDefaultMicDeviceChanged, const wchar_t*, deviceId, const wchar_t*, deviceName)
+//virtual void onDefaultSpeakerDeviceChanged(const wchar_t* deviceId, const wchar_t* deviceName) = 0;
+CallBack_FUNC_2(onDefaultSpeakerDeviceChanged, const wchar_t*, deviceId, const wchar_t*, deviceName)
 
 END_CLASS_DEFINE(IAudioSettingContext)
 END_ZOOM_SDK_NAMESPACE

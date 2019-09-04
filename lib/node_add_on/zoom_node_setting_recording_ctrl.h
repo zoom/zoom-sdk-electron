@@ -14,7 +14,13 @@ private:
 	ZoomNodeSettingRecordingCtrlWrap();
 	~ZoomNodeSettingRecordingCtrlWrap();
 public:
+	/// \brief Set the path to save the recording file.
+	/// \param 1. szPath(string) Specify the path to save the recording file.
+	/// \return If the function succeeds, the return value is ZNSDKERR_SUCCESS.
+	///Otherwise failed. To get extended error information, see \link ZNSDKError \endlink enum.
 	static void SetRecordingPath(const v8::FunctionCallbackInfo<v8::Value>& args);
+	/// \brief Get the path to save the recording file.
+	/// \return The path to save the recording file.
 	static void GetRecordingPath(const v8::FunctionCallbackInfo<v8::Value>& args);
 	
 	

@@ -288,6 +288,11 @@
  * @param userID The user's user ID.
  */
 - (void)onActiveSpeakerVideoUserChanged:(unsigned int)userID;
+/**
+ * @brief Notify that host ask you to unmute yourself.
+ */
+- (void)onHostAskUnmute;
+
 @end
 
 @interface ZoomSDKMeetingActionController : NSObject

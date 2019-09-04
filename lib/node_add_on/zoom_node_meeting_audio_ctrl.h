@@ -14,11 +14,35 @@ private:
 	ZoomNodeMeetingAudioCtrlWrap();
 	~ZoomNodeMeetingAudioCtrlWrap();
 public:
+	/// \brief Mute the assigned user.
+	/// \param 1. userid(number) Specify the user ID to mute. ZERO(0) indicates to mute all the participants.
+	/// \param 2. allowUnmuteBySelf(bool) The user may unmute himself when everyone is muted.
+	/// \return If the function succeeds, the return value is ZNSDKERR_SUCCESS.
+	///Otherwise failed. To get extended error information, see \link ZNSDKError \endlink enum.
 	static void MuteAudio(const v8::FunctionCallbackInfo<v8::Value>& args);
+	/// \brief Unmute the assigned user. 
+	/// \param 1. userid(number) Specify the user ID to unmute. ZERO(0) indicates to unmute all the participants. 
+	/// \return If the function succeeds, the return value is ZNSDKERR_SUCCESS.
+	///Otherwise failed. To get extended error information, see \link ZNSDKError \endlink enum.
 	static void UnMuteAudio(const v8::FunctionCallbackInfo<v8::Value>& args);
+	/// \brief Join VoIP meeting.
+	/// \return If the function succeeds, the return value is ZNSDKERR_SUCCESS.
+	///Otherwise failed. To get extended error information, see \link ZNSDKError \endlink enum.
 	static void JoinVoip(const v8::FunctionCallbackInfo<v8::Value>& args);
+	/// \brief Leave VoIP meeting.
+	/// \return If the function succeeds, the return value is ZNSDKERR_SUCCESS.
+	///Otherwise failed. To get extended error information, see \link ZNSDKError \endlink enum.
 	static void LeaveVoip(const v8::FunctionCallbackInfo<v8::Value>& args);
+	/// \brief Set user's audio status changed callback function.
+	/// \param 1. callback(function)  Callback of user's audio status changed.
+	/// \return If the function succeeds, the return value is ZNSDKERR_SUCCESS.
+	///Otherwise failed. To get extended error information, see \link ZNSDKError \endlink enum.
 	static void SetMeetingAudioStatusCB(const v8::FunctionCallbackInfo<v8::Value>& args);
+	/// \brief Set the callback event that users whose audio is active changed.
+	/// \param 1. callback(function)  Callback that users whose audio is active changed.
+	/// \return If the function succeeds, the return value is ZNSDKERR_SUCCESS.
+	///Otherwise failed. To get extended error information, see \link ZNSDKError \endlink enum.
+	static void SetUserActiveAudioChangeCB(const v8::FunctionCallbackInfo<v8::Value>& args);
 	
 	static v8::Persistent<v8::Function> constructor;
 };
@@ -35,6 +59,7 @@ static void InitClassAttribute<ZoomNodeMeetingAudioCtrlWrap >(const v8::Local<v8
 	NODE_SET_PROTOTYPE_METHOD(tpl, "JoinVoip", ZoomNodeMeetingAudioCtrlWrap::JoinVoip);
 	NODE_SET_PROTOTYPE_METHOD(tpl, "LeaveVoip", ZoomNodeMeetingAudioCtrlWrap::LeaveVoip);
 	NODE_SET_PROTOTYPE_METHOD(tpl, "SetMeetingAudioStatusCB", ZoomNodeMeetingAudioCtrlWrap::SetMeetingAudioStatusCB);
+	NODE_SET_PROTOTYPE_METHOD(tpl, "SetUserActiveAudioChangeCB", ZoomNodeMeetingAudioCtrlWrap::SetUserActiveAudioChangeCB);
 
 }
 template<>
@@ -43,38 +68,6 @@ static v8::Persistent<v8::Function>* GetConstructor<ZoomNodeMeetingAudioCtrlWrap
 }
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-class ZNativeSDKMeetingAudioWrapSink : public IZNativeSDKMeetingAudioWrapSink
-{
-public:
-	virtual void onUserAudioStatusChange(ZNList<ZNUserAudioStatus> lstAudioStatusChange, ZoomSTRING strAudioStatusList)
-	{
-		if (ZoomNodeSinkHelper::GetInst().onUserAudioStatusChange.IsEmpty())
-			return;
-
-		auto isolate = v8::Isolate::GetCurrent();
-		v8::HandleScope scope(isolate);
-		auto context = isolate->GetCurrentContext();
-		auto global = context->Global();
-		
-		v8::Local<v8::Array> nodes = v8::Array::New(isolate);
-		for (int i = 0; i < lstAudioStatusChange.getLength(); ++i) {
-			v8::HandleScope scope(isolate);
-			v8::Local<v8::Object> node = v8::Object::New(isolate);
-			node->Set(v8::String::NewFromUtf8(isolate, "userid"), v8::String::NewFromUtf8(isolate, zs2s(lstAudioStatusChange.get(i).userId).c_str()));
-			node->Set(v8::String::NewFromUtf8(isolate, "audioStauts"), v8::Integer::New(isolate, (int32_t)lstAudioStatusChange.get(i).audioStauts));
-			nodes->Set(i, node);
-		}
-		//
-		int argc = 1;
-		v8::Local<v8::Value> argv[1] = { nodes };
-		auto fn = v8::Local<v8::Function>::New(isolate, ZoomNodeSinkHelper::GetInst().onUserAudioStatusChange);
-
-		fn->Call(context, global, argc, argv);
-	}
-};
-
-static ZNativeSDKMeetingAudioWrapSink _g_node_meetingAudio_cb;
-
 
 
 #endif

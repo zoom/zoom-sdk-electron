@@ -12,11 +12,11 @@ ZMeetingUICtrlWrap &ZMeetingServiceWrap::GetMeetingUICtrl(){
 }
 
 ZMeetingUICtrlWrap::ZMeetingUICtrlWrap(){
-
+    m_pSink = 0;
 }
 
 ZMeetingUICtrlWrap::~ZMeetingUICtrlWrap(){
-
+    m_pSink = 0;
 }
 
 void ZMeetingUICtrlWrap::Init(){
@@ -25,7 +25,7 @@ void ZMeetingUICtrlWrap::Init(){
 void ZMeetingUICtrlWrap::Uninit(){
     
 }
-void ZMeetingUICtrlWrap::SetSink(IZNativeSDKMeetingUICtrlWrapSink *pSink){
+void ZMeetingUICtrlWrap::SetSink(ZNativeSDKMeetingUICtrlWrapSink *pSink){
     
     m_pSink = pSink;
 }
@@ -33,8 +33,11 @@ void ZMeetingUICtrlWrap::SetSink(IZNativeSDKMeetingUICtrlWrapSink *pSink){
 ZNSDKError ZMeetingUICtrlWrap::ShowChatDlg(ZNShowChatDlgParam showChatDlgParam){
     
     ZoomSDKMeetingService *service = [[ZoomSDK sharedSDK]getMeetingService];
+    if (!service){
+        return ZNSDKERR_SERVICE_FAILED;
+    }
     ZoomSDKMeetingUIController *controller = [service getMeetingUIController];
-    if (!service || !controller) {
+    if (!controller) {
         return ZNSDKERR_SERVICE_FAILED;
     }
     NSString *L = [NSString stringWithCString:showChatDlgParam.rect_left.c_str() encoding:NSUTF8StringEncoding];
@@ -49,8 +52,11 @@ ZNSDKError ZMeetingUICtrlWrap::ShowChatDlg(ZNShowChatDlgParam showChatDlgParam){
 ZNSDKError ZMeetingUICtrlWrap::HideChatDlg(){
     
     ZoomSDKMeetingService *service = [[ZoomSDK sharedSDK]getMeetingService];
+    if (!service){
+        return ZNSDKERR_SERVICE_FAILED;
+    }
     ZoomSDKMeetingUIController *controller = [service getMeetingUIController];
-    if (!service || !controller) {
+    if (!controller) {
         return ZNSDKERR_SERVICE_FAILED;
     }
     ZoomSDKError ret = [controller showMeetingComponent:MeetingComponent_Chat window:nil show:NO InPanel:NO frame:NSZeroRect];
@@ -60,8 +66,11 @@ ZNSDKError ZMeetingUICtrlWrap::HideChatDlg(){
 ZNSDKError ZMeetingUICtrlWrap::EnterFullScreen(bool bFirstView, bool bSecView){
     
     ZoomSDKMeetingService *service = [[ZoomSDK sharedSDK]getMeetingService];
+    if (!service){
+        return ZNSDKERR_SERVICE_FAILED;
+    }
     ZoomSDKMeetingUIController *controller = [service getMeetingUIController];
-    if (!service || !controller) {
+    if (!controller) {
         return ZNSDKERR_SERVICE_FAILED;
     }
     ZoomSDKError  ret = [controller enterFullScreen:YES firstMonitor:bFirstView DualMonitor:bSecView];
@@ -72,8 +81,11 @@ ZNSDKError ZMeetingUICtrlWrap::EnterFullScreen(bool bFirstView, bool bSecView){
 ZNSDKError ZMeetingUICtrlWrap::ExitFullScreen(bool bFirstView, bool bSecView){
     
     ZoomSDKMeetingService *service = [[ZoomSDK sharedSDK]getMeetingService];
+    if (!service){
+        return ZNSDKERR_SERVICE_FAILED;
+    }
     ZoomSDKMeetingUIController *controller = [service getMeetingUIController];
-    if (!service || !controller) {
+    if (!controller) {
         return ZNSDKERR_SERVICE_FAILED;
     }
     ZoomSDKError  ret = [controller enterFullScreen:NO firstMonitor:bFirstView DualMonitor:bSecView];
@@ -83,8 +95,11 @@ ZNSDKError ZMeetingUICtrlWrap::ExitFullScreen(bool bFirstView, bool bSecView){
 ZNSDKError ZMeetingUICtrlWrap::SwitchToVideoWall(){
     
     ZoomSDKMeetingService *service = [[ZoomSDK sharedSDK]getMeetingService];
+    if (!service){
+        return ZNSDKERR_SERVICE_FAILED;
+    }
     ZoomSDKMeetingUIController *controller = [service getMeetingUIController];
-    if (!service || !controller) {
+    if (!controller) {
         return ZNSDKERR_SERVICE_FAILED;
     }
     ZoomSDKError  ret = [controller switchToVideoWallView];
@@ -93,8 +108,11 @@ ZNSDKError ZMeetingUICtrlWrap::SwitchToVideoWall(){
 
 ZNSDKError ZMeetingUICtrlWrap::SwtichToAcitveSpeaker(){
     ZoomSDKMeetingService *service = [[ZoomSDK sharedSDK]getMeetingService];
+    if (!service){
+        return ZNSDKERR_SERVICE_FAILED;
+    }
     ZoomSDKMeetingUIController *controller = [service getMeetingUIController];
-    if (!service || !controller) {
+    if (!controller) {
         return ZNSDKERR_SERVICE_FAILED;
     }
     ZoomSDKError  ret = [controller switchToActiveSpeakerView];
@@ -104,8 +122,11 @@ ZNSDKError ZMeetingUICtrlWrap::SwtichToAcitveSpeaker(){
 ZNSDKError ZMeetingUICtrlWrap::MoveFloatVideoWnd(ZoomSTRING left, ZoomSTRING top){
     
     ZoomSDKMeetingService *service = [[ZoomSDK sharedSDK]getMeetingService];
+    if (!service){
+        return ZNSDKERR_SERVICE_FAILED;
+    }
     ZoomSDKMeetingUIController *controller = [service getMeetingUIController];
-    if (!service || !controller) {
+    if (!controller) {
         return ZNSDKERR_SERVICE_FAILED;
     }
 
@@ -118,8 +139,11 @@ ZNSDKError ZMeetingUICtrlWrap::MoveFloatVideoWnd(ZoomSTRING left, ZoomSTRING top
 
 ZNSDKError ZMeetingUICtrlWrap::ShowSharingToolbar(bool bShow){
     ZoomSDKMeetingService *service = [[ZoomSDK sharedSDK]getMeetingService];
+    if (!service){
+        return ZNSDKERR_SERVICE_FAILED;
+    }
     ZoomSDKMeetingUIController *controller = [service getMeetingUIController];
-    if (!service || !controller) {
+    if (!controller) {
         return ZNSDKERR_SERVICE_FAILED;
     }
     ZoomSDKError  ret = [controller showMeetingComponent:MeetingComponent_MainShareToolBar window:nil show:bShow InPanel:bShow frame:NSZeroRect];
@@ -128,8 +152,11 @@ ZNSDKError ZMeetingUICtrlWrap::ShowSharingToolbar(bool bShow){
 
 ZNSDKError ZMeetingUICtrlWrap::SwitchFloatVideoToActiveSpkMod(){
     ZoomSDKMeetingService *service = [[ZoomSDK sharedSDK]getMeetingService];
+    if (!service){
+        return ZNSDKERR_SERVICE_FAILED;
+    }
     ZoomSDKMeetingUIController *controller = [service getMeetingUIController];
-    if (!service || !controller){
+    if (!controller){
         return ZNSDKERR_SERVICE_FAILED;
     }
     ZoomSDKError ret = [controller switchFloatVideoToActiveSpeakerMode];
@@ -138,8 +165,11 @@ ZNSDKError ZMeetingUICtrlWrap::SwitchFloatVideoToActiveSpkMod(){
 
 ZNSDKError ZMeetingUICtrlWrap::ChangeFloatoActiveSpkVideoSize(ZNSDKFloatVideoType type){
     ZoomSDKMeetingService *service = [[ZoomSDK sharedSDK]getMeetingService];
+    if (!service){
+        return ZNSDKERR_SERVICE_FAILED;
+    }
     ZoomSDKMeetingUIController *controller = [service getMeetingUIController];
-    if (!service || !controller) {
+    if (!controller) {
          return ZNSDKERR_SERVICE_FAILED;
     }
     if (type == ZN_FLOATVIDEO_List || type == ZN_FLOATVIDEO_Small)
@@ -157,8 +187,11 @@ ZNSDKError ZMeetingUICtrlWrap::ChangeFloatoActiveSpkVideoSize(ZNSDKFloatVideoTyp
 
 ZNSDKError ZMeetingUICtrlWrap::SwitchFloatVideoToGalleryMod(){
     ZoomSDKMeetingService *service = [[ZoomSDK sharedSDK]getMeetingService];
+    if (!service){
+        return ZNSDKERR_SERVICE_FAILED;
+    }
     ZoomSDKMeetingUIController *controller = [service getMeetingUIController];
-    if (!service || !controller){
+    if (!controller){
         return ZNSDKERR_SERVICE_FAILED;
     }
     ZoomSDKError ret = [controller switchFloatVideoToGalleryMode];
@@ -167,8 +200,11 @@ ZNSDKError ZMeetingUICtrlWrap::SwitchFloatVideoToGalleryMod(){
 
 ZNSDKError ZMeetingUICtrlWrap::ShowParticipantsListWnd(bool bShow){
     ZoomSDKMeetingService *service = [[ZoomSDK sharedSDK]getMeetingService];
+    if (!service){
+        return ZNSDKERR_SERVICE_FAILED;
+    }
     ZoomSDKMeetingUIController *controller = [service getMeetingUIController];
-    if (!service || !controller){
+    if (!controller){
         return ZNSDKERR_SERVICE_FAILED;
     }
     
@@ -178,8 +214,11 @@ ZNSDKError ZMeetingUICtrlWrap::ShowParticipantsListWnd(bool bShow){
 
 ZNSDKError ZMeetingUICtrlWrap::ShowBottomFloatToolbarWnd(bool bShow){
     ZoomSDKMeetingService *service = [[ZoomSDK sharedSDK]getMeetingService];
+    if (!service){
+        return ZNSDKERR_SERVICE_FAILED;
+    }
     ZoomSDKMeetingUIController *controller = [service getMeetingUIController];
-    if (!service || !controller){
+    if (!controller){
         return ZNSDKERR_SERVICE_FAILED;
     }
 
@@ -189,8 +228,11 @@ ZNSDKError ZMeetingUICtrlWrap::ShowBottomFloatToolbarWnd(bool bShow){
 
 ZNSDKError ZMeetingUICtrlWrap::ShowJoinAudioDlg(){
     ZoomSDKMeetingService *service = [[ZoomSDK sharedSDK]getMeetingService];
+    if (!service){
+        return ZNSDKERR_SERVICE_FAILED;
+    }
     ZoomSDKMeetingUIController *controller = [service getMeetingUIController];
-    if (!service || !controller){
+    if (!controller){
         
         return ZNSDKERR_SERVICE_FAILED;
     }
@@ -202,8 +244,11 @@ ZNSDKError ZMeetingUICtrlWrap::ShowJoinAudioDlg(){
 
 ZNSDKError ZMeetingUICtrlWrap::HideJoinAudioDlg(){
     ZoomSDKMeetingService *service = [[ZoomSDK sharedSDK]getMeetingService];
+    if (!service){
+        return ZNSDKERR_SERVICE_FAILED;
+    }
     ZoomSDKMeetingUIController *controller = [service getMeetingUIController];
-    if (!service || !controller){
+    if (!controller){
         return ZNSDKERR_SERVICE_FAILED;
     }
     ZoomSDKError ret = [controller showMeetingComponent:MeetingComponent_Audio window:nil show:NO InPanel:NO frame:NSZeroRect];
@@ -212,8 +257,11 @@ ZNSDKError ZMeetingUICtrlWrap::HideJoinAudioDlg(){
 
 ZNSDKError ZMeetingUICtrlWrap::GetWallViewPageInfo(ZNVideoWallPageInfoParam &param){
     ZoomSDKMeetingService *service = [[ZoomSDK sharedSDK]getMeetingService];
+    if (!service){
+        return ZNSDKERR_SERVICE_FAILED;
+    }
     ZoomSDKMeetingUIController *controller = [service getMeetingUIController];
-    if (!service || !controller){
+    if (!controller){
         return ZNSDKERR_SERVICE_FAILED;
     }
     NSString *currentPage = [NSString stringWithCString:param.currentPage.c_str() encoding:NSUTF8StringEncoding];
@@ -227,8 +275,11 @@ ZNSDKError ZMeetingUICtrlWrap::GetWallViewPageInfo(ZNVideoWallPageInfoParam &par
 
 ZNSDKError ZMeetingUICtrlWrap::ShowPreOrNextPageVideo(bool bPageUP){
     ZoomSDKMeetingService *service = [[ZoomSDK sharedSDK]getMeetingService];
+    if (!service){
+        return ZNSDKERR_SERVICE_FAILED;
+    }
     ZoomSDKMeetingUIController *controller = [service getMeetingUIController];
-    if (!service || !controller){
+    if (!controller){
         return ZNSDKERR_SERVICE_FAILED;
     }
     ZoomSDKError ret = [controller showPreOrNextPageWallView:bPageUP];
@@ -237,8 +288,11 @@ ZNSDKError ZMeetingUICtrlWrap::ShowPreOrNextPageVideo(bool bPageUP){
 
 ZNSDKError ZMeetingUICtrlWrap::ShowSharingFrameWindows(bool bShow){
     ZoomSDKMeetingService *service = [[ZoomSDK sharedSDK]getMeetingService];
+    if (!service){
+        return ZNSDKERR_SERVICE_FAILED;
+    }
     ZoomSDKMeetingUIController *controller = [service getMeetingUIController];
-    if (!service || !controller){
+    if (!controller){
         return ZNSDKERR_SERVICE_FAILED;
     }
     

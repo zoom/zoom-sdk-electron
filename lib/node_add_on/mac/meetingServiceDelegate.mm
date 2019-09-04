@@ -20,7 +20,6 @@ extern ZNativeSDKWrap _g_native_wrap;;
 
 #pragma mark meeting delegate
 - (void)onMeetingStatusChange:(ZoomSDKMeetingStatus)state meetingError:(ZoomSDKMeetingError)error EndReason:(EndMeetingReason)reason{
-
     
     nativeErrorTypeHelp help;
     ZNMeetingStatus status = help.ZNSDKMeetingStatus(state);
@@ -62,6 +61,15 @@ extern ZNativeSDKWrap _g_native_wrap;;
     
     _g_native_wrap.GetMeetingServiceWrap().GetMeetingConfigCtrl().onFreeMeetingUpgradeToProMeeting();
 }
+
+-(void)onSharingStatus:(ZoomSDKShareStatus)status User:(unsigned int)userID{
+    
+    nativeErrorTypeHelp help;
+    ZNShareStatus shareStatus = help.ZNSDKShareStatus(status);
+    _g_native_wrap.GetMeetingServiceWrap().GetMeetingShareCtrl().onSharingStatus(shareStatus, userID);
+    
+}
+
 #pragma mark meeting ui delegate
 - (void)onToolbarInviteButtonClick {
 
@@ -78,13 +86,25 @@ extern ZNativeSDKWrap _g_native_wrap;;
 
 #pragma mark meeting action controller
 - (void)onVideoStatusChange:(BOOL)videoOn UserID:(unsigned int)userID{
+    
     ZNVideoStatus videoStatus = ZN_Video_OFF;
     if (videoOn == YES) {
         videoStatus = ZN_Video_ON;
     }else{
         videoStatus = ZN_Video_OFF;
     }
-    _g_native_wrap.GetMeetingServiceWrap().GetMeetingVideoCtrl().onUserVideoStatusChange(std::to_string(userID), videoStatus);
+    _g_native_wrap.GetMeetingServiceWrap().GetMeetingVideoCtrl().onUserVideoStatusChange(userID, videoStatus);
+}
+
+-(void)onActiveVideoUserChanged:(unsigned int)userID{
+    
+    _g_native_wrap.GetMeetingServiceWrap().GetMeetingVideoCtrl().onActiveVideoUserChanged(userID);
+    
+}
+
+-(void)onActiveSpeakerVideoUserChanged:(unsigned int)userID{
+    
+    _g_native_wrap.GetMeetingServiceWrap().GetMeetingVideoCtrl().onActiveSpeakerVideoUserChanged(userID);
 }
 
 
@@ -101,22 +121,29 @@ extern ZNativeSDKWrap _g_native_wrap;;
         ZoomSDKAudioStatus status = [key getStatus];
         ZNAudioStatus  znStatus = help_typeChanage.ZNSDKUserAudioStatus(status);
         userAudioInfo.audioStauts = znStatus;
-        userAudioInfo.userId = std::to_string(USERID);
-        userAudioStatusList.add(userAudioInfo);
+        userAudioInfo.userId = USERID;
+        userAudioStatusList.push_back(userAudioInfo);
     }
     _g_native_wrap.GetMeetingServiceWrap().GetMeetingAudioCtrl().onUserAudioStatusChange(userAudioStatusList, "");
     
 }
 
+-(void)onActiveSpeakerChanged:(unsigned int)userID{
+    
+    ZNList<unsigned int> list;
+    list.push_back(userID);
+    _g_native_wrap.GetMeetingServiceWrap().GetMeetingAudioCtrl().onUserActiveAudioChange(list);
+    
+}
 
 -(void)onUserLeft:(NSArray *)array{
     if (!array || array.count == 0) {
         return;
     }
-    ZNList<ZoomSTRING> list;
+    ZNList<unsigned int> list;
     for (NSNumber *num in array) {
         unsigned int userid = [num unsignedIntValue];
-        list.add(std::to_string(userid));
+        list.push_back(userid);
     }
     _g_native_wrap.GetMeetingServiceWrap().GetMeetingParticipantsCtrl().onUserLeft(list, "");
 }
@@ -126,17 +153,16 @@ extern ZNativeSDKWrap _g_native_wrap;;
     if (!array || array.count == 0) {
         return;
     }
-    ZNList<ZoomSTRING> list;
+    ZNList<unsigned int> list;
     for (NSNumber *num in array) {
         unsigned int userid = [num unsignedIntValue];
-        list.add(std::to_string(userid));
+        list.push_back(userid);
     }
     _g_native_wrap.GetMeetingServiceWrap().GetMeetingParticipantsCtrl().onUserJoin(list, "");
 }
 
 -(void)onHostChange:(unsigned int)userID{
-    
-    _g_native_wrap.GetMeetingServiceWrap().GetMeetingParticipantsCtrl().onHostChangeNotification(std::to_string(userID));
+ _g_native_wrap.GetMeetingServiceWrap().GetMeetingParticipantsCtrl().onHostChangeNotification(userID);
 }
 
 
@@ -146,6 +172,5 @@ extern ZNativeSDKWrap _g_native_wrap;;
     ZNH323CalloutStatus status = help_typeChanage.ZoomSDKH323Status(calloutStatus);
     _g_native_wrap.GetMeetingServiceWrap().GetMeetingH323Ctrl().onH323CalloutStatusNotify(status);
 }
-
 
 @end

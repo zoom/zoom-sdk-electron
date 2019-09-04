@@ -4,8 +4,6 @@
 #include "wrap/video_setting_context_wrap.h"
 #include "zoom_native_to_wrap.h"
 
-
-
 ZSettingVideoWrap::ZSettingVideoWrap()
 {
 
@@ -55,7 +53,7 @@ ZNList<ZNCameraInfo> ZSettingVideoWrap::GetCameraList()
 				zn_camera_info.deviceId = pCameraInfo->GetDeviceId();
 			}
 			zn_camera_info.isSelectedDevice = pCameraInfo->IsSelectedDevice();
-			zn_camera_list.add(zn_camera_info);
+			zn_camera_list.push_back(zn_camera_info);
 		}
 	}
 	return zn_camera_list;

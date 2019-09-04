@@ -265,6 +265,17 @@
 - (ZoomSDKError)startShareCamera:(NSString*)deviceID displayWindow:(NSWindow*)window;
 
 /**
+ * @brief Determine if user can share next camera, only avaliable for ZOOM UI.
+ * @return If the function succeeds, it will return YES, otherwise not.
+ */
+- (BOOL)canSwitchToShareNextCamera;
+/**
+ * @brief Share next camera, only avaliable for ZOOM UI.
+ * @return If the function succeeds, it will return ZoomSDKError_succuss, otherwise not.
+ */
+- (ZoomSDKError)switchToShareNextCamera;
+
+/**
  * @brief Determine if user can share white-board.
  * @return If the function succeeds, it will return YES, otherwise not.
  */

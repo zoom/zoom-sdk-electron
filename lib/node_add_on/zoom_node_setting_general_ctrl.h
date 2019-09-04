@@ -13,15 +13,46 @@ private:
 	ZoomNodeSettingGeneralCtrlWrap();
 	~ZoomNodeSettingGeneralCtrlWrap();
 public:
+	/// \brief Enable or disable dual screen mode.
+	/// \param 1. bEnable(bool) TRUE indicates to set to enable the dual screen mode.
+	/// \return If the function succeeds, the return value is ZNSDKERR_SUCCESS.
+	///Otherwise failed. To get extended error information, see \link ZNSDKError \endlink enum.
 	static void EnableDualScreenMode(const v8::FunctionCallbackInfo<v8::Value>& args);
+	/// \brief Enable or disable the aero mode when sharing the screen.
+	/// \param 1. bTurnoff(bool) TRUE indicates to turn off the aero mode when sharing the screen.
+	/// \return If the function succeeds, the return value is ZNSDKERR_SUCCESS.
+	///Otherwise failed. To get extended error information, see \link ZNSDKError \endlink enum.
+	/// \remarks The function can only be called in windows 7 environment.
 	static void TurnOffAeroModeInSharing(const v8::FunctionCallbackInfo<v8::Value>& args);
+	/// \brief Enable or disable to auto-fit the ZOOM window when viewing the shared content.
+	/// \param 1. bEnable(bool) TRUE indicates to resize automatically.
+	/// \return If the function succeeds, the return value is ZNSDKERR_SUCCESS.
+	///Otherwise failed. To get extended error information, see \link ZNSDKError \endlink enum.
 	static void EnableAutoFitToWindowWhenViewSharing(const v8::FunctionCallbackInfo<v8::Value>& args);
+	/// \brief Enable or disable to enter the full screen video mode automatically when join meeting. 
+	/// \param 1. bEnable(bool) TRUE indicates to enter the full screen video mode.
+	/// \return If the function succeeds, the return value is ZNSDKERR_SUCCESS.
+	///Otherwise failed. To get extended error information, see \link ZNSDKError \endlink enum.
 	static void EnableAutoFullScreenVideoWhenJoinMeeting(const v8::FunctionCallbackInfo<v8::Value>& args);
+	/// \brief Enable or disable to use the split screen mode, which enables the attendees to view the lectures or the gallery.
+	/// \param 1. bEnable(bool) TRUE indicates to enter the split screen mode.
+	/// \return If the function succeeds, the return value is ZNSDKERR_SUCCESS.
+	///Otherwise failed. To get extended error information, see \link ZNSDKError \endlink enum.
 	static void EnableSplitScreenMode(const v8::FunctionCallbackInfo<v8::Value>& args);
+	/// \brief Determine if the dual screen mode is supported.
+	/// \return TRUE indicates to enable the dual screen mode.
 	static void IsDualScreenModeEnabled(const v8::FunctionCallbackInfo<v8::Value>& args);
-	static void IsAeroModeInSharingTurnOff(const v8::FunctionCallbackInfo<v8::Value>& args); //win7
+	/// \brief Determine if the aero mode is turned off when sharing the screen.
+	/// \return TRUE indicates to turn off the mode. 
+	static void IsAeroModeInSharingTurnOff(const v8::FunctionCallbackInfo<v8::Value>& args);
+	/// \brief Determine if it is able to auto-fit the ZOOM window when viewing the shared content.
+	/// \return TRUE indicates to resize automatically.
 	static void IsAutoFitToWindowWhenViewSharingEnabled(const v8::FunctionCallbackInfo<v8::Value>& args);
+	/// \brief Determine if it is able to enter the full screen video mode automatically when join meeting.
+	/// \return TRUE indicates to enter the full screen video mode.
 	static void IsAutoFullScreenVideoWhenJoinMeetingEnabled(const v8::FunctionCallbackInfo<v8::Value>& args);
+	/// \brief Determine if the split screen mode is enabled.
+	/// \return TRUE indicates enabled. FALSE not.
 	static void IsSplitScreenModeEnabled(const v8::FunctionCallbackInfo<v8::Value>& args);
 	
 	static v8::Persistent<v8::Function> constructor;

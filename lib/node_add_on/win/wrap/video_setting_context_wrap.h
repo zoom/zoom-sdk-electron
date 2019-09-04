@@ -61,6 +61,8 @@ DEFINE_FUNC_0(GetTestVideoDeviceHelper, ITestVideoDeviceHelper*)
 
 //virtual void onComputerCamDeviceChanged(IList<ICameraInfo*>* pNewCameraList) = 0;
 CallBack_FUNC_1(onComputerCamDeviceChanged, IList<ICameraInfo*>*, pNewCameraList)
+//virtual void onDefaultCamDeviceChanged(const wchar_t* deviceId, const wchar_t* deviceName) = 0;
+CallBack_FUNC_2(onDefaultCamDeviceChanged, const wchar_t*, deviceId, const wchar_t*, deviceName)
 
 END_CLASS_DEFINE(IVideoSettingContext)
 END_ZOOM_SDK_NAMESPACE

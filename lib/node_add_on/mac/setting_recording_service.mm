@@ -25,6 +25,9 @@ void ZSettingRecordingWrap::Uninit(){
 ZNSDKError ZSettingRecordingWrap::SetRecordingPath(ZoomSTRING szPath){
     
     ZoomSDKSettingService *service = [[ZoomSDK sharedSDK]getSettingService];
+    if (!service){
+        return ZNSDKERR_SERVICE_FAILED;
+    }
     ZoomSDKRecordSetting *record = [service getRecordSetting];
     NSString *path = [NSString stringWithCString:szPath.c_str() encoding:NSUTF8StringEncoding];
     if (!path) {
@@ -43,6 +46,9 @@ ZNSDKError ZSettingRecordingWrap::SetRecordingPath(ZoomSTRING szPath){
 ZoomSTRING ZSettingRecordingWrap::GetRecordingPath(){
     
     ZoomSDKSettingService *service = [[ZoomSDK sharedSDK]getSettingService];
+    if (!service){
+        return "";
+    }
     ZoomSDKRecordSetting *record = [service getRecordSetting];
     if(service && record){
         NSString *path = [record getRecordingPath];

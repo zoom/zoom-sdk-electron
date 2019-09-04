@@ -15,7 +15,7 @@ ZMeetingServiceWrap::~ZMeetingServiceWrap(){
     [[[[ZoomSDK sharedSDK]getMeetingService]getMeetingActionController]setDelegate:nil];
     [[[[ZoomSDK sharedSDK]getMeetingService]getMeetingUIController]setDelegate:nil];
     [[[[ZoomSDK sharedSDK]getMeetingService]getH323Helper]setDelegate:nil];
-
+    [[[[ZoomSDK sharedSDK]getMeetingService]getASController]setDelegate:nil];
 }
 
 void ZMeetingServiceWrap::Init(){
@@ -31,7 +31,7 @@ void ZMeetingServiceWrap::Uninit(){
       
 }
 
-void ZMeetingServiceWrap::SetSink(IZNativeSDKMeetingWrapSink *pSink){
+void ZMeetingServiceWrap::SetSink(ZNativeSDKMeetingWrapSink *pSink){
     
     [[[ZoomSDK sharedSDK]getMeetingService]setDelegate:[meetingServiceDelegate share]];
     [[[[ZoomSDK sharedSDK]getMeetingService]getMeetingActionController]setDelegate:[meetingServiceDelegate share]];
@@ -47,7 +47,8 @@ ZNSDKError ZMeetingServiceWrap::Start(ZNStartParam startParam){
     NSString *user_id = [NSString stringWithCString:startParam.userId.c_str() encoding:NSUTF8StringEncoding];
     NSString *token = [NSString stringWithCString:startParam.userToken.c_str() encoding:NSUTF8StringEncoding];
     NSString *displayName = [NSString stringWithCString:startParam.username.c_str() encoding:NSUTF8StringEncoding];
-    NSString *num = [NSString stringWithCString:startParam.meetingNumber.c_str() encoding:NSUTF8StringEncoding];
+    NSNumber *number = [NSNumber numberWithUnsignedLong:startParam.meetingNumber];
+    NSString *num = [number stringValue];
     BOOL isDirecShare = startParam.isDirectShareDesktop;
     NSString *display = [NSString stringWithCString:startParam.hDirectShareAppWnd.c_str() encoding:NSUTF8StringEncoding];
     
@@ -68,7 +69,8 @@ ZNSDKError ZMeetingServiceWrap::Start_WithoutLogin(ZNStartParam startParam){
     NSString *userid = [NSString stringWithCString:startParam.userId.c_str() encoding:NSUTF8StringEncoding];
     NSString *userToken = [NSString stringWithCString:startParam.userToken.c_str() encoding:NSUTF8StringEncoding];
     NSString *disName = [NSString stringWithCString:startParam.username.c_str() encoding:NSUTF8StringEncoding];
-    NSString *num = [NSString stringWithCString:startParam.meetingNumber.c_str() encoding:NSUTF8StringEncoding];
+    NSNumber *number = [NSNumber numberWithUnsignedLong:startParam.meetingNumber];
+    NSString *num = [number stringValue];
     BOOL isDirecShare = startParam.isDirectShareDesktop;
     NSString *display = [NSString stringWithCString:startParam.hDirectShareAppWnd.c_str() encoding:NSUTF8StringEncoding];
     CGDirectDisplayID  displayID = [display  intValue];
@@ -87,7 +89,8 @@ ZNSDKError ZMeetingServiceWrap::Join(ZNJoinParam joinParam){
     NSString *tokenLogin = [NSString stringWithCString:joinParam.token4EnforceLogin.c_str() encoding:NSUTF8StringEncoding];
     NSString *webToken = [NSString stringWithCString:joinParam.webinarToken.c_str() encoding:NSUTF8StringEncoding];
     NSString *particpanid = [NSString stringWithCString:joinParam.participantId.c_str() encoding:NSUTF8StringEncoding];
-    NSString *num = [NSString stringWithCString:joinParam.meetingNumber.c_str() encoding:NSUTF8StringEncoding];
+    NSNumber *number = [NSNumber numberWithUnsignedLong:joinParam.meetingNumber];
+    NSString *num = [number stringValue];
     NSString *name = [NSString stringWithCString:joinParam.username.c_str() encoding:NSUTF8StringEncoding];
     NSString *pwd = [NSString stringWithCString:joinParam.psw.c_str() encoding:NSUTF8StringEncoding];
     BOOL isDirecShare = joinParam.isDirectShareDesktop;
@@ -109,7 +112,8 @@ ZNSDKError ZMeetingServiceWrap::Join_WithoutLogin(ZNJoinParam joinParam){
     NSString *tokenLogin = [NSString stringWithCString:joinParam.token4EnforceLogin.c_str() encoding:NSUTF8StringEncoding];
     NSString *webToken = [NSString stringWithCString:joinParam.webinarToken.c_str() encoding:NSUTF8StringEncoding];
     NSString *particpanid = [NSString stringWithCString:joinParam.participantId.c_str() encoding:NSUTF8StringEncoding];
-    NSString *num = [NSString stringWithCString:joinParam.meetingNumber.c_str() encoding:NSUTF8StringEncoding];
+    NSNumber *number = [NSNumber numberWithUnsignedLong:joinParam.meetingNumber];
+    NSString *num = [number stringValue];
     NSString *name = [NSString stringWithCString:joinParam.username.c_str() encoding:NSUTF8StringEncoding];
     NSString *pwd = [NSString stringWithCString:joinParam.psw.c_str() encoding:NSUTF8StringEncoding];
     BOOL isDirecShare = joinParam.isDirectShareDesktop;
@@ -190,8 +194,10 @@ ZNConnectionQuality  ZMeetingServiceWrap::GetSharingConnQuality(){
 //callback
 void ZMeetingServiceWrap::onMeetingStatusChanged(ZNMeetingStatus meetingStatus, int iResult){
 
+    if (meetingStatus == ZNMEETING_STATUS_INMEETING) {
+        [[[[ZoomSDK sharedSDK]getMeetingService]getASController]setDelegate:[meetingServiceDelegate share]];
+    }
     if (m_pSink) {
-        
         m_pSink -> onMeetingStatusChanged(meetingStatus, iResult);
     }
 }
@@ -224,16 +230,16 @@ ZNMeetingType ZMeetingInfoWrap::GetMeetingType(){
     return ZNMEETING_TYPE_NONE;
 }
 
-ZoomSTRING ZMeetingInfoWrap::GetMeetingNumber(){
+unsigned long long  ZMeetingInfoWrap::GetMeetingNumber(){
     ZoomSDKMeetingService *service = [[ZoomSDK sharedSDK]getMeetingService];
     if (service) {
         NSString *meetingNumber = [service  getMeetingProperty:MeetingPropertyCmd_MeetingNumber];
         if (!meetingNumber) {
-            return "";
+            return 0;
         }
-        return meetingNumber.UTF8String;
+        return meetingNumber.longLongValue;
     }
-    return "";
+    return 0;
 }
 
 ZoomSTRING ZMeetingInfoWrap::GetMeetingID(){
@@ -296,7 +302,6 @@ ZoomSTRING ZMeetingInfoWrap::GetMeetingHostTag(){
 bool ZMeetingInfoWrap::CheckingIsInternalMeeting(){
     ZoomSDKMeetingService *service = [[ZoomSDK sharedSDK]getMeetingService];
     if (service) {
-        
         return [service isInternalMeeting];
     }
     return false;

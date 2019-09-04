@@ -445,6 +445,118 @@ ZNPremeetingAPIResult Map2WrapDefine(ZOOM_SDK_NAMESPACE::PremeetingAPIResult res
 	}
 	return zn_premeeting_result;
 }
+ZNDirectShareStatus Map2WrapDefine(ZOOM_SDK_NAMESPACE::DirectShareStatus status)
+{
+	ZNDirectShareStatus zn_direct_share_status;
+	switch (status)
+	{
+	case ZOOMSDK::DirectShare_Unknown:
+		zn_direct_share_status = ZN_DirectShare_Unknown;
+		break;
+	case ZOOMSDK::DirectShare_Connecting:
+		zn_direct_share_status = ZN_DirectShare_Connecting;
+		break;
+	case ZOOMSDK::DirectShare_In_Direct_Share_Mode:
+		zn_direct_share_status = ZN_DirectShare_In_Direct_Share_Mode;
+		break;
+	case ZOOMSDK::DirectShare_Ended:
+		zn_direct_share_status = ZN_DirectShare_Ended;
+		break;
+	case ZOOMSDK::DirectShare_Need_MeetingID_Or_PairingCode:
+		zn_direct_share_status = ZN_DirectShare_Need_MeetingID_Or_PairingCode;
+		break;
+	case ZOOMSDK::DirectShare_NetWork_Error:
+		zn_direct_share_status = ZN_DirectShare_NetWork_Error;
+		break;
+	case ZOOMSDK::DirectShare_Other_Error:
+		zn_direct_share_status = ZN_DirectShare_Other_Error;
+		break;
+	default:
+		break;
+	}
+	return zn_direct_share_status;
+}
+ZNShareStatus Map2WrapDefine(ZOOM_SDK_NAMESPACE::SharingStatus status)
+{
+	ZNShareStatus zn_sharing_status;
+	switch (status)
+	{
+	case ZOOMSDK::Sharing_Self_Send_Begin:
+		zn_sharing_status = ZN_Sharing_Self_Send_Begin;
+		break;
+	case ZOOMSDK::Sharing_Self_Send_End:
+		zn_sharing_status = ZN_Sharing_Self_Send_End;
+		break;
+	case ZOOMSDK::Sharing_Other_Share_Begin:
+		zn_sharing_status = ZN_Sharing_Other_Share_Begin;
+		break;
+	case ZOOMSDK::Sharing_Other_Share_End:
+		zn_sharing_status = ZN_Sharing_Other_Share_End;
+		break;
+	case ZOOMSDK::Sharing_View_Other_Sharing:
+		zn_sharing_status = ZN_Sharing_View_Other_Sharing;
+		break;
+	case ZOOMSDK::Sharing_Pause:
+		zn_sharing_status = ZN_Sharing_Pause;
+		break;
+	case ZOOMSDK::Sharing_Resume:
+		zn_sharing_status = ZN_Sharing_Resume;
+		break;
+	default:
+		break;
+	}
+	return zn_sharing_status;
+}
+ZNAudioType Map2WrapDefine(ZOOM_SDK_NAMESPACE::AudioType type)
+{
+	ZNAudioType zn_audio_type;
+	switch (type)
+	{
+	case ZOOMSDK::AUDIOTYPE_NONE:
+		zn_audio_type = ZN_AUDIOTYPE_NONE;
+		break;
+	case ZOOMSDK::AUDIOTYPE_VOIP:
+		zn_audio_type = ZN_AUDIOTYPE_VOIP;
+		break;
+	case ZOOMSDK::AUDIOTYPE_PHONE:
+		zn_audio_type = ZN_AUDIOTYPE_PHONE;
+		break;
+	case ZOOMSDK::AUDIOTYPE_UNKNOW:
+		zn_audio_type = ZN_AUDIOTYPE_UNKNOW;
+		break;
+	default:
+		break;
+	}
+	return zn_audio_type;
+}
+ZNUserRole Map2WrapDefine(ZOOM_SDK_NAMESPACE::UserRole role)
+{
+	ZNUserRole zn_user_role;
+	switch (role)
+	{
+	case ZOOMSDK::USERROLE_NONE:
+		zn_user_role = ZN_USERROLE_NONE;
+		break;
+	case ZOOMSDK::USERROLE_HOST:
+		zn_user_role = ZN_USERROLE_HOST;
+		break;
+	case ZOOMSDK::USERROLE_COHOST:
+		zn_user_role = ZN_USERROLE_COHOST;
+		break;
+	case ZOOMSDK::USERROLE_PANELIST:
+		zn_user_role = ZN_USERROLE_PANELIST;
+		break;
+	case ZOOMSDK::USERROLE_BREAKOUTROOM_MODERATOR:
+		zn_user_role = ZN_USERROLE_BREAKOUTROOM_MODERATOR;
+		break;
+	case ZOOMSDK::USERROLE_ATTENDEE:
+		zn_user_role = ZN_USERROLE_ATTENDEE;
+		break;
+	default:
+		break;
+	}
+	return zn_user_role;
+}
 
 /////Covert JS define to SDK
 ZOOM_SDK_NAMESPACE::SDK_LANGUAGE_ID Map2SDKDefine(ZNSDK_LANGUAGE_ID id)

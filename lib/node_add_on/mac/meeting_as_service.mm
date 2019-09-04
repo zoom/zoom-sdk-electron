@@ -16,8 +16,11 @@ ZMeetingAnnotationWrap  &ZMeetingServiceWrap::GetMeetingAnnotation(){
 ZNSDKError ZMeetingUICtrlWrap::GetCurrentSplitScreenModeInfo(ZNSplitScreenInfo &info){
     
     ZoomSDKMeetingService *service = [[ZoomSDK sharedSDK]getMeetingService];
+    if (!service){
+        return ZNSDKERR_SERVICE_FAILED;
+    }
     ZoomSDKASController *controller = [service getASController];
-    if (!service || !controller)
+    if (!controller)
         return ZNSDKERR_SERVICE_FAILED;
     ZoomSDKSplitScreenInfo  *screeninfo = [controller getCurrentSplitScreenModeInfo];
     info.bZNInSplitScreenMode = screeninfo.isInSplitScreenMode;
@@ -28,8 +31,11 @@ ZNSDKError ZMeetingUICtrlWrap::GetCurrentSplitScreenModeInfo(ZNSplitScreenInfo &
 ZNSDKError ZMeetingUICtrlWrap::SwitchSplitScreenMode(bool bSplit){
     
     ZoomSDKMeetingService *service = [[ZoomSDK sharedSDK]getMeetingService];
+    if (!service){
+        return ZNSDKERR_SERVICE_FAILED;
+    }
     ZoomSDKASController *as = [service getASController];
-    if (!service || !as){
+    if (!as){
         
          return ZNSDKERR_SERVICE_FAILED;
     }
@@ -58,8 +64,11 @@ void ZMeetingAnnotationWrap::Uninit(){
 bool ZMeetingAnnotationWrap::IsAnnoataionDisable(){
     
     ZoomSDKMeetingService *service = [[ZoomSDK sharedSDK]getMeetingService];
+    if (!service){
+        return ZNSDKERR_SERVICE_FAILED;
+    }
     ZoomSDKASController *controller = [service getASController];
-    if (!service || !controller)
+    if (!controller)
         return  NO;
     return [[controller getAnnotationController]isAnnotationDisable];
 }
@@ -67,8 +76,11 @@ bool ZMeetingAnnotationWrap::IsAnnoataionDisable(){
 ZNSDKError ZMeetingAnnotationWrap::StartAnnotation(ZNSDKViewType type, ZoomSTRING left, ZoomSTRING top){
     
     ZoomSDKMeetingService *service = [[ZoomSDK sharedSDK]getMeetingService];
+    if (!service){
+        return ZNSDKERR_SERVICE_FAILED;
+    }
      ZoomSDKASController *controller = [service getASController];
-    if (!service || !controller) {
+    if (!controller) {
         return ZNSDKERR_SERVICE_FAILED;
     }
     float X = [[NSString stringWithCString:left.c_str() encoding:NSUTF8StringEncoding] floatValue];
@@ -81,8 +93,11 @@ ZNSDKError ZMeetingAnnotationWrap::StartAnnotation(ZNSDKViewType type, ZoomSTRIN
 ZNSDKError ZMeetingAnnotationWrap::StopAnnotation(ZNSDKViewType type){
     
     ZoomSDKMeetingService *service = [[ZoomSDK sharedSDK]getMeetingService];
+    if (!service){
+        return ZNSDKERR_SERVICE_FAILED;
+    }
     ZoomSDKASController *controller = [service getASController];
-    if (!service || !controller) {
+    if (!controller) {
         return ZNSDKERR_SERVICE_FAILED;
     }
     ScreenType  screenType = Help_type.ZoomSDKScreenViewType(type);
@@ -92,8 +107,11 @@ ZNSDKError ZMeetingAnnotationWrap::StopAnnotation(ZNSDKViewType type){
 ZNSDKError ZMeetingAnnotationWrap::SetTool(ZNSDKViewType viewType, ZNAnnotationToolType toolType){
     
     ZoomSDKMeetingService *service = [[ZoomSDK sharedSDK]getMeetingService];
+    if (!service){
+        return ZNSDKERR_SERVICE_FAILED;
+    }
     ZoomSDKASController *controller = [service getASController];
-    if (!service || !controller) {
+    if (!controller) {
         return ZNSDKERR_SERVICE_FAILED;
     }
     ScreenType  screenType = Help_type.ZoomSDKScreenViewType(viewType);
@@ -104,8 +122,11 @@ ZNSDKError ZMeetingAnnotationWrap::SetTool(ZNSDKViewType viewType, ZNAnnotationT
 ZNSDKError ZMeetingAnnotationWrap::Clear(ZNSDKViewType viewType, ZNAnnotationClearType toolType){
     
     ZoomSDKMeetingService *service = [[ZoomSDK sharedSDK]getMeetingService];
+    if (!service){
+        return ZNSDKERR_SERVICE_FAILED;
+    }
     ZoomSDKASController *controller = [service getASController];
-    if (!service || !controller) {
+    if (!controller) {
         return ZNSDKERR_SERVICE_FAILED;
     }
     ScreenType  screenType = Help_type.ZoomSDKScreenViewType(viewType);
@@ -128,8 +149,11 @@ ZNSDKError ZMeetingAnnotationWrap::SetColor(ZNSDKViewType viewType, ZoomSTRING c
 ZNSDKError ZMeetingAnnotationWrap::SetLineWidth(ZNSDKViewType viewType, ZoomSTRING lineWidth){
     
     ZoomSDKMeetingService *service = [[ZoomSDK sharedSDK]getMeetingService];
+    if (!service){
+        return ZNSDKERR_SERVICE_FAILED;
+    }
     ZoomSDKASController *controller = [service getASController];
-    if (!service || !controller) {
+    if (!controller) {
         return ZNSDKERR_SERVICE_FAILED;
     }
     ScreenType  screenType = Help_type.ZoomSDKScreenViewType(viewType);
@@ -141,8 +165,11 @@ ZNSDKError ZMeetingAnnotationWrap::SetLineWidth(ZNSDKViewType viewType, ZoomSTRI
 ZNSDKError ZMeetingAnnotationWrap::Undo(ZNSDKViewType viewType){
     
     ZoomSDKMeetingService *service = [[ZoomSDK sharedSDK]getMeetingService];
+    if (!service){
+        return ZNSDKERR_SERVICE_FAILED;
+    }
     ZoomSDKASController *controller = [service getASController];
-    if (!service || !controller) {
+    if (!controller) {
         return ZNSDKERR_SERVICE_FAILED;
     }
     ScreenType  screenType = Help_type.ZoomSDKScreenViewType(viewType);
@@ -153,8 +180,11 @@ ZNSDKError ZMeetingAnnotationWrap::Undo(ZNSDKViewType viewType){
 ZNSDKError ZMeetingAnnotationWrap::Redo(ZNSDKViewType viewType){
     
     ZoomSDKMeetingService *service = [[ZoomSDK sharedSDK]getMeetingService];
+    if (!service){
+        return ZNSDKERR_SERVICE_FAILED;
+    }
     ZoomSDKASController *controller = [service getASController];
-    if (!service || !controller) {
+    if (!controller) {
         return ZNSDKERR_SERVICE_FAILED;
     }
     ScreenType  screenType = Help_type.ZoomSDKScreenViewType(viewType);

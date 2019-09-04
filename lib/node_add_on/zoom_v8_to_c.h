@@ -1,6 +1,7 @@
 #ifndef _v8_to_c_h_
 #define _v8_to_c_h_
 #include <string>
+#include "zoom_node_common_include.h"
 #if (defined BUILD_WIN)
 #define ZNODESTRING std::wstring
 #else

@@ -12,10 +12,11 @@ ZMeetingH323Wrap &ZMeetingServiceWrap::GetMeetingH323Ctrl(){
 
 ZMeetingH323Wrap::ZMeetingH323Wrap(){
     
+    m_pSink = 0;
 }
 
 ZMeetingH323Wrap::~ZMeetingH323Wrap(){
-    
+    m_pSink = 0;
 }
 
 void ZMeetingH323Wrap::Init(){
@@ -26,7 +27,7 @@ void ZMeetingH323Wrap::Uninit(){
     
 }
 
-void  ZMeetingH323Wrap::SetSink(IZNativeSDKMeetingH323WrapSink *pSink){
+void  ZMeetingH323Wrap::SetSink(ZNativeSDKMeetingH323WrapSink *pSink){
     
     m_pSink = pSink;
 }
@@ -34,6 +35,9 @@ void  ZMeetingH323Wrap::SetSink(IZNativeSDKMeetingH323WrapSink *pSink){
 ZNSDKError ZMeetingH323Wrap::CallOutH323(ZoomSTRING deviceName, ZoomSTRING deviceIP, ZoomSTRING device164Num, ZNH323DeviceType deviceType){
     
     ZoomSDKMeetingService *service = [[ZoomSDK sharedSDK]getMeetingService];
+    if (!service){
+        return ZNSDKERR_SERVICE_FAILED;
+    }
     ZoomSDKH323Helper *help = [service getH323Helper];
     H323DeviceInfo *info = [[[H323DeviceInfo alloc]init] autorelease];
     info.name = [NSString stringWithCString:deviceName.c_str() encoding:NSUTF8StringEncoding];
@@ -52,6 +56,9 @@ ZNSDKError ZMeetingH323Wrap::CallOutH323(ZoomSTRING deviceName, ZoomSTRING devic
 ZNSDKError ZMeetingH323Wrap::CancelCallOutH323(){
     
     ZoomSDKMeetingService *service = [[ZoomSDK sharedSDK]getMeetingService];
+    if (!service){
+        return ZNSDKERR_SERVICE_FAILED;
+    }
     ZoomSDKH323Helper *help = [service getH323Helper];
     if (service && help) {
         ZoomSDKError error = [help cancelCallOutH323];
@@ -63,14 +70,17 @@ ZNSDKError ZMeetingH323Wrap::CancelCallOutH323(){
 
 ZNList<ZoomSTRING> ZMeetingH323Wrap::GetH323Address(){
     
-    ZoomSDKMeetingService *service = [[ZoomSDK sharedSDK]getMeetingService];
-    ZoomSDKH323Helper *help = [service getH323Helper];
     ZNList<ZoomSTRING> list;
+    ZoomSDKMeetingService *service = [[ZoomSDK sharedSDK]getMeetingService];
+    if (!service){
+        return list;
+    }
+    ZoomSDKH323Helper *help = [service getH323Helper];
     if (service && help) {
         NSArray *arr = [help getH323DeviceAddress];
         if (arr && arr.count > 0) {
             for (NSString *address in arr) {
-                list.add(address.UTF8String);
+                list.push_back(address.UTF8String);
             }
         }
         return list;
@@ -82,6 +92,9 @@ ZNList<ZoomSTRING> ZMeetingH323Wrap::GetH323Address(){
 ZoomSTRING ZMeetingH323Wrap::GetH323Password(){
     
     ZoomSDKMeetingService *service = [[ZoomSDK sharedSDK]getMeetingService];
+    if (!service){
+        return "";
+    }
     ZoomSDKH323Helper *help = [service getH323Helper];
     if (service && help) {
         NSString *psd = [help getH323Password];
@@ -96,9 +109,12 @@ ZoomSTRING ZMeetingH323Wrap::GetH323Password(){
 
 ZNList<ZNH323DeviecInfo> ZMeetingH323Wrap::GetCalloutH323DviceList(){
     
-    ZoomSDKMeetingService *service = [[ZoomSDK sharedSDK]getMeetingService];
-    ZoomSDKH323Helper *help = [service getH323Helper];
     ZNList<ZNH323DeviecInfo> list;
+    ZoomSDKMeetingService *service = [[ZoomSDK sharedSDK]getMeetingService];
+    if (!service){
+        return list;
+    }
+    ZoomSDKH323Helper *help = [service getH323Helper];
     ZNH323DeviecInfo ZN_info;
     if (!service || !help) {
         return list;
@@ -113,7 +129,7 @@ ZNList<ZNH323DeviecInfo> ZMeetingH323Wrap::GetCalloutH323DviceList(){
         ZN_info.h323_deviceE164Name = info.e164num.UTF8String;
         H323DeviceType DVType = info.type;
         ZN_info.h323_DeviceType = Help_type.ZNSDKH323DeviceType(DVType);
-        list.add(ZN_info);
+        list.push_back(ZN_info);
     }
     return list;
 }

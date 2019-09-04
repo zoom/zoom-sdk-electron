@@ -1,1 +1,2 @@
 #define IDI_SDK_ICON	100
+#define IDI_SDK_BIG_ICON 124

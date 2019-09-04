@@ -3,34 +3,34 @@
 #include "../auth_service_wrap_core.h"
 #include "Header_include.h"
 #import "authServiceDelegate.h"
+#import "sdk_native_error.h"
 static nativeErrorTypeHelp error;
 ZAuthServiceWrap::ZAuthServiceWrap(){
-  
 
+    m_pSink = 0;
 }
 
 ZAuthServiceWrap::~ZAuthServiceWrap(){
-
-    [[[ZoomSDK sharedSDK]getAuthService]setDelegate:NULL];
-   
+    m_pSink = 0;
+    [[[ZoomSDK sharedSDK]getAuthService]setDelegate:nil];
 }
+
+
 
 void ZAuthServiceWrap::Init(){
 
     ZoomSDKAuthService *auth = [[ZoomSDK sharedSDK]getAuthService];
     if (auth) {
-        
         [auth setDelegate:[authServiceDelegate share]];
     }
     
 }
 
 void ZAuthServiceWrap::Uninit(){
-    [[[ZoomSDK sharedSDK]getAuthService]setDelegate:nil];
+
 }
 
-void ZAuthServiceWrap::SetSink(IZNativeSDKAuthWrapSink *pSink){
-    
+void ZAuthServiceWrap::SetSink(ZNativeSDKAuthWrapSink *pSink){
 
     m_pSink = pSink;
 }
@@ -121,8 +121,7 @@ void ZAuthServiceWrap::onLogout(){
 void ZAuthServiceWrap::onZoomIdentityExpired(){
     
     if (m_pSink) {
-        m_pSink->onZoomIdentityExpired()
-        ;
+        m_pSink->onZoomIdentityExpired();
     }
 }
 

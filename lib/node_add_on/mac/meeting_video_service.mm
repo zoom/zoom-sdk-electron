@@ -31,63 +31,67 @@ void ZMeetingVideoWrap::Uninit(){
     
 }
 
-void ZMeetingVideoWrap::SetSink(IZNativeSDKMeetingVideoWrapSink *pSink){
+void ZMeetingVideoWrap::SetSink(ZNativeSDKMeetingVideoWrapSink *pSink){
     
     m_pSink = pSink;
 }
 
-ZNSDKError ZMeetingVideoWrap::MuteVideo(){
+ZNSDKError ZMeetingVideoWrap::MuteVideo(unsigned int userId){
     
     ZoomSDKMeetingService *service = [[ZoomSDK sharedSDK]getMeetingService];
+    if (!service){
+        return ZNSDKERR_SERVICE_FAILED;
+    }
     ZoomSDKMeetingActionController *action = [service getMeetingActionController];
-    if (service && action) {
-        ZoomSDKError ret = [action actionMeetingWithCmd:ActionMeetingCmd_MuteVideo userID:0 onScreen:ScreenType_First];
+    if (action) {
+        ZoomSDKError ret = [action actionMeetingWithCmd:ActionMeetingCmd_MuteVideo userID:userId onScreen:ScreenType_First];
         return Help_type.ZoomSDKErrorType(ret);
     }
     return ZNSDKERR_SERVICE_FAILED;
 }
 
-ZNSDKError ZMeetingVideoWrap::UnMuteVideo(){
+ZNSDKError ZMeetingVideoWrap::UnMuteVideo(unsigned int userId){
     
     ZoomSDKMeetingService *service = [[ZoomSDK sharedSDK]getMeetingService];
+    if (!service){
+        return ZNSDKERR_SERVICE_FAILED;
+    }
     ZoomSDKMeetingActionController *action = [service getMeetingActionController];
-    if (service && action) {
-        ZoomSDKError ret = [action actionMeetingWithCmd:ActionMeetingCmd_UnMuteVideo userID:0 onScreen:ScreenType_First];
+    if (action) {
+        ZoomSDKError ret = [action actionMeetingWithCmd:ActionMeetingCmd_UnMuteVideo userID:userId onScreen:ScreenType_First];
         return Help_type.ZoomSDKErrorType(ret);
     }
     return ZNSDKERR_SERVICE_FAILED;
 }
 
-ZNSDKError ZMeetingVideoWrap::PinVideo(bool bPin, bool bFirstView, ZoomSTRING userId){
+ZNSDKError ZMeetingVideoWrap::PinVideo(bool bPin, bool bFirstView, unsigned int userId){
     
     ZoomSDKMeetingService *service = [[ZoomSDK sharedSDK]getMeetingService];
+    if (!service){
+        return ZNSDKERR_SERVICE_FAILED;
+    }
     ZoomSDKMeetingActionController *action = [service getMeetingActionController];
-    if (service && action) {
-        NSString *ID = [NSString stringWithCString:userId.c_str() encoding:NSUTF8StringEncoding];
-        if (ID == nil) {
-            return ZNSDKERR_INVALID_PARAMETER;
-        }
+    if (action) {
         ZoomSDKError ret(ZoomSDKError_UnKnow);
         if (bFirstView) {
-            ret = [action actionMeetingWithCmd:ActionMeetingCmd_PinVideo userID:ID.intValue onScreen:ScreenType_First];
+            ret = [action actionMeetingWithCmd:ActionMeetingCmd_PinVideo userID:userId onScreen:ScreenType_First];
         }else{
-            ret = [action actionMeetingWithCmd:ActionMeetingCmd_PinVideo userID:ID.intValue onScreen:ScreenType_Second];
+            ret = [action actionMeetingWithCmd:ActionMeetingCmd_PinVideo userID:userId onScreen:ScreenType_Second];
         }
         return Help_type.ZoomSDKErrorType(ret);
     }
     return ZNSDKERR_SERVICE_FAILED;
 }
 
-ZNSDKError ZMeetingVideoWrap::SpotlightVideo(bool bSpotlight, ZoomSTRING userId){
+ZNSDKError ZMeetingVideoWrap::SpotlightVideo(bool bSpotlight, unsigned int userId){
     
     ZoomSDKMeetingService *service = [[ZoomSDK sharedSDK]getMeetingService];
+    if (!service){
+        return ZNSDKERR_SERVICE_FAILED;
+    }
     ZoomSDKMeetingActionController *action = [service getMeetingActionController];
-    if (service && action) {
-        NSString *ID = [NSString stringWithCString:userId.c_str() encoding:NSUTF8StringEncoding];
-        if (ID == nil) {
-            return ZNSDKERR_INVALID_PARAMETER;
-        }
-        ZoomSDKError ret = [action actionMeetingWithCmd:ActionMeetingCmd_SpotlightVideo userID:ID.intValue onScreen:ScreenType_First];
+    if (action) {
+        ZoomSDKError ret = [action actionMeetingWithCmd:ActionMeetingCmd_SpotlightVideo userID:userId onScreen:ScreenType_First];
         return Help_type.ZoomSDKErrorType(ret);
     }
     return ZNSDKERR_SERVICE_FAILED;
@@ -96,8 +100,11 @@ ZNSDKError ZMeetingVideoWrap::SpotlightVideo(bool bSpotlight, ZoomSTRING userId)
 ZNSDKError ZMeetingVideoWrap::HideOrShowNoVideoUserOnVideoWall(bool bHide){
     
     ZoomSDKMeetingService *service = [[ZoomSDK sharedSDK]getMeetingService];
+    if (!service){
+        return ZNSDKERR_SERVICE_FAILED;
+    }
     ZoomSDKMeetingUIController *action = [service getMeetingUIController];
-    if (service && action) {
+    if (action) {
         ZoomSDKError ret = [action hideOrShowNoVideoUserOnVideoWall:bHide];
         return Help_type.ZoomSDKErrorType(ret);
     }
@@ -108,10 +115,24 @@ ZNSDKError ZMeetingVideoWrap::HideOrShowNoVideoUserOnVideoWall(bool bHide){
 
 
 //callback
-void ZMeetingVideoWrap::onUserVideoStatusChange(ZoomSTRING userId, ZNVideoStatus status){
+void ZMeetingVideoWrap::onUserVideoStatusChange(unsigned int userId, ZNVideoStatus status){
     
     if (m_pSink) {
         m_pSink->onUserVideoStatusChange(userId, status);
     }
     
+}
+
+void ZMeetingVideoWrap::onActiveVideoUserChanged(unsigned int userid){
+    
+    if (m_pSink) {
+        m_pSink->onActiveVideoUserChanged(userid);
+    }
+}
+
+void ZMeetingVideoWrap::onActiveSpeakerVideoUserChanged(unsigned int userid){
+    
+    if (m_pSink) {
+        m_pSink->onActiveSpeakerVideoUserChanged(userid);
+    }
 }

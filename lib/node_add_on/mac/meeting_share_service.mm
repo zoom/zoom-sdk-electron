@@ -13,11 +13,11 @@ ZMeetingShareWrap &ZMeetingServiceWrap::GetMeetingShareCtrl(){
 }
 
 ZMeetingShareWrap::ZMeetingShareWrap(){
-    
+    m_pSink = 0;
 }
 
 ZMeetingShareWrap::~ZMeetingShareWrap(){
-    
+    m_pSink = 0;
 }
 
 void ZMeetingShareWrap::Init(){
@@ -28,9 +28,16 @@ void ZMeetingShareWrap::Uninit(){
     
 }
 
+void ZMeetingShareWrap::SetSink(ZNativeSDKMeetingShareWrapSink *pSink){
+    m_pSink = pSink;
+}
+
 ZNSDKError ZMeetingShareWrap::StartAppShare(ZoomSTRING hShareApp){
     
     ZoomSDKMeetingService *service = [[ZoomSDK sharedSDK]getMeetingService];
+    if (!service){
+        return ZNSDKERR_SERVICE_FAILED;
+    }
     ZoomSDKASController *as = [service getASController];
     NSString *ID = [NSString stringWithCString:hShareApp.c_str() encoding:NSUTF8StringEncoding];
     CGWindowID windowID = ID.intValue;
@@ -45,6 +52,9 @@ ZNSDKError ZMeetingShareWrap::StartAppShare(ZoomSTRING hShareApp){
 ZNSDKError ZMeetingShareWrap::StartMonitorShare(ZoomSTRING monitorID){
     
     ZoomSDKMeetingService *service = [[ZoomSDK sharedSDK]getMeetingService];
+    if (!service){
+        return ZNSDKERR_SERVICE_FAILED;
+    }
     ZoomSDKASController *as = [service getASController];
     NSString *ID = [NSString stringWithCString:monitorID.c_str() encoding:NSUTF8StringEncoding];
     CGDirectDisplayID  displayID = ID.intValue;
@@ -59,6 +69,9 @@ ZNSDKError ZMeetingShareWrap::StartMonitorShare(ZoomSTRING monitorID){
 ZNSDKError ZMeetingShareWrap::StopShare(){
     
     ZoomSDKMeetingService *service = [[ZoomSDK sharedSDK]getMeetingService];
+    if (!service){
+        return ZNSDKERR_SERVICE_FAILED;
+    }
     ZoomSDKASController *as = [service getASController];
     if (service && as) {
         ZoomSDKError error = [as stopShare];
@@ -68,4 +81,10 @@ ZNSDKError ZMeetingShareWrap::StopShare(){
     
 }
 
-
+//callback
+void ZMeetingShareWrap::onSharingStatus(ZNShareStatus status, unsigned int userId){
+    
+    if (m_pSink) {
+        m_pSink->onSharingStatus(status, userId);
+    }
+}

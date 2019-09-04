@@ -29,7 +29,7 @@ input {
 }
 
 input[type="radio"] + label::before {
-  content: "\a0"; /*不换行空格*/
+  content: "\a0";
   display: inline-block;
   vertical-align: middle;
   font-size: 12px;
@@ -57,6 +57,13 @@ input[type="radio"] {
   margin-bottom: 5px;
 }
 
+.input-disabled {
+  background-color: #f5f7fa;
+  border-color: #e4e7ed;
+  color: #c0c4cc;
+  cursor: not-allowed;
+}
+
 button {
   display: inline-block;
   line-height: 1;
@@ -80,6 +87,17 @@ button {
 .button-small {
   padding: 9px 15px;
   border-radius: 20px;
+}
+
+.button-small2 {
+  padding: 9px 15px;
+  border-radius: 5px;
+}
+
+.button-disabled {
+  background-color: #a0cfff;
+  border-color: #a0cfff;
+  cursor: not-allowed;
 }
 
 .logo {
@@ -118,4 +136,64 @@ select {
   outline: none;
   padding: 0 15px;
   transition: border-color .2s cubic-bezier(.645,.045,.355,1);
+}
+
+.main-content {
+  display: flex;
+  justify-content: center;
+}
+
+.user-content, .yuv-content {
+  overflow: hidden;
+}
+
+.user-content {
+  width: 630px;
+}
+
+.left {
+  float: left;
+}
+
+.right {
+  float: right;
+  text-align: left;
+}
+
+.width-200 {
+  width: 200px;
+}
+
+.width-630 {
+  width: 630px;
+}
+
+.input-width {
+  width: 160px;
+}
+
+.handle-section {
+  margin-bottom: 5px;
+}
+
+li {
+  cursor: pointer;
+  margin-bottom: 3px;
+}
+
+.canvas {
+  display: inline-block;
+  margin: 0 2px 5px 0;
+  position: relative;
+}
+
+.canvas div {
+  padding: 2px 6px;
+  font-size: 12px;
+  color: #fff;
+  font-weight: 100;
+  background: rgba(0, 0, 0, 0.4);
+  position: absolute;
+  bottom: 0;
+  left: 0;
 }

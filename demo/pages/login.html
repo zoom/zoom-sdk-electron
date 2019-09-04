@@ -19,7 +19,15 @@
 			sendJoin();
     }
     function handleLoginWithSSOToken () {
-      ipcRenderer.send('asynchronous-message', 'loginWithSSOToken');
+      let sso = document.getElementById("sso").value.replace(/^\s+|\s+$/g, ''); 
+      let reg = /\S/;
+      let retkey = reg.test(sso);
+      if (retkey == true) {
+        document.getElementById("logintip").style.cssText="display: none;";
+				ipcRenderer.send('asynchronous-message', 'loginWithSSOToken', sso);
+			} else {
+        document.getElementById("logintip").style.cssText="display: block;";
+      }
     }
  
 	</script>
@@ -37,9 +45,17 @@
 	<div class="center"><input type="password" name="psw" placeholder="input password" id="psw"/></div>
 	<br/>
 	<div class="center">
-    <button type="button" onclick="dologin()">Login</button>   
-    <!-- <button type="button" onclick="handleLoginWithSSOToken()">LoginWithSSOToken</button> -->
-		<button type="button" onclick="switchtoJoinstart()">Join Without Login</button>
+    <button type="button" onclick="dologin()">Login With Email</button>
+	<!-- <button type="button" onclick="switchtoJoinstart()">Join Without Login</button> -->
+  </div>
+  <br/>
+  <div class="center"><input type="text" name="sso" placeholder="input SSO token" id="sso"/></div>
+  <div class="tip" id="logintip">
+		your input SSO token is incorrect
+	</div>
+	<br/>
+	<div class="center"> 
+    <button type="button" onclick="handleLoginWithSSOToken()">Login With SSOToken</button>
 	</div>
 </body>
 </html>

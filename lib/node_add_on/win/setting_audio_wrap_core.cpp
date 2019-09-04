@@ -4,8 +4,6 @@
 #include "wrap/audio_setting_context_wrap.h"
 #include "zoom_native_to_wrap.h"
 
-
-
 ZSettingAudioWrap::ZSettingAudioWrap()
 {
 
@@ -53,7 +51,7 @@ ZNList<ZNMicInfo> ZSettingAudioWrap::GetMicList()
 				zn_mic_info.deviceId = pMicInfo->GetDeviceId();
 			}
 			zn_mic_info.isSelectedDevice = pMicInfo->IsSelectedDevice();
-			zn_mic_list.add(zn_mic_info);
+			zn_mic_list.push_back(zn_mic_info);
 		}
 	}
 	return zn_mic_list;
@@ -87,7 +85,7 @@ ZNList<ZNSpeakerInfo> ZSettingAudioWrap::GetSpeakerList()
 				zn_speaker_info.deviceId = pSpeakerInfo->GetDeviceId();
 			}
 			zn_speaker_info.isSelectedDevice = pSpeakerInfo->IsSelectedDevice();
-			zn_speaker_list.add(zn_speaker_info);
+			zn_speaker_list.push_back(zn_speaker_info);
 		}
 	}
 	return zn_speaker_list;

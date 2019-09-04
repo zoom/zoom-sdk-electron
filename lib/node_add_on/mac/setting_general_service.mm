@@ -24,6 +24,9 @@ void ZSettingGeneralWrap::Uninit(){
 ZNSDKError ZSettingGeneralWrap::EnableDualScreenMode(bool bEnable){
     
     ZoomSDKSettingService *service = [[ZoomSDK sharedSDK]getSettingService];
+    if (!service){
+        return ZNSDKERR_SERVICE_FAILED;
+    }
     ZoomSDKGeneralSetting *general = [service getGeneralSetting];
     if(service && general){
         
@@ -42,6 +45,9 @@ ZNSDKError ZSettingGeneralWrap::TurnOffAeroModeInSharing(bool bEnable){
 ZNSDKError ZSettingGeneralWrap::EnableAutoFitToWindowWhenViewSharing(bool bEnable){
     
     ZoomSDKSettingService *service = [[ZoomSDK sharedSDK]getSettingService];
+    if (!service){
+        return ZNSDKERR_SERVICE_FAILED;
+    }
     ZoomSDKGeneralSetting *general = [service getGeneralSetting];
     if(service && general){
         
@@ -54,6 +60,9 @@ ZNSDKError ZSettingGeneralWrap::EnableAutoFitToWindowWhenViewSharing(bool bEnabl
 ZNSDKError ZSettingGeneralWrap::EnableAutoFullScreenVideoWhenJoinMeeting(bool bEnable){
     
     ZoomSDKSettingService *service = [[ZoomSDK sharedSDK]getSettingService];
+    if (!service){
+        return ZNSDKERR_SERVICE_FAILED;
+    }
     ZoomSDKGeneralSetting *general = [service getGeneralSetting];
     if(service && general){
         
@@ -66,6 +75,9 @@ ZNSDKError ZSettingGeneralWrap::EnableAutoFullScreenVideoWhenJoinMeeting(bool bE
 ZNSDKError ZSettingGeneralWrap::EnableSplitScreenMode(bool bEnable){
     
     ZoomSDKMeetingService *service = [[ZoomSDK sharedSDK]getMeetingService];
+    if (!service){
+        return ZNSDKERR_SERVICE_FAILED;
+    }
     ZoomSDKASController *general = [service getASController];
     if(service && general){
         

@@ -1,5 +1,7 @@
 #pragma once
 #include "common_include.h"
+#include "outlook_plugin_integration_helper_wrap.h"
+#include "directshare_helper_wrap.h"
 BEGIN_ZOOM_SDK_NAMESPACE
 ZOOM_SDK_NAMESPACE::IAuthService* InitIAuthServiceFunc(ZOOM_SDK_NAMESPACE::IAuthServiceEvent* pEvent);
 void UninitIAuthServiceFunc(ZOOM_SDK_NAMESPACE::IAuthService* obj);
@@ -34,10 +36,24 @@ DEFINE_FUNC_0(GetAccountInfo, IAccountInfo*)
 
 //virtual LOGINSTATUS GetLoginStatus() = 0;
 DEFINE_FUNC_0(GetLoginStatus, LOGINSTATUS)
+#if (defined UserInterfaceClass)
+private:
+	//virtual IOutlookPluginIntegrationHelper* GetOutlookPluginHeler() = 0;
+	DEFINE_FUNC_0(GetOutlookPluginHeler, IOutlookPluginIntegrationHelper*)
+	//virtual IDirectShareServiceHelper* GetDirectShareServiceHeler() = 0;
+	DEFINE_FUNC_0(GetDirectShareServiceHeler, IDirectShareServiceHelper*)
+public:
+#define T_GetOutlookPluginHeler _GetOutlookPluginHeler
+#define T_GetDirectShareServiceHeler _GetDirectShareServiceHeler
+#else
+#define T_GetOutlookPluginHeler GetOutlookPluginHeler
+#define T_GetDirectShareServiceHeler GetDirectShareServiceHeler
+#endif
+
 //virtual IOutlookPluginIntegrationHelper* GetOutlookPluginHeler() = 0;
-DEFINE_FUNC_0(GetOutlookPluginHeler, IOutlookPluginIntegrationHelper*)
+DEFINE_FUNC_AND_MEMBER(T_GetOutlookPluginHeler, IOutlookPluginIntegrationHelperWrap)
 //virtual IDirectShareServiceHelper* GetDirectShareServiceHeler() = 0;
-DEFINE_FUNC_0(GetDirectShareServiceHeler, IDirectShareServiceHelper*)
+DEFINE_FUNC_AND_MEMBER(T_GetDirectShareServiceHeler, IDirectShareServiceHelperWrap)
 
 //virtual void onAuthenticationReturn(AuthResult ret)
 CallBack_FUNC_1(onAuthenticationReturn, AuthResult,ret)

@@ -55,25 +55,19 @@ private:
 class ZDirectShareHelperWrapEvent : public ZOOM_SDK_NAMESPACE::IDirectShareServiceHelperEvent
 {
 public:
-	void SetOwner(ZDirectShareHelperWrap* obj) { owner_ = obj; }
+	void SetOwner(ZDirectShareHelperWrap* obj) { owner_ = obj;}
 	virtual void OnDirectShareStatusUpdate(ZOOM_SDK_NAMESPACE::DirectShareStatus status, ZOOM_SDK_NAMESPACE::IDirectShareViaMeetingIDOrPairingCodeHandler* handler)
 	{
 		
 		if (owner_) {
 			
-			if (status == ZOOM_SDK_NAMESPACE::DirectShare_Need_MeetingID_Or_PairingCode)
+			if ((status == ZOOM_SDK_NAMESPACE::DirectShare_Need_MeetingID_Or_PairingCode) || (status == ZOOM_SDK_NAMESPACE::DirectShare_WrongMeetingID_Or_SharingKey) )
 			{
 				ZDirectShareViaMeetingIDOrPairingCodeHandler::GetInst().SetHandler(handler);
 			}
-			/*else
-			{
-				ZDirectShareViaMeetingIDOrPairingCodeHandler::GetInst().SetHandler(NULL);
-			}*/
-			
 			owner_->OnDirectShareStatusUpdate(Map2WrapDefine(status));
 		}
 	}
-	
 private:
 	ZDirectShareHelperWrap* owner_;
 };

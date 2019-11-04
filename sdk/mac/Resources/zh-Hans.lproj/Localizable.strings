@@ -3156,3 +3156,20 @@
 "LN_Join_As_Guest_87404" = "以访客身份加入";
 "LN_Join_Info_87404" = "如果您与主持人属于同一组织，请登录以加入会议。否则，请以访客身份加入会议。";
 "LN_Join_The_Meeting_87404" = "加入会议";
+
+
+"LN_Verify_Number_Title_109148" = "验证手机号码";
+"LN_Verify_Enter_Number_109148" = "请输入您的手机号码";
+"LN_Verify_Enter_Digit_109148" = "请输入6位数字验证码";
+"LN_Verify_Send_Code_109148" = "发送验证码";
+"LN_Verify_109148" = "验证";
+"LN_Verify_Already_Verified_109148" = "账户已验证手机号码？";
+"LN_Verify_Resend_Code_109148" = "重新发送";
+"LN_Verify_Error_Identify_Code_109148" = "验证码有误，请重新输入。";
+"LN_Verify_Error_Expired_109148" = "验证码已过期，请重新发送。";
+"LN_Verify_Error_Already_Bound_109148" = "此手机号已绑定其他用户，请更换手机号。";
+"LN_Verify_Error_Send_Failed_109148" = "发送验证码失败，请稍后重试。";
+"LN_Verify_Error_Invalid_Number_109148" = "请输入正确的手机号。";
+"LN_Verify_Error_Too_Frequent_109148" = "发送验证码次数过多，请稍后重试。";
+"LN_Verify_Agree_Privacy_Policy_109148" = "加入会议即表示我同意";
+"LN_Verify_Privacy_Policy_109148" = "隐私政策";

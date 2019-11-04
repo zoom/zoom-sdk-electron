@@ -14,6 +14,7 @@ public:
 	virtual ~ZNativeSDKWrap();
 	ZNSDKError InitSDK(ZNInitParam& initParam);
 	ZNSDKError CleanUPSDK();
+	ZoomSTRING GetVersion();
 	ZAuthServiceWrap& GetAuthServiceWrap();
 	ZMeetingServiceWrap& GetMeetingServiceWrap();
 	ZSettingServiceWrap& GetSettingServiceWrap();

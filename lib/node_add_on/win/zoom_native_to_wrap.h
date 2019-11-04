@@ -20,6 +20,7 @@ ZNDirectShareStatus Map2WrapDefine(ZOOM_SDK_NAMESPACE::DirectShareStatus status)
 ZNShareStatus Map2WrapDefine(ZOOM_SDK_NAMESPACE::SharingStatus status);
 ZNAudioType Map2WrapDefine(ZOOM_SDK_NAMESPACE::AudioType type);
 ZNUserRole Map2WrapDefine(ZOOM_SDK_NAMESPACE::UserRole role);
+ZNSMSVerificationCodeErr Map2WrapDefine(SMSVerificationCodeErr err);
 
 //convert js to sdk
 ZOOM_SDK_NAMESPACE::SDK_LANGUAGE_ID Map2SDKDefine(ZNSDK_LANGUAGE_ID id);
@@ -34,8 +35,10 @@ ZOOM_SDK_NAMESPACE::SettingTabPage Map2SDKDefine(ZNSettingTabPage tabPage);
 ZOOM_SDK_NAMESPACE::SDKCustomizedStringType Map2SDKDefine(ZNSDKCustomizedStringType type);
 ZOOM_SDK_NAMESPACE::SDKCustomizedURLType Map2SDKDefine(ZNSDKCustomizedURLType type);
 ZOOM_SDK_NAMESPACE::H323DeviceType Map2SDKDefine(ZNH323DeviceType type);
-
+ZOOM_SDK_NAMESPACE::SDKMinimizeUIMode Map2SDKDefine(ZNSDKMinimizeUIMode mode);
+ZOOM_SDK_NAMESPACE::SDK_APP_Locale Map2SDKDefine(ZNSDK_APP_Locale mode);
 //convert zoomstring to string
 std::string wStr2Str(const ZoomSTRING& s);
-
+//convert string to zoomstring
+ZoomSTRING Str2WStr(const std::string& s);
 #endif // !_zoom_native_to_wrap_h_

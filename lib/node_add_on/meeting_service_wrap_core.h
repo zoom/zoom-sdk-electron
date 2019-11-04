@@ -7,6 +7,7 @@
 #include "meeting_share_wrap_core.h"
 #include "meeting_h323_wrap_core.h"
 #include "meeting_config_wrap_core.h"
+#include "zoom_sdk_sms_helper_wrap_core.h"
 #include "zoom_sinks_wrap_class.h"
 
 class ZMeetingInfoWrap
@@ -56,6 +57,14 @@ public:
 	ZNSDKError GetCurrentSplitScreenModeInfo(ZNSplitScreenInfo& info);
 	ZNSDKError SwitchSplitScreenMode(bool bSplit);
 
+	ZNSDKError BackToMeeting();
+	ZNSDKError GetMeetingUIWnd(ZoomSTRING& hFirstView, ZoomSTRING& hSecondView);
+	ZNSDKError SwitchMinimizeUIMode4FristScreenMeetingUIWnd(ZNSDKMinimizeUIMode mode);
+	bool  IsMinimizeModeOfFristScreenMeetingUIWnd(ZNSDKMinimizeUIMode& mode);
+	ZNSDKError SwapToShowShareViewOrVideo(bool bToDisplayShare);
+	ZNSDKError IsDisplayingShareViewOrVideo(bool& bIsShare);
+	ZNSDKError CanSwapToShowShareViewOrVideo(bool& bCan);
+
 	//callback
 	void onInviteBtnClicked(bool& bHandled);
 private:
@@ -77,6 +86,7 @@ public:
 	ZNSDKError Leave(ZNLeaveMeetingCmd cmd);
 	ZNSDKError Lock();
 	ZNSDKError Unlock();
+	ZNSDKError HandleZoomWebUriProtocolAction(ZoomSTRING protocol_action);
 
 	ZMeetingInfoWrap& GetMeetingInfo();
 	ZMeetingUICtrlWrap& GetMeetingUICtrl();
@@ -87,6 +97,7 @@ public:
 	ZMeetingShareWrap& GetMeetingShareCtrl();
 	ZMeetingH323Wrap& GetMeetingH323Ctrl();
 	ZMeetingConfigWrap& GetMeetingConfigCtrl();
+	ZSDKSMSHelperWrap& GetSDKSMSHelper();
 
 	ZNConnectionQuality GetSharingConnQuality();
 	ZNConnectionQuality GetVideoConnQuality();
@@ -105,4 +116,5 @@ private:
 	ZMeetingShareWrap m_meeting_share_ctrl;
 	ZMeetingH323Wrap m_meeting_h323_ctrl;
 	ZMeetingConfigWrap m_meeting_config_ctrl;
+	ZSDKSMSHelperWrap m_sdk_sms_helper;
 };

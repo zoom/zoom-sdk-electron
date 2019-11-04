@@ -25,6 +25,9 @@ void UninitIAnnotationControllerFunc(ZOOM_SDK_NAMESPACE::IAnnotationController* 
 
 }
 
+//virtual ICustomizedAnnotationController* GetCustomizedAnnotationController(ICustomizedShareRender* pShareRender = NULL) = 0;
+//IMPL_FUNC_0(IAnnotationController, GetCustomizedAnnotationController, ICustomizedAnnotationController*, NULL)
+
 //virtual bool IsAnnoataionDisable() = 0;
 IMPL_FUNC_0(IAnnotationController, IsAnnoataionDisable, bool, false)
 //virtual SDKError StartAnnotation(SDKViewType viewtype, int left, int top) = 0;
@@ -43,8 +46,6 @@ IMPL_FUNC_2(IAnnotationController, SetLineWidth, SDKError, SDKViewType, viewtype
 IMPL_FUNC_1(IAnnotationController, Undo, SDKError, SDKViewType, viewtype, SDKERR_UNINITIALIZE)
 //virtual SDKError Redo(SDKViewType viewtype) = 0;
 IMPL_FUNC_1(IAnnotationController, Redo, SDKError, SDKViewType, viewtype, SDKERR_UNINITIALIZE)
-//virtual ICustomizedAnnotationController* GetCustomizedAnnotationController() = 0;
-IMPL_FUNC_0(IAnnotationController, GetCustomizedAnnotationController, ICustomizedAnnotationController*, NULL)
 //virtual SDKError DisableViewerAnnotation(SDKViewType viewtype, bool bDisable) = 0;
 IMPL_FUNC_2(IAnnotationController, DisableViewerAnnotation, SDKError, SDKViewType, viewtype, bool, bDisable, SDKERR_UNINITIALIZE)
 //virtual SDKError IsViewerAnnotationDisabled(SDKViewType viewtype, bool& bDisabled) = 0;

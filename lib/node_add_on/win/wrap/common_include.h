@@ -43,6 +43,7 @@
 #include "../h/ui_hook_interface.h"
 #include "../h/zoom_sdk_platform.h"
 #include "../h/zoom_sdk_raw_data_helper_interface.h"
+#include "../h/zoom_sdk_sms_helper_interface.h"
 #elif (defined CSHARP_WRAP) || (defined INTEL_UNITE)
 #include "../h/zoom_sdk.h"
 #include "../h/meeting_service_interface.h"
@@ -83,6 +84,7 @@
 #include "../h/ui_hook_interface.h"
 #include "../h/zoom_sdk_platform.h"
 #include "../h/zoom_sdk_raw_data_helper_interface.h"
+#include "../h/zoom_sdk_sms_helper_interface.h"
 #else
 #include "../../zoom_sdk/include/zoom_sdk.h"
 #include "../../zoom_sdk/include/meeting_service_interface.h"
@@ -123,6 +125,7 @@
 #include "../../zoom_sdk/include/ui_hook_interface.h"
 #include "../../../../zoom_sdk/zoom_sdk_rawdata_helper/zoom_sdk_platform.h"
 #include "../../../../zoom_sdk/zoom_sdk_rawdata_helper/zoom_sdk_raw_data_helper_interface.h"
+#include "../h/zoom_sdk_sms_helper_interface.h"
 #endif
 #include <string>
 #include <functional>

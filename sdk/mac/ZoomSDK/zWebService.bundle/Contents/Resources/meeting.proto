@@ -192,6 +192,13 @@ message MeetingProto {
   optional string launchDropboxShareInMeetingUrl = 111;    // DEPRECATED!! dropbox share in meeting url for launch
   optional FileIntegrationList shareFileInMeetingIntegrations = 112; //ZOOM-64503 deep link to share from dropbox
   repeated KeyValOption launchExtParameters = 115; // ZOOM-75897 Add dropbox file id to the share url - initiated from Dropbox surface 
+  
+  //miss some items, keep be consistent with web in ep branch
+  optional string participantSecretKey256         = 123; //ZOOM-87204
+  optional int32 asyncLoadOptions	   = 124; //ZOOM-87204
+  
+  //miss some items, keep be consistent with web in ep branch
+  optional string smsuuid = 129;
 }
 
 

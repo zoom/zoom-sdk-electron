@@ -41,5 +41,9 @@ public:
     ZNDirectShareStatus   ZNSDKDirectShareStatus(DirectShareStatus &status);
     ZNShareStatus  ZNSDKShareStatus(ZoomSDKShareStatus &status);
     ZNUserRole ZNSDKUserRole(UserRole &role);
+    ZNMeetingFailCode  ZNSDKMeetingFailCode(ZoomSDKMeetingError &error);
+    ZNMeetingEndReason  ZNSDKMeetingEndReason(EndMeetingReason &reason);
+    ZoomSDKLocale ZNSDKAPPLocalType(ZNSDK_APP_Locale &local);
+    ZNSMSVerificationCodeErr ZNSDKSMSVerificationCodeError(ZoomSDKSMSVerificationCodeError &code);
 };
 

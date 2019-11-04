@@ -63,7 +63,7 @@ ZNSDKError ZMeetingShareWrap::StartAppShare(ZoomSTRING hShareApp)
 	if (!hShareApp.empty())
 	{
 		HWND sdk_share_app;
-		swscanf_s(hShareApp.c_str(), L"%x", &sdk_share_app);
+		swscanf_s(hShareApp.c_str(), L"%x", (unsigned int*)&sdk_share_app);
 		return Map2WrapDefine(ZOOM_SDK_NAMESPACE::CSDKWrap::GetInst().GetMeetingServiceWrap().T_GetMeetingShareController().StartAppShare(sdk_share_app));
 	}
 	else

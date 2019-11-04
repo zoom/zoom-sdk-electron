@@ -141,7 +141,8 @@ public:
 		//2.data format
 		char format_[200] = { 0 };
 		//type islimit width height yoffset uoffset voffset
-		sprintf(format_, "%s;%d;%d;%d;%d;%llu;%llu;%llu", "yuvi420", data_->IsLimitedI420() ? 1 : 0,			data_->GetStreamWidth(), data_->GetStreamHeight(), data_->GetRotation(),
+		sprintf(format_, "%s;%d;%d;%d;%d;%llu;%llu;%llu", "yuvi420", data_->IsLimitedI420() ? 1 : 0,
+			data_->GetStreamWidth(), data_->GetStreamHeight(), data_->GetRotation(),
 			(unsigned long long)data_->GetYBuffer() - (unsigned long long)data_->GetBuffer(),
 			(unsigned long long)data_->GetUBuffer() - (unsigned long long)data_->GetBuffer(),
 			(unsigned long long)data_->GetVBuffer() - (unsigned long long)data_->GetBuffer()

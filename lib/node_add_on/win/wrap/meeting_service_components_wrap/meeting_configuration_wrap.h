@@ -83,7 +83,6 @@ DEFINE_FUNC_1(EnableHideFullPhoneNumber4PureCallinUser, void, bool, bEnable)
 DEFINE_FUNC_1(EnableLengthLimitationOfMeetingNumber, void, bool, bEnable)
 //virtual void EnableShareIOSDevice(bool bEnable) = 0;
 DEFINE_FUNC_1(EnableShareIOSDevice, void, bool, bEnable)
-
 //virtual void EnableShareWhiteBoard(bool bEnable) = 0;
 DEFINE_FUNC_1(EnableShareWhiteBoard, void, bool, bEnable)
 //virtual void AlwaysShowIconOnTaskBar(bool bAlwaysShow) = 0;
@@ -146,9 +145,23 @@ DEFINE_FUNC_1(RedirectMeetingWarningMsg, void, RedirectWarningMsgOption, redirec
 DEFINE_FUNC_1(HideUpgradeWarningMsgForFreeUserWhenSchedule, void, bool, bHide)
 //virtual void EnableLocalRecordingConvertProgressBarDialog(bool bShow) = 0;
 DEFINE_FUNC_1(EnableLocalRecordingConvertProgressBarDialog, void, bool, bShow)
+//virtual void HideSwitchCameraButton(bool bHide) = 0;
+DEFINE_FUNC_1(HideSwitchCameraButton, void, bool, bHide)
+//virtual void HideCopyUrlOnInviteWindow(bool bHide) = 0;
+DEFINE_FUNC_1(HideCopyUrlOnInviteWindow, void, bool, bHide)
+//virtual void HideCopyInvitationOnInviteWindow(bool bHide) = 0;
+DEFINE_FUNC_1(HideCopyInvitationOnInviteWindow, void, bool, bHide)
+//virtual void HideKeypadButtonOnMeetingWindow(bool bHide) = 0;
+DEFINE_FUNC_1(HideKeypadButtonOnMeetingWindow, void, bool, bHide)
+//virtual void HideRemoteControlOnMeetingUI(bool bHide) = 0;
+DEFINE_FUNC_1(HideRemoteControlOnMeetingUI, void, bool, bHide)
+//virtual void HideQAOnMeetingUI(bool bHide) = 0;
+DEFINE_FUNC_1(HideQAOnMeetingUI, void, bool, bHide)
+//virtual void HidePollOnMeetingUI(bool bHide) = 0;
+DEFINE_FUNC_1(HidePollOnMeetingUI, void, bool, bHide)
+
 //virtual void SetMaxDurationForOnlyHostInMeeting(int nDuration) = 0;
 DEFINE_FUNC_1(SetMaxDurationForOnlyHostInMeeting, void, int, nDuration)
-
 //virtual void onInputMeetingPasswordAndScreenNameNotification(IMeetingPasswordAndScreenNameHandler* pHandler) = 0;
 CallBack_FUNC_1(onInputMeetingPasswordAndScreenNameNotification, IMeetingPasswordAndScreenNameHandler*, pHandler)
 //virtual void onAirPlayInstructionWndNotification(bool bShow, const wchar_t* airhostName) = 0;

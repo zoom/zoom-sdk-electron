@@ -403,7 +403,11 @@ typedef enum {
     ZoomSDKMeetingStatus_Webinar_Promote = 12,
     //Demote the attendees from the panelist.
     ZoomSDKMeetingStatus_Webinar_Depromote = 13,
-
+    //Join breakout room.
+    ZoomSDKMeetingStatus_Join_Breakout_Room = 14,
+    //Leave breakout room.
+    ZoomSDKMeetingStatus_Leave_Breakout_Room = 15,
+    
 }ZoomSDKMeetingStatus;
 
 /**
@@ -781,6 +785,10 @@ typedef enum
     SwapShareContentAndVideoButton,
     //Chat button: manage in-meeting chat of the current user.
     ChatButton,
+    //Question and answer(QA) button on toolbar. Available only in webinar.
+    ToolBarQandAButton,
+    //Poll button: questionnaire.
+    ToolBarPollingButton
 }SDKButton;
 
 /**
@@ -1105,10 +1113,52 @@ typedef enum{
  *@brief Enumerations of General setting about share
  */
 typedef enum {
-    //when user share screen will enter full screen
+    //When user share screen will enter full screen
     shareSettingCmd_enterFullScreen,
-    //when user to share screen will enter max window
+    //When user to share screen will enter max window
     shareSettingCmd_enterMaxWindow,
-    //when user user side to side mode
+    //When user user side to side mode
     shareSettingCmd_sideToSideMode,
 }shareSettingCmd;
+
+/**
+ * @brief Enumerations of attendee view question type.
+ */
+typedef enum {
+    //Attendee only view the answered question.
+    ViewType_OnlyAnswered_Question = 0,
+    //Attendee view the all question.
+    ViewType_All_Question,
+}AttendeeViewQuestionType;
+
+/**
+ * @brief Enumerations of question status.
+ */
+typedef enum {
+    //The question state is init.
+    QAQuestionState_Init = 0,
+    //The question is sent.
+    QAQuestionState_Sent,
+    //The question is received.
+    QAQuestionState_Received,
+    //The question send fail.
+    QAQuestionState_SendFail,
+    //The question is sending.
+    QAQuestionState_Sending,
+    //The question state is unknow for init.
+    QAQuestionState_Unknow,
+}ZoomSDKQAQuestionState;
+
+/**
+ * @brief Enumerations of Q&A connect status.
+ */
+typedef enum {
+    //The Q&A is connecting.
+    QAConnectStatus_Connecting = 0,
+    //The Q&A is connected.
+    QAConnectStatus_Connected,
+    //The Q&A is disonnected.
+    QAConnectStatus_Disonnected,
+    //The Q&A is disonnected conflict.
+    QAConnectStatus_Disconnect_Conflict,
+}ZoomSDKQAConnectStatus;

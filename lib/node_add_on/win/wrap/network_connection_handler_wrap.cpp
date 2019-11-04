@@ -20,4 +20,6 @@ void UninitINetworkConnectionHelperFunc(INetworkConnectionHelper* obj)
 		CSDKImpl::GetInst().DestroyNetworkConnectionHelper(obj);
 	}
 }
+//virtual SDKError ConfigureProxy(ProxySettings& proxy_setting) = 0;
+IMPL_FUNC_1(INetworkConnectionHelper, ConfigureProxy, SDKError, ProxySettings&, proxy_setting, SDKERR_UNINITIALIZE)
 END_ZOOM_SDK_NAMESPACE

@@ -109,6 +109,11 @@ public:
 	//direct_share_helper_cb
 	v8::Persistent<v8::Function, v8::CopyablePersistentTraits<v8::Function> > OnDirectShareStatusUpdate;
 
+	//sdk_sms_helper_cb
+	v8::Persistent<v8::Function, v8::CopyablePersistentTraits<v8::Function> > onNeedRealNameAuthMeetingNotification;
+	v8::Persistent<v8::Function, v8::CopyablePersistentTraits<v8::Function> > onRetrieveSMSVerificationCodeResultNotification;
+	v8::Persistent<v8::Function, v8::CopyablePersistentTraits<v8::Function> > onVerifySMSVerificationCodeResultNotification;
+
 	static ZoomNodeSinkHelper& GetInst()
 	{
 		static ZoomNodeSinkHelper inst;

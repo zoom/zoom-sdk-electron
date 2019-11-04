@@ -295,7 +295,6 @@ bool ZUserInfoWrap::GetWebinarAttendeeStauts(unsigned int userid)
 }
 ZoomSTRING ZUserInfoWrap::GetAudioVoiceLevel(unsigned int userid)
 {
-	
 	int audio_voice_level = 0;
 	ZOOM_SDK_NAMESPACE::IUserInfo* userinfo = ZOOM_SDK_NAMESPACE::CSDKWrap::GetInst().GetMeetingServiceWrap().T_GetMeetingParticipantsController().GetUserByUserID(userid);
 	if (userinfo)

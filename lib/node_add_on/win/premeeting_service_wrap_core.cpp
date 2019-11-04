@@ -72,9 +72,9 @@ void ZPremeetingServiceWrap::SetSink(ZNativeSDKPreMeetingWrapSink* pSink)
 ZNSDKError ZPremeetingServiceWrap::ScheduleMeeting(ZNWndPosition wndParam)
 {
 	ZOOM_SDK_NAMESPACE::WndPosition sdk_pos;
-	swscanf_s(wndParam.z_hParent.c_str(), L"%x", &sdk_pos.hParent);
+	swscanf_s(wndParam.z_hParent.c_str(), L"%x", (unsigned int*)&sdk_pos.hParent);
 	
-	swscanf_s(wndParam.z_hSelfWnd.c_str(), L"%x", &sdk_pos.hSelfWnd);
+	swscanf_s(wndParam.z_hSelfWnd.c_str(), L"%x", (unsigned int*)&sdk_pos.hSelfWnd);
 	
 	sdk_pos.left = _wtoi(wndParam.z_left.c_str());
 	sdk_pos.top = _wtoi(wndParam.z_top.c_str());
@@ -93,12 +93,13 @@ ZNSDKError ZPremeetingServiceWrap::EditMeeting(unsigned long long meetingUniqueI
 	{
 		return Map2WrapDefine(ZOOM_SDK_NAMESPACE::CSDKWrap::GetInst().GetPreMeetingServiceWrap().EditMeeting(pEditMeetingItem));
 	}
+	return Map2WrapDefine(ZOOM_SDK_NAMESPACE::SDKERR_INTELNAL_ERROR);
 }
 ZNSDKError ZPremeetingServiceWrap::EditMeeting(ZNWndPosition wndParam, unsigned long long meetingUniqueID)
 {
 	ZOOM_SDK_NAMESPACE::WndPosition sdk_pos;
-	swscanf_s(wndParam.z_hParent.c_str(), L"%x", &sdk_pos.hParent);
-	swscanf_s(wndParam.z_hSelfWnd.c_str(), L"%x", &sdk_pos.hSelfWnd);
+	swscanf_s(wndParam.z_hParent.c_str(), L"%x", (unsigned int*)&sdk_pos.hParent);
+	swscanf_s(wndParam.z_hSelfWnd.c_str(), L"%x", (unsigned int*)&sdk_pos.hSelfWnd);
 	sdk_pos.left = _wtoi(wndParam.z_left.c_str());
 	sdk_pos.top = _wtoi(wndParam.z_top.c_str());
 	return Map2WrapDefine(ZOOM_SDK_NAMESPACE::CSDKWrap::GetInst().GetPreMeetingServiceWrap().EditMeeting(sdk_pos, meetingUniqueID));

@@ -4,6 +4,7 @@
 #include "setting_audio_wrap_core.h"
 #include "setting_general_wrap_core.h"
 #include "setting_recording_wrap_core.h"
+#include "setting_ui_strategy_wrap_core.h"
 
 class ZSettingServiceWrap
 {
@@ -20,10 +21,12 @@ public:
 	ZSettingAudioWrap& GetSettingAudioCtrl();
 	ZSettingGeneralWrap& GetSettingGeneralCtrl();
 	ZSettingRecordingWrap& GetSettingRecordingCtrl();
+	ZSettingUIStrategyWrap& GetSettingStrategyCtrl();
 	
 private:
 	ZSettingVideoWrap m_setting_video_ctrl;
 	ZSettingAudioWrap m_setting_audio_ctrl;
 	ZSettingGeneralWrap m_setting_general_ctrl;
 	ZSettingRecordingWrap m_setting_recording_ctrl;
+	ZSettingUIStrategyWrap m_setting_ui_strategy_ctrl;
 };

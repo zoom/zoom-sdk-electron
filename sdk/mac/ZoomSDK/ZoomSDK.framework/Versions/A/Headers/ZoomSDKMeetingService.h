@@ -23,6 +23,7 @@
 #import "ZoomSDKWebinarController.h"
 #import "ZoomSDKCloseCaptionController.h"
 #import "ZoomSDKRawDataController.h"
+#import "ZoomSDKRealNameAuthenticationController.h"
 
 @interface ZoomSDKSecuritySessionKey : NSObject
 {
@@ -122,6 +123,7 @@
     ZoomSDKWebinarController*        _webinarController;
     ZoomSDKCloseCaptionController*   _closeCaptionController;
     ZoomSDKRawDataController*        _rawDataController;
+    ZoomSDKRealNameAuthenticationController*       _realNameController;
 }
 /**
  * Callback of receiving meeting events.
@@ -211,6 +213,11 @@
  */
 - (ZoomSDKRawDataController*)getRawDataController;
 
+/**
+ * @brief Get object of controller ZoomSDKRealNameAuthenticationController.
+ * @return If the function succeeds, it will return a ZoomSDKRealNameAuthenticationController object which you can use to Real-name authentication.
+ */
+-(ZoomSDKRealNameAuthenticationController *)getRealNameController;
 /**
  * @brief Start a ZOOM meeting with meeting number.
  * @note userId\userToken\username is for API user.

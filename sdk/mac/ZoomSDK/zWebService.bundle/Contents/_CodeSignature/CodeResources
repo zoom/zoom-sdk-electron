@@ -6,7 +6,7 @@
 	<dict>
 		<key>Resources/SaasBeeWebServiceModule-Info.plist</key>
 		<data>
-		g66MSAOdJTfhWBTeFMgWThkYryo=
+		FMaJPZTNNZHmEf21GaHLV+XLYmA=
 		</data>
 		<key>Resources/en.lproj/InfoPlist.strings</key>
 		<dict>
@@ -23,7 +23,7 @@
 		</data>
 		<key>Resources/meeting.proto</key>
 		<data>
-		nL/v9iL0DaLJYd4eOPIpj+giEtM=
+		qlbHKEpG/iXHmRYPWn3AqYO1MZg=
 		</data>
 	</dict>
 	<key>files2</key>
@@ -32,11 +32,11 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			g66MSAOdJTfhWBTeFMgWThkYryo=
+			FMaJPZTNNZHmEf21GaHLV+XLYmA=
 			</data>
 			<key>hash2</key>
 			<data>
-			6VqOesMdMyhA7Kh8uwnXq1ZTYMhDN5qzhVEXPlzVNiY=
+			OLLZxnuQOrr3CpUd/zhndBVhBEmc+Z0yj2Me/BbanJY=
 			</data>
 		</dict>
 		<key>Resources/en.lproj/InfoPlist.strings</key>
@@ -67,11 +67,11 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			nL/v9iL0DaLJYd4eOPIpj+giEtM=
+			qlbHKEpG/iXHmRYPWn3AqYO1MZg=
 			</data>
 			<key>hash2</key>
 			<data>
-			RhJ//Uu6wZSoOR9FXLGXdoi3AoVsM0pOL8BwADkA4hQ=
+			6x1I8tkPsMSZ7rakDpEvYoDxOr4ftkzM8uqVObZoaRM=
 			</data>
 		</dict>
 	</dict>

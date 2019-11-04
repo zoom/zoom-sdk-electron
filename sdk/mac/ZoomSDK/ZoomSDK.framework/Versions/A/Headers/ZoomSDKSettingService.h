@@ -12,6 +12,14 @@
 typedef enum{
     SettingComponent_AdvancedFeatureButton,
     SettingComponent_AdvancedFeatureTab,
+    SettingComponent_GeneralFeatureTab,
+    SettingComponent_VideoFeatureTab,
+    SettingComponent_AudioFeatureTab,
+    SettingComponent_VirtualBackgroundFeatureTab,
+    SettingComponent_RecordingFeatureTab,
+    SettingComponent_StatisticsFeatureTab,
+    SettingComponent_FeedbackFeatureTab,
+    SettingComponent_AccessibilityFeatureTab,
 }SettingComponent;
 
 typedef enum{

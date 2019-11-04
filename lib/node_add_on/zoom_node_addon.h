@@ -111,6 +111,7 @@ public:
 	/// \param 5. langInfo(string)  The value should be the full path of the resource file when the langType value is CustomizedLanguage_FilePath, including the file name. When the langType value is CustomizedLanguage_Content, the value saves the content of the resource.
 	/// \param 6. strSupportUrl(string)  Support URL.
 	/// \param 7. enable_log(boolean)  Enable log feature.
+	/// \param 8. locale(number) Locale
 	/// \return If the function succeeds, the return value is ZNSDKERR_SUCCESS.
 	///Otherwise failed. To get extended error information, see \link ZNSDKError \endlink enum.
 	static void InitSDK(const v8::FunctionCallbackInfo<v8::Value>& args);
@@ -136,6 +137,11 @@ public:
 	static void GetShareRawDataObj(const v8::FunctionCallbackInfo<v8::Value>& args);
 	/// \brief Get Zoom SDK RawData License Service Module.
 	static void GetRawDataLicenseObj(const v8::FunctionCallbackInfo<v8::Value>& args);
+	/// \brief Get Zoom SDK SMS Helper Service Module.
+	static void GetSDKSMSHelperObj(const v8::FunctionCallbackInfo<v8::Value>& args);
+	/// \brief Get the version of ZOOM SDK.
+	/// \return The version of ZOOM SDK.
+	static void GetZoomSDKVersion(const v8::FunctionCallbackInfo<v8::Value>& args);
 
 	static v8::Persistent<v8::Function> constructor;
 };
@@ -158,6 +164,8 @@ static void InitClassAttribute<ZoomNodeWrap >(const v8::Local<v8::FunctionTempla
 	NODE_SET_PROTOTYPE_METHOD(tpl, "GetAudioRawDataObj", ZoomNodeWrap::GetAudioRawDataObj);
 	NODE_SET_PROTOTYPE_METHOD(tpl, "GetShareRawDataObj", ZoomNodeWrap::GetShareRawDataObj);
 	NODE_SET_PROTOTYPE_METHOD(tpl, "GetRawDataLicenseObj", ZoomNodeWrap::GetRawDataLicenseObj);
+	NODE_SET_PROTOTYPE_METHOD(tpl, "GetZoomSDKVersion", ZoomNodeWrap::GetZoomSDKVersion);
+	NODE_SET_PROTOTYPE_METHOD(tpl, "GetSDKSMSHelperObj", ZoomNodeWrap::GetSDKSMSHelperObj);
 }
 template<>
 static v8::Persistent<v8::Function>* GetConstructor<ZoomNodeWrap >() {
@@ -276,6 +284,8 @@ public:
 	/// \remarks If you are not in the meeting, the ZNConn_Quality_Unknow will be returned.
 	static void GetAudioConnQuality(const v8::FunctionCallbackInfo<v8::Value>& args);
 
+	static void HandleZoomWebUriProtocolAction(const v8::FunctionCallbackInfo<v8::Value>& args);
+
 	static v8::Persistent<v8::Function> constructor;
 };
 template<>
@@ -308,6 +318,8 @@ static void InitClassAttribute<ZoomNodeMeetingWrap >(const v8::Local<v8::Functio
 	NODE_SET_PROTOTYPE_METHOD(tpl, "GetSharingConnQuality", ZoomNodeMeetingWrap::GetSharingConnQuality);
 	NODE_SET_PROTOTYPE_METHOD(tpl, "GetVideoConnQuality", ZoomNodeMeetingWrap::GetVideoConnQuality);
 	NODE_SET_PROTOTYPE_METHOD(tpl, "GetAudioConnQuality", ZoomNodeMeetingWrap::GetAudioConnQuality);
+
+	NODE_SET_PROTOTYPE_METHOD(tpl, "HandleZoomWebUriProtocolAction", ZoomNodeMeetingWrap::HandleZoomWebUriProtocolAction);
 
 }
 template<>
@@ -494,6 +506,38 @@ public:
 	///Otherwise failed. To get extended error information, see \link ZNSDKError \endlink enum.
 	static void SetInviteButtonClickedCB(const v8::FunctionCallbackInfo<v8::Value>& args);
 
+	/// \brief Active the principal window of meeting and place it on top.
+	/// \return If the function succeeds, the return value is ZNSDKERR_SUCCESS.
+	///If the function fails, the return value is not ZNSDKERR_SUCCESS. To get extended error information, refer to ZNSDKError enum.
+	static void BackToMeeting(const v8::FunctionCallbackInfo<v8::Value>& args);
+	/// \brief Get the window handle of the meeting user interface. This interface is only valid on Windows. 
+	/// \return If the function succeeds, the return value is a object which includes "err" ZNSDKError, "hFirstView" the window handle(hex) of the meeting user interface displayed by the first view,
+	///and "hSecondView" the window handle(hex) of the meeting user interface displayed by the second view. To get extended error information, see \link ZNSDKError \endlink enum.
+	static void GetMeetingUIWnd(const v8::FunctionCallbackInfo<v8::Value>& args);
+	/// \brief Change the display mode of the minimized meeting window for the first view.
+	/// \param 1.mode(number) Specifies the minimized mode. For more details, see \link ZNSDKMinimizeUIMode \endlink enum.
+	/// \return If the function succeeds, the return value is ZNSDKERR_SUCCESS.
+	///Otherwise failed. To get extended error information, see \link ZNSDKError \endlink enum.
+	static void SwitchMinimizeUIMode4FristScreenMeetingUIWnd(const v8::FunctionCallbackInfo<v8::Value>& args);
+	/// \brief Determines the minimize state of the first view.
+	/// \return For Windows: If the function succeeds, the return value is a object which includes "bIsMinimizMode"  TRUE indicates the minimize state, FALSE not;
+	///"mode" the display mode. For more details, see \link ZNSDKMinimizeUIMode \endlink enum. 
+	/// For Mac: If the function succeeds, the return value is a object which includes "bIsMinimizMode"  TRUE indicates the minimize state, FALSE not.
+	static void IsMinimizeModeOfFristScreenMeetingUIWnd(const v8::FunctionCallbackInfo<v8::Value>& args);
+	/// \brief when someone else shares, and meeting window is not full screen. you can call the api to switch video & share display postion. 
+	/// \param 1.bToDisplayShare(bool) TRUE means to display share, otherwise video.
+	/// \return If the function succeeds, the return value is ZNSDKERR_SUCCESS.
+	///Otherwise failed. To get extended error information, see \link ZNSDKError \endlink enum.
+	static void SwapToShowShareViewOrVideo(const v8::FunctionCallbackInfo<v8::Value>& args);
+	/// \brief Determine if the meeting is displaying the sharing screen now.
+	/// \return If the function succeeds, the return value is a object which includes "err" ZNSDKError,
+	///"bIsShare" TRUE means is showing sharing screen, FALSE means is showing video. To get extended error information, see \link ZNSDKError \endlink enum.
+	static void IsDisplayingShareViewOrVideo(const v8::FunctionCallbackInfo<v8::Value>& args);
+	/// \brief Determine if the user can swap to show sharing screen or video now.
+	/// \return If the function succeeds, the return value is a object which includes "err" ZNSDKError,
+	///"bCan" TRUE means Can, otherwise not. To get extended error information, see \link ZNSDKError \endlink enum.
+	static void CanSwapToShowShareViewOrVideo(const v8::FunctionCallbackInfo<v8::Value>& args);
+
 	static v8::Persistent<v8::Function> constructor;
 };
 template<>
@@ -525,6 +569,14 @@ static void InitClassAttribute<ZoomNodeMeetingUICtrlWrap >(const v8::Local<v8::F
 	NODE_SET_PROTOTYPE_METHOD(tpl, "GetCurrentSplitScreenModeInfo", ZoomNodeMeetingUICtrlWrap::GetCurrentSplitScreenModeInfo);
 	NODE_SET_PROTOTYPE_METHOD(tpl, "SwitchSplitScreenMode", ZoomNodeMeetingUICtrlWrap::SwitchSplitScreenMode);
 	NODE_SET_PROTOTYPE_METHOD(tpl, "SetInviteButtonClickedCB", ZoomNodeMeetingUICtrlWrap::SetInviteButtonClickedCB);
+
+	NODE_SET_PROTOTYPE_METHOD(tpl, "BackToMeeting", ZoomNodeMeetingUICtrlWrap::BackToMeeting);
+	NODE_SET_PROTOTYPE_METHOD(tpl, "GetMeetingUIWnd", ZoomNodeMeetingUICtrlWrap::GetMeetingUIWnd);
+	NODE_SET_PROTOTYPE_METHOD(tpl, "SwitchMinimizeUIMode4FristScreenMeetingUIWnd", ZoomNodeMeetingUICtrlWrap::SwitchMinimizeUIMode4FristScreenMeetingUIWnd);
+	NODE_SET_PROTOTYPE_METHOD(tpl, "IsMinimizeModeOfFristScreenMeetingUIWnd", ZoomNodeMeetingUICtrlWrap::IsMinimizeModeOfFristScreenMeetingUIWnd);
+	NODE_SET_PROTOTYPE_METHOD(tpl, "SwapToShowShareViewOrVideo", ZoomNodeMeetingUICtrlWrap::SwapToShowShareViewOrVideo);
+	NODE_SET_PROTOTYPE_METHOD(tpl, "IsDisplayingShareViewOrVideo", ZoomNodeMeetingUICtrlWrap::IsDisplayingShareViewOrVideo);
+	NODE_SET_PROTOTYPE_METHOD(tpl, "CanSwapToShowShareViewOrVideo", ZoomNodeMeetingUICtrlWrap::CanSwapToShowShareViewOrVideo);
 }
 template<>
 static v8::Persistent<v8::Function>* GetConstructor<ZoomNodeMeetingUICtrlWrap >() {
@@ -561,7 +613,8 @@ public:
 	static void GetSettingGeneralCtrl(const v8::FunctionCallbackInfo<v8::Value>& args);
 	/// \brief Get Zoom SDK Recording Setting Controller Module.
 	static void GetSettingRecordingCtrl(const v8::FunctionCallbackInfo<v8::Value>& args);
-
+	/// \brief Get Zoom SDK Setting UI Strategy Controller Module.
+	static void GetSettingUIStrategyCtrl(const v8::FunctionCallbackInfo<v8::Value>& args);
 
 	static v8::Persistent<v8::Function> constructor;
 };
@@ -580,6 +633,7 @@ static void InitClassAttribute<ZoomNodeSettingWrap >(const v8::Local<v8::Functio
 	NODE_SET_PROTOTYPE_METHOD(tpl, "GetSettingAudioCtrl", ZoomNodeSettingWrap::GetSettingAudioCtrl);
 	NODE_SET_PROTOTYPE_METHOD(tpl, "GetSettingGeneralCtrl", ZoomNodeSettingWrap::GetSettingGeneralCtrl);
 	NODE_SET_PROTOTYPE_METHOD(tpl, "GetSettingRecordingCtrl", ZoomNodeSettingWrap::GetSettingRecordingCtrl);
+	NODE_SET_PROTOTYPE_METHOD(tpl, "GetSettingUIStrategyCtrl", ZoomNodeSettingWrap::GetSettingUIStrategyCtrl);
 
 }
 template<>

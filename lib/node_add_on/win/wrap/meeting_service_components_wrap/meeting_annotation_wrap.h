@@ -16,6 +16,15 @@ virtual SDKError SetEvent(IMeetingAnnotationSupportEvent* pEvent)
 	external_cb = pEvent;
 	return SDKERR_SUCCESS;
 }
+
+//virtual ICustomizedAnnotationController* GetCustomizedAnnotationController(ICustomizedShareRender* pShareRender = NULL) = 0;
+ICustomizedAnnotationController* IAnnotationControllerWrap::GetCustomizedAnnotationController(ICustomizedShareRender* pShareRender = NULL)
+{
+	if (m_obj)
+		return m_obj->GetCustomizedAnnotationController(pShareRender);
+	return NULL;
+}
+
 //virtual bool IsAnnoataionDisable() = 0;
 DEFINE_FUNC_0(IsAnnoataionDisable, bool)
 //virtual SDKError StartAnnotation(SDKViewType viewtype, int left, int top) = 0;
@@ -34,8 +43,6 @@ DEFINE_FUNC_2(SetLineWidth, SDKError, SDKViewType, viewtype, long, lineWidth)
 DEFINE_FUNC_1(Undo, SDKError, SDKViewType, viewtype)
 //virtual SDKError Redo(SDKViewType viewtype) = 0;
 DEFINE_FUNC_1(Redo, SDKError, SDKViewType, viewtype)
-//virtual ICustomizedAnnotationController* GetCustomizedAnnotationController() = 0;
-DEFINE_FUNC_0(GetCustomizedAnnotationController, ICustomizedAnnotationController*)
 //virtual SDKError DisableViewerAnnotation(SDKViewType viewtype, bool bDisable) = 0;
 DEFINE_FUNC_2(DisableViewerAnnotation, SDKError, SDKViewType, viewtype, bool, bDisable)
 //virtual SDKError IsViewerAnnotationDisabled(SDKViewType viewtype, bool& bDisabled) = 0;

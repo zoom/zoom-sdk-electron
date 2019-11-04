@@ -589,8 +589,8 @@ class ZNativeSDKDirectShareHelperWrapSink
 public:
 	/// \brief The callback event will be triggered if the status of direct sharing changes.
 	/// \param status Specifies the status of direct sharing. For more details, see \link ZNDirectShareStatus \endlink enum.
-	///When the value of status is ZN_DirectShare_Need_MeetingID_Or_PairingCode, the SDK user must set the value of 
-	///the _paring_code or _meeting_number via the functions TryWithPairingCode or TryWithMeetingNumber to start direct sharing.
+	///When the value of status is ZN_DirectShare_Need_MeetingID_Or_PairingCode or ZN_DirectShare_WrongMeetingID_Or_SharingKey, 
+	///the SDK user must set the value of the _paring_code or _meeting_number via the functions TryWithPairingCode or TryWithMeetingNumber to start direct sharing.
 	virtual void OnDirectShareStatusUpdate(ZNDirectShareStatus status)
 	{
 		if (ZoomNodeSinkHelper::GetInst().OnDirectShareStatusUpdate.IsEmpty())
@@ -612,6 +612,76 @@ public:
 		fn->Call(context, global, argc, argv);
 
 
+	}
+};
+///////////////////////////////////////////////////////////////////////////////////////////////////////////
+class ZNativeSDKSMSHelperWrapSink
+{
+public:
+	virtual void onNeedRealNameAuthMeetingNotification(ZNList<ZNZoomRealNameAuthCountryInfo> support_country_list, ZoomSTRING privacy_url)
+	{
+		if (ZoomNodeSinkHelper::GetInst().onNeedRealNameAuthMeetingNotification.IsEmpty())
+			return;
+
+		auto isolate = v8::Isolate::GetCurrent();
+		v8::HandleScope scope(isolate);
+		auto context = isolate->GetCurrentContext();
+		auto global = context->Global();
+
+		v8::Local<v8::Array> zn_support_country_list = v8::Array::New(isolate);
+		for (unsigned int i = 0; i < support_country_list.size(); ++i)
+		{
+			v8::HandleScope scope(isolate);
+			v8::Local<v8::Object> node = v8::Object::New(isolate);
+			node->Set(v8::String::NewFromUtf8(isolate, "countryCode"), v8::String::NewFromUtf8(isolate, zs2s(support_country_list[i].countryCode).c_str()));
+			node->Set(v8::String::NewFromUtf8(isolate, "countryID"), v8::String::NewFromUtf8(isolate, zs2s(support_country_list[i].countryID).c_str()));
+			node->Set(v8::String::NewFromUtf8(isolate, "countryName"), v8::String::NewFromUtf8(isolate, zs2s(support_country_list[i].countryName).c_str()));
+			zn_support_country_list->Set(i, node);
+		}
+		
+		v8::Local<v8::String> zn_privacy_url = v8::String::NewFromUtf8(isolate, zs2s(privacy_url).c_str());
+
+		int argc = 2;
+		v8::Local<v8::Value> argv[2] = { zn_support_country_list, zn_privacy_url };
+		auto fn = v8::Local<v8::Function>::New(isolate, ZoomNodeSinkHelper::GetInst().onNeedRealNameAuthMeetingNotification);
+
+		fn->Call(context, global, argc, argv);
+	}
+	virtual void onRetrieveSMSVerificationCodeResultNotification(ZNSMSVerificationCodeErr result)
+	{
+		if (ZoomNodeSinkHelper::GetInst().onRetrieveSMSVerificationCodeResultNotification.IsEmpty())
+			return;
+
+		auto isolate = v8::Isolate::GetCurrent();
+		v8::HandleScope scope(isolate);
+		auto context = isolate->GetCurrentContext();
+		auto global = context->Global();
+
+		v8::Local<v8::Integer> zn_smsVerificationCodeErr = v8::Integer::New(isolate, (int32_t)result);
+
+		int argc = 1;
+		v8::Local<v8::Value> argv[1] = { zn_smsVerificationCodeErr };
+		auto fn = v8::Local<v8::Function>::New(isolate, ZoomNodeSinkHelper::GetInst().onRetrieveSMSVerificationCodeResultNotification);
+
+		fn->Call(context, global, argc, argv);
+	}
+	virtual void onVerifySMSVerificationCodeResultNotification(ZNSMSVerificationCodeErr result)
+	{
+		if (ZoomNodeSinkHelper::GetInst().onVerifySMSVerificationCodeResultNotification.IsEmpty())
+			return;
+
+		auto isolate = v8::Isolate::GetCurrent();
+		v8::HandleScope scope(isolate);
+		auto context = isolate->GetCurrentContext();
+		auto global = context->Global();
+
+		v8::Local<v8::Integer> zn_smsVerificationCodeErr = v8::Integer::New(isolate, (int32_t)result);
+
+		int argc = 1;
+		v8::Local<v8::Value> argv[1] = { zn_smsVerificationCodeErr };
+		auto fn = v8::Local<v8::Function>::New(isolate, ZoomNodeSinkHelper::GetInst().onVerifySMSVerificationCodeResultNotification);
+
+		fn->Call(context, global, argc, argv);
 	}
 };
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -650,6 +720,9 @@ public:
 
 	//direct_share_helper_cb
 	ZNativeSDKDirectShareHelperWrapSink m_directShareHelperWrapSink;
+
+	//sms_helper_cb
+	ZNativeSDKSMSHelperWrapSink m_smsHelperWrapSink;
 
 
 	static ZoomNodeSinkWrapMgr& GetInst()

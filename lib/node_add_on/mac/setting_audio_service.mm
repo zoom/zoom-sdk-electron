@@ -2,50 +2,51 @@
 #include "../meeting_service_wrap_core.h"
 #include "sdk_native_error.h"
 #import "Header_include.h"
-
-extern nativeErrorTypeHelp  Help_type;
-ZSettingAudioWrap::ZSettingAudioWrap(){
-    
-}
-ZSettingAudioWrap::~ZSettingAudioWrap(){
+ZSettingAudioWrap::ZSettingAudioWrap()
+{
     
 }
 
-
-void ZSettingAudioWrap::Init(){
+ZSettingAudioWrap::~ZSettingAudioWrap()
+{
     
 }
 
-
-void ZSettingAudioWrap::Uninit(){
+void ZSettingAudioWrap::Init()
+{
     
 }
 
-ZNSDKError ZSettingAudioWrap::SelectMic(ZoomSTRING deviceId, ZoomSTRING deviceName){
+void ZSettingAudioWrap::Uninit()
+{
     
-    ZoomSDKSettingService *service = [[ZoomSDK sharedSDK]getSettingService];
+}
+
+ZNSDKError ZSettingAudioWrap::SelectMic(ZoomSTRING deviceId, ZoomSTRING deviceName)
+{
+    NSString  *ID = [NSString stringWithCString:deviceId.c_str() encoding:NSUTF8StringEncoding];
+    NSString  *name = [NSString stringWithCString:deviceName.c_str() encoding:NSUTF8StringEncoding];
+    if (!ID || !name) {
+        return ZNSDKERR_INVALID_PARAMETER;
+    }
+    ZoomSDKSettingService *service = [[ZoomSDK sharedSDK] getSettingService];
     if (!service){
         return ZNSDKERR_SERVICE_FAILED;
     }
     ZoomSDKAudioSetting *audio = [service getAudioSetting];
-    NSString  *ID = [NSString stringWithCString:deviceId.c_str() encoding:NSUTF8StringEncoding];
-    NSString  *name = [NSString stringWithCString:deviceName.c_str() encoding:NSUTF8StringEncoding];
-    if (!ID || !name) {
-        
-        return ZNSDKERR_INVALID_PARAMETER;
-    }
     if(audio){
         ZoomSDKError ret = [audio selectAudioDevice:YES DeviceID:ID DeviceName:name];
+        nativeErrorTypeHelp  Help_type;
         return Help_type.ZoomSDKErrorType(ret);
     }
     return ZNSDKERR_SERVICE_FAILED;
 }
 
 
-ZNList<ZNMicInfo> ZSettingAudioWrap::GetMicList(){
-    
+ZNList<ZNMicInfo> ZSettingAudioWrap::GetMicList()
+{
     ZNList<ZNMicInfo> list;
-    ZoomSDKSettingService *service = [[ZoomSDK sharedSDK]getSettingService];
+    ZoomSDKSettingService *service = [[ZoomSDK sharedSDK] getSettingService];
     if (!service){
         return list;
     }
@@ -65,38 +66,36 @@ ZNList<ZNMicInfo> ZSettingAudioWrap::GetMicList(){
             micInfo.isSelectedDevice = isSelected;
             list.push_back(micInfo);
         }
-        
         return list;
     }
     return list;
-    
 }
 
 ZNSDKError ZSettingAudioWrap::SelectSpeaker(ZoomSTRING deviceId, ZoomSTRING deviceName){
     
-    ZoomSDKSettingService *service = [[ZoomSDK sharedSDK]getSettingService];
+    ZoomSDKSettingService *service = [[ZoomSDK sharedSDK] getSettingService];
     if (!service){
         return ZNSDKERR_SERVICE_FAILED;
     }
-    ZoomSDKAudioSetting *audio = [service getAudioSetting];
     NSString  *ID = [NSString stringWithCString:deviceId.c_str() encoding:NSUTF8StringEncoding];
     NSString  *name = [NSString stringWithCString:deviceName.c_str() encoding:NSUTF8StringEncoding];
     if (!ID || !name) {
-        
         return ZNSDKERR_INVALID_PARAMETER;
     }
+    ZoomSDKAudioSetting *audio = [service getAudioSetting];
     if(service && audio){
         ZoomSDKError ret = [audio selectAudioDevice:NO DeviceID:ID DeviceName:name];
+        nativeErrorTypeHelp  Help_type;
         return Help_type.ZoomSDKErrorType(ret);
     }
     return ZNSDKERR_SERVICE_FAILED;
     
 }
 
-ZNList<ZNSpeakerInfo> ZSettingAudioWrap::GetSpeakerList(){
-    
+ZNList<ZNSpeakerInfo> ZSettingAudioWrap::GetSpeakerList()
+{
     ZNList<ZNSpeakerInfo> list;
-    ZoomSDKSettingService *service = [[ZoomSDK sharedSDK]getSettingService];
+    ZoomSDKSettingService *service = [[ZoomSDK sharedSDK] getSettingService];
     if (!service){
         return list;
     }
@@ -122,70 +121,68 @@ ZNList<ZNSpeakerInfo> ZSettingAudioWrap::GetSpeakerList(){
     return list;
 }
 
-bool ZSettingAudioWrap::IsAutoJoinAudioEnabled(){
-    
-    ZoomSDKSettingService *service = [[ZoomSDK sharedSDK]getSettingService];
+bool ZSettingAudioWrap::IsAutoJoinAudioEnabled()
+{
+    ZoomSDKSettingService *service = [[ZoomSDK sharedSDK] getSettingService];
     if (!service){
         return false;
     }
     ZoomSDKAudioSetting *audio = [service getAudioSetting];
-    if(service && audio){
-        
+    if(audio){
         return [audio isJoinAudoWhenJoinMeetingOn];
     }
     return false;
 }
 
-bool ZSettingAudioWrap::IsAutoAdjustMicEnabled(){
-    
-    ZoomSDKSettingService *service = [[ZoomSDK sharedSDK]getSettingService];
+bool ZSettingAudioWrap::IsAutoAdjustMicEnabled()
+{
+    ZoomSDKSettingService *service = [[ZoomSDK sharedSDK] getSettingService];
     if (!service){
         return false;
     }
     ZoomSDKAudioSetting *audio = [service getAudioSetting];
-    if(service && audio){
-        
+    if(audio){
         return [audio isAutoAdjustMicOn];
     }
     return  false;
 }
 
-ZNSDKError ZSettingAudioWrap::EnableAutoJoinAudio(bool bEnable){
-    
-    ZoomSDKSettingService *service = [[ZoomSDK sharedSDK]getSettingService];
-    if (!service){
+ZNSDKError ZSettingAudioWrap::EnableAutoJoinAudio(bool bEnable)
+{
+    ZoomSDKSettingService *service = [[ZoomSDK sharedSDK] getSettingService];
+    if (!service)
+    {
         return ZNSDKERR_SERVICE_FAILED;
     }
-    ZoomSDKAudioSetting *audio = [service getAudioSetting];
-    bool isJoin = this->IsAutoJoinAudioEnabled();
+    bool isJoin = IsAutoJoinAudioEnabled();
     if (isJoin == bEnable) {
         return ZNSDKERR_WRONG_USEAGE;
     }
-    if(service && audio){
-        
+    ZoomSDKAudioSetting *audio = [service getAudioSetting];
+    if(audio)
+    {
         ZoomSDKError ret = [audio enableAutoJoinVoip:bEnable];
+        nativeErrorTypeHelp  Help_type;
         return Help_type.ZoomSDKErrorType(ret);
- 
     }
     return ZNSDKERR_SERVICE_FAILED;
 }
 
-ZNSDKError ZSettingAudioWrap::EnableAutoAdjustMic(bool bEnable){
-    
-    ZoomSDKSettingService *service = [[ZoomSDK sharedSDK]getSettingService];
+ZNSDKError ZSettingAudioWrap::EnableAutoAdjustMic(bool bEnable)
+{
+    ZoomSDKSettingService *service = [[ZoomSDK sharedSDK] getSettingService];
     if (!service){
         return ZNSDKERR_SERVICE_FAILED;
     }
-    ZoomSDKAudioSetting *audio = [service getAudioSetting];
-    bool isJoin = this->IsAutoAdjustMicEnabled();
+    bool isJoin = IsAutoAdjustMicEnabled();
     if (isJoin == bEnable) {
         return ZNSDKERR_WRONG_USEAGE;
     }
-    if(service && audio){
-        
+    ZoomSDKAudioSetting *audio = [service getAudioSetting];
+    if(audio){
         ZoomSDKError ret = [audio enableAutoAdjustMic:bEnable];
+        nativeErrorTypeHelp  Help_type;
         return Help_type.ZoomSDKErrorType(ret);
-        
     }
     return ZNSDKERR_SERVICE_FAILED;
 }

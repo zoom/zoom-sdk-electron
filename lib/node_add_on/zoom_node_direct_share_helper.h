@@ -41,20 +41,20 @@ public:
 	/// \return If the function succeeds, the return value is ZNSDKERR_SUCCESS.
 	///Otherwise failed. To get extended error information, see \link ZNSDKError \endlink enum.
 	/// \remarks This API can only be called when \link ZNDirectShareStatus \endlink is ZN_DirectShare_Need_MeetingID_Or_PairingCode 
-	///according OnDirectShareStatusUpdate
+	///or ZN_DirectShare_WrongMeetingID_Or_SharingKey according OnDirectShareStatusUpdate
 	static void TryWithMeetingNumber(const v8::FunctionCallbackInfo<v8::Value>& args);
 	/// \brief Try to match with the pairing code.
 	/// \param 1. pairingCode(string) Specifies the pairing code.
 	/// \return If the function succeeds, the return value is ZNSDKERR_SUCCESS.
 	///Otherwise failed. To get extended error information, see \link ZNSDKError \endlink enum.
 	/// \remarks This API can only be called when \link ZNDirectShareStatus \endlink is ZN_DirectShare_Need_MeetingID_Or_PairingCode 
-	///according OnDirectShareStatusUpdate
+	///or ZN_DirectShare_WrongMeetingID_Or_SharingKey according OnDirectShareStatusUpdate
 	static void TryWithPairingCode(const v8::FunctionCallbackInfo<v8::Value>& args);
 	/// \brief Delete the present direct sharing.
 	/// \return If the function succeeds, the return value is ZNSDKERR_SUCCESS.
 	///Otherwise failed. To get extended error information, see \link ZNSDKError \endlink enum.
 	/// \remarks This API can only be called when \link ZNDirectShareStatus \endlink is ZN_DirectShare_Need_MeetingID_Or_PairingCode 
-	///according OnDirectShareStatusUpdate
+	///or ZN_DirectShare_WrongMeetingID_Or_SharingKey according OnDirectShareStatusUpdate
 	static void Cancel(const v8::FunctionCallbackInfo<v8::Value>& args);
 
 

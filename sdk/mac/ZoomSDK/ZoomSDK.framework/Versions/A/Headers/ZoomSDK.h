@@ -37,6 +37,13 @@
  * Access to the class and all the other components of the SDK by merging <ZoomSDK/ZoomSDK.h> into source code.
  * The user can preconfigure SDK client by functions in this class. Before calling initSDK:YES/NO, you should get the object of this class via sharedSDK and call the corresponding functions.
  */
+
+typedef enum
+{
+    ZoomSDKLocale_Def = 0,
+    ZoomSDKLocale_CN  = 1,
+}ZoomSDKLocale;
+
 @interface ZoomSDK : NSObject
 {
     NSString               *_zoomDomain;
@@ -135,6 +142,12 @@
  */
 - (void)setCustomLocalizationFileName:(NSString*)fileName;
 
+/**
+ * @brief Set the locale of the App.
+ * @param locale The locale you want set for the App.
+ * @note You should call the method before calling [[ZoomSDK sharedSDK]initSDK:NO/YES] in the App.
+ */
+- (void)setAppLocale:(ZoomSDKLocale)locale;
 @end
 
 

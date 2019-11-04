@@ -471,6 +471,9 @@ ZNDirectShareStatus Map2WrapDefine(ZOOM_SDK_NAMESPACE::DirectShareStatus status)
 	case ZOOMSDK::DirectShare_Other_Error:
 		zn_direct_share_status = ZN_DirectShare_Other_Error;
 		break;
+	case ZOOMSDK::DirectShare_WrongMeetingID_Or_SharingKey:
+		zn_direct_share_status = ZN_DirectShare_WrongMeetingID_Or_SharingKey;
+		break; 
 	default:
 		break;
 	}
@@ -556,6 +559,43 @@ ZNUserRole Map2WrapDefine(ZOOM_SDK_NAMESPACE::UserRole role)
 		break;
 	}
 	return zn_user_role;
+}
+ZNSMSVerificationCodeErr Map2WrapDefine(SMSVerificationCodeErr err)
+{
+	ZNSMSVerificationCodeErr zn_err = ZNSMSVerificationCodeErr_Unknown;
+	switch (err)
+	{
+	case SMSVerificationCodeErr_Unknown:
+		zn_err = ZNSMSVerificationCodeErr_Unknown;
+		break;
+	case SMSVerificationCodeErr_Success:
+		zn_err = ZNSMSVerificationCodeErr_Success;
+		break;
+	case SMSVerificationCodeErr_Retrieve_SendSMSFailed:
+		zn_err = ZNSMSVerificationCodeErr_Retrieve_SendSMSFailed;
+		break;
+	case SMSVerificationCodeErr_Retrieve_InvalidPhoneNum:
+		zn_err = ZNSMSVerificationCodeErr_Retrieve_InvalidPhoneNum;
+		break;
+	case SMSVerificationCodeErr_Retrieve_PhoneNumAlreadyBound:
+		zn_err = ZNSMSVerificationCodeErr_Retrieve_PhoneNumAlreadyBound;
+		break;
+	case SMSVerificationCodeErr_Retrieve_PhoneNumSendTooFrequent:
+		zn_err = ZNSMSVerificationCodeErr_Retrieve_PhoneNumSendTooFrequent;
+		break;
+	case SMSVerificationCodeErr_Verify_CodeIncorrect:
+		zn_err = ZNSMSVerificationCodeErr_Verify_CodeIncorrect;
+		break;
+	case SMSVerificationCodeErr_Verify_CodeExpired:
+		zn_err = ZNSMSVerificationCodeErr_Verify_CodeExpired;
+		break;
+	case SMSVerificationCodeErr_Verify_UnknownError:
+		zn_err = ZNSMSVerificationCodeErr_Verify_UnknownError;
+		break;
+	default:
+		break;
+	}
+	return zn_err;
 }
 
 /////Covert JS define to SDK
@@ -898,6 +938,44 @@ ZOOM_SDK_NAMESPACE::H323DeviceType Map2SDKDefine(ZNH323DeviceType type)
 	}
 	return sdk_h323_type;
 }
+ZOOM_SDK_NAMESPACE::SDKMinimizeUIMode Map2SDKDefine(ZNSDKMinimizeUIMode mode)
+{
+	ZOOM_SDK_NAMESPACE::SDKMinimizeUIMode sdk_mode;
+	switch (mode)
+	{
+	case ZN_MinimizeUIMode_NONE:
+		sdk_mode = ZOOM_SDK_NAMESPACE::MinimizeUIMode_NONE;
+		break;
+	case ZN_MinimizeUIMode_SHARE:
+		sdk_mode = ZOOM_SDK_NAMESPACE::MinimizeUIMode_SHARE;
+		break;
+	case ZN_MinimizeUIMode_VIDEO:
+		sdk_mode = ZOOM_SDK_NAMESPACE::MinimizeUIMode_VIDEO;
+		break;
+	case ZN_MinimizeUIMode_ACTIVESPEAKER:
+		sdk_mode = ZOOM_SDK_NAMESPACE::MinimizeUIMode_ACTIVESPEAKER;
+		break;
+	default:
+		break;
+	}
+	return sdk_mode;
+}
+ZOOM_SDK_NAMESPACE::SDK_APP_Locale Map2SDKDefine(ZNSDK_APP_Locale locale)
+{
+	ZOOM_SDK_NAMESPACE::SDK_APP_Locale sdk_locale;
+	switch (locale)
+	{
+	case ZNSDK_APP_Locale_Default:
+		sdk_locale = ZOOM_SDK_NAMESPACE::SDK_APP_Locale_Default;
+		break;
+	case ZNSDK_APP_Locale_CN:
+		sdk_locale = ZOOM_SDK_NAMESPACE::SDK_APP_Locale_CN;
+		break;
+	default:
+		break;
+	}
+	return sdk_locale;
+}
 std::string wStr2Str(const ZoomSTRING& s)
 {
 
@@ -907,4 +985,17 @@ std::string wStr2Str(const ZoomSTRING& s)
 	std::string r(len, '\0');
 	WideCharToMultiByte(CP_UTF8, 0, s.c_str(), slength, &r[0], len, 0, 0);
 	return r;
+}
+ZoomSTRING Str2WStr(const std::string& s)
+{
+	std::string strLocale = setlocale(LC_ALL, "");
+	const char* chSrc = s.c_str();
+	size_t nDestSize = mbstowcs(NULL, chSrc, 0) + 1;
+	wchar_t* wchDest = new wchar_t[nDestSize];
+	wmemset(wchDest, 0, nDestSize);
+	mbstowcs(wchDest, chSrc, nDestSize);
+	std::wstring wstrResult = wchDest;
+	delete[]wchDest;
+	setlocale(LC_ALL, strLocale.c_str());
+	return wstrResult;
 }

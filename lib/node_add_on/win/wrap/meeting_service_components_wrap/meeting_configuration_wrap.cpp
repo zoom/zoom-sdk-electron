@@ -52,6 +52,15 @@ IMPL_FUNC_NORET_1(IMeetingConfiguration,EnableToolTipsShow, void, bool, bEnable)
 IMPL_FUNC_NORET_1(IMeetingConfiguration,EnableAirplayInstructionWindow, void, bool, bEnable)
 IMPL_FUNC_NORET_1(IMeetingConfiguration,EnableClaimHostFeature, void, bool, bEnable)
 
+IMPL_FUNC_NORET_1(IMeetingConfiguration, HideSwitchCameraButton, void, bool, bHide)
+IMPL_FUNC_NORET_1(IMeetingConfiguration, HideCopyUrlOnInviteWindow, void, bool, bHide)
+IMPL_FUNC_NORET_1(IMeetingConfiguration, HideCopyInvitationOnInviteWindow, void, bool, bHide)
+IMPL_FUNC_NORET_1(IMeetingConfiguration, HideKeypadButtonOnMeetingWindow, void, bool, bHide)
+IMPL_FUNC_NORET_1(IMeetingConfiguration, HideRemoteControlOnMeetingUI, void, bool, bHide)
+IMPL_FUNC_NORET_1(IMeetingConfiguration, HideQAOnMeetingUI, void, bool, bHide)
+IMPL_FUNC_NORET_1(IMeetingConfiguration, HidePollOnMeetingUI, void, bool, bHide)
+
+
 //virtual void ConfigDSCP(int dscpAudio, int dscpVideo, bool bReset) = 0;
 IMPL_FUNC_NORET_3(IMeetingConfiguration,ConfigDSCP, void, int, dscpAudio, int, dscpVideo, bool, bReset)
 //virtual void RedirectClickParticipantListBTNEvent(bool bRedirect) = 0;

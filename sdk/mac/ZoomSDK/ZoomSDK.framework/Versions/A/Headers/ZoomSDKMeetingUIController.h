@@ -125,4 +125,10 @@
  */
 - (ZoomSDKError)showPreOrNextPageWallView:(BOOL)nextPage;
 
+/**
+ * @brief Active the principal window of meeting and place it on top.
+ * @return If the function succeeds, it will return the ZoomSDKError_Success, otherwise failed.
+ */
+- (ZoomSDKError)backToMeeting;
+
 @end

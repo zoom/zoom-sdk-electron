@@ -1,5 +1,63 @@
 # CHANGELOG
 
+## 2019-11-04 @ [v4.4.56616.1029](https://github.com/zoom/zoom-sdk-electron/releases/tag/v4.4.56616.1029)
+
+## Added
+* Add new interfaces for meeting config controller (locate in `zoom_meeting_configuration.js`)
+  * `MeetingConfig_Reset()`
+  * `MeetingConfig_EnableAutoAdjustSpeakerVolumeWhenJoinAudio()`
+     * param \{Boolean} bEnable
+  * `MeetingConfig_EnableAutoAdjustMicVolumeWhenJoinAudio()`
+     * param \{Boolean} bEnable
+  * `MeetingConfig_ConfigDSCP()`
+     * param \{Number} dscpAudio Configure DSCP value for audio
+     * param \{Number} dscpVideo Configure DSCP value for video
+     * param \{Boolean} bReset
+  * `MeetingConfig_EnableHideFullPhoneNumber4PureCallinUser()`
+     * param \{Boolean} bHide
+  * `MeetingConfig_EnableLengthLimitationOfMeetingNumber()`
+     * param \{Boolean} bEnable
+  * `MeetingConfig_EnableShareIOSDevice()`
+     * param \{Boolean} bEnable
+  * `MeetingConfig_EnableShareWhiteBoard()`
+     * param \{Boolean} bEnable
+  * `MeetingConfig_ForceDisableMultiShare()`
+     * param \{Boolean} bDisable
+  * `MeetingConfig_SetMaxDurationForOnlyHostInMeeting()`
+     * param \{Number} nDuration
+  * `MeetingConfig_EnableLocalRecordingConvertProgressBarDialog()`
+     * param \{Boolean} bShow
+* Add new interfaces for meeting UI controller (locate in `zoom_meeting_ui_ctrl.js`)
+  * `MeetingUI_BackToMeeting()`
+  * `MeetingUI_GetMeetingUIWnd()`
+  * `MeetingUI_SwitchMinimizeUIMode4FristScreenMeetingUIWnd()`
+     * param \{Number} mode
+  * `MeetingUI_IsMinimizeModeOfFristScreenMeetingUIWnd()`
+  * `MeetingUI_SwapToShowShareViewOrVideo()`
+     * param \{Boolean} mode
+  * `MeetingUI_IsDisplayingShareViewOrVideo()`
+  * `MeetingUI_CanSwapToShowShareViewOrVideo()`
+* Add a new interface for getting zoom SDK version (locate in `zoom_sdk.js`)
+    * `GetZoomSDKVersion()`
+* Add a new interface for joining a meeting using zoom web url (locate in `zoom_meeting.js`)
+  * `HandleZoomWebUriProtocolAction()`
+* Add new interfaces for setting UI strategy (locate in `zoom_setting_ui_ctrl.js`)
+  * `SettingUI_DisableAdvancedFeatures4GeneralSetting()`
+     * param \{Boolean} bDisable
+  * `SettingUI_DisableAccountSettingTabPage()`
+     * aram \{Boolean} bDisable
+  * `SettingUI_ConfSettingDialogShownTabPage()`
+     * param \{Number} number settingDlgShowTabPageOption, Every bit indicates whether to show a certain tab page
+      * bit 1: indicates whether to show the virtual background page. "1" show, "0" not show
+      * bit 2: indicates whether to show the video page. "1" show, "0" not show
+      * bit 3: indicates whether to show the statistics page. "1" show, "0" not show
+      * bit 4: indicates whether to show the recording page. "1" show, "0" not show
+      * bit 5: indicates whether to show the general page. "1" show, "0" not show
+      * bit 6: indicates whether to show the feedback page. "1" show, "0" not show
+      * bit 7: indicates whether to show the audio page. "1" show, "0" not show
+      * bit 8: indicates whether to show the advance feature page. "1" show, "0" not show
+      * bit 9: indicates whether to show the accessibility page. "1" show, "0" not show
+
 ## 2019-09-04 @ [v4.4.55968.0904](https://github.com/zoom/zoom-sdk-electron/releases/tag/v4.4.55968.0904)
 
 ## Added

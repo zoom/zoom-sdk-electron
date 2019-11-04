@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.15"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>zoom_electron_node: ZoomNodeMeetingWrap Class Reference</title>
+<title>zoom_electron_sdk: ZoomNodeMeetingWrap Class Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -18,7 +18,7 @@
  <tbody>
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
-   <div id="projectname">zoom_electron_node
+   <div id="projectname">zoom_electron_sdk
    </div>
   </td>
  </tr>
@@ -119,6 +119,8 @@ Static Public Member Functions</h2></td></tr>
 <tr class="memitem:a695ee32ec9f3aa20bc9a7a334d5d3306"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_zoom_node_meeting_wrap.html#a695ee32ec9f3aa20bc9a7a334d5d3306">GetAudioConnQuality</a> (const v8::FunctionCallbackInfo&lt; v8::Value &gt; &amp;args)</td></tr>
 <tr class="memdesc:a695ee32ec9f3aa20bc9a7a334d5d3306"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the Internet connection quality of audio.  <a href="#a695ee32ec9f3aa20bc9a7a334d5d3306">More...</a><br /></td></tr>
 <tr class="separator:a695ee32ec9f3aa20bc9a7a334d5d3306"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:a284f302b1cc65498a78b43a37e7e97e3"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_zoom_node_meeting_wrap.html#a284f302b1cc65498a78b43a37e7e97e3">HandleZoomWebUriProtocolAction</a> (const v8::FunctionCallbackInfo&lt; v8::Value &gt; &amp;args)</td></tr>
+<tr class="separator:a284f302b1cc65498a78b43a37e7e97e3"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-static-attribs"></a>
 Static Public Attributes</h2></td></tr>
@@ -214,7 +216,7 @@ Friends</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Get the Internet connection quality of audio. </p>
-<dl class="section return"><dt>Returns</dt><dd>If the function succeeds, the return is one of those enumerated in <a class="el" href="zoom__native__sdk__wrap__core__def_8h.html#a8bdba5d8abde1c3344e2e90e07e3d174">ZNConnectionQuality</a> enum. </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>If the function succeeds, the return is one of those enumerated in <a class="el" href="">ZNConnectionQuality</a> enum. </dd></dl>
 <dl class="section remark"><dt>Remarks</dt><dd>If you are not in the meeting, the ZNConn_Quality_Unknow will be returned. </dd></dl>
 
 </div>
@@ -496,7 +498,7 @@ Friends</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Get the quality of Internet connection when sharing. </p>
-<dl class="section return"><dt>Returns</dt><dd>If the function succeeds, the return is one of those enumerated in <a class="el" href="zoom__native__sdk__wrap__core__def_8h.html#a8bdba5d8abde1c3344e2e90e07e3d174">ZNConnectionQuality</a> enum. </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>If the function succeeds, the return is one of those enumerated in <a class="el" href="">ZNConnectionQuality</a> enum. </dd></dl>
 <dl class="section remark"><dt>Remarks</dt><dd>If you are not in the meeting, the ZNConn_Quality_Unknow will be returned. </dd></dl>
 
 </div>
@@ -526,8 +528,34 @@ Friends</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Get the Internet connection quality of video. </p>
-<dl class="section return"><dt>Returns</dt><dd>If the function succeeds, the return is one of those enumerated in <a class="el" href="zoom__native__sdk__wrap__core__def_8h.html#a8bdba5d8abde1c3344e2e90e07e3d174">ZNConnectionQuality</a> enum. </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>If the function succeeds, the return is one of those enumerated in <a class="el" href="">ZNConnectionQuality</a> enum. </dd></dl>
 <dl class="section remark"><dt>Remarks</dt><dd>If you are not in the meeting, the ZNConn_Quality_Unknow will be returned. </dd></dl>
+
+</div>
+</div>
+<a id="a284f302b1cc65498a78b43a37e7e97e3"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#a284f302b1cc65498a78b43a37e7e97e3">&#9670;&nbsp;</a></span>HandleZoomWebUriProtocolAction()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static void ZoomNodeMeetingWrap::HandleZoomWebUriProtocolAction </td>
+          <td>(</td>
+          <td class="paramtype">const v8::FunctionCallbackInfo&lt; v8::Value &gt; &amp;&#160;</td>
+          <td class="paramname"><em>args</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
 
 </div>
 </div>
@@ -571,7 +599,7 @@ Friends</h2></td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>If the function succeeds, the return value is ZNSDKERR_SUCCESS. Otherwise failed. To get extended error information, see <a class="el" href="zoom__native__sdk__wrap__core__def_8h.html#a5def98f0e6036f545cc78d03ba0adc10">ZNSDKError</a> enum. </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>If the function succeeds, the return value is ZNSDKERR_SUCCESS. Otherwise failed. To get extended error information, see <a class="el" href="">ZNSDKError</a> enum. </dd></dl>
 
 </div>
 </div>
@@ -616,7 +644,7 @@ Friends</h2></td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>If the function succeeds, the return value is ZNSDKERR_SUCCESS. Otherwise failed. To get extended error information, see <a class="el" href="zoom__native__sdk__wrap__core__def_8h.html#a5def98f0e6036f545cc78d03ba0adc10">ZNSDKError</a> enum. </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>If the function succeeds, the return value is ZNSDKERR_SUCCESS. Otherwise failed. To get extended error information, see <a class="el" href="">ZNSDKError</a> enum. </dd></dl>
 
 </div>
 </div>
@@ -651,7 +679,7 @@ Friends</h2></td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>If the function succeeds, the return value is ZNSDKERR_SUCCESS. Otherwise failed. To get extended error information, see <a class="el" href="zoom__native__sdk__wrap__core__def_8h.html#a5def98f0e6036f545cc78d03ba0adc10">ZNSDKError</a> enum. </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>If the function succeeds, the return value is ZNSDKERR_SUCCESS. Otherwise failed. To get extended error information, see <a class="el" href="">ZNSDKError</a> enum. </dd></dl>
 
 </div>
 </div>
@@ -680,7 +708,7 @@ Friends</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Lock the current meeting. </p>
-<dl class="section return"><dt>Returns</dt><dd>If the function succeeds, the return value is ZNSDKERR_SUCCESS. Otherwise failed. To get extended error information, see <a class="el" href="zoom__native__sdk__wrap__core__def_8h.html#a5def98f0e6036f545cc78d03ba0adc10">ZNSDKError</a> enum. </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>If the function succeeds, the return value is ZNSDKERR_SUCCESS. Otherwise failed. To get extended error information, see <a class="el" href="">ZNSDKError</a> enum. </dd></dl>
 
 </div>
 </div>
@@ -715,7 +743,7 @@ Friends</h2></td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>If the function succeeds, the return value is ZNSDKERR_SUCCESS. Otherwise failed. To get extended error information, see <a class="el" href="zoom__native__sdk__wrap__core__def_8h.html#a5def98f0e6036f545cc78d03ba0adc10">ZNSDKError</a> enum. </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>If the function succeeds, the return value is ZNSDKERR_SUCCESS. Otherwise failed. To get extended error information, see <a class="el" href="">ZNSDKError</a> enum. </dd></dl>
 
 </div>
 </div>
@@ -755,7 +783,7 @@ Friends</h2></td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>If the function succeeds, the return value is ZNSDKERR_SUCCESS. Otherwise failed. To get extended error information, see <a class="el" href="zoom__native__sdk__wrap__core__def_8h.html#a5def98f0e6036f545cc78d03ba0adc10">ZNSDKError</a> enum. </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>If the function succeeds, the return value is ZNSDKERR_SUCCESS. Otherwise failed. To get extended error information, see <a class="el" href="">ZNSDKError</a> enum. </dd></dl>
 
 </div>
 </div>
@@ -790,7 +818,7 @@ Friends</h2></td></tr>
     <tr><td class="paramname">2.</td><td>userToken(string) User token. </td></tr>
     <tr><td class="paramname">3.</td><td>userZAK(string) ZOOM access token. </td></tr>
     <tr><td class="paramname">4.</td><td>username(string) Username when logged in the meeting. </td></tr>
-    <tr><td class="paramname">5.</td><td>userType(number) User type. See <a class="el" href="zoom__native__sdk__wrap__core__def_8h.html#a9074c1d7e06de7076cca45eb61f7559a">ZNZoomUserType</a> enum. </td></tr>
+    <tr><td class="paramname">5.</td><td>userType(number) User type. See <a class="el" href="">ZNZoomUserType</a> enum. </td></tr>
     <tr><td class="paramname">6.</td><td>meetingNumber(string) Meeting number. </td></tr>
     <tr><td class="paramname">7.</td><td>sdkVanityID(string) Meeting vanity ID </td></tr>
     <tr><td class="paramname">8.</td><td>hDirectShareAppWnd(string) The window handle of the direct sharing application. </td></tr>
@@ -801,7 +829,7 @@ Friends</h2></td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>If the function succeeds, the return value is ZNSDKERR_SUCCESS. Otherwise failed. To get extended error information, see <a class="el" href="zoom__native__sdk__wrap__core__def_8h.html#a5def98f0e6036f545cc78d03ba0adc10">ZNSDKError</a> enum. </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>If the function succeeds, the return value is ZNSDKERR_SUCCESS. Otherwise failed. To get extended error information, see <a class="el" href="">ZNSDKError</a> enum. </dd></dl>
 
 </div>
 </div>
@@ -830,7 +858,7 @@ Friends</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Unlock the current meeting. </p>
-<dl class="section return"><dt>Returns</dt><dd>If the function succeeds, the return value is ZNSDKERR_SUCCESS. Otherwise failed. To get extended error information, see <a class="el" href="zoom__native__sdk__wrap__core__def_8h.html#a5def98f0e6036f545cc78d03ba0adc10">ZNSDKError</a> enum. </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>If the function succeeds, the return value is ZNSDKERR_SUCCESS. Otherwise failed. To get extended error information, see <a class="el" href="">ZNSDKError</a> enum. </dd></dl>
 
 </div>
 </div>
@@ -881,7 +909,7 @@ Friends</h2></td></tr>
 </div>
 </div>
 <hr/>The documentation for this class was generated from the following file:<ul>
-<li>C:/Users/86139/Desktop/node_add_on/<a class="el" href="zoom__node__addon_8h_source.html">zoom_node_addon.h</a></li>
+<li><a class="el" href="zoom__node__addon_8h_source.html">zoom_node_addon.h</a></li>
 </ul>
 </div><!-- contents -->
 <!-- start footer part -->

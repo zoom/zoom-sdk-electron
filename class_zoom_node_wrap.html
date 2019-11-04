@@ -5,7 +5,7 @@
 <meta http-equiv="X-UA-Compatible" content="IE=9"/>
 <meta name="generator" content="Doxygen 1.8.15"/>
 <meta name="viewport" content="width=device-width, initial-scale=1"/>
-<title>zoom_electron_node: ZoomNodeWrap Class Reference</title>
+<title>zoom_electron_sdk: ZoomNodeWrap Class Reference</title>
 <link href="tabs.css" rel="stylesheet" type="text/css"/>
 <script type="text/javascript" src="jquery.js"></script>
 <script type="text/javascript" src="dynsections.js"></script>
@@ -18,7 +18,7 @@
  <tbody>
  <tr style="height: 56px;">
   <td id="projectalign" style="padding-left: 0.5em;">
-   <div id="projectname">zoom_electron_node
+   <div id="projectname">zoom_electron_sdk
    </div>
   </td>
  </tr>
@@ -92,6 +92,12 @@ Static Public Member Functions</h2></td></tr>
 <tr class="memitem:a7a44f67398ae2b2444010de7a89cf147"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_zoom_node_wrap.html#a7a44f67398ae2b2444010de7a89cf147">GetRawDataLicenseObj</a> (const v8::FunctionCallbackInfo&lt; v8::Value &gt; &amp;args)</td></tr>
 <tr class="memdesc:a7a44f67398ae2b2444010de7a89cf147"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get Zoom SDK RawData License Service Module.  <a href="#a7a44f67398ae2b2444010de7a89cf147">More...</a><br /></td></tr>
 <tr class="separator:a7a44f67398ae2b2444010de7a89cf147"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ae79e65c376d37baae350c9e986db15db"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_zoom_node_wrap.html#ae79e65c376d37baae350c9e986db15db">GetSDKSMSHelperObj</a> (const v8::FunctionCallbackInfo&lt; v8::Value &gt; &amp;args)</td></tr>
+<tr class="memdesc:ae79e65c376d37baae350c9e986db15db"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get Zoom SDK SMS Helper Service Module.  <a href="#ae79e65c376d37baae350c9e986db15db">More...</a><br /></td></tr>
+<tr class="separator:ae79e65c376d37baae350c9e986db15db"><td class="memSeparator" colspan="2">&#160;</td></tr>
+<tr class="memitem:ab060199ea5be6c56906bf73bf95b9956"><td class="memItemLeft" align="right" valign="top">static void&#160;</td><td class="memItemRight" valign="bottom"><a class="el" href="class_zoom_node_wrap.html#ab060199ea5be6c56906bf73bf95b9956">GetZoomSDKVersion</a> (const v8::FunctionCallbackInfo&lt; v8::Value &gt; &amp;args)</td></tr>
+<tr class="memdesc:ab060199ea5be6c56906bf73bf95b9956"><td class="mdescLeft">&#160;</td><td class="mdescRight">Get the version of ZOOM SDK.  <a href="#ab060199ea5be6c56906bf73bf95b9956">More...</a><br /></td></tr>
+<tr class="separator:ab060199ea5be6c56906bf73bf95b9956"><td class="memSeparator" colspan="2">&#160;</td></tr>
 </table><table class="memberdecls">
 <tr class="heading"><td colspan="2"><h2 class="groupheader"><a name="pub-static-attribs"></a>
 Static Public Attributes</h2></td></tr>
@@ -187,7 +193,7 @@ Friends</h2></td></tr>
 </div><div class="memdoc">
 
 <p>Clean up ZOOM SDK. </p>
-<dl class="section return"><dt>Returns</dt><dd>If the function succeeds, the return value is ZNSDKERR_SUCCESS. Otherwise failed. To get extended error information, see <a class="el" href="zoom__native__sdk__wrap__core__def_8h.html#a5def98f0e6036f545cc78d03ba0adc10">ZNSDKError</a> enum. </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>If the function succeeds, the return value is ZNSDKERR_SUCCESS. Otherwise failed. To get extended error information, see <a class="el" href="">ZNSDKError</a> enum. </dd></dl>
 
 </div>
 </div>
@@ -359,6 +365,34 @@ Friends</h2></td></tr>
 
 </div>
 </div>
+<a id="ae79e65c376d37baae350c9e986db15db"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ae79e65c376d37baae350c9e986db15db">&#9670;&nbsp;</a></span>GetSDKSMSHelperObj()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static void ZoomNodeWrap::GetSDKSMSHelperObj </td>
+          <td>(</td>
+          <td class="paramtype">const v8::FunctionCallbackInfo&lt; v8::Value &gt; &amp;&#160;</td>
+          <td class="paramname"><em>args</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Get Zoom SDK SMS Helper Service Module. </p>
+
+</div>
+</div>
 <a id="ad6da4812610726ede5e7dda23cf3b537"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#ad6da4812610726ede5e7dda23cf3b537">&#9670;&nbsp;</a></span>GetSetObj()</h2>
 
@@ -443,6 +477,35 @@ Friends</h2></td></tr>
 
 </div>
 </div>
+<a id="ab060199ea5be6c56906bf73bf95b9956"></a>
+<h2 class="memtitle"><span class="permalink"><a href="#ab060199ea5be6c56906bf73bf95b9956">&#9670;&nbsp;</a></span>GetZoomSDKVersion()</h2>
+
+<div class="memitem">
+<div class="memproto">
+<table class="mlabels">
+  <tr>
+  <td class="mlabels-left">
+      <table class="memname">
+        <tr>
+          <td class="memname">static void ZoomNodeWrap::GetZoomSDKVersion </td>
+          <td>(</td>
+          <td class="paramtype">const v8::FunctionCallbackInfo&lt; v8::Value &gt; &amp;&#160;</td>
+          <td class="paramname"><em>args</em></td><td>)</td>
+          <td></td>
+        </tr>
+      </table>
+  </td>
+  <td class="mlabels-right">
+<span class="mlabels"><span class="mlabel">static</span></span>  </td>
+  </tr>
+</table>
+</div><div class="memdoc">
+
+<p>Get the version of ZOOM SDK. </p>
+<dl class="section return"><dt>Returns</dt><dd>The version of ZOOM SDK. </dd></dl>
+
+</div>
+</div>
 <a id="accc323f02c88b134a2a0e912f28b3d24"></a>
 <h2 class="memtitle"><span class="permalink"><a href="#accc323f02c88b134a2a0e912f28b3d24">&#9670;&nbsp;</a></span>InitSDK()</h2>
 
@@ -472,15 +535,16 @@ Friends</h2></td></tr>
   <table class="params">
     <tr><td class="paramname">1.</td><td>path(string) On win os is the sdk.dll path. On mac os is empty. </td></tr>
     <tr><td class="paramname">2.</td><td>domain(string) Web domain. </td></tr>
-    <tr><td class="paramname">3.</td><td>langid(number) The ID of the SDK language. see <a class="el" href="zoom__native__sdk__wrap__core__def_8h.html#a814a4fa3add286289f09a7d48e80f840">ZNSDK_LANGUAGE_ID</a> enum. </td></tr>
+    <tr><td class="paramname">3.</td><td>langid(number) The ID of the SDK language. see <a class="el" href="">ZNSDK_LANGUAGE_ID</a> enum. </td></tr>
     <tr><td class="paramname">4.</td><td>langName(string) Resource name. </td></tr>
     <tr><td class="paramname">5.</td><td>langInfo(string) The value should be the full path of the resource file when the langType value is CustomizedLanguage_FilePath, including the file name. When the langType value is CustomizedLanguage_Content, the value saves the content of the resource. </td></tr>
     <tr><td class="paramname">6.</td><td>strSupportUrl(string) Support URL. </td></tr>
     <tr><td class="paramname">7.</td><td>enable_log(boolean) Enable log feature. </td></tr>
+    <tr><td class="paramname">8.</td><td>locale(number) App locale. </td></tr>
   </table>
   </dd>
 </dl>
-<dl class="section return"><dt>Returns</dt><dd>If the function succeeds, the return value is ZNSDKERR_SUCCESS. Otherwise failed. To get extended error information, see <a class="el" href="zoom__native__sdk__wrap__core__def_8h.html#a5def98f0e6036f545cc78d03ba0adc10">ZNSDKError</a> enum. </dd></dl>
+<dl class="section return"><dt>Returns</dt><dd>If the function succeeds, the return value is ZNSDKERR_SUCCESS. Otherwise failed. To get extended error information, see <a class="el" href="">ZNSDKError</a> enum. </dd></dl>
 
 </div>
 </div>
@@ -531,7 +595,7 @@ Friends</h2></td></tr>
 </div>
 </div>
 <hr/>The documentation for this class was generated from the following file:<ul>
-<li>C:/Users/86139/Desktop/node_add_on/<a class="el" href="zoom__node__addon_8h_source.html">zoom_node_addon.h</a></li>
+<li><a class="el" href="zoom__node__addon_8h_source.html">zoom_node_addon.h</a></li>
 </ul>
 </div><!-- contents -->
 <!-- start footer part -->

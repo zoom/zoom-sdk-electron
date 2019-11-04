@@ -1,5 +1,6 @@
 const { app, BrowserWindow, ipcMain } = require('electron');
-const { ZOOM_TYPE_OS_TYPE, ZoomSDK_LANGUAGE_ID, ZoomSDKError, ZoomAuthResult, ZoomLoginStatus, ZoomMeetingStatus, ZoomMeetingUIFloatVideoType } = require('../lib/settings.js');
+const { ZOOM_TYPE_OS_TYPE, ZoomSDK_LANGUAGE_ID, ZoomSDKError, ZoomAuthResult, ZoomLoginStatus, ZoomMeetingStatus, 
+  ZoomMeetingUIFloatVideoType, SDKCustomizedStringType, SDKCustomizedURLType, ZoomAPPLocale } = require('../lib/settings.js');
 const ZOOMSDKMOD = require('../lib/zoom_sdk.js');
 const os = require('os');
 const platform = os.platform();
@@ -35,8 +36,11 @@ let zoompremeeting;
 let zoomvideorawdata;
 let zoomsharerawdata;
 let zoomaudiorawdata;
+let zoomsms;
 let zoomsetui;
 let hasRDLicense;
+let autoCloseYUV = false;
+let hasLogin = false;
 
 function sdkauthCB(status) {
   if (ZoomAuthResult.AUTHRET_SUCCESS == status){
@@ -71,9 +75,10 @@ function sdkauthCB(status) {
     zoomsetrecord = zoomsetting.GetRecordingSetting();
     zoomsetvideo = zoomsetting.GetVideoSetting();
     zoomsetaudio = zoomsetting.GetAudioSetting();
-    // zoomsetui = zoomsetting.GetSettingUICtrl();
+    zoomsetui = zoomsetting.GetSettingUICtrl();
     zoomcustomizedresource = zoomsdk.GetCustomizedResource();
     zoompremeeting = zoomsdk.PreMeeting();
+    zoomsms = zoomsdk.SMSHelper();
     zoomvideorawdata = zoomsdk.VideoRawData();
     zoomaudiorawdata = zoomsdk.AudioRawData();
     zoomsharerawdata = zoomsdk.ShareRawData();
@@ -121,8 +126,8 @@ function onUserVideoStatusChange(result) {
   console.log('onUserVideoStatusChange', result);
 }
 
-function meetingstatuscb(status) {
-  console.log('meetingstatus', status);
+function meetingstatuscb(status, result) {
+  console.log('meetingstatus', status, result);
   switch (status)
   {
     case ZoomMeetingStatus.MEETING_STATUS_CONNECTING:
@@ -138,7 +143,11 @@ function meetingstatuscb(status) {
     break
     case ZoomMeetingStatus.MEETING_STATUS_FAILED:
     case ZoomMeetingStatus.MEETING_STATUS_ENDED:
-      showStartJoinWindow();
+      if (hasLogin) {
+        showStartJoinWindow();
+      } else {
+        showLoginWindow();
+      }
       break;
     default:
     break;
@@ -180,6 +189,7 @@ function showWaitingWindow() {
     domainWindow = null;
   }
   if (YUVWindow){
+    autoCloseYUV = true;
     YUVWindow.close();
     YUVWindow = null;
   }
@@ -231,13 +241,16 @@ function showYUVWindow() {
         nodeIntegration: true
       } 
     });
-    YUVWindow.on('close', () => {
+    YUVWindow.on('close', (flag) => {
       YUVWindow.webContents.send('main-process-meetingstatus', 'ended');
       let opt = {
         endMeeting: false
       }
-      let ret = zoommeeting.LeaveMeeting(opt);
-      console.log('leave', ret);
+      console.log('autoCloseYUV', autoCloseYUV);
+      if (!autoCloseYUV) {
+        let ret = zoommeeting.LeaveMeeting(opt);
+        console.log('leave', ret);
+      }
       YUVWindow = null;
       if (startjoinWindow) {
         startjoinWindow.close();
@@ -246,6 +259,7 @@ function showYUVWindow() {
       showStartJoinWindow();
     });
     YUVWindow.loadURL('file://' + __dirname + '/pages/yuv.html');
+    autoCloseYUV = false
   }
   if (mainWindow){
     mainWindow.close();
@@ -310,6 +324,7 @@ function showDomainwindow(){
     startjoinUnLoginWindow = null;
   }
   if (YUVWindow){
+    autoCloseYUV = true;
     YUVWindow.close();
     YUVWindow = null;
   }
@@ -352,12 +367,14 @@ function showAuthwindow(){
     domainWindow = null;
   }
   if (YUVWindow){
+    autoCloseYUV = true;
     YUVWindow.close();
     YUVWindow = null;
   }
 }
 
 function showLoginWindow(){
+  hasLogin = false;
   if (!loginWindow)
   {
     loginWindow = new BrowserWindow({ width: 700, height: 500,
@@ -392,6 +409,7 @@ function showLoginWindow(){
     domainWindow = null;
   }
   if (YUVWindow){
+    autoCloseYUV = true;
     YUVWindow.close();
     YUVWindow = null;
   }
@@ -432,6 +450,7 @@ function showStartJoinWindow(){
     domainWindow = null;
   }
   if (YUVWindow){
+    autoCloseYUV = true;
     YUVWindow.close();
     YUVWindow = null;
   }
@@ -458,6 +477,10 @@ function apicallresultcb(apiname, ret) {
 function OnDirectShareStatusUpdate(status) {
   console.log('OnDirectShareStatusUpdate', status);
   startjoinWindow ? startjoinWindow.webContents.send('main-process-onDirectShareStatusUpdate', status): null;
+}
+
+function onLibUVRawDataReceived(databuf) {
+	console.log('onLibUVRawDataReceived -- pipe works! -- data:', databuf);
 }
 
 function onVideoRawDataReceived(databuf, format, receivers) {
@@ -505,6 +528,30 @@ function hasRawDataLicense() {
   return ret;
 }
 
+function customizedresource() {
+  zoomcustomizedresource = zoomsdk.GetCustomizedResource();
+	const optCustomizedResouce = {
+    CustomizedStringType: SDKCustomizedStringType.SDK_Customized_Title_App,
+    strCustomizedString: 'zoom demo'
+  }		
+  const optCustomizedURLResouce = {
+    CustomizedURLType: SDKCustomizedURLType.ZN_SDKCustomizedURL_SUPPORTURL,
+    strCustomizeURL: 'https://www.baidu.com/'
+  }		
+  const optCustomizedPictureResouce = {
+    strPNGID: 'ZOOMAPPICON.PNG',
+    strPNGPath: 'D:\\emoticons.png'
+  }		
+	if(zoomcustomizedresource) {
+		let retCustomize = zoomcustomizedresource.Resource_AddCustomizedStringResource(optCustomizedResouce);
+    console.log('retCustomize', retCustomize);
+    let retURLCustomize = zoomcustomizedresource.Resource_AddCustomizedURLResource(optCustomizedURLResouce);
+    console.log('retURLCustomize', retURLCustomize);
+    let retPictureCustomize = zoomcustomizedresource.Resource_AddCustomizedPictureResource(optCustomizedPictureResouce);
+    console.log('retPictureCustomize', retPictureCustomize);
+  }
+}
+
 let functionObj = {
   showSatrtJoinUnLoginWindow: function() {
     if (!startjoinUnLoginWindow) {
@@ -548,6 +595,9 @@ let functionObj = {
       enable_log: enable_log,
       langid: ZoomSDK_LANGUAGE_ID.LANGUAGE_English
     }
+    if (platform == 'win32') {
+      customizedresource(); // CustomizedResource only support windows, should call before initSDK
+    }
     var ret = zoomsdk.InitSDK(opts);
     if (ZoomSDKError.SDKERR_SUCCESS == ret){
       ProcSDKReady();
@@ -566,6 +616,7 @@ let functionObj = {
       showWaitingWindow();
     }
     zoomauth.Login(username, psw, false);
+    hasLogin = true;
   },
   loginWithSSOToken: function(ssotoken) {
     let ret = zoomauth.LoginWithSSOToken(ssotoken);
@@ -643,6 +694,16 @@ let functionObj = {
   getParticipantsList: function() {
     let ret = zoommeeting.GetParticipantsList();
     console.log('GetParticipantsList', ret);
+    return ret;
+  },
+  getUserInfoByUserID: function(userid) {
+    let ret = zoommeeting.GetUserInfoByUserID(userid);
+    console.log('GetUserInfoByUserID', ret);
+    return ret;
+  },
+  handleZoomWebUriProtocolAction: function(protocol_action) {
+    let ret = zoommeeting.HandleZoomWebUriProtocolAction(protocol_action);
+    console.log('HandleZoomWebUriProtocolAction', ret);
     return ret;
   },
   getMeetingTopic: function() {
@@ -886,10 +947,10 @@ let functionObj = {
     let ret = zoomannotation.Annotaion_Redo(opts)
     console.log('Redo', ret);
   },
-  muteAudio: function(userid) {
+  muteAudio: function(userid, allowunmutebyself) {
     let opts = {
       userid: userid,
-      allowunmutebyself: false
+      allowunmutebyself: allowunmutebyself
     }
     let ret = zoomaudio.MeetingAudio_MuteAudio(opts);
     console.log('MuteAudio', ret);
@@ -1526,13 +1587,6 @@ let functionObj = {
     let ret = zoomconfiguration.MeetingConfig_ConfigDSCP(opts);
     console.log('ConfigDSCP', ret);
   },
-  disableRemoteCtrlCopyPasteFeature: function(bDisable) {
-    let opts = {
-      bDisable: bDisable
-    }
-    let ret = zoomconfiguration.MeetingConfig_DisableRemoteCtrlCopyPasteFeature(opts);
-    console.log('DisableRemoteCtrlCopyPasteFeature', ret);
-  },
   enableHideFullPhoneNumber4PureCallinUser: function(bHide) {
     let opts = {
       bHide: bHide
@@ -1575,6 +1629,13 @@ let functionObj = {
     let ret = zoomconfiguration.MeetingConfig_SetMaxDurationForOnlyHostInMeeting(opts);
     console.log('SetMaxDurationForOnlyHostInMeeting', ret);
   },
+  enableLocalRecordingConvertProgressBarDialog: function(bShow) {
+    let opts = {
+      bShow: bShow
+    }
+    let ret = zoomconfiguration.MeetingConfig_EnableLocalRecordingConvertProgressBarDialog(opts);
+    console.log('EnableLocalRecordingConvertProgressBarDialog', ret);
+  },
   disableAdvancedFeatures4GeneralSetting: function(bDisable) {
     let opts = {
       bDisable: bDisable
@@ -1589,20 +1650,56 @@ let functionObj = {
     let ret = zoomsetui.SettingUI_DisableAccountSettingTabPage(opts);
     console.log('DisableAccountSettingTabPage', ret);
   },
-  ConfSettingDialogShownTabPage: function(bShowAccessibility) {
+  confSettingDialogShownTabPage: function(number) {
     let opts = {
-      bShowAccessibility: bShowAccessibility,
-      bShowAdvancedFeature: true,
-      bShowAudio: true,
-      bShowFeedback: true,
-      bShowGeneral: true,
-      bSHowRecording: true,
-      bShowStatistics: true,
-      bShowVideo: true,
-      bShowVirtualBackGround: true
+      number: number
     }
     let ret = zoomsetui.SettingUI_ConfSettingDialogShownTabPage(opts);
     console.log('ConfSettingDialogShownTabPage', ret);
+  },
+  enableZoomAuthRealNameMeetingUIShown: function(b_enable) {
+    let opts = {
+      b_enable: b_enable
+    }
+    let ret = zoomsms.EnableZoomAuthRealNameMeetingUIShown(opts);
+    console.log('EnableZoomAuthRealNameMeetingUIShown', ret);
+  },
+  getResendSMSVerificationCodeHandler: function() {
+    let ret = zoomsms.GetResendSMSVerificationCodeHandler();
+    console.log('GetResendSMSVerificationCodeHandler', ret);
+  },
+  retrieve: function(country_code, phone_number) {
+    let opts = {
+      country_code: country_code,
+      phone_number: phone_number
+    }
+    let ret = zoomsms.Retrieve(opts);
+    console.log('Retrieve', ret);
+  },
+  retrieve_CancelAndLeaveMeeting: function() {
+    let ret = zoomsms.Retrieve_CancelAndLeaveMeeting();
+    console.log('Retrieve_CancelAndLeaveMeeting', ret);
+  },
+  getReVerifySMSVerificationCodeHandler: function() {
+    let ret = zoomsms.GetReVerifySMSVerificationCodeHandler();
+    console.log('GetReVerifySMSVerificationCodeHandler', ret);
+  },
+  verify: function(country_code, phone_number, verification_code) {
+    let opts = {
+      country_code: country_code,
+      phone_number: phone_number,
+      verification_code: verification_code
+    }
+    let ret = zoomsms.Verify(opts);
+    console.log('Verify', ret);
+  },
+  verify_CancelAndLeaveMeeting: function() {
+    let ret = zoomsms.Verify_CancelAndLeaveMeeting();
+    console.log('Verify_CancelAndLeaveMeeting', ret);
+  },
+  getSupportPhoneNumberCountryList: function() {
+    let ret = zoomsms.GetSupportPhoneNumberCountryList();
+    console.log('GetSupportPhoneNumberCountryList', ret);
   }
 }
 

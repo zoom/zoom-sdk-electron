@@ -36,6 +36,7 @@ void ZoomNodeMeetingConfigCtrlWrap::EnableInviteButtonOnMeetingUI(const v8::Func
 void ZoomNodeMeetingConfigCtrlWrap::SetFloatVideoPos(const v8::FunctionCallbackInfo<v8::Value>& args)
 {
 	v8::Isolate* isolate = args.GetIsolate();
+#if (defined _WIN32)
 	if (args.Length() < 4) {
 		isolate->ThrowException(v8::Exception::TypeError(
 			v8::String::NewFromUtf8(isolate, "Wrong number of arguments")));
@@ -52,18 +53,31 @@ void ZoomNodeMeetingConfigCtrlWrap::SetFloatVideoPos(const v8::FunctionCallbackI
 			v8::String::NewFromUtf8(isolate, "Wrong arguments")));
 		return;
 	}
+#else
+	if (args.Length() < 2) {
+		isolate->ThrowException(v8::Exception::TypeError(
+			v8::String::NewFromUtf8(isolate, "Wrong number of arguments")));
+		return;
+	}
+
+	if (!args[0]->IsString() ||
+		!args[1]->IsString()
+		)
+	{
+		isolate->ThrowException(v8::Exception::TypeError(
+			v8::String::NewFromUtf8(isolate, "Wrong arguments")));
+		return;
+	}
+#endif
+	
 
 	ZNWndPosition zn_position;
+	zoom_v8toc(args[0].As<v8::String>(), zn_position.z_left);
+	zoom_v8toc(args[1].As<v8::String>(), zn_position.z_top);
 #if (defined _WIN32)
-    zoom_v8toc(args[0].As<v8::String>(), zn_position.z_hSelfWnd);
-    zoom_v8toc(args[1].As<v8::String>(), zn_position.z_hParent);
-#else
-    zoom_v8toc(args[0].As<v8::String>(), zn_position.z_height);
-    zoom_v8toc(args[1].As<v8::String>(), zn_position.z_width);
+	zoom_v8toc(args[2].As<v8::String>(), zn_position.z_hSelfWnd);
+	zoom_v8toc(args[3].As<v8::String>(), zn_position.z_hParent);
 #endif
-	zoom_v8toc(args[2].As<v8::String>(), zn_position.z_left);
-	zoom_v8toc(args[3].As<v8::String>(), zn_position.z_top);
-
 	ZNSDKError err = ZNSDKERR_SUCCESS;
 	_g_native_wrap.GetMeetingServiceWrap().GetMeetingConfigCtrl().SetFloatVideoPos(zn_position);
 	v8::Local<v8::Integer> bret = v8::Integer::New(isolate, (int32_t)err);
@@ -144,6 +158,7 @@ void ZoomNodeMeetingConfigCtrlWrap::SetDirectShareMonitorID(const v8::FunctionCa
 void ZoomNodeMeetingConfigCtrlWrap::SetMeetingUIPos(const v8::FunctionCallbackInfo<v8::Value>& args)
 {
 	v8::Isolate* isolate = args.GetIsolate();
+#if (defined _WIN32)
 	if (args.Length() < 4) {
 		isolate->ThrowException(v8::Exception::TypeError(
 			v8::String::NewFromUtf8(isolate, "Wrong number of arguments")));
@@ -160,18 +175,30 @@ void ZoomNodeMeetingConfigCtrlWrap::SetMeetingUIPos(const v8::FunctionCallbackIn
 			v8::String::NewFromUtf8(isolate, "Wrong arguments")));
 		return;
 	}
+#else
+	if (args.Length() < 2) {
+		isolate->ThrowException(v8::Exception::TypeError(
+			v8::String::NewFromUtf8(isolate, "Wrong number of arguments")));
+		return;
+	}
+
+	if (!args[0]->IsString() ||
+		!args[1]->IsString()
+		)
+	{
+		isolate->ThrowException(v8::Exception::TypeError(
+			v8::String::NewFromUtf8(isolate, "Wrong arguments")));
+		return;
+	}
+#endif
 
 	ZNWndPosition zn_position;
+	zoom_v8toc(args[0].As<v8::String>(), zn_position.z_left);
+	zoom_v8toc(args[1].As<v8::String>(), zn_position.z_top);
 #if (defined _WIN32)
-    zoom_v8toc(args[0].As<v8::String>(), zn_position.z_hSelfWnd);
-    zoom_v8toc(args[1].As<v8::String>(), zn_position.z_hParent);
-#else
-    zoom_v8toc(args[0].As<v8::String>(), zn_position.z_height);
-    zoom_v8toc(args[1].As<v8::String>(), zn_position.z_width);
+	zoom_v8toc(args[2].As<v8::String>(), zn_position.z_hSelfWnd);
+	zoom_v8toc(args[3].As<v8::String>(), zn_position.z_hParent);
 #endif
-	zoom_v8toc(args[2].As<v8::String>(), zn_position.z_left);
-	zoom_v8toc(args[3].As<v8::String>(), zn_position.z_top);
-
 	ZNSDKError err = ZNSDKERR_SUCCESS;
 	_g_native_wrap.GetMeetingServiceWrap().GetMeetingConfigCtrl().SetMeetingUIPos(zn_position);
 	v8::Local<v8::Integer> bret = v8::Integer::New(isolate, (int32_t)err);
@@ -373,6 +400,266 @@ void ZoomNodeMeetingConfigCtrlWrap::PrePopulateWebinarRegistrationInfo(const v8:
 	v8::Local<v8::Integer> bret = v8::Integer::New(isolate, (int32_t)err);
 	args.GetReturnValue().Set(bret);
 }
+
+void ZoomNodeMeetingConfigCtrlWrap::Reset(const v8::FunctionCallbackInfo<v8::Value>& args)
+{
+	v8::Isolate* isolate = args.GetIsolate();
+	ZNSDKError err = ZNSDKERR_SUCCESS;
+	_g_native_wrap.GetMeetingServiceWrap().GetMeetingConfigCtrl().Reset();
+	v8::Local<v8::Integer> bret = v8::Integer::New(isolate, (int32_t)err);
+	args.GetReturnValue().Set(bret);
+}
+void ZoomNodeMeetingConfigCtrlWrap::EnableAutoAdjustSpeakerVolumeWhenJoinAudio(const v8::FunctionCallbackInfo<v8::Value>& args)
+{
+	v8::Isolate* isolate = args.GetIsolate();
+	if (args.Length() < 1) {
+		isolate->ThrowException(v8::Exception::TypeError(
+			v8::String::NewFromUtf8(isolate, "Wrong number of arguments")));
+		return;
+	}
+
+	if (!args[0]->IsBoolean())
+	{
+		isolate->ThrowException(v8::Exception::TypeError(
+			v8::String::NewFromUtf8(isolate, "Wrong arguments")));
+		return;
+	}
+
+	bool zn_bEnable = true;
+	zoom_v8toc(args[0].As<v8::Boolean>(), zn_bEnable);
+	ZNSDKError err = ZNSDKERR_SUCCESS;
+	_g_native_wrap.GetMeetingServiceWrap().GetMeetingConfigCtrl().EnableAutoAdjustSpeakerVolumeWhenJoinAudio(zn_bEnable);
+	v8::Local<v8::Integer> bret = v8::Integer::New(isolate, (int32_t)err);
+	args.GetReturnValue().Set(bret);
+}
+void ZoomNodeMeetingConfigCtrlWrap::EnableAutoAdjustMicVolumeWhenJoinAudio(const v8::FunctionCallbackInfo<v8::Value>& args)
+{
+	v8::Isolate* isolate = args.GetIsolate();
+	if (args.Length() < 1) {
+		isolate->ThrowException(v8::Exception::TypeError(
+			v8::String::NewFromUtf8(isolate, "Wrong number of arguments")));
+		return;
+	}
+
+	if (!args[0]->IsBoolean())
+	{
+		isolate->ThrowException(v8::Exception::TypeError(
+			v8::String::NewFromUtf8(isolate, "Wrong arguments")));
+		return;
+	}
+
+	bool zn_bEnable = true;
+	zoom_v8toc(args[0].As<v8::Boolean>(), zn_bEnable);
+	ZNSDKError err = ZNSDKERR_SUCCESS;
+	_g_native_wrap.GetMeetingServiceWrap().GetMeetingConfigCtrl().EnableAutoAdjustMicVolumeWhenJoinAudio(zn_bEnable);
+	v8::Local<v8::Integer> bret = v8::Integer::New(isolate, (int32_t)err);
+	args.GetReturnValue().Set(bret);
+}
+void ZoomNodeMeetingConfigCtrlWrap::ConfigDSCP(const v8::FunctionCallbackInfo<v8::Value>& args)
+{
+	v8::Isolate* isolate = args.GetIsolate();
+	if (args.Length() < 3) {
+		isolate->ThrowException(v8::Exception::TypeError(
+			v8::String::NewFromUtf8(isolate, "Wrong number of arguments")));
+		return;
+	}
+
+	if (!args[0]->IsNumber() ||
+		!args[1]->IsNumber() ||
+		!args[2]->IsBoolean()
+		)
+	{
+		isolate->ThrowException(v8::Exception::TypeError(
+			v8::String::NewFromUtf8(isolate, "Wrong arguments")));
+		return;
+	}
+	int zn_dscpAudio = (int)args[0].As<v8::Integer>()->Value();
+	int zn_dscpVideo = (int)args[1].As<v8::Integer>()->Value();
+	bool zn_bReset = false;
+	zoom_v8toc(args[0].As<v8::Boolean>(), zn_bReset);
+	ZNSDKError err = ZNSDKERR_SUCCESS;
+	_g_native_wrap.GetMeetingServiceWrap().GetMeetingConfigCtrl().ConfigDSCP(zn_dscpAudio, zn_dscpVideo, zn_bReset);
+	v8::Local<v8::Integer> bret = v8::Integer::New(isolate, (int32_t)err);
+	args.GetReturnValue().Set(bret);
+}
+
+void ZoomNodeMeetingConfigCtrlWrap::EnableHideFullPhoneNumber4PureCallinUser(const v8::FunctionCallbackInfo<v8::Value>& args)
+{
+	v8::Isolate* isolate = args.GetIsolate();
+	if (args.Length() < 1) {
+		isolate->ThrowException(v8::Exception::TypeError(
+			v8::String::NewFromUtf8(isolate, "Wrong number of arguments")));
+		return;
+	}
+
+	if (!args[0]->IsBoolean())
+	{
+		isolate->ThrowException(v8::Exception::TypeError(
+			v8::String::NewFromUtf8(isolate, "Wrong arguments")));
+		return;
+	}
+
+	bool zn_bEnable = false;
+	zoom_v8toc(args[0].As<v8::Boolean>(), zn_bEnable);
+	ZNSDKError err = ZNSDKERR_SUCCESS;
+	_g_native_wrap.GetMeetingServiceWrap().GetMeetingConfigCtrl().EnableHideFullPhoneNumber4PureCallinUser(zn_bEnable);
+	v8::Local<v8::Integer> bret = v8::Integer::New(isolate, (int32_t)err);
+	args.GetReturnValue().Set(bret);
+}
+void ZoomNodeMeetingConfigCtrlWrap::EnableLengthLimitationOfMeetingNumber(const v8::FunctionCallbackInfo<v8::Value>& args)
+{
+	v8::Isolate* isolate = args.GetIsolate();
+	if (args.Length() < 1) {
+		isolate->ThrowException(v8::Exception::TypeError(
+			v8::String::NewFromUtf8(isolate, "Wrong number of arguments")));
+		return;
+	}
+
+	if (!args[0]->IsBoolean())
+	{
+		isolate->ThrowException(v8::Exception::TypeError(
+			v8::String::NewFromUtf8(isolate, "Wrong arguments")));
+		return;
+	}
+
+	bool zn_bEnable = false;
+	zoom_v8toc(args[0].As<v8::Boolean>(), zn_bEnable);
+#if (defined _WIN32)
+	ZNSDKError err = ZNSDKERR_SUCCESS;
+#else
+	ZNSDKError err = ZNSDKERR_NO_IMPL;
+#endif 
+	_g_native_wrap.GetMeetingServiceWrap().GetMeetingConfigCtrl().EnableLengthLimitationOfMeetingNumber(zn_bEnable);
+	v8::Local<v8::Integer> bret = v8::Integer::New(isolate, (int32_t)err);
+	args.GetReturnValue().Set(bret);
+}
+void ZoomNodeMeetingConfigCtrlWrap::EnableShareIOSDevice(const v8::FunctionCallbackInfo<v8::Value>& args)
+{
+	v8::Isolate* isolate = args.GetIsolate();
+	if (args.Length() < 1) {
+		isolate->ThrowException(v8::Exception::TypeError(
+			v8::String::NewFromUtf8(isolate, "Wrong number of arguments")));
+		return;
+	}
+
+	if (!args[0]->IsBoolean())
+	{
+		isolate->ThrowException(v8::Exception::TypeError(
+			v8::String::NewFromUtf8(isolate, "Wrong arguments")));
+		return;
+	}
+
+	bool zn_bEnable = false;
+	zoom_v8toc(args[0].As<v8::Boolean>(), zn_bEnable);
+#if (defined _WIN32)
+	ZNSDKError err = ZNSDKERR_SUCCESS;
+#else
+	ZNSDKError err = ZNSDKERR_NO_IMPL;
+#endif 
+	_g_native_wrap.GetMeetingServiceWrap().GetMeetingConfigCtrl().EnableShareIOSDevice(zn_bEnable);
+	v8::Local<v8::Integer> bret = v8::Integer::New(isolate, (int32_t)err);
+	args.GetReturnValue().Set(bret);
+}
+void ZoomNodeMeetingConfigCtrlWrap::EnableShareWhiteBoard(const v8::FunctionCallbackInfo<v8::Value>& args)
+{
+	v8::Isolate* isolate = args.GetIsolate();
+	if (args.Length() < 1) {
+		isolate->ThrowException(v8::Exception::TypeError(
+			v8::String::NewFromUtf8(isolate, "Wrong number of arguments")));
+		return;
+	}
+
+	if (!args[0]->IsBoolean())
+	{
+		isolate->ThrowException(v8::Exception::TypeError(
+			v8::String::NewFromUtf8(isolate, "Wrong arguments")));
+		return;
+	}
+
+	bool zn_bEnable = true;
+	zoom_v8toc(args[0].As<v8::Boolean>(), zn_bEnable);
+#if (defined _WIN32)
+	ZNSDKError err = ZNSDKERR_SUCCESS;
+#else
+	ZNSDKError err = ZNSDKERR_NO_IMPL;
+#endif 
+	_g_native_wrap.GetMeetingServiceWrap().GetMeetingConfigCtrl().EnableShareWhiteBoard(zn_bEnable);
+	v8::Local<v8::Integer> bret = v8::Integer::New(isolate, (int32_t)err);
+	args.GetReturnValue().Set(bret);
+}
+void ZoomNodeMeetingConfigCtrlWrap::ForceDisableMultiShare(const v8::FunctionCallbackInfo<v8::Value>& args)
+{
+	v8::Isolate* isolate = args.GetIsolate();
+	if (args.Length() < 1) {
+		isolate->ThrowException(v8::Exception::TypeError(
+			v8::String::NewFromUtf8(isolate, "Wrong number of arguments")));
+		return;
+	}
+
+	if (!args[0]->IsBoolean())
+	{
+		isolate->ThrowException(v8::Exception::TypeError(
+			v8::String::NewFromUtf8(isolate, "Wrong arguments")));
+		return;
+	}
+
+	bool zn_bDisable = false;
+	zoom_v8toc(args[0].As<v8::Boolean>(), zn_bDisable);
+	ZNSDKError err = ZNSDKERR_SUCCESS;
+	_g_native_wrap.GetMeetingServiceWrap().GetMeetingConfigCtrl().ForceDisableMultiShare(zn_bDisable);
+	v8::Local<v8::Integer> bret = v8::Integer::New(isolate, (int32_t)err);
+	args.GetReturnValue().Set(bret);
+}
+void ZoomNodeMeetingConfigCtrlWrap::EnableLocalRecordingConvertProgressBarDialog(const v8::FunctionCallbackInfo<v8::Value>& args)
+{
+	v8::Isolate* isolate = args.GetIsolate();
+	if (args.Length() < 1) {
+		isolate->ThrowException(v8::Exception::TypeError(
+			v8::String::NewFromUtf8(isolate, "Wrong number of arguments")));
+		return;
+	}
+
+	if (!args[0]->IsBoolean())
+	{
+		isolate->ThrowException(v8::Exception::TypeError(
+			v8::String::NewFromUtf8(isolate, "Wrong arguments")));
+		return;
+	}
+
+	bool zn_bShow = true;
+	zoom_v8toc(args[0].As<v8::Boolean>(), zn_bShow);
+	ZNSDKError err = ZNSDKERR_SUCCESS;
+	_g_native_wrap.GetMeetingServiceWrap().GetMeetingConfigCtrl().EnableLocalRecordingConvertProgressBarDialog(zn_bShow);
+	v8::Local<v8::Integer> bret = v8::Integer::New(isolate, (int32_t)err);
+	args.GetReturnValue().Set(bret);
+}
+void ZoomNodeMeetingConfigCtrlWrap::SetMaxDurationForOnlyHostInMeeting(const v8::FunctionCallbackInfo<v8::Value>& args)
+{
+	v8::Isolate* isolate = args.GetIsolate();
+	if (args.Length() < 1) {
+		isolate->ThrowException(v8::Exception::TypeError(
+			v8::String::NewFromUtf8(isolate, "Wrong number of arguments")));
+		return;
+	}
+
+	if (!args[0]->IsNumber())
+	{
+		isolate->ThrowException(v8::Exception::TypeError(
+			v8::String::NewFromUtf8(isolate, "Wrong arguments")));
+		return;
+	}
+
+	int zn_nDuration = (int)args[0].As<v8::Integer>()->Value();
+#if (defined _WIN32)
+	ZNSDKError err = ZNSDKERR_SUCCESS;
+#else
+	ZNSDKError err = ZNSDKERR_NO_IMPL;
+#endif 
+	_g_native_wrap.GetMeetingServiceWrap().GetMeetingConfigCtrl().SetMaxDurationForOnlyHostInMeeting(zn_nDuration);
+	v8::Local<v8::Integer> bret = v8::Integer::New(isolate, (int32_t)err);
+	args.GetReturnValue().Set(bret);
+}
+
 void ZoomNodeMeetingConfigCtrlWrap::GetReminderType(const v8::FunctionCallbackInfo<v8::Value>& args)
 {
 	v8::Isolate* isolate = args.GetIsolate();
@@ -494,6 +781,1141 @@ void ZoomNodeMeetingConfigCtrlWrap::SetFreeMeetingUpgradeToProMeetingCB(const v8
 	ZoomNodeSinkHelper::GetInst().onFreeMeetingUpgradeToProMeeting = cb;
 
 	ZNSDKError err = ZNSDKERR_SUCCESS;
+	v8::Local<v8::Integer> bret = v8::Integer::New(isolate, (int32_t)err);
+	args.GetReturnValue().Set(bret);
+}
+
+
+void ZoomNodeMeetingConfigCtrlWrap::EnableApproveRemoteControlDlg(const v8::FunctionCallbackInfo<v8::Value>& args)
+{
+	v8::Isolate* isolate = args.GetIsolate();
+	if (args.Length() < 1) {
+		isolate->ThrowException(v8::Exception::TypeError(
+			v8::String::NewFromUtf8(isolate, "Wrong number of arguments")));
+		return;
+	}
+
+	if (!args[0]->IsBoolean())
+	{
+		isolate->ThrowException(v8::Exception::TypeError(
+			v8::String::NewFromUtf8(isolate, "Wrong arguments")));
+		return;
+	}
+	
+	bool zn_bEnable = true;
+	zoom_v8toc(args[0].As<v8::Boolean>(), zn_bEnable);
+	ZNSDKError err = ZNSDKERR_SUCCESS;
+	_g_native_wrap.GetMeetingServiceWrap().GetMeetingConfigCtrl().EnableApproveRemoteControlDlg(zn_bEnable);
+	v8::Local<v8::Integer> bret = v8::Integer::New(isolate, (int32_t)err);
+	args.GetReturnValue().Set(bret);
+}
+
+void ZoomNodeMeetingConfigCtrlWrap::EnableDeclineRemoteControlResponseDlg(const v8::FunctionCallbackInfo<v8::Value>& args)
+{
+	v8::Isolate* isolate = args.GetIsolate();
+	if (args.Length() < 1) {
+		isolate->ThrowException(v8::Exception::TypeError(
+			v8::String::NewFromUtf8(isolate, "Wrong number of arguments")));
+		return;
+	}
+
+	if (!args[0]->IsBoolean())
+	{
+		isolate->ThrowException(v8::Exception::TypeError(
+			v8::String::NewFromUtf8(isolate, "Wrong arguments")));
+		return;
+	}
+
+	bool zn_bEnable = true;
+	zoom_v8toc(args[0].As<v8::Boolean>(), zn_bEnable);
+	ZNSDKError err = ZNSDKERR_SUCCESS;
+	_g_native_wrap.GetMeetingServiceWrap().GetMeetingConfigCtrl().EnableDeclineRemoteControlResponseDlg(zn_bEnable);
+	v8::Local<v8::Integer> bret = v8::Integer::New(isolate, (int32_t)err);
+	args.GetReturnValue().Set(bret);
+}
+
+void ZoomNodeMeetingConfigCtrlWrap::EnableLeaveMeetingOptionForHost(const v8::FunctionCallbackInfo<v8::Value>& args)
+{
+	v8::Isolate* isolate = args.GetIsolate();
+	if (args.Length() < 1) {
+		isolate->ThrowException(v8::Exception::TypeError(
+			v8::String::NewFromUtf8(isolate, "Wrong number of arguments")));
+		return;
+	}
+
+	if (!args[0]->IsBoolean())
+	{
+		isolate->ThrowException(v8::Exception::TypeError(
+			v8::String::NewFromUtf8(isolate, "Wrong arguments")));
+		return;
+	}
+
+	bool zn_bEnable = true;
+	zoom_v8toc(args[0].As<v8::Boolean>(), zn_bEnable);
+	ZNSDKError err = ZNSDKERR_SUCCESS;
+	_g_native_wrap.GetMeetingServiceWrap().GetMeetingConfigCtrl().EnableLeaveMeetingOptionForHost(zn_bEnable);
+	v8::Local<v8::Integer> bret = v8::Integer::New(isolate, (int32_t)err);
+	args.GetReturnValue().Set(bret);
+}
+
+void ZoomNodeMeetingConfigCtrlWrap::EnableVideoButtonOnMeetingUI(const v8::FunctionCallbackInfo<v8::Value>& args)
+{
+	v8::Isolate* isolate = args.GetIsolate();
+	if (args.Length() < 1) {
+		isolate->ThrowException(v8::Exception::TypeError(
+			v8::String::NewFromUtf8(isolate, "Wrong number of arguments")));
+		return;
+	}
+
+	if (!args[0]->IsBoolean())
+	{
+		isolate->ThrowException(v8::Exception::TypeError(
+			v8::String::NewFromUtf8(isolate, "Wrong arguments")));
+		return;
+	}
+
+	bool zn_bEnable = true;
+	zoom_v8toc(args[0].As<v8::Boolean>(), zn_bEnable);
+	ZNSDKError err = ZNSDKERR_SUCCESS;
+	_g_native_wrap.GetMeetingServiceWrap().GetMeetingConfigCtrl().EnableVideoButtonOnMeetingUI(zn_bEnable);
+	v8::Local<v8::Integer> bret = v8::Integer::New(isolate, (int32_t)err);
+	args.GetReturnValue().Set(bret);
+}
+
+void ZoomNodeMeetingConfigCtrlWrap::EnableEnterAndExitFullScreenButtonOnMeetingUI(const v8::FunctionCallbackInfo<v8::Value>& args)
+{
+	v8::Isolate* isolate = args.GetIsolate();
+	if (args.Length() < 1) {
+		isolate->ThrowException(v8::Exception::TypeError(
+			v8::String::NewFromUtf8(isolate, "Wrong number of arguments")));
+		return;
+	}
+
+	if (!args[0]->IsBoolean())
+	{
+		isolate->ThrowException(v8::Exception::TypeError(
+			v8::String::NewFromUtf8(isolate, "Wrong arguments")));
+		return;
+	}
+
+	bool zn_bEnable = true;
+	zoom_v8toc(args[0].As<v8::Boolean>(), zn_bEnable);
+	ZNSDKError err = ZNSDKERR_SUCCESS;
+	_g_native_wrap.GetMeetingServiceWrap().GetMeetingConfigCtrl().EnableEnterAndExitFullScreenButtonOnMeetingUI(zn_bEnable);
+	v8::Local<v8::Integer> bret = v8::Integer::New(isolate, (int32_t)err);
+	args.GetReturnValue().Set(bret);
+}
+
+void ZoomNodeMeetingConfigCtrlWrap::RedirectClickShareBTNEvent(const v8::FunctionCallbackInfo<v8::Value>& args)
+{
+	v8::Isolate* isolate = args.GetIsolate();
+	if (args.Length() < 1) {
+		isolate->ThrowException(v8::Exception::TypeError(
+			v8::String::NewFromUtf8(isolate, "Wrong number of arguments")));
+		return;
+	}
+
+	if (!args[0]->IsBoolean())
+	{
+		isolate->ThrowException(v8::Exception::TypeError(
+			v8::String::NewFromUtf8(isolate, "Wrong arguments")));
+		return;
+	}
+
+	bool zn_bRedirect = true;
+	zoom_v8toc(args[0].As<v8::Boolean>(), zn_bRedirect);
+	ZNSDKError err = ZNSDKERR_SUCCESS;
+	_g_native_wrap.GetMeetingServiceWrap().GetMeetingConfigCtrl().RedirectClickShareBTNEvent(zn_bRedirect);
+	v8::Local<v8::Integer> bret = v8::Integer::New(isolate, (int32_t)err);
+	args.GetReturnValue().Set(bret);
+}
+
+void ZoomNodeMeetingConfigCtrlWrap::RedirectClickEndMeetingBTNEvent(const v8::FunctionCallbackInfo<v8::Value>& args)
+{
+	v8::Isolate* isolate = args.GetIsolate();
+	if (args.Length() < 1) {
+		isolate->ThrowException(v8::Exception::TypeError(
+			v8::String::NewFromUtf8(isolate, "Wrong number of arguments")));
+		return;
+	}
+
+	if (!args[0]->IsBoolean())
+	{
+		isolate->ThrowException(v8::Exception::TypeError(
+			v8::String::NewFromUtf8(isolate, "Wrong arguments")));
+		return;
+	}
+
+	bool zn_bRedirect = true;
+	zoom_v8toc(args[0].As<v8::Boolean>(), zn_bRedirect);
+	ZNSDKError err = ZNSDKERR_SUCCESS;
+	_g_native_wrap.GetMeetingServiceWrap().GetMeetingConfigCtrl().RedirectClickEndMeetingBTNEvent(zn_bRedirect);
+	v8::Local<v8::Integer> bret = v8::Integer::New(isolate, (int32_t)err);
+	args.GetReturnValue().Set(bret);
+}
+
+void ZoomNodeMeetingConfigCtrlWrap::RedirectFreeMeetingEndingReminderDlg(const v8::FunctionCallbackInfo<v8::Value>& args)
+{
+	v8::Isolate* isolate = args.GetIsolate();
+	if (args.Length() < 1) {
+		isolate->ThrowException(v8::Exception::TypeError(
+			v8::String::NewFromUtf8(isolate, "Wrong number of arguments")));
+		return;
+	}
+
+	if (!args[0]->IsBoolean())
+	{
+		isolate->ThrowException(v8::Exception::TypeError(
+			v8::String::NewFromUtf8(isolate, "Wrong arguments")));
+		return;
+	}
+
+	bool zn_bRedirect = true;
+	zoom_v8toc(args[0].As<v8::Boolean>(), zn_bRedirect);
+	ZNSDKError err = ZNSDKERR_SUCCESS;
+	_g_native_wrap.GetMeetingServiceWrap().GetMeetingConfigCtrl().RedirectFreeMeetingEndingReminderDlg(zn_bRedirect);
+	v8::Local<v8::Integer> bret = v8::Integer::New(isolate, (int32_t)err);
+	args.GetReturnValue().Set(bret);
+}
+
+void ZoomNodeMeetingConfigCtrlWrap::RedirectClickCustomLiveStreamMenuEvent(const v8::FunctionCallbackInfo<v8::Value>& args)
+{
+	v8::Isolate* isolate = args.GetIsolate();
+	if (args.Length() < 1) {
+		isolate->ThrowException(v8::Exception::TypeError(
+			v8::String::NewFromUtf8(isolate, "Wrong number of arguments")));
+		return;
+	}
+
+	if (!args[0]->IsBoolean())
+	{
+		isolate->ThrowException(v8::Exception::TypeError(
+			v8::String::NewFromUtf8(isolate, "Wrong arguments")));
+		return;
+	}
+
+	bool zn_bRedirect = true;
+	zoom_v8toc(args[0].As<v8::Boolean>(), zn_bRedirect);
+	ZNSDKError err = ZNSDKERR_SUCCESS;
+	_g_native_wrap.GetMeetingServiceWrap().GetMeetingConfigCtrl().RedirectClickCustomLiveStreamMenuEvent(zn_bRedirect);
+	v8::Local<v8::Integer> bret = v8::Integer::New(isolate, (int32_t)err);
+	args.GetReturnValue().Set(bret);
+}
+
+void ZoomNodeMeetingConfigCtrlWrap::RedirectClickParticipantListBTNEvent(const v8::FunctionCallbackInfo<v8::Value>& args)
+{
+	v8::Isolate* isolate = args.GetIsolate();
+	if (args.Length() < 1) {
+		isolate->ThrowException(v8::Exception::TypeError(
+			v8::String::NewFromUtf8(isolate, "Wrong number of arguments")));
+		return;
+	}
+
+	if (!args[0]->IsBoolean())
+	{
+		isolate->ThrowException(v8::Exception::TypeError(
+			v8::String::NewFromUtf8(isolate, "Wrong arguments")));
+		return;
+	}
+
+	bool zn_bRedirect = true;
+	zoom_v8toc(args[0].As<v8::Boolean>(), zn_bRedirect);
+	ZNSDKError err = ZNSDKERR_SUCCESS;
+	_g_native_wrap.GetMeetingServiceWrap().GetMeetingConfigCtrl().RedirectClickParticipantListBTNEvent(zn_bRedirect);
+	v8::Local<v8::Integer> bret = v8::Integer::New(isolate, (int32_t)err);
+	args.GetReturnValue().Set(bret);
+}
+
+void ZoomNodeMeetingConfigCtrlWrap::RedirectClickCCBTNEvent(const v8::FunctionCallbackInfo<v8::Value>& args)
+{
+	v8::Isolate* isolate = args.GetIsolate();
+	if (args.Length() < 1) {
+		isolate->ThrowException(v8::Exception::TypeError(
+			v8::String::NewFromUtf8(isolate, "Wrong number of arguments")));
+		return;
+	}
+
+	if (!args[0]->IsBoolean())
+	{
+		isolate->ThrowException(v8::Exception::TypeError(
+			v8::String::NewFromUtf8(isolate, "Wrong arguments")));
+		return;
+	}
+
+	bool zn_bRedirect = true;
+	zoom_v8toc(args[0].As<v8::Boolean>(), zn_bRedirect);
+	ZNSDKError err = ZNSDKERR_SUCCESS;
+	_g_native_wrap.GetMeetingServiceWrap().GetMeetingConfigCtrl().RedirectClickCCBTNEvent(zn_bRedirect);
+	v8::Local<v8::Integer> bret = v8::Integer::New(isolate, (int32_t)err);
+	args.GetReturnValue().Set(bret);
+}
+
+void ZoomNodeMeetingConfigCtrlWrap::RedirectMeetingWarningMsg(const v8::FunctionCallbackInfo<v8::Value>& args)
+{
+	v8::Isolate* isolate = args.GetIsolate();
+	if (args.Length() < 2) {
+		isolate->ThrowException(v8::Exception::TypeError(
+			v8::String::NewFromUtf8(isolate, "Wrong number of arguments")));
+		return;
+	}
+
+	if (!args[0]->IsBoolean() || !args[1]->IsBoolean())
+	{
+		isolate->ThrowException(v8::Exception::TypeError(
+			v8::String::NewFromUtf8(isolate, "Wrong arguments")));
+		return;
+	}
+
+	ZNZoomRedirectWarningMsgOption zn_RedirectOption;
+	bool zn_bRedirect = false; 
+	zoom_v8toc(args[0].As<v8::Boolean>(), zn_bRedirect);	
+	zn_RedirectOption.bRedirectBadNetwork = zn_bRedirect;
+	zoom_v8toc(args[1].As<v8::Boolean>(), zn_bRedirect);
+	zn_RedirectOption.bRedirectWarnHighCPU = zn_bRedirect;
+	ZNSDKError err = ZNSDKERR_SUCCESS;
+	_g_native_wrap.GetMeetingServiceWrap().GetMeetingConfigCtrl().RedirectMeetingWarningMsg(zn_RedirectOption);
+	v8::Local<v8::Integer> bret = v8::Integer::New(isolate, (int32_t)err);
+	args.GetReturnValue().Set(bret);
+}
+
+void ZoomNodeMeetingConfigCtrlWrap::EnableToolTipsShow(const v8::FunctionCallbackInfo<v8::Value>& args)
+{
+	v8::Isolate* isolate = args.GetIsolate();
+	if (args.Length() < 1) {
+		isolate->ThrowException(v8::Exception::TypeError(
+			v8::String::NewFromUtf8(isolate, "Wrong number of arguments")));
+		return;
+	}
+
+	if (!args[0]->IsBoolean())
+	{
+		isolate->ThrowException(v8::Exception::TypeError(
+			v8::String::NewFromUtf8(isolate, "Wrong arguments")));
+		return;
+	}
+
+	bool zn_bEnable = true;
+	zoom_v8toc(args[0].As<v8::Boolean>(), zn_bEnable);
+	ZNSDKError err = ZNSDKERR_SUCCESS;
+	_g_native_wrap.GetMeetingServiceWrap().GetMeetingConfigCtrl().EnableToolTipsShow(zn_bEnable);
+	v8::Local<v8::Integer> bret = v8::Integer::New(isolate, (int32_t)err);
+	args.GetReturnValue().Set(bret);
+}
+
+void ZoomNodeMeetingConfigCtrlWrap::EnableAirplayInstructionWindow(const v8::FunctionCallbackInfo<v8::Value>& args)
+{
+	v8::Isolate* isolate = args.GetIsolate();
+	if (args.Length() < 1) {
+		isolate->ThrowException(v8::Exception::TypeError(
+			v8::String::NewFromUtf8(isolate, "Wrong number of arguments")));
+		return;
+	}
+
+	if (!args[0]->IsBoolean())
+	{
+		isolate->ThrowException(v8::Exception::TypeError(
+			v8::String::NewFromUtf8(isolate, "Wrong arguments")));
+		return;
+	}
+
+	bool zn_bEnable = true;
+	zoom_v8toc(args[0].As<v8::Boolean>(), zn_bEnable);
+	ZNSDKError err = ZNSDKERR_SUCCESS;
+	_g_native_wrap.GetMeetingServiceWrap().GetMeetingConfigCtrl().EnableAirplayInstructionWindow(zn_bEnable);
+	v8::Local<v8::Integer> bret = v8::Integer::New(isolate, (int32_t)err);
+	args.GetReturnValue().Set(bret);
+}
+
+void ZoomNodeMeetingConfigCtrlWrap::EnableClaimHostFeature(const v8::FunctionCallbackInfo<v8::Value>& args)
+{
+	v8::Isolate* isolate = args.GetIsolate();
+	if (args.Length() < 1) {
+		isolate->ThrowException(v8::Exception::TypeError(
+			v8::String::NewFromUtf8(isolate, "Wrong number of arguments")));
+		return;
+	}
+
+	if (!args[0]->IsBoolean())
+	{
+		isolate->ThrowException(v8::Exception::TypeError(
+			v8::String::NewFromUtf8(isolate, "Wrong arguments")));
+		return;
+	}
+
+	bool zn_bEnable = true;
+	zoom_v8toc(args[0].As<v8::Boolean>(), zn_bEnable);
+	ZNSDKError err = ZNSDKERR_SUCCESS;
+	_g_native_wrap.GetMeetingServiceWrap().GetMeetingConfigCtrl().EnableClaimHostFeature(zn_bEnable);
+	v8::Local<v8::Integer> bret = v8::Integer::New(isolate, (int32_t)err);
+	args.GetReturnValue().Set(bret);
+}
+
+void ZoomNodeMeetingConfigCtrlWrap::EnableAutoHideJoinAudioDialog(const v8::FunctionCallbackInfo<v8::Value>& args)
+{
+	v8::Isolate* isolate = args.GetIsolate();
+	if (args.Length() < 1) {
+		isolate->ThrowException(v8::Exception::TypeError(
+			v8::String::NewFromUtf8(isolate, "Wrong number of arguments")));
+		return;
+	}
+
+	if (!args[0]->IsBoolean())
+	{
+		isolate->ThrowException(v8::Exception::TypeError(
+			v8::String::NewFromUtf8(isolate, "Wrong arguments")));
+		return;
+	}
+
+	bool zn_bEnable = true;
+	zoom_v8toc(args[0].As<v8::Boolean>(), zn_bEnable);
+	ZNSDKError err = ZNSDKERR_SUCCESS;
+	_g_native_wrap.GetMeetingServiceWrap().GetMeetingConfigCtrl().EnableAutoHideJoinAudioDialog(zn_bEnable);
+	v8::Local<v8::Integer> bret = v8::Integer::New(isolate, (int32_t)err);
+	args.GetReturnValue().Set(bret);
+}
+
+void ZoomNodeMeetingConfigCtrlWrap::AlwaysShowIconOnTaskBar(const v8::FunctionCallbackInfo<v8::Value>& args)
+{
+	v8::Isolate* isolate = args.GetIsolate();
+	if (args.Length() < 1) {
+		isolate->ThrowException(v8::Exception::TypeError(
+			v8::String::NewFromUtf8(isolate, "Wrong number of arguments")));
+		return;
+	}
+
+	if (!args[0]->IsBoolean())
+	{
+		isolate->ThrowException(v8::Exception::TypeError(
+			v8::String::NewFromUtf8(isolate, "Wrong arguments")));
+		return;
+	}
+
+	bool zn_bAlwaysShow = true;
+	zoom_v8toc(args[0].As<v8::Boolean>(), zn_bAlwaysShow);
+	ZNSDKError err = ZNSDKERR_SUCCESS;
+	_g_native_wrap.GetMeetingServiceWrap().GetMeetingConfigCtrl().AlwaysShowIconOnTaskBar(zn_bAlwaysShow);
+	v8::Local<v8::Integer> bret = v8::Integer::New(isolate, (int32_t)err);
+	args.GetReturnValue().Set(bret);
+}
+
+void ZoomNodeMeetingConfigCtrlWrap::DisableSplitScreenModeUIElements(const v8::FunctionCallbackInfo<v8::Value>& args)
+{
+	v8::Isolate* isolate = args.GetIsolate();
+	if (args.Length() < 1) {
+		isolate->ThrowException(v8::Exception::TypeError(
+			v8::String::NewFromUtf8(isolate, "Wrong number of arguments")));
+		return;
+	}
+
+	if (!args[0]->IsBoolean())
+	{
+		isolate->ThrowException(v8::Exception::TypeError(
+			v8::String::NewFromUtf8(isolate, "Wrong arguments")));
+		return;
+	}
+
+	bool zn_bDisable = true;
+	zoom_v8toc(args[0].As<v8::Boolean>(), zn_bDisable);
+	ZNSDKError err = ZNSDKERR_SUCCESS;
+	_g_native_wrap.GetMeetingServiceWrap().GetMeetingConfigCtrl().DisableSplitScreenModeUIElements(zn_bDisable);
+	v8::Local<v8::Integer> bret = v8::Integer::New(isolate, (int32_t)err);
+	args.GetReturnValue().Set(bret);
+}
+
+void ZoomNodeMeetingConfigCtrlWrap::SetShowAudioUseComputerSoundChkbox(const v8::FunctionCallbackInfo<v8::Value>& args)
+{
+	v8::Isolate* isolate = args.GetIsolate();
+	if (args.Length() < 1) {
+		isolate->ThrowException(v8::Exception::TypeError(
+			v8::String::NewFromUtf8(isolate, "Wrong number of arguments")));
+		return;
+	}
+
+	if (!args[0]->IsBoolean())
+	{
+		isolate->ThrowException(v8::Exception::TypeError(
+			v8::String::NewFromUtf8(isolate, "Wrong arguments")));
+		return;
+	}
+
+	bool zn_bShow = true;
+	zoom_v8toc(args[0].As<v8::Boolean>(), zn_bShow);
+	ZNSDKError err = ZNSDKERR_SUCCESS;
+	_g_native_wrap.GetMeetingServiceWrap().GetMeetingConfigCtrl().SetShowAudioUseComputerSoundChkbox(zn_bShow);
+	v8::Local<v8::Integer> bret = v8::Integer::New(isolate, (int32_t)err);
+	args.GetReturnValue().Set(bret);
+}
+
+void ZoomNodeMeetingConfigCtrlWrap::SetShowCallInTab(const v8::FunctionCallbackInfo<v8::Value>& args)
+{
+	v8::Isolate* isolate = args.GetIsolate();
+	if (args.Length() < 1) {
+		isolate->ThrowException(v8::Exception::TypeError(
+			v8::String::NewFromUtf8(isolate, "Wrong number of arguments")));
+		return;
+	}
+
+	if (!args[0]->IsBoolean())
+	{
+		isolate->ThrowException(v8::Exception::TypeError(
+			v8::String::NewFromUtf8(isolate, "Wrong arguments")));
+		return;
+	}
+
+	bool zn_bShow = true;
+	zoom_v8toc(args[0].As<v8::Boolean>(), zn_bShow);
+	ZNSDKError err = ZNSDKERR_SUCCESS;
+	_g_native_wrap.GetMeetingServiceWrap().GetMeetingConfigCtrl().SetShowCallInTab(zn_bShow);
+	v8::Local<v8::Integer> bret = v8::Integer::New(isolate, (int32_t)err);
+	args.GetReturnValue().Set(bret);
+}
+
+void ZoomNodeMeetingConfigCtrlWrap::SetShowCallMeTab(const v8::FunctionCallbackInfo<v8::Value>& args)
+{
+	v8::Isolate* isolate = args.GetIsolate();
+	if (args.Length() < 1) {
+		isolate->ThrowException(v8::Exception::TypeError(
+			v8::String::NewFromUtf8(isolate, "Wrong number of arguments")));
+		return;
+	}
+
+	if (!args[0]->IsBoolean())
+	{
+		isolate->ThrowException(v8::Exception::TypeError(
+			v8::String::NewFromUtf8(isolate, "Wrong arguments")));
+		return;
+	}
+
+	bool zn_bShow = true;
+	zoom_v8toc(args[0].As<v8::Boolean>(), zn_bShow);
+	ZNSDKError err = ZNSDKERR_SUCCESS;
+	_g_native_wrap.GetMeetingServiceWrap().GetMeetingConfigCtrl().SetShowCallMeTab(zn_bShow);
+	v8::Local<v8::Integer> bret = v8::Integer::New(isolate, (int32_t)err);
+	args.GetReturnValue().Set(bret);
+}
+
+void ZoomNodeMeetingConfigCtrlWrap::SetAlwaysShowMeetingIDOnTitle(const v8::FunctionCallbackInfo<v8::Value>& args)
+{
+	v8::Isolate* isolate = args.GetIsolate();
+	if (args.Length() < 1) {
+		isolate->ThrowException(v8::Exception::TypeError(
+			v8::String::NewFromUtf8(isolate, "Wrong number of arguments")));
+		return;
+	}
+
+	if (!args[0]->IsBoolean())
+	{
+		isolate->ThrowException(v8::Exception::TypeError(
+			v8::String::NewFromUtf8(isolate, "Wrong arguments")));
+		return;
+	}
+
+	bool zn_bAlwaysShow = true;
+	zoom_v8toc(args[0].As<v8::Boolean>(), zn_bAlwaysShow);
+	ZNSDKError err = ZNSDKERR_SUCCESS;
+	_g_native_wrap.GetMeetingServiceWrap().GetMeetingConfigCtrl().SetAlwaysShowMeetingIDOnTitle(zn_bAlwaysShow);
+	v8::Local<v8::Integer> bret = v8::Integer::New(isolate, (int32_t)err);
+	args.GetReturnValue().Set(bret);
+}
+
+void ZoomNodeMeetingConfigCtrlWrap::DisableTopMostAttr4SettingDialog(const v8::FunctionCallbackInfo<v8::Value>& args)
+{
+	v8::Isolate* isolate = args.GetIsolate();
+	if (args.Length() < 1) {
+		isolate->ThrowException(v8::Exception::TypeError(
+			v8::String::NewFromUtf8(isolate, "Wrong number of arguments")));
+		return;
+	}
+
+	if (!args[0]->IsBoolean())
+	{
+		isolate->ThrowException(v8::Exception::TypeError(
+			v8::String::NewFromUtf8(isolate, "Wrong arguments")));
+		return;
+	}
+
+	bool zn_bDisable = true;
+	zoom_v8toc(args[0].As<v8::Boolean>(), zn_bDisable);
+	ZNSDKError err = ZNSDKERR_SUCCESS;
+	_g_native_wrap.GetMeetingServiceWrap().GetMeetingConfigCtrl().DisableTopMostAttr4SettingDialog(zn_bDisable);
+	v8::Local<v8::Integer> bret = v8::Integer::New(isolate, (int32_t)err);
+	args.GetReturnValue().Set(bret);
+}
+
+void ZoomNodeMeetingConfigCtrlWrap::EnableGrabShareWithoutReminder(const v8::FunctionCallbackInfo<v8::Value>& args)
+{
+	v8::Isolate* isolate = args.GetIsolate();
+	if (args.Length() < 1) {
+		isolate->ThrowException(v8::Exception::TypeError(
+			v8::String::NewFromUtf8(isolate, "Wrong number of arguments")));
+		return;
+	}
+
+	if (!args[0]->IsBoolean())
+	{
+		isolate->ThrowException(v8::Exception::TypeError(
+			v8::String::NewFromUtf8(isolate, "Wrong arguments")));
+		return;
+	}
+
+	bool zn_bEnable = true;
+	zoom_v8toc(args[0].As<v8::Boolean>(), zn_bEnable);
+	ZNSDKError err = ZNSDKERR_SUCCESS;
+	_g_native_wrap.GetMeetingServiceWrap().GetMeetingConfigCtrl().EnableGrabShareWithoutReminder(zn_bEnable);
+	v8::Local<v8::Integer> bret = v8::Integer::New(isolate, (int32_t)err);
+	args.GetReturnValue().Set(bret);
+}
+
+void ZoomNodeMeetingConfigCtrlWrap::EnableShowShareSwitchMultiToSingleConfirmDlg(const v8::FunctionCallbackInfo<v8::Value>& args)
+{
+	v8::Isolate* isolate = args.GetIsolate();
+	if (args.Length() < 1) {
+		isolate->ThrowException(v8::Exception::TypeError(
+			v8::String::NewFromUtf8(isolate, "Wrong number of arguments")));
+		return;
+	}
+
+	if (!args[0]->IsBoolean())
+	{
+		isolate->ThrowException(v8::Exception::TypeError(
+			v8::String::NewFromUtf8(isolate, "Wrong arguments")));
+		return;
+	}
+
+	bool zn_bEnable = true;
+	zoom_v8toc(args[0].As<v8::Boolean>(), zn_bEnable);
+	ZNSDKError err = ZNSDKERR_SUCCESS;
+	_g_native_wrap.GetMeetingServiceWrap().GetMeetingConfigCtrl().EnableShowShareSwitchMultiToSingleConfirmDlg(zn_bEnable);
+	v8::Local<v8::Integer> bret = v8::Integer::New(isolate, (int32_t)err);
+	args.GetReturnValue().Set(bret);
+}
+
+void ZoomNodeMeetingConfigCtrlWrap::DisableFreeMeetingRemainTimeNotify(const v8::FunctionCallbackInfo<v8::Value>& args)
+{
+	v8::Isolate* isolate = args.GetIsolate();
+	if (args.Length() < 1) {
+		isolate->ThrowException(v8::Exception::TypeError(
+			v8::String::NewFromUtf8(isolate, "Wrong number of arguments")));
+		return;
+	}
+
+	if (!args[0]->IsBoolean())
+	{
+		isolate->ThrowException(v8::Exception::TypeError(
+			v8::String::NewFromUtf8(isolate, "Wrong arguments")));
+		return;
+	}
+
+	bool zn_bDisable = true;
+	zoom_v8toc(args[0].As<v8::Boolean>(), zn_bDisable);
+	ZNSDKError err = ZNSDKERR_SUCCESS;
+	_g_native_wrap.GetMeetingServiceWrap().GetMeetingConfigCtrl().DisableFreeMeetingRemainTimeNotify(zn_bDisable);
+	v8::Local<v8::Integer> bret = v8::Integer::New(isolate, (int32_t)err);
+	args.GetReturnValue().Set(bret);
+}
+
+void ZoomNodeMeetingConfigCtrlWrap::HideChatItemOnMeetingUI(const v8::FunctionCallbackInfo<v8::Value>& args)
+{
+	v8::Isolate* isolate = args.GetIsolate();
+	if (args.Length() < 1) {
+		isolate->ThrowException(v8::Exception::TypeError(
+			v8::String::NewFromUtf8(isolate, "Wrong number of arguments")));
+		return;
+	}
+
+	if (!args[0]->IsBoolean())
+	{
+		isolate->ThrowException(v8::Exception::TypeError(
+			v8::String::NewFromUtf8(isolate, "Wrong arguments")));
+		return;
+	}
+
+	bool zn_bHide = true;
+	zoom_v8toc(args[0].As<v8::Boolean>(), zn_bHide);
+	ZNSDKError err = ZNSDKERR_SUCCESS;
+	_g_native_wrap.GetMeetingServiceWrap().GetMeetingConfigCtrl().HideChatItemOnMeetingUI(zn_bHide);
+	v8::Local<v8::Integer> bret = v8::Integer::New(isolate, (int32_t)err);
+	args.GetReturnValue().Set(bret);
+}
+
+void ZoomNodeMeetingConfigCtrlWrap::HideRecordItemOnMeetingUI(const v8::FunctionCallbackInfo<v8::Value>& args)
+{
+	v8::Isolate* isolate = args.GetIsolate();
+	if (args.Length() < 1) {
+		isolate->ThrowException(v8::Exception::TypeError(
+			v8::String::NewFromUtf8(isolate, "Wrong number of arguments")));
+		return;
+	}
+
+	if (!args[0]->IsBoolean())
+	{
+		isolate->ThrowException(v8::Exception::TypeError(
+			v8::String::NewFromUtf8(isolate, "Wrong arguments")));
+		return;
+	}
+
+	bool zn_bHide = true;
+	zoom_v8toc(args[0].As<v8::Boolean>(), zn_bHide);
+	ZNSDKError err = ZNSDKERR_SUCCESS;
+	_g_native_wrap.GetMeetingServiceWrap().GetMeetingConfigCtrl().HideRecordItemOnMeetingUI(zn_bHide);
+	v8::Local<v8::Integer> bret = v8::Integer::New(isolate, (int32_t)err);
+	args.GetReturnValue().Set(bret);
+}
+
+void ZoomNodeMeetingConfigCtrlWrap::HideUpgradeFreeMeetingButton(const v8::FunctionCallbackInfo<v8::Value>& args)
+{
+	v8::Isolate* isolate = args.GetIsolate();
+	if (args.Length() < 1) {
+		isolate->ThrowException(v8::Exception::TypeError(
+			v8::String::NewFromUtf8(isolate, "Wrong number of arguments")));
+		return;
+	}
+
+	if (!args[0]->IsBoolean())
+	{
+		isolate->ThrowException(v8::Exception::TypeError(
+			v8::String::NewFromUtf8(isolate, "Wrong arguments")));
+		return;
+	}
+
+	bool zn_bHide = true;
+	zoom_v8toc(args[0].As<v8::Boolean>(), zn_bHide);
+	ZNSDKError err = ZNSDKERR_SUCCESS;
+	_g_native_wrap.GetMeetingServiceWrap().GetMeetingConfigCtrl().HideUpgradeFreeMeetingButton(zn_bHide);
+	v8::Local<v8::Integer> bret = v8::Integer::New(isolate, (int32_t)err);
+	args.GetReturnValue().Set(bret);
+}
+
+void ZoomNodeMeetingConfigCtrlWrap::SetShowInviteDlgTabPage(const v8::FunctionCallbackInfo<v8::Value>& args)
+{
+	v8::Isolate* isolate = args.GetIsolate();
+	if (args.Length() < 2) {
+		isolate->ThrowException(v8::Exception::TypeError(
+			v8::String::NewFromUtf8(isolate, "Wrong number of arguments")));
+		return;
+	}
+
+	if (!args[0]->IsNumber() || !args[1]->IsBoolean())
+	{
+		isolate->ThrowException(v8::Exception::TypeError(
+			v8::String::NewFromUtf8(isolate, "Wrong arguments")));
+		return;
+	}
+	ZNSDKInviteDlgTabPage  zn_TabPage;
+	zn_TabPage = (ZNSDKInviteDlgTabPage)(unsigned int)args[0]->NumberValue();
+	bool zn_bShow = true;
+	zoom_v8toc(args[1].As<v8::Boolean>(), zn_bShow);
+	ZNSDKError err = ZNSDKERR_SUCCESS;
+	_g_native_wrap.GetMeetingServiceWrap().GetMeetingConfigCtrl().SetShowInviteDlgTabPage(zn_TabPage, zn_bShow);
+	v8::Local<v8::Integer> bret = v8::Integer::New(isolate, (int32_t)err);
+	args.GetReturnValue().Set(bret);
+}
+
+void ZoomNodeMeetingConfigCtrlWrap::SetShowH323SubTabPage(const v8::FunctionCallbackInfo<v8::Value>& args)
+{
+	v8::Isolate* isolate = args.GetIsolate();
+	if (args.Length() < 2) {
+		isolate->ThrowException(v8::Exception::TypeError(
+			v8::String::NewFromUtf8(isolate, "Wrong number of arguments")));
+		return;
+	}
+
+	if (!args[0]->IsNumber() || !args[1]->IsBoolean())
+	{
+		isolate->ThrowException(v8::Exception::TypeError(
+			v8::String::NewFromUtf8(isolate, "Wrong arguments")));
+		return;
+	}
+	ZNSDKH323TabPage  zn_TabPage;
+	zn_TabPage = (ZNSDKH323TabPage)(unsigned int)args[0]->NumberValue();
+	bool zn_bShow = true;
+	zoom_v8toc(args[1].As<v8::Boolean>(), zn_bShow);
+	ZNSDKError err = ZNSDKERR_SUCCESS;
+	_g_native_wrap.GetMeetingServiceWrap().GetMeetingConfigCtrl().SetShowH323SubTabPage(zn_TabPage, zn_bShow);
+	v8::Local<v8::Integer> bret = v8::Integer::New(isolate, (int32_t)err);
+	args.GetReturnValue().Set(bret);
+}
+
+void ZoomNodeMeetingConfigCtrlWrap::HideUpgradeWarningMsgForFreeUserWhenSchedule(const v8::FunctionCallbackInfo<v8::Value>& args)
+{
+	v8::Isolate* isolate = args.GetIsolate();
+	if (args.Length() < 1) {
+		isolate->ThrowException(v8::Exception::TypeError(
+			v8::String::NewFromUtf8(isolate, "Wrong number of arguments")));
+		return;
+	}
+
+	if (!args[0]->IsBoolean())
+	{
+		isolate->ThrowException(v8::Exception::TypeError(
+			v8::String::NewFromUtf8(isolate, "Wrong arguments")));
+		return;
+	}
+
+	bool zn_bHide = true;
+	zoom_v8toc(args[0].As<v8::Boolean>(), zn_bHide);
+	ZNSDKError err = ZNSDKERR_SUCCESS;
+	_g_native_wrap.GetMeetingServiceWrap().GetMeetingConfigCtrl().HideUpgradeWarningMsgForFreeUserWhenSchedule(zn_bHide);
+	v8::Local<v8::Integer> bret = v8::Integer::New(isolate, (int32_t)err);
+	args.GetReturnValue().Set(bret);
+}
+
+void ZoomNodeMeetingConfigCtrlWrap::HideSwitchCameraButton(const v8::FunctionCallbackInfo<v8::Value>& args)
+{
+	v8::Isolate* isolate = args.GetIsolate();
+	if (args.Length() < 1) {
+		isolate->ThrowException(v8::Exception::TypeError(
+			v8::String::NewFromUtf8(isolate, "Wrong number of arguments")));
+		return;
+	}
+
+	if (!args[0]->IsBoolean())
+	{
+		isolate->ThrowException(v8::Exception::TypeError(
+			v8::String::NewFromUtf8(isolate, "Wrong arguments")));
+		return;
+	}
+
+	bool zn_bHide = true;
+	zoom_v8toc(args[0].As<v8::Boolean>(), zn_bHide);
+	ZNSDKError err = ZNSDKERR_SUCCESS;
+	_g_native_wrap.GetMeetingServiceWrap().GetMeetingConfigCtrl().HideSwitchCameraButton(zn_bHide);
+	v8::Local<v8::Integer> bret = v8::Integer::New(isolate, (int32_t)err);
+	args.GetReturnValue().Set(bret);
+}
+
+void ZoomNodeMeetingConfigCtrlWrap::HideCopyUrlOnInviteWindow(const v8::FunctionCallbackInfo<v8::Value>& args)
+{
+	v8::Isolate* isolate = args.GetIsolate();
+	if (args.Length() < 1) {
+		isolate->ThrowException(v8::Exception::TypeError(
+			v8::String::NewFromUtf8(isolate, "Wrong number of arguments")));
+		return;
+	}
+
+	if (!args[0]->IsBoolean())
+	{
+		isolate->ThrowException(v8::Exception::TypeError(
+			v8::String::NewFromUtf8(isolate, "Wrong arguments")));
+		return;
+	}
+
+	bool zn_bHide = true;
+	zoom_v8toc(args[0].As<v8::Boolean>(), zn_bHide);
+	ZNSDKError err = ZNSDKERR_SUCCESS;
+	_g_native_wrap.GetMeetingServiceWrap().GetMeetingConfigCtrl().HideCopyUrlOnInviteWindow(zn_bHide);
+	v8::Local<v8::Integer> bret = v8::Integer::New(isolate, (int32_t)err);
+	args.GetReturnValue().Set(bret);
+}
+
+void ZoomNodeMeetingConfigCtrlWrap::HideCopyInvitationOnInviteWindow(const v8::FunctionCallbackInfo<v8::Value>& args)
+{
+	v8::Isolate* isolate = args.GetIsolate();
+	if (args.Length() < 1) {
+		isolate->ThrowException(v8::Exception::TypeError(
+			v8::String::NewFromUtf8(isolate, "Wrong number of arguments")));
+		return;
+	}
+
+	if (!args[0]->IsBoolean())
+	{
+		isolate->ThrowException(v8::Exception::TypeError(
+			v8::String::NewFromUtf8(isolate, "Wrong arguments")));
+		return;
+	}
+
+	bool zn_bHide = true;
+	zoom_v8toc(args[0].As<v8::Boolean>(), zn_bHide);
+	ZNSDKError err = ZNSDKERR_SUCCESS;
+	_g_native_wrap.GetMeetingServiceWrap().GetMeetingConfigCtrl().HideCopyInvitationOnInviteWindow(zn_bHide);
+	v8::Local<v8::Integer> bret = v8::Integer::New(isolate, (int32_t)err);
+	args.GetReturnValue().Set(bret);
+}
+
+void ZoomNodeMeetingConfigCtrlWrap::HideKeypadButtonOnMeetingWindow(const v8::FunctionCallbackInfo<v8::Value>& args)
+{
+	v8::Isolate* isolate = args.GetIsolate();
+	if (args.Length() < 1) {
+		isolate->ThrowException(v8::Exception::TypeError(
+			v8::String::NewFromUtf8(isolate, "Wrong number of arguments")));
+		return;
+	}
+
+	if (!args[0]->IsBoolean())
+	{
+		isolate->ThrowException(v8::Exception::TypeError(
+			v8::String::NewFromUtf8(isolate, "Wrong arguments")));
+		return;
+	}
+
+	bool zn_bHide = true;
+	zoom_v8toc(args[0].As<v8::Boolean>(), zn_bHide);
+	ZNSDKError err = ZNSDKERR_SUCCESS;
+	_g_native_wrap.GetMeetingServiceWrap().GetMeetingConfigCtrl().HideKeypadButtonOnMeetingWindow(zn_bHide);
+	v8::Local<v8::Integer> bret = v8::Integer::New(isolate, (int32_t)err);
+	args.GetReturnValue().Set(bret);
+}
+
+void ZoomNodeMeetingConfigCtrlWrap::HideRemoteControlOnMeetingUI(const v8::FunctionCallbackInfo<v8::Value>& args)
+{
+	v8::Isolate* isolate = args.GetIsolate();
+	if (args.Length() < 1) {
+		isolate->ThrowException(v8::Exception::TypeError(
+			v8::String::NewFromUtf8(isolate, "Wrong number of arguments")));
+		return;
+	}
+
+	if (!args[0]->IsBoolean())
+	{
+		isolate->ThrowException(v8::Exception::TypeError(
+			v8::String::NewFromUtf8(isolate, "Wrong arguments")));
+		return;
+	}
+
+	bool zn_bHide = true;
+	zoom_v8toc(args[0].As<v8::Boolean>(), zn_bHide);
+	ZNSDKError err = ZNSDKERR_SUCCESS;
+	_g_native_wrap.GetMeetingServiceWrap().GetMeetingConfigCtrl().HideRemoteControlOnMeetingUI(zn_bHide);
+	v8::Local<v8::Integer> bret = v8::Integer::New(isolate, (int32_t)err);
+	args.GetReturnValue().Set(bret);
+}
+
+void ZoomNodeMeetingConfigCtrlWrap::HideQAOnMeetingUI(const v8::FunctionCallbackInfo<v8::Value>& args)
+{
+	v8::Isolate* isolate = args.GetIsolate();
+	if (args.Length() < 1) {
+		isolate->ThrowException(v8::Exception::TypeError(
+			v8::String::NewFromUtf8(isolate, "Wrong number of arguments")));
+		return;
+	}
+
+	if (!args[0]->IsBoolean())
+	{
+		isolate->ThrowException(v8::Exception::TypeError(
+			v8::String::NewFromUtf8(isolate, "Wrong arguments")));
+		return;
+	}
+
+	bool zn_bHide = true;
+	zoom_v8toc(args[0].As<v8::Boolean>(), zn_bHide);
+	ZNSDKError err = ZNSDKERR_SUCCESS;
+	_g_native_wrap.GetMeetingServiceWrap().GetMeetingConfigCtrl().HideQAOnMeetingUI(zn_bHide);
+	v8::Local<v8::Integer> bret = v8::Integer::New(isolate, (int32_t)err);
+	args.GetReturnValue().Set(bret);
+}
+
+void ZoomNodeMeetingConfigCtrlWrap::HidePollOnMeetingUI(const v8::FunctionCallbackInfo<v8::Value>& args)
+{
+	v8::Isolate* isolate = args.GetIsolate();
+	if (args.Length() < 1) {
+		isolate->ThrowException(v8::Exception::TypeError(
+			v8::String::NewFromUtf8(isolate, "Wrong number of arguments")));
+		return;
+	}
+
+	if (!args[0]->IsBoolean())
+	{
+		isolate->ThrowException(v8::Exception::TypeError(
+			v8::String::NewFromUtf8(isolate, "Wrong arguments")));
+		return;
+	}
+
+	bool zn_bHide = true;
+	zoom_v8toc(args[0].As<v8::Boolean>(), zn_bHide);
+	ZNSDKError err = ZNSDKERR_SUCCESS;
+	_g_native_wrap.GetMeetingServiceWrap().GetMeetingConfigCtrl().HidePollOnMeetingUI(zn_bHide);
+	v8::Local<v8::Integer> bret = v8::Integer::New(isolate, (int32_t)err);
+	args.GetReturnValue().Set(bret);
+}
+
+void ZoomNodeMeetingConfigCtrlWrap::EnableInputMeetingPasswordDlg(const v8::FunctionCallbackInfo<v8::Value>& args)
+{
+	v8::Isolate* isolate = args.GetIsolate();
+	if (args.Length() < 1) {
+		isolate->ThrowException(v8::Exception::TypeError(
+			v8::String::NewFromUtf8(isolate, "Wrong number of arguments")));
+		return;
+	}
+
+	if (!args[0]->IsBoolean())
+	{
+		isolate->ThrowException(v8::Exception::TypeError(
+			v8::String::NewFromUtf8(isolate, "Wrong arguments")));
+		return;
+	}
+
+	bool zn_bEnable = true;
+	zoom_v8toc(args[0].As<v8::Boolean>(), zn_bEnable);
+	ZNSDKError err = ZNSDKERR_SUCCESS;
+	_g_native_wrap.GetMeetingServiceWrap().GetMeetingConfigCtrl().EnableInputMeetingPasswordDlg(zn_bEnable);
+	v8::Local<v8::Integer> bret = v8::Integer::New(isolate, (int32_t)err);
+	args.GetReturnValue().Set(bret);
+}
+
+void ZoomNodeMeetingConfigCtrlWrap::EnableInputMeetingScreenNameDlg(const v8::FunctionCallbackInfo<v8::Value>& args)
+{
+	v8::Isolate* isolate = args.GetIsolate();
+	if (args.Length() < 1) {
+		isolate->ThrowException(v8::Exception::TypeError(
+			v8::String::NewFromUtf8(isolate, "Wrong number of arguments")));
+		return;
+	}
+
+	if (!args[0]->IsBoolean())
+	{
+		isolate->ThrowException(v8::Exception::TypeError(
+			v8::String::NewFromUtf8(isolate, "Wrong arguments")));
+		return;
+	}
+
+	bool zn_bEnable = true;
+	zoom_v8toc(args[0].As<v8::Boolean>(), zn_bEnable);
+	ZNSDKError err = ZNSDKERR_SUCCESS;
+	_g_native_wrap.GetMeetingServiceWrap().GetMeetingConfigCtrl().EnableInputMeetingScreenNameDlg(zn_bEnable);
+	v8::Local<v8::Integer> bret = v8::Integer::New(isolate, (int32_t)err);
+	args.GetReturnValue().Set(bret);
+}
+
+void ZoomNodeMeetingConfigCtrlWrap::RedirectWebinarNeedRegister(const v8::FunctionCallbackInfo<v8::Value>& args)
+{
+	v8::Isolate* isolate = args.GetIsolate();
+	if (args.Length() < 1) {
+		isolate->ThrowException(v8::Exception::TypeError(
+			v8::String::NewFromUtf8(isolate, "Wrong number of arguments")));
+		return;
+	}
+
+	if (!args[0]->IsBoolean())
+	{
+		isolate->ThrowException(v8::Exception::TypeError(
+			v8::String::NewFromUtf8(isolate, "Wrong arguments")));
+		return;
+	}
+
+	bool zn_bRedirect = true;
+	zoom_v8toc(args[0].As<v8::Boolean>(), zn_bRedirect);
+	ZNSDKError err = ZNSDKERR_SUCCESS;
+	_g_native_wrap.GetMeetingServiceWrap().GetMeetingConfigCtrl().RedirectWebinarNeedRegister(zn_bRedirect);
+	v8::Local<v8::Integer> bret = v8::Integer::New(isolate, (int32_t)err);
+	args.GetReturnValue().Set(bret);
+}
+
+void ZoomNodeMeetingConfigCtrlWrap::RedirectEndOtherMeeting(const v8::FunctionCallbackInfo<v8::Value>& args)
+{
+	v8::Isolate* isolate = args.GetIsolate();
+	if (args.Length() < 1) {
+		isolate->ThrowException(v8::Exception::TypeError(
+			v8::String::NewFromUtf8(isolate, "Wrong number of arguments")));
+		return;
+	}
+
+	if (!args[0]->IsBoolean())
+	{
+		isolate->ThrowException(v8::Exception::TypeError(
+			v8::String::NewFromUtf8(isolate, "Wrong arguments")));
+		return;
+	}
+
+	bool zn_bRedirect = true;
+	zoom_v8toc(args[0].As<v8::Boolean>(), zn_bRedirect);
+	ZNSDKError err = ZNSDKERR_SUCCESS;
+	_g_native_wrap.GetMeetingServiceWrap().GetMeetingConfigCtrl().RedirectEndOtherMeeting(zn_bRedirect);
+	v8::Local<v8::Integer> bret = v8::Integer::New(isolate, (int32_t)err);
+	args.GetReturnValue().Set(bret);
+}
+
+void ZoomNodeMeetingConfigCtrlWrap::EnableForceAutoStartMyVideoWhenJoinMeeting(const v8::FunctionCallbackInfo<v8::Value>& args)
+{
+	v8::Isolate* isolate = args.GetIsolate();
+	if (args.Length() < 1) {
+		isolate->ThrowException(v8::Exception::TypeError(
+			v8::String::NewFromUtf8(isolate, "Wrong number of arguments")));
+		return;
+	}
+
+	if (!args[0]->IsBoolean())
+	{
+		isolate->ThrowException(v8::Exception::TypeError(
+			v8::String::NewFromUtf8(isolate, "Wrong arguments")));
+		return;
+	}
+
+	bool zn_bEnable = true;
+	zoom_v8toc(args[0].As<v8::Boolean>(), zn_bEnable);
+	ZNSDKError err = ZNSDKERR_SUCCESS;
+	_g_native_wrap.GetMeetingServiceWrap().GetMeetingConfigCtrl().EnableForceAutoStartMyVideoWhenJoinMeeting(zn_bEnable);
+	v8::Local<v8::Integer> bret = v8::Integer::New(isolate, (int32_t)err);
+	args.GetReturnValue().Set(bret);
+}
+
+void ZoomNodeMeetingConfigCtrlWrap::EnableForceAutoStopMyVideoWhenJoinMeeting(const v8::FunctionCallbackInfo<v8::Value>& args)
+{
+	v8::Isolate* isolate = args.GetIsolate();
+	if (args.Length() < 1) {
+		isolate->ThrowException(v8::Exception::TypeError(
+			v8::String::NewFromUtf8(isolate, "Wrong number of arguments")));
+		return;
+	}
+
+	if (!args[0]->IsBoolean())
+	{
+		isolate->ThrowException(v8::Exception::TypeError(
+			v8::String::NewFromUtf8(isolate, "Wrong arguments")));
+		return;
+	}
+
+	bool zn_bEnable = true;
+	zoom_v8toc(args[0].As<v8::Boolean>(), zn_bEnable);
+	ZNSDKError err = ZNSDKERR_SUCCESS;
+	_g_native_wrap.GetMeetingServiceWrap().GetMeetingConfigCtrl().EnableForceAutoStopMyVideoWhenJoinMeeting(zn_bEnable);
+	v8::Local<v8::Integer> bret = v8::Integer::New(isolate, (int32_t)err);
+	args.GetReturnValue().Set(bret);
+}
+
+void ZoomNodeMeetingConfigCtrlWrap::DisableAutoShowSelectJoinAudioDlgWhenJoinMeeting(const v8::FunctionCallbackInfo<v8::Value>& args)
+{
+	v8::Isolate* isolate = args.GetIsolate();
+	if (args.Length() < 1) {
+		isolate->ThrowException(v8::Exception::TypeError(
+			v8::String::NewFromUtf8(isolate, "Wrong number of arguments")));
+		return;
+	}
+
+	if (!args[0]->IsBoolean())
+	{
+		isolate->ThrowException(v8::Exception::TypeError(
+			v8::String::NewFromUtf8(isolate, "Wrong arguments")));
+		return;
+	}
+
+	bool zn_bDisable = true;
+	zoom_v8toc(args[0].As<v8::Boolean>(), zn_bDisable);
+	ZNSDKError err = ZNSDKERR_SUCCESS;
+	_g_native_wrap.GetMeetingServiceWrap().GetMeetingConfigCtrl().DisableAutoShowSelectJoinAudioDlgWhenJoinMeeting(zn_bDisable);
+	v8::Local<v8::Integer> bret = v8::Integer::New(isolate, (int32_t)err);
+	args.GetReturnValue().Set(bret);
+}
+
+void ZoomNodeMeetingConfigCtrlWrap::DisableRemoteCtrlCopyPasteFeature(const v8::FunctionCallbackInfo<v8::Value>& args)
+{
+	v8::Isolate* isolate = args.GetIsolate();
+	if (args.Length() < 1) {
+		isolate->ThrowException(v8::Exception::TypeError(
+			v8::String::NewFromUtf8(isolate, "Wrong number of arguments")));
+		return;
+	}
+
+	if (!args[0]->IsBoolean())
+	{
+		isolate->ThrowException(v8::Exception::TypeError(
+			v8::String::NewFromUtf8(isolate, "Wrong arguments")));
+		return;
+	}
+
+	bool zn_bDisable = true;
+	zoom_v8toc(args[0].As<v8::Boolean>(), zn_bDisable);
+	ZNSDKError err = ZNSDKERR_SUCCESS;
+	_g_native_wrap.GetMeetingServiceWrap().GetMeetingConfigCtrl().DisableRemoteCtrlCopyPasteFeature(zn_bDisable);
 	v8::Local<v8::Integer> bret = v8::Integer::New(isolate, (int32_t)err);
 	args.GetReturnValue().Set(bret);
 }

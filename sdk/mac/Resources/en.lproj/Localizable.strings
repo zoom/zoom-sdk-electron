@@ -3551,3 +3551,21 @@
 "LN_WaitInfo_87404" = "You are not part of the same organization as the host. Please wait.";
 "LN_Join_As_Guest_87404" = "Join as Guest";
 "LN_Join_Info_87404" = "If you are part of the same organization as the host, please sign in to join the meeting. Otherwise, join the meeting as a guest.";
+
+
+"LN_Verify_Number_Title_109148" = "Verify Phone Number";
+"LN_Verify_Enter_Number_109148" = "Enter your phone number";
+"LN_Verify_Enter_Digit_109148" = "Enter 6-digit Code";
+"LN_Verify_Send_Code_109148" = "Send Code";
+"LN_Verify_109148" = "Verify";
+"LN_Verify_Already_Verified_109148" = "Already have a verified phone number?";
+"LN_Verify_Resend_Code_109148" = "Resend";
+"LN_Verify_Error_Identify_Code_109148" = "Your verification code is incorrect. Please try again.";
+"LN_Verify_Error_Expired_109148" = "Your verification code has expired. Please resend.";
+"LN_Verify_Error_Already_Bound_109148" = "Your phone number has already been linked to another account, please try another phone number.";
+"LN_Verify_Error_Send_Failed_109148" = "Failed to send a verification code to your phone number. Please try again later.";
+"LN_Verify_Error_Invalid_Number_109148" = "The phone number is not in the correct format.";
+"LN_Verify_Error_Too_Frequent_109148" = "You have sent too many codes to this phone number. Please try again later.";
+"LN_Verify_Agree_Privacy_Policy_109148" = "By joining the meeting, I agree to the";
+"LN_Verify_Privacy_Policy_109148" = "Privacy Policy";
+

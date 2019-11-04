@@ -25,6 +25,7 @@
 #include "wrap/meeting_service_components_wrap/meeting_ui_ctrl_wrap.cpp"
 #include "wrap/meeting_service_components_wrap/meeting_video_wrap.cpp"
 #include "wrap/meeting_service_components_wrap/meeting_waiting_room_wrap.cpp"
+#include "wrap/meeting_service_components_wrap/meeting_realname_auth_helper_wrap.cpp"
 //
 #include "wrap/video_setting_context_wrap.cpp"
 #include "wrap/audio_setting_context_wrap.cpp"
@@ -68,7 +69,7 @@ ZNSDKError ZNativeSDKWrap::InitSDK(ZNInitParam& initParam)
 	param.strSupportUrl = initParam.strSupportUrl.c_str();
 	param.obConfigOpts.customizedLang.langName = wsTOs(initParam.obConfigOpts.customizedLang.langName).c_str();
 	param.obConfigOpts.customizedLang.langInfo = wsTOs(initParam.obConfigOpts.customizedLang.langInfo).c_str();
-
+	param.locale = Map2SDKDefine(initParam.locale);
 
 	HMODULE hRes = NULL;
 	param.uiWindowIconSmallID = IDI_SDK_ICON;
@@ -84,7 +85,6 @@ ZNSDKError ZNativeSDKWrap::InitSDK(ZNInitParam& initParam)
 	{
 		_z_auth_service_wrap.Init();
 		_z_meeting_service_wrap.Init();
-		_z_setting_service_wrap.Init();
 		_z_premeeting_service_wrap.Init();
 		//_z_customized_resource_wrap.Init();
 	}
@@ -94,6 +94,13 @@ ZNSDKError ZNativeSDKWrap::CleanUPSDK()
 {
 	ZOOM_SDK_NAMESPACE::CSDKWrap::GetInst().CleanUPSDK();
 	return ZNSDKERR_SUCCESS;
+}
+ZoomSTRING ZNativeSDKWrap::GetVersion()
+{
+
+	ZoomSTRING zn_version;
+	zn_version = ZOOM_SDK_NAMESPACE::CSDKWrap::GetInst().GetVersion();
+	return zn_version;
 }
 ZNativeSDKWrap::ZNativeSDKWrap()
 {

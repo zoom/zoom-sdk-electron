@@ -22,6 +22,11 @@
       let meetingnumber=document.getElementById("meetingnumber").value; 
       sendjoin(meetingnumber, username);
     }
+
+    function handleZoomWebUriProtocolAction() {
+      let protocol_action = document.getElementById('protocol_action').value;
+      ipcRenderer.send('asynchronous-message', 'handleZoomWebUriProtocolAction', protocol_action);
+    }
   </script>
 
 </head>
@@ -35,10 +40,13 @@
 	<div class="center"><input type="text" name="meetingnumber" placeholder="input meeting number" id="meetingnumber"/></div>
 	<br/>
 	<div class="center"><input type="text" name="username" placeholder="input user name" id="username"/></div>
+  <br/>
+  <div class="center"><input type="text" name="protocol_action" placeholder="input meeting url" id="protocol_action"/></div>
 	<br/>
 	<div class="center">
 		<button type="button" onclick="dostart()">Start</button>   
-		<button type="button" onclick="dojoin()">Join</button> 
+    <button type="button" onclick="dojoin()">Join</button> 
+    <button type="button" onclick="handleZoomWebUriProtocolAction()">Join Meeting With URL</button>
 	</div>
 </body>
 </html>

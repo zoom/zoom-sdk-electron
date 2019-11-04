@@ -13,9 +13,9 @@
 	<div class="center">
 		<div class="section">Leave or End Meeting</div>
     <button type="button" class="button-small" onclick="leave()">Leave Meeting</button>
-		<button type="button" class="button-small" onclick="end()">End Meeting</button>
-		<button type="button" class="button-small" onclick="lock()">Lock Meeting</button>
-		<button type="button" class="button-small" onclick="unlock()">Unlock Meeting</button>
+		<button type="button" class="button-small" onclick="end()" id="btn-end">End Meeting</button>
+		<button type="button" class="button-small" onclick="lock()" id="btn-lock">Lock Meeting</button>
+		<button type="button" class="button-small" onclick="unlock()" id="btn-unlock">Unlock Meeting</button>
     <div class="section">Meeting Info</div>
     <div>
       <input type="text" name="email" class="input-show" placeholder="input email, monitorID, meetingNumber" id="email"/>
@@ -50,7 +50,7 @@
     <div class="section">Meeting UI</div>
     <div>
       <input type="text" name="show" class="input-show" placeholder="empty is false otherwise is true" id="show"/>
-      <!--<input type="text" name="mode" class="input-show" placeholder="input mode" id="mode"/>-->
+      <input type="text" name="mode" class="input-show" placeholder="input mode" id="mode"/>
     </div>
 		<button type="button" class="button-small" onclick="showChat()">Show Chat</button>
 		<button type="button" class="button-small" onclick="hideChat()">Hide Chat</button>
@@ -83,21 +83,14 @@
 		<button type="button" class="button-small" onclick="setColor()">Set Color</button>
 		<button type="button" class="button-small" onclick="SetLineWidth()">Set Line Width</button>
 		<button type="button" class="button-small" onclick="undo()">Undo</button>
-    <button type="button" class="button-small" onclick="redo()">Redo</button> -->
-    <!--<button type="button" class="button-small" onclick="backToMeeting()">Back To Meeting</button>-->
-    <!--<button type="button" class="button-small" onclick="getMeetingUIWnd()">Get MeetingUIWnd</button>-->
-    <!--<button type="button" class="button-small" onclick="switchMinimizeUIMode4FristScreenMeetingUIWnd()">Switch Minimize UIMode</button>-->
-    <!--<button type="button" class="button-small" onclick="isMinimizeModeOfFristScreenMeetingUIWnd()">Is Minimize Mode</button>-->
-    <!--<button type="button" class="button-small" onclick="canSwapToShowShareViewOrVideo()">Can SwapToShow ShareView</button>-->
-    <!--<button type="button" class="button-small" onclick="swapToShowShareViewOrVideo()">SwapToShow ShareView</button>-->
-    <!--<button type="button" class="button-small" onclick="isDisplayingShareViewOrVideo()">Is Displaying ShareView</button>-->
-    <!--<div class="section">Setting UI</div>-->
-    <!--<div>-->
-      <!--<input type="text" name="bDisable" class="input-show" placeholder="empty is false otherwise is true" id="bDisable"/>-->
-    <!--</div>-->
-    <!--<button type="button" class="button-small" onclick="disableAdvancedFeatures4GeneralSetting()">Disable AdvancedFeatures</button>-->
-    <!--<button type="button" class="button-small" onclick="disableAccountSettingTabPage()">Disable AccountSettingTabPage</button>-->
-    <!--<button type="button" class="button-small" onclick="confSettingDialogShownTabPage()">Conf SettingDialogShownTabPage</button>-->
+    	<button type="button" class="button-small" onclick="redo()">Redo</button> -->
+		<button type="button" class="button-small" onclick="backToMeeting()">Back To Meeting</button>
+		<button type="button" class="button-small" onclick="getMeetingUIWnd()">Get MeetingUIWnd</button>
+		<button type="button" class="button-small" onclick="switchMinimizeUIMode4FristScreenMeetingUIWnd()">Switch Minimize UIMode</button>
+		<button type="button" class="button-small" onclick="isMinimizeModeOfFristScreenMeetingUIWnd()">Is Minimize Mode</button>
+		<button type="button" class="button-small" onclick="canSwapToShowShareViewOrVideo()">Can SwapToShow ShareView</button>
+		<button type="button" class="button-small" onclick="swapToShowShareViewOrVideo()">SwapToShow ShareView</button>
+		<button type="button" class="button-small" onclick="isDisplayingShareViewOrVideo()">Is Displaying ShareView</button>
     <div class="section">Video and Audio</div>
     <div>
       <input type="text" name="userid" class="input-show" placeholder="input userid" id="userid"/>
@@ -124,7 +117,32 @@
 </html>
 
 <script>
-  const {ipcRenderer} = require('electron');
+  const {ipcRenderer, remote} = require('electron');
+
+  let btnEnd = document.querySelector('#btn-end');
+  let btnLock = document.querySelector('#btn-lock');
+  let btnUnLock = document.querySelector('#btn-unlock');
+  
+  let zoommeeting = remote.app.zoommeeting;
+  let userList = zoommeeting.GetParticipantsList();
+  let userObj = zoommeeting.GetUserInfoByUserID(userList[0].userid);
+  let isHost = userObj.isHost;
+
+  if (isHost) {
+    btnEnd.disabled = false;
+    btnEnd.classList.remove("button-disabled");
+    btnLock.disabled = false;
+    btnLock.classList.remove("button-disabled");
+    btnUnLock.disabled = false;
+    btnUnLock.classList.remove("button-disabled");
+  } else {
+    btnEnd.disabled = 'disabled';
+    btnEnd.classList.add("button-disabled");
+    btnLock.disabled = 'disabled';
+    btnLock.classList.add("button-disabled");
+    btnUnLock.disabled = 'disabled';
+    btnUnLock.classList.add("button-disabled");
+  }
 
   function leave() {
     ipcRenderer.send('asynchronous-message', 'leave', false);
@@ -350,28 +368,14 @@
     ipcRenderer.send('asynchronous-message', 'isDisplayingShareViewOrVideo');
   }
 
-  function disableAdvancedFeatures4GeneralSetting() {
-    let bDisable = document.getElementById("bDisable").value;
-    ipcRenderer.send('asynchronous-message', 'disableAdvancedFeatures4GeneralSetting', Boolean(bDisable));
-  }
-
-  function disableAccountSettingTabPage() {
-    let bDisable = document.getElementById("bDisable").value;
-    ipcRenderer.send('asynchronous-message', 'disableAccountSettingTabPage', Boolean(bDisable));
-  }
-
-  function confSettingDialogShownTabPage() {
-    let bShowAccessibility = document.getElementById("bShowAccessibility").value;
-    ipcRenderer.send('asynchronous-message', 'confSettingDialogShownTabPage', Boolean(bShowAccessibility));
-  }
-
   function canSwapToShowShareViewOrVideo() {
     ipcRenderer.send('asynchronous-message', 'canSwapToShowShareViewOrVideo');
   }
 
   function muteAudio() {
     let userid = document.getElementById("userid").value;
-    ipcRenderer.send('asynchronous-message', 'muteAudio', userid);
+    let mute = document.getElementById("uEnable").value;
+    ipcRenderer.send('asynchronous-message', 'muteAudio', userid, Boolean(mute));
   }
 
   function unMuteAudio() {
@@ -408,7 +412,7 @@
   }
   
   function hideOrShowNoVideoUserOnVideoWall() {
-    let bHide = document.getElementById("uEnable").bHide;
+    let bHide = document.getElementById("uEnable").value;
     ipcRenderer.send('asynchronous-message', 'hideOrShowNoVideoUserOnVideoWall', Boolean(bHide));
   }
 

@@ -20,6 +20,9 @@ virtual SDKError UnRegisterNetworkConnectionHandler()
 	external_cb = NULL;
 	return SDKERR_SUCCESS;
 }
+
+//virtual SDKError ConfigureProxy(ProxySettings& proxy_setting) = 0;
+DEFINE_FUNC_1(ConfigureProxy, SDKError, ProxySettings&, proxy_setting)
 //virtual void onProxyDetectComplete() = 0;
 CallBack_FUNC_0(onProxyDetectComplete)
 //virtual void onProxySettingNotification(IProxySettingHandler* handler) = 0;

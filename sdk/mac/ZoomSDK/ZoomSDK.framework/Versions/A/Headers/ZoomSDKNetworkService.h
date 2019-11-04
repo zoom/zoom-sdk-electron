@@ -8,6 +8,11 @@
 
 #import <Foundation/Foundation.h>
 
+typedef struct ZoomSDKProxySettings{
+    NSString*     _proxy;
+    BOOL          _autoDetct;
+}ZoomSDKProxySettings;
+
 @interface ZoomSDKProxySettingHelper : NSObject
 {
     NSString*   _proxyHost;
@@ -100,4 +105,11 @@
     id<ZoomSDKNetworkSeviceDelegate>  _delegate;
 }
 @property(nonatomic, retain) id<ZoomSDKNetworkSeviceDelegate> delegate;
+
+/**
+ * @brief Configure the proxy for Zoom SDK.
+ * @param ZoomSDKProxySettings A struct object containing proxy information.
+ * @return If the function succeeds, it will return ZoomSDKError_Success. Otherwise failed.
+ */
+- (ZoomSDKError)ConfigureProxy:(ZoomSDKProxySettings)settings;
 @end

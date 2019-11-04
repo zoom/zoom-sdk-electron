@@ -5,56 +5,56 @@
 extern  ZNativeSDKWrap _g_native_wrap;
 @implementation authServiceDelegate
 
-+(authServiceDelegate *)share{
-    
++(authServiceDelegate *)share
+{
     static authServiceDelegate *delegate = nil;
     static dispatch_once_t onceToken;
     dispatch_once(&onceToken, ^{
-        
-        delegate = [[authServiceDelegate alloc]init];
-       
+        delegate = [[authServiceDelegate alloc] init];
     });
-    
     return delegate;
 }
 
-- (void)onZoomSDKAuthReturn:(ZoomSDKAuthError)returnValue {
-    
+- (void)onZoomSDKAuthReturn:(ZoomSDKAuthError)returnValue
+{
     nativeErrorTypeHelp native_help;
     ZNAuthResult result = native_help.ZoomSDKAuthErrorTpye(returnValue);
     self.authResult = result;
     _g_native_wrap.GetAuthServiceWrap().onAuthenticationReturn(result);
 }
 
-- (void)onZoomSDKLogin:(ZoomSDKLoginStatus)loginStatus failReason:(NSString *)reason{
-    
+- (void)onZoomSDKLogin:(ZoomSDKLoginStatus)loginStatus failReason:(NSString *)reason
+{
     nativeErrorTypeHelp native_login_help;
     ZNLOGINSTATUS result = native_login_help.ZoomSDKLoginStatusType(loginStatus);
     self.loginStatus = result;
     _g_native_wrap.GetAuthServiceWrap().onLoginRet(result);
 }
 
-
--(void)onZoomSDKLogout{
+-(void)onZoomSDKLogout
+{
     _g_native_wrap.GetAuthServiceWrap().onLogout();
 }
 
-
--(void)onZoomIdentityExpired{
+-(void)onZoomIdentityExpired
+{
     _g_native_wrap.GetAuthServiceWrap().onZoomIdentityExpired();
 }
 
--(ZNAuthResult)getAuthResult{
+-(ZNAuthResult)getAuthResult
+{
     return self.authResult;
 }
--(ZNLOGINSTATUS)getLoginStatus{
+
+-(ZNLOGINSTATUS)getLoginStatus
+{
     return self.loginStatus;
 }
 
 
 #pragma mark PremeetingServic
--(void)onListMeeting:(ZoomSDKPremeetingError)error MeetingList:(NSArray *)meetingList{
-    
+-(void)onListMeeting:(ZoomSDKPremeetingError)error MeetingList:(NSArray *)meetingList
+{
     nativeErrorTypeHelp help;
     ZNPremeetingAPIResult result = help.ZNSDKPreMeetingError(error);
     ZNList<unsigned long long> list;
@@ -68,23 +68,23 @@ extern  ZNativeSDKWrap _g_native_wrap;
     _g_native_wrap.GetPremeetingServiecWrap().onListMeeting(result, list);
 }
 
--(void)onScheduleOrEditMeeting:(ZoomSDKPremeetingError)error MeetingUniqueID:(long long)meetingUniqueID{
-    
+-(void)onScheduleOrEditMeeting:(ZoomSDKPremeetingError)error MeetingUniqueID:(long long)meetingUniqueID
+{
     nativeErrorTypeHelp help;
     ZNPremeetingAPIResult result = help.ZNSDKPreMeetingError(error);
     _g_native_wrap.GetPremeetingServiecWrap().onScheduleOrEditMeeting(result, meetingUniqueID);
 }
 
--(void)onDeleteMeeting:(ZoomSDKPremeetingError)error{
-    
+-(void)onDeleteMeeting:(ZoomSDKPremeetingError)error
+{
     nativeErrorTypeHelp help;
     ZNPremeetingAPIResult result = help.ZNSDKPreMeetingError(error);
     _g_native_wrap.GetPremeetingServiecWrap().onDeleteMeeting(result);
 }
 
 #pragma direct share
--(void)onDirectShareStatusReceived:(DirectShareStatus)status DirectShareReceived:(ZoomSDKDirectShareHandler *)handler{
-    
+-(void)onDirectShareStatusReceived:(DirectShareStatus)status DirectShareReceived:(ZoomSDKDirectShareHandler *)handler
+{
     nativeErrorTypeHelp help;
     ZNDirectShareStatus  ZNStatus = help.ZNSDKDirectShareStatus(status);
     self.directStatus = status;
@@ -92,12 +92,13 @@ extern  ZNativeSDKWrap _g_native_wrap;
     _g_native_wrap.GetAuthServiceWrap().GetDirectShareHelper().OnDirectShareStatusUpdate(ZNStatus);
 }
 
--(DirectShareStatus)getDirectShare{
+-(DirectShareStatus)getDirectShare
+{
     return self.directStatus;
 }
 
--(ZoomSDKDirectShareHandler *)getDirectShareHandler{
-    
+-(ZoomSDKDirectShareHandler *)getDirectShareHandler
+{
     return self.DirectShareHandler;
 }
 

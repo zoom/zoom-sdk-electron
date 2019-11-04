@@ -96,6 +96,7 @@
     <ClCompile Include="meeting_service_components_wrap\meeting_live_stream_wrap.cpp" />
     <ClCompile Include="meeting_service_components_wrap\meeting_participants_ctrl_wrap.cpp" />
     <ClCompile Include="meeting_service_components_wrap\meeting_phone_helper_wrap.cpp" />
+    <ClCompile Include="meeting_service_components_wrap\meeting_realname_auth_helper_wrap.cpp" />
     <ClCompile Include="meeting_service_components_wrap\meeting_recording_wrap.cpp" />
     <ClCompile Include="meeting_service_components_wrap\meeting_remote_ctrl_wrap.cpp" />
     <ClCompile Include="meeting_service_components_wrap\meeting_sharing_wrap.cpp" />
@@ -139,6 +140,7 @@
     <ClInclude Include="meeting_service_components_wrap\meeting_live_stream_wrap.h" />
     <ClInclude Include="meeting_service_components_wrap\meeting_participants_ctrl_wrap.h" />
     <ClInclude Include="meeting_service_components_wrap\meeting_phone_helper_wrap.h" />
+    <ClInclude Include="meeting_service_components_wrap\meeting_realname_auth_helper_wrap.h" />
     <ClInclude Include="meeting_service_components_wrap\meeting_recording_wrap.h" />
     <ClInclude Include="meeting_service_components_wrap\meeting_remote_ctrl_wrap.h" />
     <ClInclude Include="meeting_service_components_wrap\meeting_sharing_wrap.h" />

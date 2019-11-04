@@ -4,40 +4,40 @@
 #include "../meeting_service_wrap_core.h"
 #include "Header_include.h"
 #include "sdk_native_error.h"
-
-extern nativeErrorTypeHelp  Help_type;
-
-ZMeetingParticipantsWrap &ZMeetingServiceWrap::GetMeetingParticipantsCtrl(){
+ZMeetingParticipantsWrap &ZMeetingServiceWrap::GetMeetingParticipantsCtrl()
+{
     return m_meeting_participants_ctrl;
 }
 
-
-ZMeetingParticipantsWrap::ZMeetingParticipantsWrap(){
+ZMeetingParticipantsWrap::ZMeetingParticipantsWrap()
+{
     m_pSink = 0;
 }
 
-ZMeetingParticipantsWrap::~ZMeetingParticipantsWrap(){
+ZMeetingParticipantsWrap::~ZMeetingParticipantsWrap()
+{
     m_pSink = 0;
+}
+
+void ZMeetingParticipantsWrap::Init()
+{
     
 }
 
-void ZMeetingParticipantsWrap::Init(){
+void ZMeetingParticipantsWrap::Uninit()
+{
     
 }
 
-void ZMeetingParticipantsWrap::Uninit(){
-    
-}
-
-void ZMeetingParticipantsWrap::SetSink(ZNativeSDKMeetingParticipantsWrapSink *pSink){
-    
+void ZMeetingParticipantsWrap::SetSink(ZNativeSDKMeetingParticipantsWrapSink *pSink)
+{
     m_pSink = pSink;
 }
 
-ZNUserInfomation ZMeetingParticipantsWrap::GetUserInfomationByUserID(unsigned int userid){
-    
+ZNUserInfomation ZMeetingParticipantsWrap::GetUserInfomationByUserID(unsigned int userid)
+{
     ZNUserInfomation user;
-    ZoomSDKMeetingService *service = [[ZoomSDK sharedSDK]getMeetingService];
+    ZoomSDKMeetingService *service = [[ZoomSDK sharedSDK] getMeetingService];
     if (!service) {
         return user;
     }
@@ -70,6 +70,7 @@ ZNUserInfomation ZMeetingParticipantsWrap::GetUserInfomationByUserID(unsigned in
     bool isSelf = [userInfo isMySelf];
     user.isMySelf = isSelf;
     UserRole roles = [userInfo getUserRole];
+    nativeErrorTypeHelp  Help_type;
     user.userRole = Help_type.ZNSDKUserRole(roles);
     bool  isPPU = [userInfo isPurePhoneUser];
     user.isPurePhoneUser = isPPU;
@@ -77,13 +78,12 @@ ZNUserInfomation ZMeetingParticipantsWrap::GetUserInfomationByUserID(unsigned in
     bool isAttend = webinar.isAttendeeCanTalk;
     user.webinarAttendeeStatus = isAttend;
     return user;
-
 }
 
-ZNList<unsigned int> ZMeetingParticipantsWrap::GetParticipantsList(){
-    
+ZNList<unsigned int> ZMeetingParticipantsWrap::GetParticipantsList()
+{
     ZNList<unsigned int> list;
-    ZoomSDKMeetingService *service = [[ZoomSDK sharedSDK]getMeetingService];
+    ZoomSDKMeetingService *service = [[ZoomSDK sharedSDK] getMeetingService];
     if (!service) {
         return list;
     }
@@ -91,35 +91,36 @@ ZNList<unsigned int> ZMeetingParticipantsWrap::GetParticipantsList(){
     if (!action) {
         return list;
     }
-    
     NSArray *listArr = [action getParticipantsList];
     for (NSNumber *userid in listArr) {
         unsigned int ID = userid.intValue;
         list.push_back(ID);
     }
-    
     return list;
 }
 
 //callback
-void ZMeetingParticipantsWrap::onHostChangeNotification(unsigned int userId){
-    
-    if (m_pSink) {
+void ZMeetingParticipantsWrap::onHostChangeNotification(unsigned int userId)
+{
+    if (m_pSink)
+    {
         m_pSink->onHostChangeNotification(userId);
     }
 }
 
-void ZMeetingParticipantsWrap::onUserJoin(std::vector<unsigned int> lstUserID, std::string strUserList){
-    
-    if (m_pSink) {
+void ZMeetingParticipantsWrap::onUserJoin(std::vector<unsigned int> lstUserID, std::string strUserList)
+{
+    if (m_pSink)
+    {
         m_pSink->onUserJoin(lstUserID,strUserList);
     }
 }
 
 
-void ZMeetingParticipantsWrap::onUserLeft(std::vector<unsigned int> lstUserID, std::string strUserList){
-    
-    if (m_pSink) {
+void ZMeetingParticipantsWrap::onUserLeft(std::vector<unsigned int> lstUserID, std::string strUserList)
+{
+    if (m_pSink)
+    {
         m_pSink->onUserLeft(lstUserID,strUserList);
     }
 }

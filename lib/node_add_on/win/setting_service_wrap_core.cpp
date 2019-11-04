@@ -13,11 +13,6 @@ ZSettingServiceWrap::~ZSettingServiceWrap()
 }
 void ZSettingServiceWrap::Init()
 {
-	ZOOM_SDK_NAMESPACE::CSDKWrap::GetInst().GetSettingServiceWrap().Init_Wrap();
-	m_setting_video_ctrl.Init();
-	m_setting_audio_ctrl.Init();
-	m_setting_general_ctrl.Init();
-	m_setting_recording_ctrl.Init();
 	
 }
 void ZSettingServiceWrap::Uninit()
@@ -40,13 +35,17 @@ ZSettingRecordingWrap& ZSettingServiceWrap::GetSettingRecordingCtrl()
 {
 	return m_setting_recording_ctrl;
 }
+ZSettingUIStrategyWrap& ZSettingServiceWrap::GetSettingStrategyCtrl()
+{
+	return m_setting_ui_strategy_ctrl;
+}
 ZNSDKError ZSettingServiceWrap::ShowSettingDlg(ZNShowSettingDlgParam param)
 {
 	ZOOM_SDK_NAMESPACE::ShowSettingDlgParam sdk_param;
-	swscanf_s(param.hParent.c_str(), L"%x", &sdk_param.hParent);
+	swscanf_s(param.hParent.c_str(), L"%x", (unsigned int*)&sdk_param.hParent);
 	sdk_param.left = _wtoi(param.left.c_str());
 	sdk_param.top = _wtoi(param.top.c_str());
-	swscanf_s(param.hSettingWnd.c_str(), L"%x", &sdk_param.hSettingWnd);
+	swscanf_s(param.hSettingWnd.c_str(), L"%x", (unsigned int*)&sdk_param.hSettingWnd);
 	sdk_param.bShow = param.bShow;
 	return Map2WrapDefine(ZOOM_SDK_NAMESPACE::CSDKWrap::GetInst().GetSettingServiceWrap().ShowSettingDlg(sdk_param));
 }

@@ -59,7 +59,10 @@
 				  "./lib/node_add_on/zoom_v8_to_c.cpp",
 				  "./lib/node_add_on/run_task_to_main_thread.cpp",
 				  "./lib/node_add_on/zoom_node_raw_data_license.cpp",
-				  "./lib/node_add_on/zoom_raw_data_wrap.cpp"
+				  "./lib/node_add_on/zoom_raw_data_wrap.cpp",
+				  "./lib/node_add_on/zoom_node_setting_ui_strategy_ctrl.cpp",
+                                  "./lib/node_add_on/zoom_node_sdk_sms_helper.cpp",
+                                  "./lib/node_add_on/mac/zoom_sms_wrap.mm",
 			  ],
 			  'mac_framework_dirs':[
 			  './../sdk/mac/ZoomSDK',
@@ -131,9 +134,11 @@
 			  "./lib/node_add_on/win/setting_video_wrap_core.cpp",
 			  "./lib/node_add_on/win/setting_audio_wrap_core.cpp",
 			  "./lib/node_add_on/win/setting_general_wrap_core.cpp",
+			  "./lib/node_add_on/win/setting_ui_strategy_wrap_core.cpp",
 			  "./lib/node_add_on/win/setting_recording_wrap_core.cpp",
 			  "./lib/node_add_on/win/directshare_helper_wrap_core.cpp",
 			  "./lib/node_add_on/win/customized_resource_wrap_core.cpp",
+			  "./lib/node_add_on/win/zoom_sdk_sms_helper_wrap_core.cpp",
 			  "./lib/node_add_on/zoom_node_addon.cpp",
 			  "./lib/node_add_on/node_res.rc",
 			  "./lib/node_add_on/win/zoom_native_to_wrap.cpp",
@@ -148,6 +153,7 @@
 			  "./lib/node_add_on/zoom_node_setting_video_ctrl.cpp",
 			  "./lib/node_add_on/zoom_node_setting_audio_ctrl.cpp",
 			  "./lib/node_add_on/zoom_node_setting_general_ctrl.cpp",
+			  "./lib/node_add_on/zoom_node_setting_ui_strategy_ctrl.cpp",
 			  "./lib/node_add_on/zoom_node_setting_recording_ctrl.cpp",
 			  "./lib/node_add_on/zoom_node_customized_resource.cpp",
 			  "./lib/node_add_on/zoom_node_direct_share_helper.cpp",
@@ -157,7 +163,8 @@
 			  "./lib/node_add_on/zoom_v8_to_c.cpp",
 			  "./lib/node_add_on/run_task_to_main_thread.cpp",
 			  "./lib/node_add_on/zoom_raw_data_wrap.cpp",
-			  "./lib/node_add_on/zoom_node_raw_data_license.cpp"
+			  "./lib/node_add_on/zoom_node_raw_data_license.cpp",
+			  "./lib/node_add_on/zoom_node_sdk_sms_helper.cpp"
 			  
 			  
 

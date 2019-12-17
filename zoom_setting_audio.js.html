@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Home</title>
+    <title>JSDoc: Source: zoom_setting_audio.js</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,32 +17,391 @@
 
 <div id="main">
 
-    <h1 class="page-title">Home</h1>
+    <h1 class="page-title">Source: zoom_setting_audio.js</h1>
 
     
 
 
 
     
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>
+const { ZoomSDKError } = require('./settings.js');
 
+var ZoomAudioSetting = (function () {
+  let instance;
+   /**
+   * mode: Zoom SDK Audio Settings Service Init
+   * @param {Object} addon zoom sdk module
+   * @return {ZoomAudioSetting}
+   */
+  function init(opts) {
+    let clientOpts = opts || {};
 
-    <h3> </h3>
+    // Private methods and variables
+    let _addon = clientOpts.addon.GetSettingAudioCtrl() || null;
 
-
-
-
-
-
-
-
-
-
+    function onComputerMicDeviceChanged(newMicList) {
+    }
     
+    function onComputerSpeakerDeviceChanged(newSpeakerList) {
+    }
 
+    function onDefaultMicDeviceChanged(deviceId, deviceName) {
+    }
+    
+    function onDefaultSpeakerDeviceChanged(deviceId, deviceName) {
+    }
+    
+    if (_addon) {
+      _addon.SetComputerMicDeviceChangedCB(onComputerMicDeviceChanged);
+      _addon.SetComputerSpeakerDeviceChangedCB(onComputerSpeakerDeviceChanged);
+      _addon.SetDefaultMicDeviceChangedCB(onDefaultMicDeviceChanged);
+      _addon.SetDefaultSpeakerDeviceChangedCB(onDefaultSpeakerDeviceChanged);
+    }
 
+    let micObj = {};
+    let speakerObj = {};
 
+    return {
+    	/** 
+       * mode: Select mic
+		   * @param {String} deviceId
+       * @param {String} deviceName Device&amp;deviceName id of camera
+		   * @return {ZoomSDKError}
+		   */
+      Setting_SelectMic: function (opts) {
+      	if (_addon) {
+      		let clientOpts = opts || {};
+      		let deviceId = clientOpts.deviceId || micObj.deviceId;
+      		let deviceName = clientOpts.deviceName || micObj.deviceName;
+      		return _addon.SelectMic(deviceId, deviceName);
+      	}
+      	return ZoomSDKError.SDKERR_UNINITIALIZE;
+      },
+      /** 
+      * mode: Get Mic List
+      * @return {ZoomSDKError}
+      */
+      Setting_GetMicList: function () {
+      	if (_addon) {
+          let micList = _addon.GetMicList();
+          micList.forEach(item => {
+            micObj.deviceName = item.deviceName
+            micObj.deviceId = item.deviceId
+            micObj.isSelected = item.isSelected
+          })
+          return micObj;
+      	}
+      	return ZoomSDKError.SDKERR_UNINITIALIZE;
+      },
+    	/** 
+      * mode: Select Speaker
+      * @param {String} deviceId
+      * @param {String} deviceName Device&amp;deviceName id of camera
+      * @return {ZoomSDKError}
+      */
+      Setting_SelectSpeaker: function (opts) {
+      	if (_addon) {
+      		let clientOpts = opts || {}
+      		let deviceId = clientOpts.deviceId || speakerObj.deviceId;
+          let deviceName = clientOpts.deviceName || speakerObj.deviceName;
+      		return _addon.SelectSpeaker(deviceId, deviceName)
+      	}
+      	return ZoomSDKError.SDKERR_UNINITIALIZE;
+      },
+      /**
+      * mode:  Get Speaker List
+      * @return {ZoomSDKError}
+      */
+      Setting_GetSpeakerList: function () {
+      	if (_addon) {
+          let speakerList = _addon.GetSpeakerList();
+          speakerList.forEach(function (item, index) {
+            speakerObj.deviceName = item.deviceName
+            speakerObj.deviceId = item.deviceId
+            speakerObj.isSelected = item.isSelected
+          });
+          return speakerObj;
+      	}
+        return ZoomSDKError.SDKERR_UNINITIALIZE;
+      },
+      /** 
+      * mode: Check if Auto Join Audio.
+      * @return {Boolean}
+      */
+      Checking_IsAutoJoinAudioEnabled: function (opts) {
+        if (_addon) {
+          return _addon.IsAutoJoinAudioEnabled();
+        }
+        return ZoomSDKError.SDKERR_UNINITIALIZE;
+      },
+      /** 
+      * mode: Check if Auto Adjust Mic.
+      * @return {Boolean}
+      */
+      Checking_IsAutoAdjustMicEnabled: function (opts) {
+        if (_addon) {
+          return _addon.IsAutoAdjustMicEnabled();
+        }
+        return ZoomSDKError.SDKERR_UNINITIALIZE;
+      },
+      /**
+      * mode:  Setting Enable Auto Join Audio
+      * @param {Boolean} zn_bEnable Enable or not
+      * @return {ZoomSDKError}
+      */
+      Setting_EnableAutoJoinAudio: function (opts) {
+        if (_addon) {
+          let clientOpts = opts || {};
+          let zn_bEnable = clientOpts.zn_bEnable;
+          return _addon.EnableAutoJoinAudio(zn_bEnable);
+        }
+        return ZoomSDKError.SDKERR_UNINITIALIZE;
+      },
+      /** 
+      * mode: Setting Enable Auto Adjust Mic
+      * @param {Boolean} zn_bEnable Enable or not
+      * @return {ZoomSDKError}
+      */
+      Setting_EnableAutoAdjustMic: function (opts) {
+        if (_addon) {
+          let clientOpts = opts || {};
+          let zn_bEnable = clientOpts.zn_bEnable;
+          return _addon.EnableAutoAdjustMic(zn_bEnable);
+        }
+        return ZoomSDKError.SDKERR_UNINITIALIZE;
+      },
+      /** 
+      * mode: Enable Stereo Audio
+      * @param {Boolean} bEnable Enable or not
+      * @return {ZoomSDKError}
+      */
+      Setting_EnableStereoAudio: function (opts) {
+        if (_addon) {
+          let clientOpts = opts || {};
+          let bEnable = clientOpts.bEnable;
+          return _addon.EnableStereoAudio(bEnable);
+        }
+        return ZoomSDKError.SDKERR_UNINITIALIZE;
+      },
+      /** 
+      * mode: Is Stereo Audio Enable
+      * @param {Boolean} bEnable Enable or not
+      * @return {ZoomSDKError}
+      */
+      Setting_IsStereoAudioEnable: function (opts) {
+        if (_addon) {
+          let clientOpts = opts || {};
+          let bEnable = clientOpts.bEnable;
+          return _addon.IsStereoAudioEnable(bEnable);
+        }
+        return ZoomSDKError.SDKERR_UNINITIALIZE;
+      },
+      /** 
+      * mode: Enable Mic Original Input
+      * @param {Boolean} bEnable Enable or not
+      * @return {ZoomSDKError}
+      */
+      Setting_EnableMicOriginalInput: function (opts) {
+        if (_addon) {
+          let clientOpts = opts || {};
+          let bEnable = clientOpts.bEnable;
+          return _addon.EnableMicOriginalInput(bEnable);
+        }
+        return ZoomSDKError.SDKERR_UNINITIALIZE;
+      },
+      /** 
+      * mode: Is Mic Original Input Enable
+      * @param {Boolean} bEnable Enable or not
+      * @return {ZoomSDKError}
+      */
+      Setting_IsMicOriginalInputEnable: function (opts) {
+        if (_addon) {
+          let clientOpts = opts || {};
+          let bEnable = clientOpts.bEnable;
+          return _addon.IsMicOriginalInputEnable(bEnable);
+        }
+        return ZoomSDKError.SDKERR_UNINITIALIZE;
+      },
+      /** 
+      * mode: Enable Hold Space Key To Speak
+      * @param {Boolean} bEnable Enable or not
+      * @return {ZoomSDKError}
+      */
+      Setting_EnableHoldSpaceKeyToSpeak: function (opts) {
+        if (_addon) {
+          let clientOpts = opts || {};
+          let bEnable = clientOpts.bEnable;
+          return _addon.EnableHoldSpaceKeyToSpeak(bEnable);
+        }
+        return ZoomSDKError.SDKERR_UNINITIALIZE;
+      },
+      /** 
+      * mode: Is Hold Space Key To Speak Enabled
+      * @param {Boolean} bEnable Enable or not
+      * @return {ZoomSDKError}
+      */
+      Setting_IsHoldSpaceKeyToSpeakEnabled: function (opts) {
+        if (_addon) {
+          let clientOpts = opts || {};
+          let bEnable = clientOpts.bEnable;
+          return _addon.IsHoldSpaceKeyToSpeakEnabled(bEnable);
+        }
+        return ZoomSDKError.SDKERR_UNINITIALIZE;
+      },
+      /** 
+      * mode: Enable Always Mute Mic When Join Voip
+      * @param {Boolean} bEnable Enable or not
+      * @return {ZoomSDKError}
+      */
+      Setting_EnableAlwaysMuteMicWhenJoinVoip: function (opts) {
+        if (_addon) {
+          let clientOpts = opts || {};
+          let bEnable = clientOpts.bEnable;
+          return _addon.EnableAlwaysMuteMicWhenJoinVoip(bEnable);
+        }
+        return ZoomSDKError.SDKERR_UNINITIALIZE;
+      },
+      /** 
+      * mode: Is Always Mute Mic When Join Voip Enabled
+      * @param {Boolean} bEnable Enable or not
+      * @return {ZoomSDKError}
+      */
+      Setting_IsAlwaysMuteMicWhenJoinVoipEnabled: function (opts) {
+        if (_addon) {
+          let clientOpts = opts || {};
+          let bEnable = clientOpts.bEnable;
+          return _addon.IsAlwaysMuteMicWhenJoinVoipEnabled(bEnable);
+        }
+        return ZoomSDKError.SDKERR_UNINITIALIZE;
+      },
+      /** 
+      * mode: Enable Suppress Audio Notify
+      * @param {Boolean} bEnable Enable or not
+      * @return {ZoomSDKError}
+      */
+      Setting_EnableSuppressAudioNotify: function (opts) {
+        if (_addon) {
+          let clientOpts = opts || {};
+          let bEnable = clientOpts.bEnable;
+          return _addon.EnableSuppressAudioNotify(bEnable);
+        }
+        return ZoomSDKError.SDKERR_UNINITIALIZE;
+      },
+      /** 
+      * mode: Is Suppress Audio Notify Enabled
+      * @param {Boolean} bEnable Enable or not
+      * @return {ZoomSDKError}
+      */
+      Setting_IsSuppressAudioNotifyEnabled: function (opts) {
+        if (_addon) {
+          let clientOpts = opts || {};
+          let bEnable = clientOpts.bEnable;
+          return _addon.IsSuppressAudioNotifyEnabled(bEnable);
+        }
+        return ZoomSDKError.SDKERR_UNINITIALIZE;
+      },
+      /** 
+      * mode: Enable Echo Cancel lation
+      * @param {Boolean} bEnable Enable or not
+      * @return {ZoomSDKError}
+      */
+      Setting_EnableEchoCancellation: function (opts) {
+        if (_addon) {
+          let clientOpts = opts || {};
+          let bEnable = clientOpts.bEnable;
+          return _addon.EnableEchoCancellation(bEnable);
+        }
+        return ZoomSDKError.SDKERR_UNINITIALIZE;
+      },
+      /** 
+      * mode: Is Echo Cancel lation Enabled
+      * @param {Boolean} bEnable Enable or not
+      * @return {ZoomSDKError}
+      */
+      Setting_IsEchoCancellationEnabled: function (opts) {
+        if (_addon) {
+          let clientOpts = opts || {};
+          let bEnable = clientOpts.bEnable;
+          return _addon.IsEchoCancellationEnabled(bEnable);
+        }
+        return ZoomSDKError.SDKERR_UNINITIALIZE;
+      },
+      /** 
+      * mode: Set Mic Vol
+      * @param {Number} value
+      * @return {ZoomSDKError}
+      */
+      Setting_SetMicVol: function (opts) {
+        if (_addon) {
+          let clientOpts = opts || {};
+          let value = clientOpts.value;
+          return _addon.SetMicVol(Number(value));
+        }
+        return ZoomSDKError.SDKERR_UNINITIALIZE;
+      },
+      /** 
+      * mode: Get Mic Vol
+      * @param {Number} value
+      * @return {ZoomSDKError}
+      */
+      Setting_GetMicVol: function (opts) {
+        if (_addon) {
+          let clientOpts = opts || {};
+          let value = clientOpts.value;
+          return _addon.GetMicVol(Number(value));
+        }
+        return ZoomSDKError.SDKERR_UNINITIALIZE;
+      },
+      /** 
+      * mode: Set Speaker Vol
+      * @param {Number} value
+      * @return {ZoomSDKError}
+      */
+      Setting_SetSpeakerVol: function (opts) {
+        if (_addon) {
+          let clientOpts = opts || {};
+          let value = clientOpts.value;
+          return _addon.SetSpeakerVol(Number(value));
+        }
+        return ZoomSDKError.SDKERR_UNINITIALIZE;
+      },
+      /** 
+      * mode: Get Speaker Vol
+      * @param {Number} value
+      * @return {ZoomSDKError}
+      */
+      Setting_GetSpeakerVol: function (opts) {
+        if (_addon) {
+          let clientOpts = opts || {};
+          let value = clientOpts.value;
+          return _addon.GetSpeakerVol(Number(value));
+        }
+        return ZoomSDKError.SDKERR_UNINITIALIZE;
+      }
+    };
+  };
+  return {
+    /**
+     * mode: Get Zoom SDK Audio Setting Service Module
+     * @return {ZoomSetting}
+    */
+    getInstance: function (opts) {
+      if(!instance) {
+        instance = init(opts);
+      }
+      return instance;;
+    }
+  };
+})();
 
-
+module.exports = {
+  ZoomAudioSetting: ZoomAudioSetting
+}</code></pre>
+        </article>
+    </section>
 
 
 

@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Home</title>
+    <title>JSDoc: Source: zoom_audio_rawdata.js</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,32 +17,84 @@
 
 <div id="main">
 
-    <h1 class="page-title">Home</h1>
+    <h1 class="page-title">Source: zoom_audio_rawdata.js</h1>
 
     
 
 
 
     
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>
+const { ZoomSDKError } = require('./settings.js');
 
+var ZoomAudioRawData = (function () {
+  let instance;
+   /**
+   * mode: Zoom SDK Video Raw Data Init
+   * @param {Object} addon zoom sdk module
+   * @return {ZoomAudioRawData}
+   */
+  function init(opts) {
+ 
+    let clientOpts = opts || {};
 
-    <h3> </h3>
+    // Private methods and variables
+    let _addon = clientOpts.addon.GetAudioRawDataObj() || null;
 
+    return {
+      /** mode: Set Raw Data CB
+      * @return {ZoomSDKError}
+      */
+      SetRawDataCB: function(onMixedAudioRawDataReceived, onOneWayAudioRawDataReceived) {
+        if (_addon) {
+          return _addon.SetRawDataCB(onMixedAudioRawDataReceived, onOneWayAudioRawDataReceived);
+        }
+        return ZoomSDKError.SDKERR_UNINITIALIZE;
+      },
+      /** mode: Start
+      * @param {Number} RawDataMemoryMode
+      * @return {ZoomSDKError}
+      */
+      Start: function (opts) {
+        if (_addon) {
+          let clientOpts = opts || {};
+          let RawDataMemoryMode = clientOpts.RawDataMemoryMode;
+          return _addon.Start(Number(RawDataMemoryMode));
+        }
+        return ZoomSDKError.SDKERR_UNINITIALIZE;
+      },
+      /** mode: Stop
+      * @return {ZoomSDKError}
+      */
+      Stop: function () {
+        if (_addon) {
+          return _addon.Stop();
+        }
+        return ZoomSDKError.SDKERR_UNINITIALIZE;
+      }
+    };
+};
+  return {
+    /**
+     * mode: Get Zoom SDK Video Raw Data Module
+     * @return {ZoomAudioRawData}
+    */
+    getInstance: function (opts) {
+      if (!instance) {
+        instance = init(opts)
+      }
+      return instance
+    }
+  };
+})();
 
-
-
-
-
-
-
-
-
-    
-
-
-
-
-
+module.exports = {
+  ZoomAudioRawData: ZoomAudioRawData
+}</code></pre>
+        </article>
+    </section>
 
 
 

@@ -69,6 +69,7 @@ public:
 	v8::Persistent<v8::Function, v8::CopyablePersistentTraits<v8::Function> > onLoginRet;
 	v8::Persistent<v8::Function, v8::CopyablePersistentTraits<v8::Function> > onLogout;
 	v8::Persistent<v8::Function, v8::CopyablePersistentTraits<v8::Function> > onZoomIdentityExpired;
+	v8::Persistent<v8::Function, v8::CopyablePersistentTraits<v8::Function> > onZoomAuthIdentityExpired;
 	//meeting_service_cb
 	v8::Persistent<v8::Function, v8::CopyablePersistentTraits<v8::Function> > onMeetingStatusChanged;
 	
@@ -78,6 +79,14 @@ public:
 	v8::Persistent<v8::Function, v8::CopyablePersistentTraits<v8::Function> > onDeleteMeeting;
 	//meetingUI_Controller_cb
 	v8::Persistent<v8::Function, v8::CopyablePersistentTraits<v8::Function> > onInviteBtnClicked;
+	v8::Persistent<v8::Function, v8::CopyablePersistentTraits<v8::Function> > onStartShareBtnClicked;
+	v8::Persistent<v8::Function, v8::CopyablePersistentTraits<v8::Function> > onEndMeetingBtnClicked;
+	v8::Persistent<v8::Function, v8::CopyablePersistentTraits<v8::Function> > onParticipantListBtnClicked;
+	v8::Persistent<v8::Function, v8::CopyablePersistentTraits<v8::Function> > onCustomLiveStreamMenuClicked;
+	v8::Persistent<v8::Function, v8::CopyablePersistentTraits<v8::Function> > onZoomInviteDialogFailed;
+	v8::Persistent<v8::Function, v8::CopyablePersistentTraits<v8::Function> > onCCBTNClicked;
+	v8::Persistent<v8::Function, v8::CopyablePersistentTraits<v8::Function> > onAudioBtnClicked;
+	v8::Persistent<v8::Function, v8::CopyablePersistentTraits<v8::Function> > onAudioMenuBtnClicked;
 
 	//meeting_audio_Controller_cb
 	v8::Persistent<v8::Function, v8::CopyablePersistentTraits<v8::Function> > onUserAudioStatusChange;
@@ -106,6 +115,13 @@ public:
 	v8::Persistent<v8::Function, v8::CopyablePersistentTraits<v8::Function> > onFreeMeetingUpgradeToGiftFreeTrialStop;
 	v8::Persistent<v8::Function, v8::CopyablePersistentTraits<v8::Function> > onFreeMeetingUpgradeToProMeeting;
 
+	v8::Persistent<v8::Function, v8::CopyablePersistentTraits<v8::Function> > onInputMeetingPasswordAndScreenNameNotification;
+	v8::Persistent<v8::Function, v8::CopyablePersistentTraits<v8::Function> > onAirPlayInstructionWndNotification;
+	v8::Persistent<v8::Function, v8::CopyablePersistentTraits<v8::Function> > onWebinarNeedRegisterNotification;
+	v8::Persistent<v8::Function, v8::CopyablePersistentTraits<v8::Function> > onEndOtherMeetingToJoinMeetingNotification;
+	v8::Persistent<v8::Function, v8::CopyablePersistentTraits<v8::Function> > onFreeMeetingRemainTime;
+	v8::Persistent<v8::Function, v8::CopyablePersistentTraits<v8::Function> > onFreeMeetingRemainTimeStopCountDown;
+
 	//direct_share_helper_cb
 	v8::Persistent<v8::Function, v8::CopyablePersistentTraits<v8::Function> > OnDirectShareStatusUpdate;
 
@@ -113,6 +129,19 @@ public:
 	v8::Persistent<v8::Function, v8::CopyablePersistentTraits<v8::Function> > onNeedRealNameAuthMeetingNotification;
 	v8::Persistent<v8::Function, v8::CopyablePersistentTraits<v8::Function> > onRetrieveSMSVerificationCodeResultNotification;
 	v8::Persistent<v8::Function, v8::CopyablePersistentTraits<v8::Function> > onVerifySMSVerificationCodeResultNotification;
+
+	//audio_setting_context_cb
+	v8::Persistent<v8::Function, v8::CopyablePersistentTraits<v8::Function> > onComputerMicDeviceChanged;
+	v8::Persistent<v8::Function, v8::CopyablePersistentTraits<v8::Function> > onComputerSpeakerDeviceChanged;
+	v8::Persistent<v8::Function, v8::CopyablePersistentTraits<v8::Function> > onDefaultMicDeviceChanged;
+	v8::Persistent<v8::Function, v8::CopyablePersistentTraits<v8::Function> > onDefaultSpeakerDeviceChanged;
+
+	//video_setting_context_cb
+	v8::Persistent<v8::Function, v8::CopyablePersistentTraits<v8::Function> > onComputerCamDeviceChanged;
+	v8::Persistent<v8::Function, v8::CopyablePersistentTraits<v8::Function> > onDefaultCamDeviceChanged;
+
+	//recording_setting_context_cb
+	v8::Persistent<v8::Function, v8::CopyablePersistentTraits<v8::Function> > onCloudRecordingStorageInfo;
 
 	static ZoomNodeSinkHelper& GetInst()
 	{

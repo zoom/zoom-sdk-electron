@@ -3,44 +3,24 @@
 #include "wrap/sdk_wrap.h"
 #include "wrap/meeting_service_components_wrap/meeting_h323_helper_wrap.h"
 #include "zoom_native_to_wrap.h"
-
+#include "sdk_events_wrap_class.h"
 extern ZOOM_SDK_NAMESPACE::IMeetingServiceWrap& g_meeting_service_wrap;
-class ZMeetingH323CtrlWrapEvent : public ZOOM_SDK_NAMESPACE::IMeetingH323HelperEvent
-{
-public:
-	void SetOwner(ZMeetingH323Wrap* obj) { owner_ = obj; }
-	virtual void onCalloutStatusNotify(ZOOM_SDK_NAMESPACE::H323CalloutStatus status)
-	{
-		if (owner_) {
-			owner_->onH323CalloutStatusNotify(Map2WrapDefine(status));
-		}
-	}
-	virtual void onParingH323Result(ZOOM_SDK_NAMESPACE::H323ParingResult result, UINT64 meetingNumber)
-	{
-		//
-	}
-private:
-	ZMeetingH323Wrap* owner_;
-};
-
-static ZMeetingH323CtrlWrapEvent g_meeting_h323_ctrl_event;
-
 
 ZMeetingH323Wrap::ZMeetingH323Wrap()
 {
-	g_meeting_h323_ctrl_event.SetOwner(this);
+	SDKEventWrapMgr::GetInst().m_meetingH323CtrlWrapEvent.SetOwner(this);
 	m_pSink = 0;
 }
 ZMeetingH323Wrap::~ZMeetingH323Wrap()
 {
 	Uninit();
 	m_pSink = 0;
-	g_meeting_h323_ctrl_event.SetOwner(NULL);
+	SDKEventWrapMgr::GetInst().m_meetingH323CtrlWrapEvent.SetOwner(NULL);
 }
 void ZMeetingH323Wrap::Init()
 {
-	
-	ZOOM_SDK_NAMESPACE::CSDKWrap::GetInst().GetMeetingServiceWrap().T_GetH323Helper().SetEvent(&g_meeting_h323_ctrl_event);
+	ZOOM_SDK_NAMESPACE::CSDKWrap::GetInst().GetMeetingServiceWrap().T_GetH323Helper().Init_Wrap(&g_meeting_service_wrap);
+	ZOOM_SDK_NAMESPACE::CSDKWrap::GetInst().GetMeetingServiceWrap().T_GetH323Helper().SetEvent(&SDKEventWrapMgr::GetInst().m_meetingH323CtrlWrapEvent);
 }
 void ZMeetingH323Wrap::Uninit()
 {

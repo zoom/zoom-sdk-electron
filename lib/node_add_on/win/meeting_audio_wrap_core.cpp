@@ -3,66 +3,12 @@
 #include "wrap/sdk_wrap.h"
 #include "wrap/meeting_service_components_wrap/meeting_audio_wrap.h"
 #include "zoom_native_to_wrap.h"
-
+#include "sdk_events_wrap_class.h"
 extern ZOOM_SDK_NAMESPACE::IMeetingServiceWrap& g_meeting_service_wrap;
-class ZMeetingAudioCtrlWrapEvent : public ZOOM_SDK_NAMESPACE::IMeetingAudioCtrlEvent
-{
-public:
-	void SetOwner(ZMeetingAudioWrap* obj) { owner_ = obj; }
-	virtual void onUserAudioStatusChange(ZOOM_SDK_NAMESPACE::IList<ZOOM_SDK_NAMESPACE::IUserAudioStatus* >* lstAudioStatusChange, const wchar_t* strAudioStatusList)
-	{
-		if (owner_) {
-			if (NULL == strAudioStatusList && lstAudioStatusChange && lstAudioStatusChange->GetCount() > 0)
-			{
-				//
-				ZNList<ZNUserAudioStatus> audio_status_list;
-				ZoomSTRING zn_strAudioStatusList = L"";
-				for (int i = 0; i < lstAudioStatusChange->GetCount(); ++i)
-				{
-					ZOOM_SDK_NAMESPACE::IUserAudioStatus* pAudioStatus = lstAudioStatusChange->GetItem(i);
-					ZNUserAudioStatus userAudioStatus;
-					if (pAudioStatus)
-					{
-						userAudioStatus.userId = pAudioStatus->GetUserId();
-						userAudioStatus.audioStauts = Map2WrapDefine(pAudioStatus->GetStatus());
-					}
-					
-					audio_status_list.push_back(userAudioStatus);
-				}
-				owner_->onUserAudioStatusChange(audio_status_list, zn_strAudioStatusList);
-			}
-		}
-	}
-	virtual void onUserActiveAudioChange(ZOOM_SDK_NAMESPACE::IList<unsigned int >* plstActiveAudio)
-	{
-		if (owner_) {
-			if (plstActiveAudio && plstActiveAudio->GetCount() > 0)
-			{
-				//
-				ZNList<unsigned int> active_audio_list;
-				for (int i = 0; i < plstActiveAudio->GetCount(); ++i)
-				{
-					unsigned int userid = plstActiveAudio->GetItem(i);
-					active_audio_list.push_back(userid);
-				}
-				owner_->onUserActiveAudioChange(active_audio_list);
-			}
-		}
-	}
-	virtual void onHostRequestStartAudio(ZOOM_SDK_NAMESPACE::IRequestStartAudioHandler* handler_)
-	{
-
-	}
-private:
-	ZMeetingAudioWrap* owner_;
-};
-
-static ZMeetingAudioCtrlWrapEvent g_meeting_audio_ctrl_event;
-
 
 ZMeetingAudioWrap::ZMeetingAudioWrap()
 {
-	g_meeting_audio_ctrl_event.SetOwner(this);
+	SDKEventWrapMgr::GetInst().m_meetingAudioCtrlWrapEvent.SetOwner(this);
 	m_pSink = 0;
 	
 }
@@ -70,12 +16,12 @@ ZMeetingAudioWrap::~ZMeetingAudioWrap()
 {
 	Uninit();
 	m_pSink = 0;
-	g_meeting_audio_ctrl_event.SetOwner(NULL);
+	SDKEventWrapMgr::GetInst().m_meetingAudioCtrlWrapEvent.SetOwner(NULL);
 }
 void ZMeetingAudioWrap::Init()
 {
-	
-	ZOOM_SDK_NAMESPACE::CSDKWrap::GetInst().GetMeetingServiceWrap().T_GetMeetingAudioController().SetEvent(&g_meeting_audio_ctrl_event);
+	ZOOM_SDK_NAMESPACE::CSDKWrap::GetInst().GetMeetingServiceWrap().T_GetMeetingAudioController().Init_Wrap(&g_meeting_service_wrap);
+	ZOOM_SDK_NAMESPACE::CSDKWrap::GetInst().GetMeetingServiceWrap().T_GetMeetingAudioController().SetEvent(&SDKEventWrapMgr::GetInst().m_meetingAudioCtrlWrapEvent);
 }
 void ZMeetingAudioWrap::Uninit()
 {

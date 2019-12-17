@@ -50,7 +50,7 @@ template<>
 static void InitClassAttribute<ZoomNodeMeetingAudioCtrlWrap >(const v8::Local<v8::FunctionTemplate>& tpl, v8::Isolate* isolate)
 {
 	tpl->SetClassName(v8::String::NewFromUtf8(
-		isolate, "ZoomNodeMeetingAudioCtrlWrap"));
+		isolate, "ZoomNodeMeetingAudioCtrlWrap", v8::NewStringType::kInternalized).ToLocalChecked());
 	tpl->InstanceTemplate()->SetInternalFieldCount(1);
 
 	// Prototype

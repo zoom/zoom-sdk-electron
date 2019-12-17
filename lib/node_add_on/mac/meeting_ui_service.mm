@@ -415,3 +415,56 @@ void ZMeetingUICtrlWrap::onInviteBtnClicked(bool &bHandled)
         m_pSink->onInviteBtnClicked(bHandled);
     }
 }
+
+void ZMeetingUICtrlWrap::onStartShareBtnClicked()
+{
+    if (m_pSink) {
+        m_pSink->onStartShareBtnClicked();
+    }
+}
+
+void ZMeetingUICtrlWrap::onEndMeetingBtnClicked()
+{
+    if (m_pSink) {
+        m_pSink->onEndMeetingBtnClicked();
+    }
+}
+
+void ZMeetingUICtrlWrap::onParticipantListBtnClicked()
+{
+    if (m_pSink) {
+        m_pSink->onParticipantListBtnClicked();
+    }
+}
+
+void ZMeetingUICtrlWrap::onCustomLiveStreamMenuClicked()
+{
+    if (m_pSink) {
+        m_pSink->onCustomLiveStreamMenuClicked();
+    }
+}
+void ZMeetingUICtrlWrap::onZoomInviteDialogFailed()
+{
+    if (m_pSink) {
+        m_pSink->onZoomInviteDialogFailed();
+    }
+}
+
+void ZMeetingUICtrlWrap::onAudioBtnClicked(ZNAudioBtnClickedCallbackInfo info)
+{
+    if (m_pSink) {
+        m_pSink->onAudioBtnClicked(info);
+    }
+}
+
+void ZMeetingUICtrlWrap::onAudioMenuBtnClicked()
+{
+    if (m_pSink) {
+        m_pSink->onAudioMenuBtnClicked();
+    }
+}
+
+void ZMeetingUICtrlWrap::onCCBTNClicked()
+{
+    return;
+}

@@ -3,60 +3,25 @@
 #include "wrap/sdk_wrap.h"
 #include "wrap/meeting_service_components_wrap/meeting_ui_ctrl_wrap.h"
 #include "zoom_native_to_wrap.h"
-
+#include "sdk_events_wrap_class.h"
 
 ZOOM_SDK_NAMESPACE::IMeetingServiceWrap& g_meeting_service_wrap = ZOOM_SDK_NAMESPACE::CSDKWrap::GetInst().GetMeetingServiceWrap();
-class ZMeetingServiceWrapEvent : public ZOOM_SDK_NAMESPACE::IMeetingServiceEvent
-{
-public:
-	void SetOwner(ZMeetingServiceWrap* obj) { owner_ = obj; }
-	virtual void onMeetingStatusChanged(ZOOM_SDK_NAMESPACE::MeetingStatus status, int iResult)
-	{
-		if (owner_) {
-			owner_->onMeetingStatusChanged(Map2WrapDefine(status), iResult);
-		}
-	}
-	virtual void onMeetingStatisticsWarningNotification(ZOOM_SDK_NAMESPACE::StatisticsWarningType type)
-	{
 
-	}
-	virtual void onMeetingSecureKeyNotification(const char* key, int len, ZOOM_SDK_NAMESPACE::IMeetingExternalSecureKeyHandler* pHandler)
-	{
-
-	}
-	virtual void onMeetingParameterNotification(const ZOOM_SDK_NAMESPACE::MeetingParameter* pMeetingParam)
-	{
-
-	}
-private:
-	ZMeetingServiceWrap* owner_;
-};
-
-static ZMeetingServiceWrapEvent g_meeting_event;
 ZMeetingServiceWrap::ZMeetingServiceWrap()
 {
-	g_meeting_event.SetOwner(this);
+	SDKEventWrapMgr::GetInst().m_meetingServiceWrapEvent.SetOwner(this);
 	m_pSink = 0;
 }
 ZMeetingServiceWrap::~ZMeetingServiceWrap()
 {
 	Uninit();
 	m_pSink = 0;
-	g_meeting_event.SetOwner(NULL);
+	SDKEventWrapMgr::GetInst().m_meetingServiceWrapEvent.SetOwner(NULL);
 }
 void ZMeetingServiceWrap::Init()
 {
 	ZOOM_SDK_NAMESPACE::CSDKWrap::GetInst().GetMeetingServiceWrap().Init_Wrap();
-	ZOOM_SDK_NAMESPACE::CSDKWrap::GetInst().GetMeetingServiceWrap().SetEvent(&g_meeting_event);
-	m_meeting_ui_ctrl.Init();
-	m_meeting_annotation.Init();
-	m_meeting_audio_ctrl.Init();
-	m_meeting_video_ctrl.Init();
-	m_meeting_participants_ctrl.Init();
-	m_meeting_share_ctrl.Init();
-	m_meeting_h323_ctrl.Init();
-	m_meeting_config_ctrl.Init();
-	m_sdk_sms_helper.Init();
+	ZOOM_SDK_NAMESPACE::CSDKWrap::GetInst().GetMeetingServiceWrap().SetEvent(&SDKEventWrapMgr::GetInst().m_meetingServiceWrapEvent);
 }
 void ZMeetingServiceWrap::Uninit()
 {
@@ -321,44 +286,23 @@ bool ZMeetingInfoWrap::CheckingIsInternalMeeting()
 	return bDisable;
 }
 ////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-class ZMeetingUIControllerWrapEvent : public ZOOM_SDK_NAMESPACE::IMeetingUIControllerEvent
-{
-public:
-	void SetOwner(ZMeetingUICtrlWrap* obj) { owner_ = obj; }
-	virtual void onInviteBtnClicked(bool& bHandled)
-	{
-		if (owner_) {
-			owner_->onInviteBtnClicked(bHandled);
-		}
-	}
-	virtual void onStartShareBtnClicked() {}
-	virtual void onEndMeetingBtnClicked() {}
-	virtual void onParticipantListBtnClicked() {}
-	virtual void onCustomLiveStreamMenuClicked() {}
-	virtual void onZoomInviteDialogFailed() {}
-	virtual void onCCBTNClicked() {}
 
-
-private:
-	ZMeetingUICtrlWrap* owner_;
-};
-static ZMeetingUIControllerWrapEvent g_meeting_ui_controller_event;
 
 ZMeetingUICtrlWrap::ZMeetingUICtrlWrap()
 {
-	g_meeting_ui_controller_event.SetOwner(this);
+	SDKEventWrapMgr::GetInst().m_meetingUICtrlWrapEvent.SetOwner(this);
 	m_pSink = 0;
 }
 ZMeetingUICtrlWrap::~ZMeetingUICtrlWrap()
 {
 	Uninit();
 	m_pSink = 0;
-	g_meeting_ui_controller_event.SetOwner(NULL);
+	SDKEventWrapMgr::GetInst().m_meetingUICtrlWrapEvent.SetOwner(NULL);
 }
 void ZMeetingUICtrlWrap::Init()
 {
-	
-	ZOOM_SDK_NAMESPACE::CSDKWrap::GetInst().GetMeetingServiceWrap().T_GetUIController().SetEvent(&g_meeting_ui_controller_event);
+	ZOOM_SDK_NAMESPACE::CSDKWrap::GetInst().GetMeetingServiceWrap().T_GetUIController().Init_Wrap(&g_meeting_service_wrap);
+	ZOOM_SDK_NAMESPACE::CSDKWrap::GetInst().GetMeetingServiceWrap().T_GetUIController().SetEvent(&SDKEventWrapMgr::GetInst().m_meetingUICtrlWrapEvent);
 }
 void ZMeetingUICtrlWrap::Uninit()
 {
@@ -369,11 +313,53 @@ void ZMeetingUICtrlWrap::SetSink(ZNativeSDKMeetingUICtrlWrapSink* pSink)
 {
 	m_pSink = pSink;
 }
+
 void ZMeetingUICtrlWrap::onInviteBtnClicked(bool& bHandled)
 {
 	if (m_pSink)
 		m_pSink->onInviteBtnClicked(bHandled);
 }
+void ZMeetingUICtrlWrap::onStartShareBtnClicked()
+{
+	if (m_pSink)
+		m_pSink->onStartShareBtnClicked();
+}
+void ZMeetingUICtrlWrap::onEndMeetingBtnClicked()
+{
+	if (m_pSink)
+		m_pSink->onEndMeetingBtnClicked();
+}
+void ZMeetingUICtrlWrap::onParticipantListBtnClicked()
+{
+	if (m_pSink)
+		m_pSink->onParticipantListBtnClicked();
+}
+void ZMeetingUICtrlWrap::onCustomLiveStreamMenuClicked()
+{
+	if (m_pSink)
+		m_pSink->onCustomLiveStreamMenuClicked();
+}
+void ZMeetingUICtrlWrap::onZoomInviteDialogFailed()
+{
+	if (m_pSink)
+		m_pSink->onZoomInviteDialogFailed();
+}
+void ZMeetingUICtrlWrap::onCCBTNClicked()
+{
+	if (m_pSink)
+		m_pSink->onCCBTNClicked();
+}
+void ZMeetingUICtrlWrap::onAudioBtnClicked(ZNAudioBtnClickedCallbackInfo info)
+{
+	if (m_pSink)
+		m_pSink->onAudioBtnClicked(info);
+}
+void ZMeetingUICtrlWrap::onAudioMenuBtnClicked()
+{
+	if (m_pSink)
+		m_pSink->onAudioMenuBtnClicked();
+}
+
 ZNSDKError ZMeetingUICtrlWrap::ShowChatDlg(ZNShowChatDlgParam showChatDlgParam)
 {
 	ZOOM_SDK_NAMESPACE::ShowChatDlgParam param;

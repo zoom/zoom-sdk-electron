@@ -2,66 +2,28 @@
 #include "../premeeting_service_wrap_core.h"
 #include "wrap/sdk_wrap.h"
 #include "zoom_native_to_wrap.h"
-
-class ZPreMeetingServiceWrapEvent : public ZOOM_SDK_NAMESPACE::IPreMeetingServiceEvent
-{
-public:
-	void SetOwner(ZPremeetingServiceWrap* obj) { owner_ = obj; }
-	virtual void onScheduleOrEditMeeting(ZOOM_SDK_NAMESPACE::PremeetingAPIResult result, UINT64 meetingUniqueID)
-	{
-		if (owner_) {
-			owner_->onScheduleOrEditMeeting(Map2WrapDefine(result), meetingUniqueID);
-		}
-	}
-	virtual void onListMeeting(ZOOM_SDK_NAMESPACE::PremeetingAPIResult result, ZOOM_SDK_NAMESPACE::IList<UINT64 >* lstMeetingList)
-	{
-		if (owner_)
-		{
-			ZNList<unsigned long long> zlst_meeting_list;
-			if (lstMeetingList && lstMeetingList->GetCount() > 0)
-			{
-				for (int i = 0; i < lstMeetingList->GetCount(); ++i)
-				{
-					unsigned long long meetingID = lstMeetingList->GetItem(i);
-					zlst_meeting_list.push_back(meetingID);
-				}
-			}
-			ZNPremeetingAPIResult z_premeeting_api_result = Map2WrapDefine(result);
-			owner_->onListMeeting(z_premeeting_api_result, zlst_meeting_list);
-		}	
-	}
-	virtual void onDeleteMeeting(ZOOM_SDK_NAMESPACE::PremeetingAPIResult result)
-	{
-		if (owner_) {
-			owner_->onDeleteMeeting(Map2WrapDefine(result));
-		}
-	}
-private:
-	ZPremeetingServiceWrap* owner_;
-};
-
-static ZPreMeetingServiceWrapEvent g_premeeting_event;
-
+#include "sdk_events_wrap_class.h"
 
 ZPremeetingServiceWrap::ZPremeetingServiceWrap()
 {
-	g_premeeting_event.SetOwner(this);
+	SDKEventWrapMgr::GetInst().m_premeetingServiceWrapEvent.SetOwner(this);
 	m_pSink = 0;
 }
 ZPremeetingServiceWrap::~ZPremeetingServiceWrap()
 {
 	Uninit();
 	m_pSink = 0;
-	g_premeeting_event.SetOwner(NULL);
+	SDKEventWrapMgr::GetInst().m_premeetingServiceWrapEvent.SetOwner(NULL);
 }
 void ZPremeetingServiceWrap::Init()
 {
-	
-	ZOOM_SDK_NAMESPACE::CSDKWrap::GetInst().GetPreMeetingServiceWrap().SetEvent(&g_premeeting_event);
+	ZOOM_SDK_NAMESPACE::CSDKWrap::GetInst().GetPreMeetingServiceWrap().Init_Wrap();
+	ZOOM_SDK_NAMESPACE::CSDKWrap::GetInst().GetPreMeetingServiceWrap().SetEvent(&SDKEventWrapMgr::GetInst().m_premeetingServiceWrapEvent);
 	
 }
 void ZPremeetingServiceWrap::Uninit()
 {
+	ZOOM_SDK_NAMESPACE::CSDKWrap::GetInst().GetPreMeetingServiceWrap().SetEvent(NULL);
 	ZOOM_SDK_NAMESPACE::CSDKWrap::GetInst().GetPreMeetingServiceWrap().Uninit_Wrap();
 }
 void ZPremeetingServiceWrap::SetSink(ZNativeSDKPreMeetingWrapSink* pSink)

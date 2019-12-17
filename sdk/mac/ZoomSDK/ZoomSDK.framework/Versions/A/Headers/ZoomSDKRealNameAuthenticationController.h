@@ -130,5 +130,11 @@ typedef enum
  * @return An object of ZoomSDKVerifySMSVerificationCodeController.
  */
 -(ZoomSDKVerifySMSVerificationCodeController *)reVerifySMSVerificationCodeController;
+
+/**
+ * @brief  Set the default cell phone information.
+ * @return If the function succeeds, will return ZoomSDKError_Success, otherwise failed.
+ */
+- (ZoomSDKError)setDefaultCellPhoneInfo:(NSString*)countryCode phoneNumber:(NSString*)phoneNumber;
 @end
 

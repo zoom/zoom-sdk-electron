@@ -44,6 +44,7 @@ public:
 	void EnableDeclineRemoteControlResponseDlg(bool bEnable);
 	void EnableLeaveMeetingOptionForHost(bool bEnable);
 	void EnableVideoButtonOnMeetingUI(bool bEnable);
+	void EnableAudioButtonOnMeetingUI(bool bEnable);
 	void EnableEnterAndExitFullScreenButtonOnMeetingUI(bool bEnable);
 	void RedirectClickShareBTNEvent(bool bRedirect);
 	void RedirectClickEndMeetingBTNEvent(bool bRedirect);
@@ -51,6 +52,8 @@ public:
 	void RedirectClickCustomLiveStreamMenuEvent(bool bRedirect);
 	void RedirectClickParticipantListBTNEvent(bool bRedirect);
 	void RedirectClickCCBTNEvent(bool bRedirect);
+	void RedirectClickAudioBTNEvent(bool bRedirect);
+	void RedirectClickAudioMenuBTNEvent(bool bRedirect);
 	void RedirectMeetingWarningMsg(ZNZoomRedirectWarningMsgOption redirectOption);
 	void EnableToolTipsShow(bool bEnable);
 	void EnableAirplayInstructionWindow(bool bEnable);
@@ -86,7 +89,20 @@ public:
 	void EnableForceAutoStartMyVideoWhenJoinMeeting(bool bEnable);
 	void EnableForceAutoStopMyVideoWhenJoinMeeting(bool bEnable);
 	void DisableAutoShowSelectJoinAudioDlgWhenJoinMeeting(bool bDisable);
+	void DisableShowJoinMeetingWnd(bool bDisable);
 	void DisableRemoteCtrlCopyPasteFeature(bool bDisable);
+
+	void SetShowVideoOptimizeChkbox(bool bShow);
+	ZNRequiredInfoType GetRequiredInfoType();
+	bool InputMeetingPasswordAndScreenName(ZoomSTRING meetingPassword, ZoomSTRING screenName);
+	bool InputMeetingIDAndScreenName(ZoomSTRING meetingID, ZoomSTRING screenName);
+	bool InputMeetingScreenName(ZoomSTRING screenName);
+	void MeetingPasswordAndScreenNameHandler_Cancel();// not a good name
+	ZNWebinarNeedRegisterType GetWebinarNeedRegisterType();
+	ZoomSTRING GetWebinarRegisterUrl();
+	void ReleaseRegisterWebinarByUrl();//not a good name
+	ZNSDKError InputWebinarRegisterEmailAndScreenName(ZoomSTRING email, ZoomSTRING screenName);
+	void CancelRegisterWebinarByEmail();
 
 	ZNFreeMeetingEndingReminderType GetReminderType();
 	ZNSDKError UpgradeMeeting();
@@ -98,6 +114,13 @@ public:
 	void onFreeMeetingUpgradeToGiftFreeTrialStart();
 	void onFreeMeetingUpgradeToGiftFreeTrialStop();
 	void onFreeMeetingUpgradeToProMeeting();
+
+	void onInputMeetingPasswordAndScreenNameNotification();
+	void onAirPlayInstructionWndNotification(bool bShow, ZoomSTRING airhostName);
+	void onWebinarNeedRegisterNotification();
+	void onEndOtherMeetingToJoinMeetingNotification();
+	void onFreeMeetingRemainTime(unsigned int leftTime);
+	void onFreeMeetingRemainTimeStopCountDown();
 
 private:
 	ZNativeSDKMeetingConfigWrapFreemeetingSink* m_pSink;

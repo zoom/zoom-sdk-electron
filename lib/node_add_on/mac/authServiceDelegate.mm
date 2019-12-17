@@ -51,7 +51,10 @@ extern  ZNativeSDKWrap _g_native_wrap;
     return self.loginStatus;
 }
 
-
+-(void)onZoomAuthIdentityExpired
+{
+    _g_native_wrap.GetAuthServiceWrap().onZoomAuthIdentityExpired();
+}
 #pragma mark PremeetingServic
 -(void)onListMeeting:(ZoomSDKPremeetingError)error MeetingList:(NSArray *)meetingList
 {

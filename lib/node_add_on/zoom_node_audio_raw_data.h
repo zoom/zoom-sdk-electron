@@ -28,6 +28,9 @@ public:
 	/// \return If the function succeeds, the return value is SDKRawDataError_SUCCESS.
 	///Otherwise failed. To get extended error information, see \link SDKRawDataError \endlink enum.
 	static void Stop(const v8::FunctionCallbackInfo<v8::Value>& args);
+
+	static void StartPipeServer(const v8::FunctionCallbackInfo<v8::Value>& args);
+	static void StopPipeServer(const v8::FunctionCallbackInfo<v8::Value>& args);
 	
 	static v8::Persistent<v8::Function> constructor;
 };
@@ -35,13 +38,16 @@ template<>
 static void InitClassAttribute<ZoomNodeAudioRawDataWrap >(const v8::Local<v8::FunctionTemplate>& tpl, v8::Isolate* isolate)
 {
 	tpl->SetClassName(v8::String::NewFromUtf8(
-		isolate, "ZoomNodeAudioRawDataWrap"));
+		isolate, "ZoomNodeAudioRawDataWrap", v8::NewStringType::kInternalized).ToLocalChecked());
 	tpl->InstanceTemplate()->SetInternalFieldCount(1);
 
 	// Prototype
 	NODE_SET_PROTOTYPE_METHOD(tpl, "SetRawDataCB", ZoomNodeAudioRawDataWrap::SetRawDataCB);
 	NODE_SET_PROTOTYPE_METHOD(tpl, "Start", ZoomNodeAudioRawDataWrap::Start);
 	NODE_SET_PROTOTYPE_METHOD(tpl, "Stop", ZoomNodeAudioRawDataWrap::Stop);
+
+	NODE_SET_PROTOTYPE_METHOD(tpl, "StartPipeServer", ZoomNodeAudioRawDataWrap::StartPipeServer);
+	NODE_SET_PROTOTYPE_METHOD(tpl, "StopPipeServer", ZoomNodeAudioRawDataWrap::StopPipeServer);
 }
 template<>
 static v8::Persistent<v8::Function>* GetConstructor<ZoomNodeAudioRawDataWrap >() {

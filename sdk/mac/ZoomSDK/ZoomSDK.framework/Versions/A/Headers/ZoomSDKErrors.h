@@ -532,11 +532,10 @@ typedef enum{
 
 /**
  * @brief Enumeration of H.323 device outgoing call status.
+ * @note The order of enumeration members has been changed.H323CalloutStatus_Unknown has been moved.
  */
 typedef enum
 {
-	//Unknown status.
-    H323CalloutStatus_Unknown,
 	//Call out successfully.
     H323CalloutStatus_Success,
 	//In process of ringing.
@@ -545,6 +544,8 @@ typedef enum
     H323CalloutStatus_Timeout,
 	//Failed to call out.
     H323CalloutStatus_Failed,
+    //Unknown status.
+    H323CalloutStatus_Unknown,
 }H323CalloutStatus;
 
 /**
@@ -1162,3 +1163,29 @@ typedef enum {
     //The Q&A is disonnected conflict.
     QAConnectStatus_Disconnect_Conflict,
 }ZoomSDKQAConnectStatus;
+
+/**
+ * @brief Enumerations of Audio action info.
+ */
+typedef enum {
+    //The audio button action info is none.
+    ZoomSDKAudioActionInfo_none = 0,
+    //The audio button action info is need to join voip.
+    ZoomSDKAudioActionInfo_needJoinVoip,
+    //The audio button action info is need to mute/unmute audio.
+    ZoomSDKAudioActionInfo_muteOrUnmenuAudio,
+    //The audio button action info is no audio device connected.
+    ZoomSDKAudioActionInfo_noAudioDeviceConnected,
+    //The audio button action info is computer audio device error.
+    ZoomSDKAudioActionInfo_computerAudioDeviceError,
+}ZoomSDKAudioActionInfo;
+
+/**
+ *@brief Struct type of auth param.
+ */
+typedef struct{
+    //The jwtToken of your auth.
+    NSString* jwtToken;
+}ZoomSDKAuthContext;
+
+

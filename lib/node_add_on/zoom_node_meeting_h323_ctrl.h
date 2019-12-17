@@ -49,7 +49,7 @@ template<>
 static void InitClassAttribute<ZoomNodeMeetingH323CtrlWrap >(const v8::Local<v8::FunctionTemplate>& tpl, v8::Isolate* isolate)
 {
 	tpl->SetClassName(v8::String::NewFromUtf8(
-		isolate, "ZoomNodeMeetingH323CtrlWrap"));
+		isolate, "ZoomNodeMeetingH323CtrlWrap", v8::NewStringType::kInternalized).ToLocalChecked());
 	tpl->InstanceTemplate()->SetInternalFieldCount(1);
 
 	// Prototype

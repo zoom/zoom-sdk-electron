@@ -1,118 +1,175 @@
 #include "zoom_raw_data_wrap.h"
 #include "zoom_node_share_raw_data.h"
 #include "run_task_to_main_thread.h"
-class ShareRawDataHelper : public IShareRawDataReceiver
+
+#include "raw_data_uv_ipc_server.h"
+#include <iostream>
+#include <string>
+#include "raw_data_format.h"
+//////////////////////////////////////////////////////////////////////////////////////////////////////
+class ShareRawDataHelper : public IShareRawDataReceiver, public UVIPCSink
 {
 public:
 	friend class ZoomNodeShareRawDataWrap;
 	ShareRawDataHelper()
 	{
 		_channel = NULL;
+		_libuv_option = false;
 	}
 	~ShareRawDataHelper()
 	{
 		if (_channel)
 			_channel->Stop();
 		_channel = NULL;
+		_libuv_option = false;
 	}
 
 	virtual void onDeviceRunning(void* device) {}
 	virtual void onDeviceStop(void* device) {}
+	virtual void onConnect() {}
+	virtual void onDisconnect() {}
+	virtual void onMessageRecvNotification(UVIPCMessage* msg)
+	{
+		if (NULL == msg)
+			return;
+		if (sizeof(unsigned int) != msg->GetLen()
+			|| NULL == msg->GetBuf())
+			return;
+		unsigned int* p_source_id = (unsigned int*)msg->GetBuf();
+		std::lock_guard<std::mutex> lock_(_cached_raw_data_count_map_mutex);
+		std::map<unsigned int, int>::iterator iter = _cached_raw_data_count_map.find(*p_source_id);
+		if (_cached_raw_data_count_map.end() != iter)
+			--iter->second;
+	}
+	virtual void onIdle() {}
+#define max_cache_frame 5
 	virtual void onShareRawDataReceived(YUVRawDataI420* data_, IVector<unsigned long long >* recv_handle_list)
 	{
-		if (data_ && data_->CanAddRef())
+		
+		if (_libuv_option)
 		{
-			data_->AddRef();
+			if (_uv_ipc_server.HasClientConnected() && data_)
 			{
-				std::lock_guard<std::mutex> lock_(_cached_raw_data_mutex);
-				std::map<unsigned int, IMainThreadTask* >::iterator iter_ = _cached_raw_data.find(data_->GetSourceID());
-				if (_cached_raw_data.end() != iter_ && iter_->second)
 				{
-					IVector<unsigned long long >* recv_handle_list_tmp = NULL;
-					if (recv_handle_list && recv_handle_list->GetCount() > 0)
+					std::lock_guard<std::mutex> lock_(_cached_raw_data_count_map_mutex);
+					std::map<unsigned int, int>::iterator iter = _cached_raw_data_count_map.find(data_->GetSourceID());
+					if (_cached_raw_data_count_map.end() != iter)
 					{
-						CZNodeSetImpl<unsigned long long >* znSet = new CZNodeSetImpl<unsigned long long >;
-						if (znSet)
+						if (iter->second > max_cache_frame)
 						{
-							int count = recv_handle_list->GetCount();
-							for (int index = 0; index < count; index++)
-							{
-								znSet->m_List.insert(recv_handle_list->GetItem(index));
-							}
-							recv_handle_list_tmp = znSet;
+							return;
+						}
+						else
+						{
+							++iter->second;
 						}
 					}
-
-					iter_->second->UpdateData(data_, recv_handle_list_tmp);
-					return;
+					else
+					{
+						_cached_raw_data_count_map.insert(std::make_pair(data_->GetSourceID(), 1));
+					}
 				}
+				UVIPCMessage* rawdata_msg = MakeUVIPCMsg(data_, recv_handle_list, TYPE_SHARE);
+				_uv_ipc_server.SendMessage(rawdata_msg);
 			}
-
-			class ShareRawDataTask : public IMainThreadTask
+		}
+		
+		else
+		{
+			if (data_ && data_->CanAddRef())
 			{
-			public:
-				friend class ShareRawDataHelper;
-				explicit ShareRawDataTask(ShareRawDataHelper* helper, YUVRawDataI420* data, IVector<unsigned long long >* recv_handle_list)
+				data_->AddRef();
 				{
-					helper_ = helper;
-					data_ = data;
-					recv_handle_list_ = recv_handle_list;
-					if (helper_ && data_)
+					std::lock_guard<std::mutex> lock_(_cached_raw_data_mutex);
+					std::map<unsigned int, IMainThreadTask* >::iterator iter_ = _cached_raw_data.find(data_->GetSourceID());
+					if (_cached_raw_data.end() != iter_ && iter_->second)
 					{
-						std::lock_guard<std::mutex> lock_(helper_->_cached_raw_data_mutex);
-						helper_->_cached_raw_data.insert(std::make_pair(data_->GetSourceID(), this));
+						IVector<unsigned long long >* recv_handle_list_tmp = NULL;
+						if (recv_handle_list && recv_handle_list->GetCount() > 0)
+						{
+							CZNodeSetImpl<unsigned long long >* znSet = new CZNodeSetImpl<unsigned long long >;
+							if (znSet)
+							{
+								int count = recv_handle_list->GetCount();
+								for (int index = 0; index < count; index++)
+								{
+									znSet->m_List.insert(recv_handle_list->GetItem(index));
+								}
+								recv_handle_list_tmp = znSet;
+							}
+						}
+
+						iter_->second->UpdateData(data_, recv_handle_list_tmp);
+						return;
 					}
 				}
-				virtual ~ShareRawDataTask() {}
-				virtual void Run()
+
+				class ShareRawDataTask : public IMainThreadTask
 				{
-					if (helper_ && data_)
+				public:
+					friend class ShareRawDataHelper;
+					explicit ShareRawDataTask(ShareRawDataHelper* helper, YUVRawDataI420* data, IVector<unsigned long long >* recv_handle_list)
 					{
-						std::lock_guard<std::mutex> lock_(helper_->_cached_raw_data_mutex);
-						helper_->_cached_raw_data.erase(data_->GetSourceID());
+						helper_ = helper;
+						data_ = data;
+						recv_handle_list_ = recv_handle_list;
+						if (helper_ && data_)
+						{
+							std::lock_guard<std::mutex> lock_(helper_->_cached_raw_data_mutex);
+							helper_->_cached_raw_data.insert(std::make_pair(data_->GetSourceID(), this));
+						}
 					}
-					if (helper_)
-						helper_->onShareRawDataReceived_MainThread(data_, recv_handle_list_);
-					if (data_)
-						data_->Release();
-					if (recv_handle_list_)
-						delete recv_handle_list_;
-					delete this;
-				}
-				virtual void UpdateData(void* data_new, void* recv_handle_list_new)
-				{
+					virtual ~ShareRawDataTask() {}
+					virtual void Run()
 					{
+						if (helper_ && data_)
+						{
+							std::lock_guard<std::mutex> lock_(helper_->_cached_raw_data_mutex);
+							helper_->_cached_raw_data.erase(data_->GetSourceID());
+						}
+						if (helper_)
+							helper_->onShareRawDataReceived_MainThread(data_, recv_handle_list_);
 						if (data_)
 							data_->Release();
 						if (recv_handle_list_)
 							delete recv_handle_list_;
-
-						data_ = (YUVRawDataI420*)data_new;
-						recv_handle_list_ = (IVector<unsigned long long >*)recv_handle_list_new;
+						delete this;
 					}
-				}
-			public:
-				ShareRawDataHelper* helper_;
-				YUVRawDataI420* data_;
-				IVector<unsigned long long >* recv_handle_list_;
-			};
-
-			IVector<unsigned long long >* recv_handle_list_tmp = NULL;
-			if (recv_handle_list && recv_handle_list->GetCount() > 0)
-			{
-				CZNodeSetImpl<unsigned long long >* znSet = new CZNodeSetImpl<unsigned long long >;
-				if (znSet)
-				{
-					int count = recv_handle_list->GetCount();
-					for (int index = 0; index < count; index++)
+					virtual void UpdateData(void* data_new, void* recv_handle_list_new)
 					{
-						znSet->m_List.insert(recv_handle_list->GetItem(index));
+						{
+							if (data_)
+								data_->Release();
+							if (recv_handle_list_)
+								delete recv_handle_list_;
+
+							data_ = (YUVRawDataI420*)data_new;
+							recv_handle_list_ = (IVector<unsigned long long >*)recv_handle_list_new;
+						}
 					}
-					recv_handle_list_tmp = znSet;
+				public:
+					ShareRawDataHelper* helper_;
+					YUVRawDataI420* data_;
+					IVector<unsigned long long >* recv_handle_list_;
+				};
+
+				IVector<unsigned long long >* recv_handle_list_tmp = NULL;
+				if (recv_handle_list && recv_handle_list->GetCount() > 0)
+				{
+					CZNodeSetImpl<unsigned long long >* znSet = new CZNodeSetImpl<unsigned long long >;
+					if (znSet)
+					{
+						int count = recv_handle_list->GetCount();
+						for (int index = 0; index < count; index++)
+						{
+							znSet->m_List.insert(recv_handle_list->GetItem(index));
+						}
+						recv_handle_list_tmp = znSet;
+					}
 				}
+				if (!PostTaskToMainThread(new ShareRawDataTask(this, data_, recv_handle_list_tmp)))
+					data_->Release();
 			}
-			if (!PostTaskToMainThread(new ShareRawDataTask(this, data_, recv_handle_list_tmp)))
-				data_->Release();
 		}
 	}
 
@@ -245,6 +302,10 @@ private:
 	v8::Persistent<v8::Function, v8::CopyablePersistentTraits<v8::Function> > _onSubscribedShareUserLeft;
 	std::mutex _cached_raw_data_mutex;
 	std::map<unsigned int, IMainThreadTask* > _cached_raw_data;
+	bool _libuv_option;
+	RawDataUVIPCServer _uv_ipc_server;
+	std::mutex _cached_raw_data_count_map_mutex;
+	std::map<unsigned int, int > _cached_raw_data_count_map;
 };
 ShareRawDataHelper g_share_rawdata;
 
@@ -264,14 +325,14 @@ void ZoomNodeShareRawDataWrap::SetRawDataCB(const v8::FunctionCallbackInfo<v8::V
 	v8::Isolate* isolate = args.GetIsolate();
 	if (args.Length() < 1) {
 		isolate->ThrowException(v8::Exception::TypeError(
-			v8::String::NewFromUtf8(isolate, "Wrong number of arguments")));
+			v8::String::NewFromUtf8(isolate, "Wrong number of arguments", v8::NewStringType::kInternalized).ToLocalChecked()));
 		return;
 	}
-
+	if (args[0]->IsNull())	{		g_share_rawdata._onShareRawDataReceived.Empty();		return;	}
 	if (!args[0]->IsFunction())
 	{
 		isolate->ThrowException(v8::Exception::TypeError(
-			v8::String::NewFromUtf8(isolate, "Wrong arguments")));
+			v8::String::NewFromUtf8(isolate, "Wrong arguments", v8::NewStringType::kInternalized).ToLocalChecked()));
 		return;
 	}
 
@@ -288,14 +349,14 @@ void ZoomNodeShareRawDataWrap::SetRawDataShareUserDataOnCB(const v8::FunctionCal
 	v8::Isolate* isolate = args.GetIsolate();
 	if (args.Length() < 1) {
 		isolate->ThrowException(v8::Exception::TypeError(
-			v8::String::NewFromUtf8(isolate, "Wrong number of arguments")));
+			v8::String::NewFromUtf8(isolate, "Wrong number of arguments", v8::NewStringType::kInternalized).ToLocalChecked()));
 		return;
 	}
-
+	if (args[0]->IsNull())	{		g_share_rawdata._onSubscribedShareUserDataOn.Empty();		return;	}
 	if (!args[0]->IsFunction())
 	{
 		isolate->ThrowException(v8::Exception::TypeError(
-			v8::String::NewFromUtf8(isolate, "Wrong arguments")));
+			v8::String::NewFromUtf8(isolate, "Wrong arguments", v8::NewStringType::kInternalized).ToLocalChecked()));
 		return;
 	}
 
@@ -312,14 +373,14 @@ void ZoomNodeShareRawDataWrap::SetRawDataShareUserDataOffCB(const v8::FunctionCa
 	v8::Isolate* isolate = args.GetIsolate();
 	if (args.Length() < 1) {
 		isolate->ThrowException(v8::Exception::TypeError(
-			v8::String::NewFromUtf8(isolate, "Wrong number of arguments")));
+			v8::String::NewFromUtf8(isolate, "Wrong number of arguments", v8::NewStringType::kInternalized).ToLocalChecked()));
 		return;
 	}
-
+	if (args[0]->IsNull())	{		g_share_rawdata._onSubscribedShareUserDataOff.Empty();		return;	}
 	if (!args[0]->IsFunction())
 	{
 		isolate->ThrowException(v8::Exception::TypeError(
-			v8::String::NewFromUtf8(isolate, "Wrong arguments")));
+			v8::String::NewFromUtf8(isolate, "Wrong arguments", v8::NewStringType::kInternalized).ToLocalChecked()));
 		return;
 	}
 
@@ -336,14 +397,14 @@ void ZoomNodeShareRawDataWrap::SetRawDataShareUserLeftCB(const v8::FunctionCallb
 	v8::Isolate* isolate = args.GetIsolate();
 	if (args.Length() < 1) {
 		isolate->ThrowException(v8::Exception::TypeError(
-			v8::String::NewFromUtf8(isolate, "Wrong number of arguments")));
+			v8::String::NewFromUtf8(isolate, "Wrong number of arguments", v8::NewStringType::kInternalized).ToLocalChecked()));
 		return;
 	}
-
+	if (args[0]->IsNull())	{		g_share_rawdata._onSubscribedShareUserLeft.Empty();		return;	}
 	if (!args[0]->IsFunction())
 	{
 		isolate->ThrowException(v8::Exception::TypeError(
-			v8::String::NewFromUtf8(isolate, "Wrong arguments")));
+			v8::String::NewFromUtf8(isolate, "Wrong arguments", v8::NewStringType::kInternalized).ToLocalChecked()));
 		return;
 	}
 
@@ -360,20 +421,24 @@ void ZoomNodeShareRawDataWrap::Start(const v8::FunctionCallbackInfo<v8::Value>& 
 	v8::Isolate* isolate = args.GetIsolate();
 	if (args.Length() < 1) {
 		isolate->ThrowException(v8::Exception::TypeError(
-			v8::String::NewFromUtf8(isolate, "Wrong number of arguments")));
+			v8::String::NewFromUtf8(isolate, "Wrong number of arguments", v8::NewStringType::kInternalized).ToLocalChecked()));
 		return;
 	}
 	if (!args[0]->IsNumber())
 	{
 		isolate->ThrowException(v8::Exception::TypeError(
-			v8::String::NewFromUtf8(isolate, "Wrong arguments")));
+			v8::String::NewFromUtf8(isolate, "Wrong arguments", v8::NewStringType::kInternalized).ToLocalChecked()));
 		return;
 	}
 	if (NULL == g_share_rawdata._channel)
 		Node_RetrieveShareRawDataChannel(&g_share_rawdata._channel);
 	SDKRawDataError err = SDKRawDataError_UNINITIALIZED;
 	if (g_share_rawdata._channel)
+	{
+		if (g_share_rawdata._libuv_option)
+			g_share_rawdata._channel->EnableIntermediateRawDataCB(true);
 		err = g_share_rawdata._channel->Start(RawDataMemoryMode_Heap, &g_share_rawdata);
+	}
 	v8::Local<v8::Integer> bret = v8::Integer::New(isolate, (int32_t)err);
 	args.GetReturnValue().Set(bret);
 }
@@ -384,7 +449,7 @@ void ZoomNodeShareRawDataWrap::Subscribe(const v8::FunctionCallbackInfo<v8::Valu
 	v8::Isolate* isolate = args.GetIsolate();
 	if (args.Length() < 3) {
 		isolate->ThrowException(v8::Exception::TypeError(
-			v8::String::NewFromUtf8(isolate, "Wrong number of arguments")));
+			v8::String::NewFromUtf8(isolate, "Wrong number of arguments", v8::NewStringType::kInternalized).ToLocalChecked()));
 		return;
 	}
 
@@ -393,7 +458,7 @@ void ZoomNodeShareRawDataWrap::Subscribe(const v8::FunctionCallbackInfo<v8::Valu
 		!args[2]->IsNumber())
 	{
 		isolate->ThrowException(v8::Exception::TypeError(
-			v8::String::NewFromUtf8(isolate, "Wrong arguments")));
+			v8::String::NewFromUtf8(isolate, "Wrong arguments", v8::NewStringType::kInternalized).ToLocalChecked()));
 		return;
 	}
 	SDKRawDataError err = SDKRawDataError_UNINITIALIZED;
@@ -410,7 +475,7 @@ void ZoomNodeShareRawDataWrap::UnSubscribe(const v8::FunctionCallbackInfo<v8::Va
 	v8::Isolate* isolate = args.GetIsolate();
 	if (args.Length() < 2) {
 		isolate->ThrowException(v8::Exception::TypeError(
-			v8::String::NewFromUtf8(isolate, "Wrong number of arguments")));
+			v8::String::NewFromUtf8(isolate, "Wrong number of arguments", v8::NewStringType::kInternalized).ToLocalChecked()));
 		return;
 	}
 
@@ -418,7 +483,7 @@ void ZoomNodeShareRawDataWrap::UnSubscribe(const v8::FunctionCallbackInfo<v8::Va
 		!args[1]->IsNumber())
 	{
 		isolate->ThrowException(v8::Exception::TypeError(
-			v8::String::NewFromUtf8(isolate, "Wrong arguments")));
+			v8::String::NewFromUtf8(isolate, "Wrong arguments", v8::NewStringType::kInternalized).ToLocalChecked()));
 		return;
 	}
 	SDKRawDataError err = SDKRawDataError_UNINITIALIZED;
@@ -443,4 +508,30 @@ void ZoomNodeShareRawDataWrap::Stop(const v8::FunctionCallbackInfo<v8::Value>& a
 	args.GetReturnValue().Set(bret);
 }
 
+void ZoomNodeShareRawDataWrap::StartPipeServer(const v8::FunctionCallbackInfo<v8::Value>& args)
+{
+	v8::Isolate* isolate = args.GetIsolate();
+	bool err = false;
+	if (!g_share_rawdata._libuv_option)
+	{
+		err = g_share_rawdata._uv_ipc_server.StartPipeServer(SHARE_PIPE_NAME, &g_share_rawdata);
+		g_share_rawdata._libuv_option = true;
+	}
+
+	v8::Local<v8::Boolean> bret = v8::Boolean::New(isolate, err);
+	args.GetReturnValue().Set(bret);
+}
+void ZoomNodeShareRawDataWrap::StopPipeServer(const v8::FunctionCallbackInfo<v8::Value>& args)
+{
+	v8::Isolate* isolate = args.GetIsolate();
+	bool err = false;
+	if (g_share_rawdata._libuv_option)
+	{
+		g_share_rawdata._libuv_option = false;
+		err = g_share_rawdata._uv_ipc_server.StopPipeServer();
+	}
+
+	v8::Local<v8::Boolean> bret = v8::Boolean::New(isolate, err);
+	args.GetReturnValue().Set(bret);
+}
 

@@ -13,6 +13,7 @@ public:
 	//
 	void SetSink(ZNativeSDKAuthWrapSink* pSink);
 	ZNSDKError AuthSDK(ZNAuthParam& authParam);
+	ZNSDKError AuthSDK(ZNAuthContext& authContext);
 	ZNSDKError Login(ZNLoginParam& loginParam);
 	ZNSDKError LoginWithSSOToken(ZNLoginParam& loginParam);
 	ZNSDKError Logout();
@@ -25,7 +26,7 @@ public:
 	void onLoginRet(ZNLOGINSTATUS ret);
 	void onLogout();
 	void onZoomIdentityExpired();
-
+	void onZoomAuthIdentityExpired();
 	
 private:
 	ZNativeSDKAuthWrapSink* m_pSink;

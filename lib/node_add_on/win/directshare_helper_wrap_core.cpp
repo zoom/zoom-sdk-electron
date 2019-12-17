@@ -3,82 +3,13 @@
 #include "wrap/sdk_wrap.h"
 #include "wrap/directshare_helper_wrap.h"
 #include "zoom_native_to_wrap.h"
+#include "sdk_events_wrap_class.h"
 
 extern ZOOM_SDK_NAMESPACE::IAuthServiceWrap& g_auth_service_wrap;
 
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-class ZDirectShareViaMeetingIDOrPairingCodeHandler
-{
-public:
-	static ZDirectShareViaMeetingIDOrPairingCodeHandler& GetInst()
-	{
-		static ZDirectShareViaMeetingIDOrPairingCodeHandler inst;
-		return inst;
-	}
-	void SetHandler(ZOOM_SDK_NAMESPACE::IDirectShareViaMeetingIDOrPairingCodeHandler *handler)
-	{
-		m_pHandler = handler;
-	}
-
-	ZNSDKError TryWithMeetingNumber(unsigned long long meetingNumber)
-	{
-		ZOOM_SDK_NAMESPACE::SDKError err = ZOOM_SDK_NAMESPACE::SDKERR_WRONG_USEAGE;
-		if (m_pHandler)
-			err = m_pHandler->TryWithMeetingNumber(meetingNumber);
-		m_pHandler = NULL;
-		return Map2WrapDefine(err);
-	}
-
-	ZNSDKError TryWithPairingCode(ZoomSTRING paringCode)
-	{
-		ZOOM_SDK_NAMESPACE::SDKError err = ZOOM_SDK_NAMESPACE::SDKERR_WRONG_USEAGE;
-		if (m_pHandler)
-			err = m_pHandler->TryWithPairingCode(paringCode.c_str());
-		m_pHandler = NULL;
-		return Map2WrapDefine(err);
-	}
-
-	ZNSDKError Cancel()
-	{
-		ZOOM_SDK_NAMESPACE::SDKError err = ZOOM_SDK_NAMESPACE::SDKERR_WRONG_USEAGE;
-		if (m_pHandler)
-			err = m_pHandler->Cancel();
-		m_pHandler = NULL;
-		return Map2WrapDefine(err);
-	}
-private:
-	ZDirectShareViaMeetingIDOrPairingCodeHandler():m_pHandler(NULL){}
-	ZOOM_SDK_NAMESPACE::IDirectShareViaMeetingIDOrPairingCodeHandler* m_pHandler;
-};
-////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-
-class ZDirectShareHelperWrapEvent : public ZOOM_SDK_NAMESPACE::IDirectShareServiceHelperEvent
-{
-public:
-	void SetOwner(ZDirectShareHelperWrap* obj) { owner_ = obj;}
-	virtual void OnDirectShareStatusUpdate(ZOOM_SDK_NAMESPACE::DirectShareStatus status, ZOOM_SDK_NAMESPACE::IDirectShareViaMeetingIDOrPairingCodeHandler* handler)
-	{
-		
-		if (owner_) {
-			
-			if ((status == ZOOM_SDK_NAMESPACE::DirectShare_Need_MeetingID_Or_PairingCode) || (status == ZOOM_SDK_NAMESPACE::DirectShare_WrongMeetingID_Or_SharingKey) )
-			{
-				ZDirectShareViaMeetingIDOrPairingCodeHandler::GetInst().SetHandler(handler);
-			}
-			owner_->OnDirectShareStatusUpdate(Map2WrapDefine(status));
-		}
-	}
-private:
-	ZDirectShareHelperWrap* owner_;
-};
-
-static ZDirectShareHelperWrapEvent g_direct_share_helper_event;
-
-
-
 ZDirectShareHelperWrap::ZDirectShareHelperWrap()
 {
-	g_direct_share_helper_event.SetOwner(this);
+	SDKEventWrapMgr::GetInst().m_directShareHelperWrapEvent.SetOwner(this);
 	m_pSink = NULL;
 	
 }
@@ -87,17 +18,17 @@ ZDirectShareHelperWrap::~ZDirectShareHelperWrap()
 	Uninit();
 	m_pSink = NULL;
 	
-	g_direct_share_helper_event.SetOwner(NULL);
+	SDKEventWrapMgr::GetInst().m_directShareHelperWrapEvent.SetOwner(NULL);
 }
 void ZDirectShareHelperWrap::Init()
 {
-	
-	ZOOM_SDK_NAMESPACE::CSDKWrap::GetInst().GetAuthServiceWrap().T_GetDirectShareServiceHeler().SetEvent(&g_direct_share_helper_event);
+	ZOOM_SDK_NAMESPACE::CSDKWrap::GetInst().GetAuthServiceWrap().T_GetDirectShareServiceHeler().Init_Wrap(&g_auth_service_wrap);
+	ZOOM_SDK_NAMESPACE::CSDKWrap::GetInst().GetAuthServiceWrap().T_GetDirectShareServiceHeler().SetEvent(&SDKEventWrapMgr::GetInst().m_directShareHelperWrapEvent);
 }
 void ZDirectShareHelperWrap::Uninit()
 {
 	ZOOM_SDK_NAMESPACE::CSDKWrap::GetInst().GetAuthServiceWrap().T_GetDirectShareServiceHeler().SetEvent(NULL);
-	
+	ZOOM_SDK_NAMESPACE::CSDKWrap::GetInst().GetAuthServiceWrap().T_GetDirectShareServiceHeler().Uninit_Wrap();
 }
 void ZDirectShareHelperWrap::SetSink(ZNativeSDKDirectShareHelperWrapSink* pSink)
 {

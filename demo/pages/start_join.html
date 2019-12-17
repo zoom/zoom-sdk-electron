@@ -13,45 +13,28 @@
 	<div class="center"><input type="text" name="meetingnumber" placeholder="input meetingNumber" id="meetingnumber"/></div>
 	<br/>
 	<div class="center"><input type="text" name="username" placeholder="input user name" id="username"/></div>
-  <br/>
-  <div class="center"><input type="text" name="protocol_action" placeholder="input meeting url" id="protocol_action"/></div>
 	<br/>
 	<div class="center">
 		<button type="button" onclick="dostart()" id="startNormalBtn">Start Normal Meeting</button>
-    <button type="button" onclick="dojoin()">Join</button> 
-    <button type="button" onclick="handleZoomWebUriProtocolAction()">Join Meeting With URL</button>
+		<button type="button" onclick="dojoin()">Join</button> 
     <button type="button" onclick="dologout()">Logout</button>
 	</div>
   <div class="center">
     <select id="startCBOption">
-      <option value="0" selected>Main Process</option>
-      <option value="1">Render Process</option>
+      <option value="main" selected>Main Process</option>
+      <option value="render">Render Process</option>
+      <option value="pipe">Pipe</option>
     </select>
     <button type="button" onclick="handleRawData('start')" id="startRawDataBtn">Start Meeting With Rawdata</button>
     <button type="button" onclick="handleRawData('join')" id="joinRawDataBtn">Join Meeting With Rawdata</button>
     <div>
-      <div class="section">SMS</div>
-      <div>
-        <input type="text" name="b_enable" class="input-show" placeholder="empty is false otherwise is true" id="b_enable"/>
-        <input type="text" name="country_code" class="input-show" placeholder="input country_code" id="country_code"/>
-        <input type="text" name="phone_number" class="input-show" placeholder="input phone_number" id="phone_number"/>
-        <input type="text" name="verification_code" class="input-show" placeholder="input verification_code" id="verification_code"/>
-      </div>
-      <button type="button" class="button-small" onclick="enableZoomAuthRealNameMeetingUIShown()">Enable ZoomAuthRealNameMeetingUIShown</button>
-      <button type="button" class="button-small" onclick="getResendSMSVerificationCodeHandler()">Get ResendSMSVerificationCodeHandler</button>
-      <button type="button" class="button-small" onclick="retrieve()">Retrieve</button>
-      <button type="button" class="button-small" onclick="retrieve_CancelAndLeaveMeeting()">Retrieve CancelAndLeaveMeeting</button>
-      <button type="button" class="button-small" onclick="getReVerifySMSVerificationCodeHandler()">Get ReVerifySMSVerificationCodeHandler</button>
-      <button type="button" class="button-small" onclick="verify()">Verify</button>
-      <button type="button" class="button-small" onclick="verify_CancelAndLeaveMeeting()">Verify CancelAndLeaveMeeting</button>
-      <button type="button" class="button-small" onclick="getSupportPhoneNumberCountryList()">Get SupportPhoneNumberCountryList</button>
       <div class="section">Test Before Start Meeting</div>
       <div>
         <input type="text" name="meetingNum" class="input-show" placeholder="empty is false otherwise is true" id="meetingNum"/>
-        <input type="text" name="dscpAudio" class="input-show" placeholder="input dscpAudio or nDuration" id="dscpAudio"/>
-        <input type="text" name="dscpVideo" class="input-show" placeholder="input dscpVideo" id="dscpVideo"/>
+        <!--<input type="text" name="dscpAudio" class="input-show" placeholder="input dscpAudio or nDuration" id="dscpAudio"/>-->
+        <!--<input type="text" name="dscpVideo" class="input-show" placeholder="input dscpVideo" id="dscpVideo"/>-->
       </div>
-      <button type="button" class="button-small" onclick="getZoomSDKVersion()">Get ZoomSDK Version</button>
+      <!--<button type="button" class="button-small" onclick="getZoomSDKVersion()">Get ZoomSDK Version</button>-->
       <button type="button" class="button-small" onclick="setFloatVideoPos()">Set FloatVideoPos</button>
       <button type="button" class="button-small" onclick="setBottomFloatToolbarWndVisibility()">Set BottomFloatToolbarWnd</button>
       <button type="button" class="button-small" onclick="setSharingToolbarVisibility()">Set SharingToolbar</button>
@@ -65,20 +48,20 @@
       <button type="button" class="button-small" onclick="enableLButtonDBClick4SwitchFullScreenMode()">Enable LButtonDBClick4SwitchFullScreenMode</button>
       <button type="button" class="button-small" onclick="setFloatVideoWndVisibility()">Set FloatVideoWndVisibility</button>
       <!-- <button type="button" class="button-small" onclick="prePopulateWebinarRegistrationInfo()">PrePopulate WebinarRegistrationInfo</button> -->
-      <button type="button" class="button-small" onclick="reset()">Reset</button>
-      <button type="button" class="button-small" onclick="enableAutoAdjustSpeakerVolumeWhenJoinAudio()">Enable AutoAdjustSpeakerVolume</button>
-      <button type="button" class="button-small" onclick="enableAutoAdjustMicVolumeWhenJoinAudio()">Enable AutoAdjustMicVolume</button>
-      <button type="button" class="button-small" onclick="configDSCP()">Config DSCP</button>
-      <button type="button" class="button-small" onclick="enableHideFullPhoneNumber4PureCallinUser()">Enable Hide FullPhoneNumber</button>
-      <button type="button" class="button-small" onclick="enableLengthLimitationOfMeetingNumber()">Enable LengthLimitation</button>
-      <button type="button" class="button-small" onclick="enableShareIOSDevice()">Enable Share IOSDevice</button>
-      <button type="button" class="button-small" onclick="enableShareWhiteBoard()">Enable Share WhiteBoard</button>
-      <button type="button" class="button-small" onclick="forceDisableMultiShare()">Force Disable MultiShare</button>
-      <button type="button" class="button-small" onclick="setMaxDurationForOnlyHostInMeeting()">Set MaxDuration</button>
-      <button type="button" class="button-small" onclick="enableLocalRecordingConvertProgressBarDialog()">Enable LocalRecordingConvertProgressBarDialog</button>
+      <!--<button type="button" class="button-small" onclick="reset()">Reset</button>-->
+      <!--<button type="button" class="button-small" onclick="enableAutoAdjustSpeakerVolumeWhenJoinAudio()">Enable AutoAdjustSpeakerVolume</button>-->
+      <!--<button type="button" class="button-small" onclick="enableAutoAdjustMicVolumeWhenJoinAudio()">Enable AutoAdjustMicVolume</button>-->
+      <!--<button type="button" class="button-small" onclick="configDSCP()">Config DSCP</button>-->
+      <!--<button type="button" class="button-small" onclick="disableRemoteCtrlCopyPasteFeature()">Disable RemoteCtrlCopyPaste</button>-->
+      <!--<button type="button" class="button-small" onclick="enableHideFullPhoneNumber4PureCallinUser()">Enable Hide FullPhoneNumber</button>-->
+      <!--<button type="button" class="button-small" onclick="enableLengthLimitationOfMeetingNumber()">Enable LengthLimitation</button>-->
+      <!--<button type="button" class="button-small" onclick="enableShareIOSDevice()">Enable Share IOSDevice</button>-->
+      <!--<button type="button" class="button-small" onclick="enableShareWhiteBoard()">Enable Share WhiteBoard</button>-->
+      <!--<button type="button" class="button-small" onclick="forceDisableMultiShare()">Force Disable MultiShare</button>-->
+      <!--<button type="button" class="button-small" onclick="setMaxDurationForOnlyHostInMeeting()">Set MaxDuration</button>-->
       <div class="section">Pre Meeting</div>
       <div>
-        <input type="text" name="meetingUniqueID" class="input-show" placeholder="input meetingUniqueID or protocol_action" id="meetingUniqueID"/>
+        <input type="text" name="meetingUniqueID" class="input-show" placeholder="input meetingUniqueID" id="meetingUniqueID"/>
       </div>
       <button type="button" class="button-small" onclick="scheduleMeetingWithWndParams()">ScheduleMeeting With WndParams</button>
       <button type="button" class="button-small" onclick="scheduleMeeting()">ScheduleMeeting</button>
@@ -131,14 +114,6 @@
       <button type="button" class="button-small" onclick="isAutoFullScreenVideoWhenJoinMeetingEnabled()">Is AutoFullScreenVideo</button>
       <button type="button" class="button-small" onclick="setRecordingPath()">Set RecordingPath</button>
       <button type="button" class="button-small" onclick="getRecordingPath()">Get RecordingPath</button>
-      <div class="section">Setting UI</div>
-      <div>
-        <input type="text" name="bDisable" class="input-show" placeholder="empty is false otherwise is true" id="bDisable"/>
-        <input type="text" name="number" class="input-show" placeholder="input number" id="number"/>
-      </div>
-      <button type="button" class="button-small" onclick="disableAdvancedFeatures4GeneralSetting()">Disable AdvancedFeatures</button>
-      <button type="button" class="button-small" onclick="disableAccountSettingTabPage()">Disable AccountSettingTabPage</button>
-      <button type="button" class="button-small" onclick="confSettingDialogShownTabPage()">Conf SettingDialogShownTabPage</button>
     </div>
   </div>
 </body>
@@ -146,7 +121,6 @@
 
 <script>
     const {ipcRenderer, remote} = require('electron');
-
     let hasRDLicense = remote.getGlobal('hasRDLicense');
     let startNormalBtn = document.querySelector('#startNormalBtn');
     let startCBOption = document.querySelector('#startCBOption');
@@ -163,53 +137,39 @@
       startRawDataBtn.style.cssText="display: none";
       joinRawDataBtn.style.cssText="display: none";
     }
-
     let tryWithMeetingNumberBtn = document.querySelector('#tryWithMeetingNumberBtn');
     let tryWithPairingCodeBtn = document.querySelector('#tryWithPairingCodeBtn');
     let cancelBtn = document.querySelector('#cancelBtn');
-
-    function sendstart(meetingnumber){
-      ipcRenderer.send('asynchronous-message', 'start', Number(meetingnumber));
+    function sendstart(meetingnumber, startCBOption){
+      ipcRenderer.send('asynchronous-message', 'start', Number(meetingnumber), startCBOption);
     }
-
-    function sendjoin(meetingnumber, username){
-      ipcRenderer.send('asynchronous-message', 'join', Number(meetingnumber), username);
+    function sendjoin(meetingnumber, username, startCBOption){
+      ipcRenderer.send('asynchronous-message', 'join', Number(meetingnumber), username, startCBOption);
     }
-
-    function dostart(){
+    function dostart(startCBOption){
       let meetingnumber=document.getElementById("meetingnumber").value; 
       let username=document.getElementById("username").value; 
-      sendstart(meetingnumber);
+      sendstart(meetingnumber, startCBOption);
     }
-
-    function dojoin(){
+    function dojoin(startCBOption){
       let meetingnumber=document.getElementById("meetingnumber").value; 
       let username=document.getElementById("username").value; 
-      sendjoin(meetingnumber, username);
+      sendjoin(meetingnumber, username, startCBOption);
     }
-    
-    function handleZoomWebUriProtocolAction() {
-      let protocol_action = document.getElementById('protocol_action').value;
-      ipcRenderer.send('asynchronous-message', 'handleZoomWebUriProtocolAction', protocol_action);
-    }
-
     function dologout(){
       ipcRenderer.send('asynchronous-message', 'logout');
     }
-
     function handleRawData (value) {
       if (value == 'start') {
-        dostart();
+        dostart(startCBOption.value);
       } else {
-        dojoin();
+        dojoin(startCBOption.value);
       }
       ipcRenderer.send('asynchronous-message', 'handleYUV', startCBOption.value);
     }
-
     function getZoomSDKVersion() {
       ipcRenderer.send('asynchronous-message', 'getZoomSDKVersion');
     }
-
     function setFloatVideoPos() {
 			ipcRenderer.send('asynchronous-message', 'setFloatVideoPos');
     }
@@ -218,122 +178,98 @@
       let meetingNum = document.getElementById("meetingNum").value;
 			ipcRenderer.send('asynchronous-message', 'setBottomFloatToolbarWndVisibility', Boolean(meetingNum));
     }
-
     function setSharingToolbarVisibility() {
       let meetingNum = document.getElementById("meetingNum").value;
 			ipcRenderer.send('asynchronous-message', 'setSharingToolbarVisibility', Boolean(meetingNum));
     }
-
     // function setDirectShareMonitorID() {
     //   let meetingnumber = document.getElementById("meetingnumber").value;
 		// 	ipcRenderer.send('asynchronous-message', 'setDirectShareMonitorID', meetingnumber);
     // }
-
     function setMeetingUIPos() {
 			ipcRenderer.send('asynchronous-message', 'setMeetingUIPos');
     }
-
     function disableWaitingForHostDialog() {
       let meetingNum = document.getElementById("meetingNum").value;
 			ipcRenderer.send('asynchronous-message', 'disableWaitingForHostDialog', Boolean(meetingNum));
     }
-
     function hideMeetingInfoFromMeetingUITitle() {
       let meetingNum = document.getElementById("meetingNum").value;
 			ipcRenderer.send('asynchronous-message', 'hideMeetingInfoFromMeetingUITitle', Boolean(meetingNum));
     }
-
     function setMeetingIDForMeetingUITitle() {
       let meetingNum = document.getElementById("meetingNum").value;
 			ipcRenderer.send('asynchronous-message', 'setMeetingIDForMeetingUITitle', meetingNum);
     }
-
     function disablePopupMeetingWrongPSWDlg() {
       let meetingNum = document.getElementById("meetingNum").value;
 			ipcRenderer.send('asynchronous-message', 'disablePopupMeetingWrongPSWDlg', Boolean(meetingNum));
     }
-
     function enableAutoEndOtherMeetingWhenStartMeeting() {
       let meetingNum = document.getElementById("meetingNum").value;
 			ipcRenderer.send('asynchronous-message', 'enableAutoEndOtherMeetingWhenStartMeeting', Boolean(meetingNum));
     }
-
     function enableLButtonDBClick4SwitchFullScreenMode() {
       let meetingNum = document.getElementById("meetingNum").value;
 			ipcRenderer.send('asynchronous-message', 'enableLButtonDBClick4SwitchFullScreenMode', Boolean(meetingNum));
     }
-
     function setFloatVideoWndVisibility() {
       let meetingNum = document.getElementById("meetingNum").value;
 			ipcRenderer.send('asynchronous-message', 'setFloatVideoWndVisibility', Boolean(meetingNum));
     }
-
     // function prePopulateWebinarRegistrationInfo() {
     //   let meetingnumber = document.getElementById("meetingnumber").value;
     //   let userName = document.getElementById("username").value;
 		// 	ipcRenderer.send('asynchronous-message', 'prePopulateWebinarRegistrationInfo', meetingnumber, userName);
     // }
-
     function reset() {
       ipcRenderer.send('asynchronous-message', 'reset');
     }
-
     function enableAutoAdjustSpeakerVolumeWhenJoinAudio() {
       let meetingNum = document.getElementById("meetingNum").value;
       ipcRenderer.send('asynchronous-message', 'enableAutoAdjustSpeakerVolumeWhenJoinAudio', Boolean(meetingNum));
     }
-
     function enableAutoAdjustMicVolumeWhenJoinAudio() {
       let meetingNum = document.getElementById("meetingNum").value;
       ipcRenderer.send('asynchronous-message', 'enableAutoAdjustMicVolumeWhenJoinAudio', Boolean(meetingNum));
     }
-
     function configDSCP() {
       let dscpAudio = document.getElementById("dscpAudio").value;
       let dscpVideo = document.getElementById("dscpVideo").value;
       let meetingNum = document.getElementById("meetingNum").value;
       ipcRenderer.send('asynchronous-message', 'configDSCP', dscpAudio, dscpVideo, Boolean(meetingNum));
     }
-
+    function disableRemoteCtrlCopyPasteFeature() {
+      let meetingNum = document.getElementById("meetingNum").value;
+      ipcRenderer.send('asynchronous-message', 'disableRemoteCtrlCopyPasteFeature', Boolean(meetingNum));
+    }
     function enableHideFullPhoneNumber4PureCallinUser() {
       let meetingNum = document.getElementById("meetingNum").value;
       ipcRenderer.send('asynchronous-message', 'enableHideFullPhoneNumber4PureCallinUser', Boolean(meetingNum));
     }
-
     function enableLengthLimitationOfMeetingNumber() {
       let meetingNum = document.getElementById("meetingNum").value;
       ipcRenderer.send('asynchronous-message', 'enableLengthLimitationOfMeetingNumber', Boolean(meetingNum));
     }
-
     function enableShareIOSDevice() {
       let meetingNum = document.getElementById("meetingNum").value;
       ipcRenderer.send('asynchronous-message', 'enableShareIOSDevice', Boolean(meetingNum));
     }
-
     function enableShareWhiteBoard() {
       let meetingNum = document.getElementById("meetingNum").value;
       ipcRenderer.send('asynchronous-message', 'enableShareWhiteBoard', Boolean(meetingNum));
     }
-
     function forceDisableMultiShare() {
       let meetingNum = document.getElementById("meetingNum").value;
       ipcRenderer.send('asynchronous-message', 'forceDisableMultiShare', Boolean(meetingNum));
     }
-
     function setMaxDurationForOnlyHostInMeeting() {
       let dscpAudio = document.getElementById("dscpAudio").value;
       ipcRenderer.send('asynchronous-message', 'setMaxDurationForOnlyHostInMeeting', dscpAudio);
     }
-
-    function enableLocalRecordingConvertProgressBarDialog() {
-      let bShow = document.getElementById("meetingNum").value;
-      ipcRenderer.send('asynchronous-message', 'enableLocalRecordingConvertProgressBarDialog', Boolean(bShow));
-    }
-
     function scheduleMeetingWithWndParams () {
       ipcRenderer.send('asynchronous-message', 'scheduleMeetingWithWndParams');
     }
-
     function scheduleMeeting () {
       ipcRenderer.send('asynchronous-message', 'scheduleMeeting');
     }
@@ -356,11 +292,9 @@
       let meetingUniqueID = document.getElementById('meetingUniqueID').value;
       ipcRenderer.send('asynchronous-message', 'editMeetingWithWndParams', meetingUniqueID);
     }
-
     function canStartDirectShare () {
       ipcRenderer.send('asynchronous-message', 'canStartDirectShare');
     }
-
     function isDirectShareInProgress () {
       ipcRenderer.send('asynchronous-message', 'isDirectShareInProgress');
     }
@@ -370,18 +304,15 @@
     }
     
     setDirectShareStatusUpdateCB();
-
     function startDirectShare () {
       ipcRenderer.send('asynchronous-message', 'startDirectShare');
     }
-
     function stopDirectShare () {
       ipcRenderer.send('asynchronous-message', 'stopDirectShare');
     }
-
     ipcRenderer.on('main-process-onDirectShareStatusUpdate', (event, arg) => {
       let data = arg;
-      if (data.DirectShareStatus == 4 || data.DirectShareStatus == 7) {
+      if (data.DirectShareStatus == 4) {
         tryWithMeetingNumberBtn.classList.remove("button-disabled");
         tryWithMeetingNumberBtn.disabled = false;
         tryWithPairingCodeBtn.classList.remove("button-disabled");
@@ -397,17 +328,14 @@
         cancelBtn.disabled = true;
       }
     });
-
     function tryWithMeetingNumber () {
       let meetingNumber = document.getElementById('meetingNumber').value;
       ipcRenderer.send('asynchronous-message', 'tryWithMeetingNumber', meetingNumber);
     }
-
     function tryWithPairingCode () {
       let meetingNumber = document.getElementById('meetingNumber').value;
       ipcRenderer.send('asynchronous-message', 'tryWithPairingCode', meetingNumber);
     }
-
     function cancel () {
       ipcRenderer.send('asynchronous-message', 'cancel');
     }
@@ -415,54 +343,42 @@
     function showSettingDlg() {
 			ipcRenderer.send('asynchronous-message', 'showSettingDlg');
     }
-
     function hideSettingDlg() {
 			ipcRenderer.send('asynchronous-message', 'hideSettingDlg');
     }
-
     // function getCameraList() {
 		// 	ipcRenderer.send('asynchronous-message', 'getCameraList');
     // }
-
     // function selectCamera() {
 		// 	ipcRenderer.send('asynchronous-message', 'selectCamera');
     // }
-
     function enableVideoMirrorEffect() {
       let enable = document.getElementById("enable").value;
 			ipcRenderer.send('asynchronous-message', 'enableVideoMirrorEffect', Boolean(enable));
     }
-
     function enableFaceBeautyEffect() {
       let enable = document.getElementById("enable").value;
 			ipcRenderer.send('asynchronous-message', 'enableFaceBeautyEffect', Boolean(enable));
     }
-
     function isMirrorEffectEnabled() {
 			ipcRenderer.send('asynchronous-message', 'isMirrorEffectEnabled');
     }
-
     function isFaceBeautyEffectEnabled() {
 			ipcRenderer.send('asynchronous-message', 'isFaceBeautyEffectEnabled');
     }
-
     function enableDualScreenMode() {
       let enable = document.getElementById("enable").value;
 			ipcRenderer.send('asynchronous-message', 'enableDualScreenMode', Boolean(enable));
     }
-
     // function getMicList() {
 		// 	ipcRenderer.send('asynchronous-message', 'getMicList');
     // }
-
     // function selectMic() {
 		// 	ipcRenderer.send('asynchronous-message', 'selectMic');
     // }
-
     // function getSpeakerList() {
 		// 	ipcRenderer.send('asynchronous-message', 'getSpeakerList');
     // }
-
     // function selectSpeaker() {
 		// 	ipcRenderer.send('asynchronous-message', 'selectSpeaker');
     // }
@@ -471,7 +387,6 @@
       let enable = document.getElementById("enable").value;
 			ipcRenderer.send('asynchronous-message', 'enableAutoJoinAudio', Boolean(enable));
     }
-
     function enableAutoAdjustMic() {
       let enable = document.getElementById("enable").value;
 			ipcRenderer.send('asynchronous-message', 'enableAutoAdjustMic', Boolean(enable));
@@ -484,7 +399,6 @@
     function isAutoAdjustMicEnabled() {
 			ipcRenderer.send('asynchronous-message', 'isAutoAdjustMicEnabled');
     }
-
     // function turnOffAeroModeInSharing() {
     //   let enable = document.getElementById("enable").value;
 		// 	ipcRenderer.send('asynchronous-message', 'turnOffAeroModeInSharing', Boolean(enable));
@@ -494,7 +408,6 @@
       let enable = document.getElementById("enable").value;
 			ipcRenderer.send('asynchronous-message', 'enableAutoFitToWindowWhenViewSharing', Boolean(enable));
     }
-
     function enableAutoFullScreenVideoWhenJoinMeeting() {
       let enable = document.getElementById("enable").value;
 			ipcRenderer.send('asynchronous-message', 'enableAutoFullScreenVideoWhenJoinMeeting', Boolean(enable));
@@ -524,7 +437,6 @@
     function isSplitScreenModeEnabled() {
 			ipcRenderer.send('asynchronous-message', 'isSplitScreenModeEnabled');
     }
-
     function setRecordingPath() {
       let zn_szPath = document.getElementById("RecordingPath").value;
 			ipcRenderer.send('asynchronous-message', 'setRecordingPath', zn_szPath);
@@ -532,58 +444,5 @@
     
     function getRecordingPath() {
       ipcRenderer.send('asynchronous-message', 'getRecordingPath');
-    }
-
-    function disableAdvancedFeatures4GeneralSetting() {
-      let bDisable = document.getElementById("bDisable").value;
-      ipcRenderer.send('asynchronous-message', 'disableAdvancedFeatures4GeneralSetting', Boolean(bDisable));
-    }
-
-    function disableAccountSettingTabPage() {
-      let bDisable = document.getElementById("bDisable").value;
-      ipcRenderer.send('asynchronous-message', 'disableAccountSettingTabPage', Boolean(bDisable));
-    }
-
-    function confSettingDialogShownTabPage() {
-      let number = document.getElementById("number").value;
-      ipcRenderer.send('asynchronous-message', 'confSettingDialogShownTabPage', Number(number));
-    }
-
-    function enableZoomAuthRealNameMeetingUIShown() {
-      let b_enable = document.getElementById("b_enable").value;
-      ipcRenderer.send('asynchronous-message', 'enableZoomAuthRealNameMeetingUIShown', Boolean(b_enable));
-    }
-
-    function getResendSMSVerificationCodeHandler() {
-      ipcRenderer.send('asynchronous-message', 'getResendSMSVerificationCodeHandler');
-    }
-
-    function retrieve() {
-      let country_code = document.getElementById("country_code").value;
-      let phone_number = document.getElementById("phone_number").value;
-      ipcRenderer.send('asynchronous-message', 'retrieve', country_code, phone_number);
-    }
-
-    function retrieve_CancelAndLeaveMeeting() {
-      ipcRenderer.send('asynchronous-message', 'retrieve_CancelAndLeaveMeeting');
-    }
-
-    function getReVerifySMSVerificationCodeHandler() {
-      ipcRenderer.send('asynchronous-message', 'getReVerifySMSVerificationCodeHandler');
-    }
-
-    function verify() {
-      let country_code = document.getElementById("country_code").value;
-      let phone_number = document.getElementById("phone_number").value;
-      let verification_code = document.getElementById("verification_code").value;
-      ipcRenderer.send('asynchronous-message', 'verify', country_code, phone_number, verification_code);
-    }
-
-    function verify_CancelAndLeaveMeeting() {
-      ipcRenderer.send('asynchronous-message', 'verify_CancelAndLeaveMeeting');
-    }
-
-    function getSupportPhoneNumberCountryList() {
-      ipcRenderer.send('asynchronous-message', 'getSupportPhoneNumberCountryList');
     }
   </script>

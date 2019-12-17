@@ -22,6 +22,8 @@ DEFINE_FUNC_0(GetResendSMSVerificationCodeHandler, IZoomRetrieveSMSVerificationC
 DEFINE_FUNC_0(GetReVerifySMSVerificationCodeHandler, IZoomVerifySMSVerificationCodeHandler*)
 //virtual IVector<IZoomRealNameAuthCountryInfo* >* GetSupportPhoneNumberCountryList() = 0;
 DEFINE_FUNC_0(GetSupportPhoneNumberCountryList, IVector<IZoomRealNameAuthCountryInfo* >*)
+//virtual bool SetDefaultCellPhoneInfo(const zTCHAR* country_code, const zTCHAR* phone_number) = 0;
+DEFINE_FUNC_2(SetDefaultCellPhoneInfo, bool, const zTCHAR*, country_code, const zTCHAR*, phone_number)
 
 //virtual void onNeedRealNameAuthMeetingNotification(IVector<IZoomRealNameAuthCountryInfo* >* support_country_list, const zTCHAR* privacy_url, IZoomRetrieveSMSVerificationCodeHandler* handler) = 0;
 CallBack_FUNC_3(onNeedRealNameAuthMeetingNotification, IVector<IZoomRealNameAuthCountryInfo* >*, support_country_list, const zTCHAR*, privacy_url, IZoomRetrieveSMSVerificationCodeHandler*, handler);

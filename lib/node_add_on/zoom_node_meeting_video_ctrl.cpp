@@ -14,14 +14,14 @@ void ZoomNodeMeetingVideoCtrlWrap::MuteVideo(const v8::FunctionCallbackInfo<v8::
 	v8::Isolate* isolate = args.GetIsolate();
 	if (args.Length() < 1) {
 		isolate->ThrowException(v8::Exception::TypeError(
-			v8::String::NewFromUtf8(isolate, "Wrong number of arguments")));
+			v8::String::NewFromUtf8(isolate, "Wrong number of arguments", v8::NewStringType::kInternalized).ToLocalChecked()));
 		return;
 	}
 
 	if (!args[0]->IsNumber())
 	{
 		isolate->ThrowException(v8::Exception::TypeError(
-			v8::String::NewFromUtf8(isolate, "Wrong arguments")));
+			v8::String::NewFromUtf8(isolate, "Wrong arguments", v8::NewStringType::kInternalized).ToLocalChecked()));
 		return;
 	}
 	unsigned int zn_userid = (unsigned int)args[0].As<v8::Integer >()->Value();
@@ -35,14 +35,14 @@ void ZoomNodeMeetingVideoCtrlWrap::UnMuteVideo(const v8::FunctionCallbackInfo<v8
 	v8::Isolate* isolate = args.GetIsolate();
 	if (args.Length() < 1) {
 		isolate->ThrowException(v8::Exception::TypeError(
-			v8::String::NewFromUtf8(isolate, "Wrong number of arguments")));
+			v8::String::NewFromUtf8(isolate, "Wrong number of arguments", v8::NewStringType::kInternalized).ToLocalChecked()));
 		return;
 	}
 
 	if (!args[0]->IsNumber())
 	{
 		isolate->ThrowException(v8::Exception::TypeError(
-			v8::String::NewFromUtf8(isolate, "Wrong arguments")));
+			v8::String::NewFromUtf8(isolate, "Wrong arguments", v8::NewStringType::kInternalized).ToLocalChecked()));
 		return;
 	}
 	unsigned int zn_userid = (unsigned int)args[0].As<v8::Integer >()->Value();
@@ -56,7 +56,7 @@ void ZoomNodeMeetingVideoCtrlWrap::PinVideo(const v8::FunctionCallbackInfo<v8::V
 	v8::Isolate* isolate = args.GetIsolate();
 	if (args.Length() < 3) {
 		isolate->ThrowException(v8::Exception::TypeError(
-			v8::String::NewFromUtf8(isolate, "Wrong number of arguments")));
+			v8::String::NewFromUtf8(isolate, "Wrong number of arguments", v8::NewStringType::kInternalized).ToLocalChecked()));
 		return;
 	}
 
@@ -65,7 +65,7 @@ void ZoomNodeMeetingVideoCtrlWrap::PinVideo(const v8::FunctionCallbackInfo<v8::V
 		!args[2]->IsNumber())
 	{
 		isolate->ThrowException(v8::Exception::TypeError(
-			v8::String::NewFromUtf8(isolate, "Wrong arguments")));
+			v8::String::NewFromUtf8(isolate, "Wrong arguments", v8::NewStringType::kInternalized).ToLocalChecked()));
 		return;
 	}
 
@@ -84,7 +84,7 @@ void ZoomNodeMeetingVideoCtrlWrap::SpotlightVideo(const v8::FunctionCallbackInfo
 	v8::Isolate* isolate = args.GetIsolate();
 	if (args.Length() < 2) {
 		isolate->ThrowException(v8::Exception::TypeError(
-			v8::String::NewFromUtf8(isolate, "Wrong number of arguments")));
+			v8::String::NewFromUtf8(isolate, "Wrong number of arguments", v8::NewStringType::kInternalized).ToLocalChecked()));
 		return;
 	}
 
@@ -92,7 +92,7 @@ void ZoomNodeMeetingVideoCtrlWrap::SpotlightVideo(const v8::FunctionCallbackInfo
 		!args[1]->IsNumber())
 	{
 		isolate->ThrowException(v8::Exception::TypeError(
-			v8::String::NewFromUtf8(isolate, "Wrong arguments")));
+			v8::String::NewFromUtf8(isolate, "Wrong arguments", v8::NewStringType::kInternalized).ToLocalChecked()));
 		return;
 	}
 	bool bSpotlight;
@@ -108,14 +108,14 @@ void ZoomNodeMeetingVideoCtrlWrap::HideOrShowNoVideoUserOnVideoWall(const v8::Fu
 	v8::Isolate* isolate = args.GetIsolate();
 	if (args.Length() < 1) {
 		isolate->ThrowException(v8::Exception::TypeError(
-			v8::String::NewFromUtf8(isolate, "Wrong number of arguments")));
+			v8::String::NewFromUtf8(isolate, "Wrong number of arguments", v8::NewStringType::kInternalized).ToLocalChecked()));
 		return;
 	}
 
 	if (!args[0]->IsBoolean())
 	{
 		isolate->ThrowException(v8::Exception::TypeError(
-			v8::String::NewFromUtf8(isolate, "Wrong arguments")));
+			v8::String::NewFromUtf8(isolate, "Wrong arguments", v8::NewStringType::kInternalized).ToLocalChecked()));
 		return;
 	}
 	bool bHide;
@@ -130,14 +130,14 @@ void ZoomNodeMeetingVideoCtrlWrap::SetMeetingVideoStatusCB(const v8::FunctionCal
 	v8::Isolate* isolate = args.GetIsolate();
 	if (args.Length() < 1) {
 		isolate->ThrowException(v8::Exception::TypeError(
-			v8::String::NewFromUtf8(isolate, "Wrong number of arguments")));
+			v8::String::NewFromUtf8(isolate, "Wrong number of arguments", v8::NewStringType::kInternalized).ToLocalChecked()));
 		return;
 	}
-
+	if (args[0]->IsNull())	{		ZoomNodeSinkHelper::GetInst().onUserVideoStatusChange.Empty();		return;	}
 	if (!args[0]->IsFunction())
 	{
 		isolate->ThrowException(v8::Exception::TypeError(
-			v8::String::NewFromUtf8(isolate, "Wrong arguments")));
+			v8::String::NewFromUtf8(isolate, "Wrong arguments", v8::NewStringType::kInternalized).ToLocalChecked()));
 		return;
 	}
 
@@ -154,14 +154,14 @@ void ZoomNodeMeetingVideoCtrlWrap::SetActiveSpeakerVideoUserChangedCB(const v8::
 	v8::Isolate* isolate = args.GetIsolate();
 	if (args.Length() < 1) {
 		isolate->ThrowException(v8::Exception::TypeError(
-			v8::String::NewFromUtf8(isolate, "Wrong number of arguments")));
+			v8::String::NewFromUtf8(isolate, "Wrong number of arguments", v8::NewStringType::kInternalized).ToLocalChecked()));
 		return;
 	}
-
+	if (args[0]->IsNull())	{		ZoomNodeSinkHelper::GetInst().onActiveSpeakerVideoUserChanged.Empty();		return;	}
 	if (!args[0]->IsFunction())
 	{
 		isolate->ThrowException(v8::Exception::TypeError(
-			v8::String::NewFromUtf8(isolate, "Wrong arguments")));
+			v8::String::NewFromUtf8(isolate, "Wrong arguments", v8::NewStringType::kInternalized).ToLocalChecked()));
 		return;
 	}
 
@@ -178,14 +178,14 @@ void ZoomNodeMeetingVideoCtrlWrap::SetActiveVideoUserChangedCB(const v8::Functio
 	v8::Isolate* isolate = args.GetIsolate();
 	if (args.Length() < 1) {
 		isolate->ThrowException(v8::Exception::TypeError(
-			v8::String::NewFromUtf8(isolate, "Wrong number of arguments")));
+			v8::String::NewFromUtf8(isolate, "Wrong number of arguments", v8::NewStringType::kInternalized).ToLocalChecked()));
 		return;
 	}
-
+	if (args[0]->IsNull())	{		ZoomNodeSinkHelper::GetInst().onActiveVideoUserChanged.Empty();		return;	}
 	if (!args[0]->IsFunction())
 	{
 		isolate->ThrowException(v8::Exception::TypeError(
-			v8::String::NewFromUtf8(isolate, "Wrong arguments")));
+			v8::String::NewFromUtf8(isolate, "Wrong arguments", v8::NewStringType::kInternalized).ToLocalChecked()));
 		return;
 	}
 

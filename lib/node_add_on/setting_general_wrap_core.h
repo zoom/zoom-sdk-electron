@@ -20,4 +20,22 @@ public:
 	bool IsAutoFullScreenVideoWhenJoinMeetingEnabled();
 	bool IsSplitScreenModeEnabled();
 
+	//////////////////////////////////////////////////////////////////////////////////////////////////////////
+	ZNSDKError EnableAutoFullScreenVideoWhenViewShare(bool bEnable);
+	bool IsAutoFullScreenVideoWhenViewShareEnabled();
+
+	ZNSDKError EnableDisplayReminderWindowWhenExit(bool bEnable);
+	bool IsDisplayReminderWindowWhenExitEnabled();
+
+	ZNSDKError EnableShowMyMeetingElapseTime(bool bEnable);
+	bool IsShowMyMeetingElapseTimeEnabled();
+
+	bool IsCurrentOSSupportAccelerateGPUWhenShare();
+
+	ZNSDKError EnableAccelerateGPUWhenShare(bool bEnable);
+	ZNSDKError IsAccelerateGPUWhenShareEnabled(bool& bEnable);
+
+	ZNSDKError EnableRemoteControlAllApplications(bool bEnable);
+	bool IsRemoteControlAllApplicationsEnabled();
+
 };

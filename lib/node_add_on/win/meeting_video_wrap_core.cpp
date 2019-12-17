@@ -3,61 +3,24 @@
 #include "wrap/sdk_wrap.h"
 #include "wrap/meeting_service_components_wrap/meeting_video_wrap.h"
 #include "zoom_native_to_wrap.h"
-
+#include "sdk_events_wrap_class.h"
 extern ZOOM_SDK_NAMESPACE::IMeetingServiceWrap& g_meeting_service_wrap;
-class ZMeetingVideoCtrlWrapEvent : public ZOOM_SDK_NAMESPACE::IMeetingVideoCtrlEvent
-{
-public:
-	void SetOwner(ZMeetingVideoWrap* obj) { owner_ = obj; }
-	virtual void onUserVideoStatusChange(unsigned int userId, ZOOM_SDK_NAMESPACE::VideoStatus status)
-	{
-		if (owner_) {
-			
-			owner_->onUserVideoStatusChange(userId, Map2WrapDefine(status));
-		}
-	}
-	virtual void onSpotlightVideoChangeNotification(bool bSpotlight, unsigned int userid)
-	{
-		//
-	}
-	virtual void onHostRequestStartVideo(ZOOM_SDK_NAMESPACE::IRequestStartVideoHandler* handler_)
-	{
-
-	}
-	virtual void onActiveSpeakerVideoUserChanged(unsigned int userid)
-	{
-		if (owner_) {
-			owner_->onActiveSpeakerVideoUserChanged(userid);
-		}
-	}
-	virtual void onActiveVideoUserChanged(unsigned int userid)
-	{
-		if (owner_) {
-			owner_->onActiveVideoUserChanged(userid);
-		}
-	}
-private:
-	ZMeetingVideoWrap* owner_;
-};
-
-static ZMeetingVideoCtrlWrapEvent g_meeting_video_ctrl_event;
-
 
 ZMeetingVideoWrap::ZMeetingVideoWrap()
 {
-	g_meeting_video_ctrl_event.SetOwner(this);
+	SDKEventWrapMgr::GetInst().m_meetingVideoCtrlWrapEvent.SetOwner(this);
 	m_pSink = 0;
 }
 ZMeetingVideoWrap::~ZMeetingVideoWrap()
 {
 	Uninit();
 	m_pSink = 0;
-	g_meeting_video_ctrl_event.SetOwner(NULL);
+	SDKEventWrapMgr::GetInst().m_meetingVideoCtrlWrapEvent.SetOwner(NULL);
 }
 void ZMeetingVideoWrap::Init()
 {
-	
-	ZOOM_SDK_NAMESPACE::CSDKWrap::GetInst().GetMeetingServiceWrap().T_GetMeetingVideoController().SetEvent(&g_meeting_video_ctrl_event);
+	ZOOM_SDK_NAMESPACE::CSDKWrap::GetInst().GetMeetingServiceWrap().T_GetMeetingVideoController().Init_Wrap(&g_meeting_service_wrap);
+	ZOOM_SDK_NAMESPACE::CSDKWrap::GetInst().GetMeetingServiceWrap().T_GetMeetingVideoController().SetEvent(&SDKEventWrapMgr::GetInst().m_meetingVideoCtrlWrapEvent);
 }
 void ZMeetingVideoWrap::Uninit()
 {

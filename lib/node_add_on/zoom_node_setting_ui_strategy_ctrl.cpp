@@ -15,14 +15,14 @@ void ZoomNodeSettingUIStrategyCtrlWrap::DisableAdvancedFeatures4GeneralSetting(c
 	v8::Isolate* isolate = args.GetIsolate();
 	if (args.Length() < 1) {
 		isolate->ThrowException(v8::Exception::TypeError(
-			v8::String::NewFromUtf8(isolate, "Wrong number of arguments")));
+			v8::String::NewFromUtf8(isolate, "Wrong number of arguments", v8::NewStringType::kInternalized).ToLocalChecked()));
 		return;
 	}
 
 	if (!args[0]->IsBoolean())
 	{
 		isolate->ThrowException(v8::Exception::TypeError(
-			v8::String::NewFromUtf8(isolate, "Wrong arguments")));
+			v8::String::NewFromUtf8(isolate, "Wrong arguments", v8::NewStringType::kInternalized).ToLocalChecked()));
 		return;
 	}
 
@@ -39,14 +39,14 @@ void ZoomNodeSettingUIStrategyCtrlWrap::DisableAccountSettingTabPage(const v8::F
 	v8::Isolate* isolate = args.GetIsolate();
 	if (args.Length() < 1) {
 		isolate->ThrowException(v8::Exception::TypeError(
-			v8::String::NewFromUtf8(isolate, "Wrong number of arguments")));
+			v8::String::NewFromUtf8(isolate, "Wrong number of arguments", v8::NewStringType::kInternalized).ToLocalChecked()));
 		return;
 	}
 
 	if (!args[0]->IsBoolean())
 	{
 		isolate->ThrowException(v8::Exception::TypeError(
-			v8::String::NewFromUtf8(isolate, "Wrong arguments")));
+			v8::String::NewFromUtf8(isolate, "Wrong arguments", v8::NewStringType::kInternalized).ToLocalChecked()));
 		return;
 	}
 
@@ -64,14 +64,14 @@ void ZoomNodeSettingUIStrategyCtrlWrap::ConfSettingDialogShownTabPage(const v8::
 
 	if (args.Length() < 1) {
 		isolate->ThrowException(v8::Exception::TypeError(
-			v8::String::NewFromUtf8(isolate, "Wrong number of arguments")));
+			v8::String::NewFromUtf8(isolate, "Wrong number of arguments", v8::NewStringType::kInternalized).ToLocalChecked()));
 		return;
 	}
 	
 	if (!args[0]->IsNumber())
 	{
 		isolate->ThrowException(v8::Exception::TypeError(
-			v8::String::NewFromUtf8(isolate, "Wrong arguments")));
+			v8::String::NewFromUtf8(isolate, "Wrong arguments", v8::NewStringType::kInternalized).ToLocalChecked()));
 		return;
 	}
 	unsigned long zn_showOption = (unsigned long)args[0].As<v8::Integer >()->Value();

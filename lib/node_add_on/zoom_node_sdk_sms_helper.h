@@ -15,6 +15,7 @@ private:
 	~ZoomNodeSDKSMSHelperWrap();
 public:
 	static void EnableZoomAuthRealNameMeetingUIShown(const v8::FunctionCallbackInfo<v8::Value>& args);
+	static void SetDefaultCellPhoneInfo(const v8::FunctionCallbackInfo<v8::Value>& args);
 	static void GetResendSMSVerificationCodeHandler(const v8::FunctionCallbackInfo<v8::Value>& args);
 	static void Retrieve(const v8::FunctionCallbackInfo<v8::Value>& args);
 	static void Retrieve_CancelAndLeaveMeeting(const v8::FunctionCallbackInfo<v8::Value>& args);
@@ -31,7 +32,7 @@ template<>
 static void InitClassAttribute<ZoomNodeSDKSMSHelperWrap >(const v8::Local<v8::FunctionTemplate>& tpl, v8::Isolate* isolate)
 {
 	tpl->SetClassName(v8::String::NewFromUtf8(
-		isolate, "ZoomNodeSDKSMSHelperWrap"));
+		isolate, "ZoomNodeSDKSMSHelperWrap", v8::NewStringType::kInternalized).ToLocalChecked());
 	tpl->InstanceTemplate()->SetInternalFieldCount(1);
 
 	// Prototype
@@ -46,6 +47,7 @@ static void InitClassAttribute<ZoomNodeSDKSMSHelperWrap >(const v8::Local<v8::Fu
 	NODE_SET_PROTOTYPE_METHOD(tpl, "SetNeedRealNameAuthMeetingNotificationCB", ZoomNodeSDKSMSHelperWrap::SetNeedRealNameAuthMeetingNotificationCB);
 	NODE_SET_PROTOTYPE_METHOD(tpl, "SetRetrieveSMSVerificationCodeResultNotificationCB", ZoomNodeSDKSMSHelperWrap::SetRetrieveSMSVerificationCodeResultNotificationCB);
 	NODE_SET_PROTOTYPE_METHOD(tpl, "SetVerifySMSVerificationCodeResultNotificationCB", ZoomNodeSDKSMSHelperWrap::SetVerifySMSVerificationCodeResultNotificationCB);
+	NODE_SET_PROTOTYPE_METHOD(tpl, "SetDefaultCellPhoneInfo", ZoomNodeSDKSMSHelperWrap::SetDefaultCellPhoneInfo);
 }
 template<>
 static v8::Persistent<v8::Function>* GetConstructor<ZoomNodeSDKSMSHelperWrap >() {

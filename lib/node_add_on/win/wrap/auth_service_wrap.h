@@ -19,6 +19,9 @@ virtual SDKError SetEvent(IAuthServiceEvent* pEvent)
 //virtual SDKError SDKAuth(AuthParam& authParam) = 0;
 DEFINE_FUNC_1(SDKAuth, SDKError, AuthParam&, authParam)
 
+//virtual SDKError SDKAuth(AuthContext& authContext) = 0;
+DEFINE_FUNC_1(SDKAuth, SDKError, AuthContext&, authContext)
+
 //virtual AuthResult GetAuthResult() = 0;
 DEFINE_FUNC_0(GetAuthResult, AuthResult)
 
@@ -63,6 +66,8 @@ CallBack_FUNC_2(onLoginRet, LOGINSTATUS, ret, IAccountInfo*,pAccountInfo)
 CallBack_FUNC_0(onLogout)
 //virtual void onZoomIdentityExpired() = 0;
 CallBack_FUNC_0(onZoomIdentityExpired)
+//virtual void onZoomAuthIdentityExpired() = 0;
+CallBack_FUNC_0(onZoomAuthIdentityExpired)
 
 END_CLASS_DEFINE(IAuthService)
 END_ZOOM_SDK_NAMESPACE

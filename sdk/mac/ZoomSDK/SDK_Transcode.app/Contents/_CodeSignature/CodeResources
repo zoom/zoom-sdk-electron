@@ -6,11 +6,11 @@
 	<dict>
 		<key>Resources/SDK_Transcode-Info.plist</key>
 		<data>
-		7X5jdpP8Be0lSN3l/bUFXBigIwE=
+		a8FvxXi5VNKT0+XVqcKj7zv4ank=
 		</data>
 		<key>Resources/TranscodeFolderController.nib</key>
 		<data>
-		U2wVHYsaQSRIkvto2TytNJGktvo=
+		qdYF5uLOIbnAjphf6TLPziBONfw=
 		</data>
 		<key>Resources/TranscodeWindowController.nib</key>
 		<data>
@@ -108,22 +108,22 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			7X5jdpP8Be0lSN3l/bUFXBigIwE=
+			a8FvxXi5VNKT0+XVqcKj7zv4ank=
 			</data>
 			<key>hash2</key>
 			<data>
-			5dxU8IB4zb/0FZ7fl7wDUcD0lUH0YTK/Vy01/dRoOJk=
+			B85hXKV3X/A6IQLYt2XRxT+l3pRDWVbDxmfzYUzUASA=
 			</data>
 		</dict>
 		<key>Resources/TranscodeFolderController.nib</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			U2wVHYsaQSRIkvto2TytNJGktvo=
+			qdYF5uLOIbnAjphf6TLPziBONfw=
 			</data>
 			<key>hash2</key>
 			<data>
-			w+LJdbNMjYBuX0d9gYDCG8rlixN3se6teD68KL2WcTA=
+			2rW959vmbHUZI1sfjgFtjpzAquXpXzkFsHFy7ALmhWA=
 			</data>
 		</dict>
 		<key>Resources/TranscodeWindowController.nib</key>

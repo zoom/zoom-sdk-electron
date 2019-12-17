@@ -105,6 +105,10 @@ Please make sure that you have configured your development environment successfu
 4. run `npm install bindings -g` to install bindings
 
 
+## SDK Reference
+
+If you would like to get a local copy of the SDK reference, you may [download it here](https://github.com/zoom/zoom-sdk-electron/archive/gh-pages.zip).
+
 ## Versioning
 
 For the versions available, see the [tags on this repository](https://github.com/zoom/zoom-sdk-electron/tags).

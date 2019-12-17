@@ -18,6 +18,7 @@ void UninitIAuthServiceFunc(ZOOM_SDK_NAMESPACE::IAuthService* obj)
 }
 	//IMPL_FUNC_1(IAuthService, SetEvent, SDKError, IAuthServiceEvent*, pEvent, SDKERR_UNINITIALIZE)
 	IMPL_FUNC_1(IAuthService, SDKAuth, SDKError, AuthParam&, authParam, SDKERR_UNINITIALIZE)
+	IMPL_FUNC_1(IAuthService, SDKAuth, SDKError, AuthContext&, authContext, SDKERR_UNINITIALIZE)
 	IMPL_FUNC_0(IAuthService, GetAuthResult, AuthResult, AUTHRET_NONE)
 	IMPL_FUNC_0(IAuthService, GetSDKIdentity, const wchar_t*, NULL)
 	IMPL_FUNC_1(IAuthService, Login, SDKError, LoginParam&, param, SDKERR_UNINITIALIZE)

@@ -156,7 +156,27 @@ ZNList<ZNZoomRealNameAuthCountryInfo> ZSDKSMSHelperWrap::GetSupportPhoneNumberCo
     return infoList;
 }
 
-
+bool ZSDKSMSHelperWrap::SetDefaultCellPhoneInfo(ZoomSTRING country_code, ZoomSTRING phone_number)
+{
+    ZoomSDKMeetingService *service = [[ZoomSDK sharedSDK] getMeetingService];
+    if (!service) {
+        return false;
+    }
+    ZoomSDKRealNameAuthenticationController *controller = [service getRealNameController];
+    if (!controller) {
+        return false;
+    }
+    if (country_code.length() == 0 || phone_number.length() == 0) {
+        return false;
+    }
+    NSString *countryCode = [NSString stringWithCString:country_code.c_str() encoding:NSUTF8StringEncoding];
+    NSString *phone = [NSString stringWithCString:phone_number.c_str() encoding:NSUTF8StringEncoding];
+    if (countryCode.length > 0 && phone.length > 0) {
+        ZoomSDKError ret = [controller setDefaultCellPhoneInfo:countryCode phoneNumber:phone];
+        return ret == ZoomSDKError_Success ? true : false;
+    }
+    return false;
+}
 
 void ZSDKSMSHelperWrap::onNeedRealNameAuthMeetingNotification(ZNList<ZNZoomRealNameAuthCountryInfo> support_country_list, ZoomSTRING privacy_url)
 {

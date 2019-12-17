@@ -49,6 +49,35 @@ public:
 	/// \return If the function succeeds, the return value is ZNSDKERR_SUCCESS.
 	///Otherwise failed. To get extended error information, see \link ZNSDKError \endlink enum.
 	static void EnableAutoAdjustMic(const v8::FunctionCallbackInfo<v8::Value>& args);
+
+	////////////////////////////////////////////////////////////////////////////////////////////////////
+	static void SetComputerMicDeviceChangedCB(const v8::FunctionCallbackInfo<v8::Value>& args);
+	static void SetComputerSpeakerDeviceChangedCB(const v8::FunctionCallbackInfo<v8::Value>& args);
+	static void SetDefaultMicDeviceChangedCB(const v8::FunctionCallbackInfo<v8::Value>& args);
+	static void SetDefaultSpeakerDeviceChangedCB(const v8::FunctionCallbackInfo<v8::Value>& args);
+
+	static void EnableStereoAudio(const v8::FunctionCallbackInfo<v8::Value>& args);
+	static void IsStereoAudioEnable(const v8::FunctionCallbackInfo<v8::Value>& args);
+
+	static void EnableMicOriginalInput(const v8::FunctionCallbackInfo<v8::Value>& args);
+	static void IsMicOriginalInputEnable(const v8::FunctionCallbackInfo<v8::Value>& args);
+
+	static void EnableHoldSpaceKeyToSpeak(const v8::FunctionCallbackInfo<v8::Value>& args);
+	static void IsHoldSpaceKeyToSpeakEnabled(const v8::FunctionCallbackInfo<v8::Value>& args);
+
+	static void EnableAlwaysMuteMicWhenJoinVoip(const v8::FunctionCallbackInfo<v8::Value>& args);
+	static void IsAlwaysMuteMicWhenJoinVoipEnabled(const v8::FunctionCallbackInfo<v8::Value>& args);
+
+	static void EnableSuppressAudioNotify(const v8::FunctionCallbackInfo<v8::Value>& args);
+	static void IsSuppressAudioNotifyEnabled(const v8::FunctionCallbackInfo<v8::Value>& args);
+
+	static void EnableEchoCancellation(const v8::FunctionCallbackInfo<v8::Value>& args);
+	static void IsEchoCancellationEnabled(const v8::FunctionCallbackInfo<v8::Value>& args);
+
+	static void SetMicVol(const v8::FunctionCallbackInfo<v8::Value>& args);
+	static void GetMicVol(const v8::FunctionCallbackInfo<v8::Value>& args);
+	static void SetSpeakerVol(const v8::FunctionCallbackInfo<v8::Value>& args);
+	static void GetSpeakerVol(const v8::FunctionCallbackInfo<v8::Value>& args);
 	
 	static v8::Persistent<v8::Function> constructor;
 };
@@ -56,7 +85,7 @@ template<>
 static void InitClassAttribute<ZoomNodeSettingAudioCtrlWrap >(const v8::Local<v8::FunctionTemplate>& tpl, v8::Isolate* isolate)
 {
 	tpl->SetClassName(v8::String::NewFromUtf8(
-		isolate, "ZoomNodeSettingAudioCtrlWrap"));
+		isolate, "ZoomNodeSettingAudioCtrlWrap", v8::NewStringType::kInternalized).ToLocalChecked());
 	tpl->InstanceTemplate()->SetInternalFieldCount(1);
 
 	// Prototype
@@ -69,6 +98,34 @@ static void InitClassAttribute<ZoomNodeSettingAudioCtrlWrap >(const v8::Local<v8
 	NODE_SET_PROTOTYPE_METHOD(tpl, "EnableAutoJoinAudio", ZoomNodeSettingAudioCtrlWrap::EnableAutoJoinAudio);
 	NODE_SET_PROTOTYPE_METHOD(tpl, "EnableAutoAdjustMic", ZoomNodeSettingAudioCtrlWrap::EnableAutoAdjustMic);
 	
+	////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	NODE_SET_PROTOTYPE_METHOD(tpl, "SetComputerMicDeviceChangedCB", ZoomNodeSettingAudioCtrlWrap::SetComputerMicDeviceChangedCB);
+	NODE_SET_PROTOTYPE_METHOD(tpl, "SetComputerSpeakerDeviceChangedCB", ZoomNodeSettingAudioCtrlWrap::SetComputerSpeakerDeviceChangedCB);
+	NODE_SET_PROTOTYPE_METHOD(tpl, "SetDefaultMicDeviceChangedCB", ZoomNodeSettingAudioCtrlWrap::SetDefaultMicDeviceChangedCB);
+	NODE_SET_PROTOTYPE_METHOD(tpl, "SetDefaultSpeakerDeviceChangedCB", ZoomNodeSettingAudioCtrlWrap::SetDefaultSpeakerDeviceChangedCB);
+
+	NODE_SET_PROTOTYPE_METHOD(tpl, "EnableStereoAudio", ZoomNodeSettingAudioCtrlWrap::EnableStereoAudio);
+	NODE_SET_PROTOTYPE_METHOD(tpl, "IsStereoAudioEnable", ZoomNodeSettingAudioCtrlWrap::IsStereoAudioEnable);
+
+	NODE_SET_PROTOTYPE_METHOD(tpl, "EnableMicOriginalInput", ZoomNodeSettingAudioCtrlWrap::EnableMicOriginalInput);
+	NODE_SET_PROTOTYPE_METHOD(tpl, "IsMicOriginalInputEnable", ZoomNodeSettingAudioCtrlWrap::IsMicOriginalInputEnable);
+
+	NODE_SET_PROTOTYPE_METHOD(tpl, "EnableHoldSpaceKeyToSpeak", ZoomNodeSettingAudioCtrlWrap::EnableHoldSpaceKeyToSpeak);
+	NODE_SET_PROTOTYPE_METHOD(tpl, "IsHoldSpaceKeyToSpeakEnabled", ZoomNodeSettingAudioCtrlWrap::IsHoldSpaceKeyToSpeakEnabled);
+
+	NODE_SET_PROTOTYPE_METHOD(tpl, "EnableAlwaysMuteMicWhenJoinVoip", ZoomNodeSettingAudioCtrlWrap::EnableAlwaysMuteMicWhenJoinVoip);
+	NODE_SET_PROTOTYPE_METHOD(tpl, "IsAlwaysMuteMicWhenJoinVoipEnabled", ZoomNodeSettingAudioCtrlWrap::IsAlwaysMuteMicWhenJoinVoipEnabled);
+
+	NODE_SET_PROTOTYPE_METHOD(tpl, "EnableSuppressAudioNotify", ZoomNodeSettingAudioCtrlWrap::EnableSuppressAudioNotify);
+	NODE_SET_PROTOTYPE_METHOD(tpl, "IsSuppressAudioNotifyEnabled", ZoomNodeSettingAudioCtrlWrap::IsSuppressAudioNotifyEnabled);
+
+	NODE_SET_PROTOTYPE_METHOD(tpl, "EnableEchoCancellation", ZoomNodeSettingAudioCtrlWrap::EnableEchoCancellation);
+	NODE_SET_PROTOTYPE_METHOD(tpl, "IsEchoCancellationEnabled", ZoomNodeSettingAudioCtrlWrap::IsEchoCancellationEnabled);
+
+	NODE_SET_PROTOTYPE_METHOD(tpl, "SetMicVol", ZoomNodeSettingAudioCtrlWrap::SetMicVol);
+	NODE_SET_PROTOTYPE_METHOD(tpl, "GetMicVol", ZoomNodeSettingAudioCtrlWrap::GetMicVol);
+	NODE_SET_PROTOTYPE_METHOD(tpl, "SetSpeakerVol", ZoomNodeSettingAudioCtrlWrap::SetSpeakerVol);
+	NODE_SET_PROTOTYPE_METHOD(tpl, "GetSpeakerVol", ZoomNodeSettingAudioCtrlWrap::GetSpeakerVol);
 }
 template<>
 static v8::Persistent<v8::Function>* GetConstructor<ZoomNodeSettingAudioCtrlWrap >() {

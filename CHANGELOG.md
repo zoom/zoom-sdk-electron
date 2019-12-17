@@ -1,5 +1,35 @@
 # CHANGELOG
 
+## 2019-12-16 @ [v4.4.57220.1211](https://github.com/zoom/zoom-sdk-electron/releases/tag/v4.4.57220.1211)
+
+## Added:
+* Add new interfaces for SDK initialization with JWT token.
+  * `AuthWithJwtToken(sdk_context)`
+* Add new interfaces in the meeting configuration service (Details available in `zoom_meeting_configuration.js`).
+ * `MeetingConfig_EnableApproveRemoteControlDlg`
+ * `MeetingConfig_EnableDeclineRemoteControlResponseDlg`
+ * `MeetingConfig_SetShowCallInTab`
+ * `MeetingConfig_SetShowCallMeTab`
+ * `MeetingConfig_RedirectClickParticipantListBTNEvent`
+ * `MeetingConfig_RedirectClickCCBTNEvent`
+* Add new interfaces in the setting service (Details available in `zoom_setting_general.js`).
+  * `Setting_EnableAutoFullScreenVideoWhenViewShare`
+    * `Setting_IsAutoFullScreenVideoWhenViewShareEnabled`
+    * `Setting_EnableShowMyMeetingElapseTime`
+    * `Setting_IsShowMyMeetingElapseTimeEnabled`
+* Add new callbacks for the events of clicking related buttons.
+  * `SetonStartShareBtnClickedCB`
+    * `SetonEndMeetingBtnClickedCB`
+    * `SetonParticipantListBtnClickedCB`
+  * Add support for Electron 6 & 7. (**Note: In order to support Electron 7, the Electron 3 or ealier version is no longer supported**)
+
+## Removed:
+* Remove the support for Electron 3 or earlier version.
+
+## Changed & Fixed:
+* Fixed an issue that the callback of direct share can not be received accidentally.
+* Fixed an issue that the meeting restarts for a few times after pressing the end meeting button.
+
 ## 2019-11-04 @ [v4.4.56616.1029](https://github.com/zoom/zoom-sdk-electron/releases/tag/v4.4.56616.1029)
 
 ## Added

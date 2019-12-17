@@ -148,6 +148,14 @@ typedef enum
  * @note You should call the method before calling [[ZoomSDK sharedSDK]initSDK:NO/YES] in the App.
  */
 - (void)setAppLocale:(ZoomSDKLocale)locale;
+
+/**
+ * @brief Switch to the new domain of the App.
+ * @param newDomain The new domain user want to switch to.
+ * @return If the function succeeds, it will return ZoomSDKError_Success, otherwise failed.
+ */
+- (ZoomSDKError)switchDomain:(NSString*)newDomain force:(BOOL)force;
+
 @end
 
 

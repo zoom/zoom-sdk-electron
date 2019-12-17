@@ -10,7 +10,7 @@
 		</data>
 		<key>Resources/Info.plist</key>
 		<data>
-		KnSsFeHo02e1wJOa1rDRNlItXDM=
+		knHGLU7JwPJoJB/qYRD+1y/TT+k=
 		</data>
 	</dict>
 	<key>files2</key>
@@ -19,7 +19,7 @@
 		<dict>
 			<key>cdhash</key>
 			<data>
-			qe2dlEGjKGJqsUj3J4kV0ecUo6w=
+			8qpBqEdS+z/cRs0JiSO+a61GlfM=
 			</data>
 			<key>requirement</key>
 			<string>identifier "zoom.us.libcmlFramework" and anchor apple generic and certificate 1[field.1.2.840.113635.100.6.2.6] /* exists */ and certificate leaf[field.1.2.840.113635.100.6.1.13] /* exists */ and certificate leaf[subject.OU] = BJ4HAAB9B3</string>
@@ -39,11 +39,11 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			KnSsFeHo02e1wJOa1rDRNlItXDM=
+			knHGLU7JwPJoJB/qYRD+1y/TT+k=
 			</data>
 			<key>hash2</key>
 			<data>
-			Y6kWYE89bSkm+b961siMmCOGry+4YX/6uCa+CQVA8mo=
+			b6akTjmCNVmS0knYkQ0Jr1/rfGL5atbmWYRPpjqHjno=
 			</data>
 		</dict>
 	</dict>

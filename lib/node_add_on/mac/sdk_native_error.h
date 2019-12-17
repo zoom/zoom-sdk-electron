@@ -45,5 +45,9 @@ public:
     ZNMeetingEndReason  ZNSDKMeetingEndReason(EndMeetingReason &reason);
     ZoomSDKLocale ZNSDKAPPLocalType(ZNSDK_APP_Locale &local);
     ZNSMSVerificationCodeErr ZNSDKSMSVerificationCodeError(ZoomSDKSMSVerificationCodeError &code);
+    ZNAudioCallbackActionInfo ZNSDKAudioCallbackAction(ZoomSDKAudioActionInfo &info);
+    ZNWebinarNeedRegisterType ZNSDKWebinarNeedRegisterType(WebinarRegisterType &type);
+    ZNRequiredInfoType ZNSDKRequiredInfoType(JoinMeetingReqInfoType &type);
+    
 };
 

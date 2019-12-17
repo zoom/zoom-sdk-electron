@@ -1,124 +1,177 @@
 #include "zoom_raw_data_wrap.h"
 #include "zoom_node_video_raw_data.h"
 #include "run_task_to_main_thread.h"
+#include <iostream>
+#include <string>
+#include "raw_data_uv_ipc_server.h"
+#include "raw_data_format.h"
 
-
-class VideoRawDataHelper : public IVideoRawDataReceiver
+class VideoRawDataHelper : public IVideoRawDataReceiver, public UVIPCSink
 {
 public:
 	friend class ZoomNodeVideoRawDataWrap;
 	VideoRawDataHelper()
 	{
 		_channel = NULL;
+		_libuv_option = false;
 	}
 	~VideoRawDataHelper()
 	{
 		if (_channel)
 			_channel->Stop();
 		_channel = NULL;
+		_libuv_option = false;
 	}
 
 	virtual void onDeviceRunning(void* device) {}
 	virtual void onDeviceStop(void* device) {}
+
+	virtual void onConnect() {}
+	virtual void onDisconnect() {}
+	virtual void onMessageRecvNotification(UVIPCMessage* msg)
+	{
+		if (NULL == msg)
+			return;
+		if (sizeof(unsigned int) != msg->GetLen()
+			|| NULL == msg->GetBuf())
+			return;
+		unsigned int* p_source_id = (unsigned int*)msg->GetBuf();
+		std::lock_guard<std::mutex> lock_(_cached_raw_data_count_map_mutex);
+		std::map<unsigned int, int>::iterator iter = _cached_raw_data_count_map.find(*p_source_id);
+		if (_cached_raw_data_count_map.end() != iter)
+			--iter->second;
+	}
+	virtual void onIdle() {}
+#define max_cache_frame 10
 	virtual void onVideoRawDataReceived(YUVRawDataI420* data_, IVector<unsigned long long >* recv_handle_list)
 	{
-		if (data_ && data_->CanAddRef())
+		if (_libuv_option)
 		{
-			data_->AddRef();
-			
+			if (_uv_ipc_server.HasClientConnected() && data_)
 			{
-				std::lock_guard<std::mutex> lock_(_cached_raw_data_mutex);
-				std::map<unsigned int, IMainThreadTask* >::iterator iter_ = _cached_raw_data.find(data_->GetSourceID());
-				if (_cached_raw_data.end() != iter_ && iter_->second)
 				{
-					IVector<unsigned long long >* recv_handle_list_tmp = NULL;
-					if (recv_handle_list && recv_handle_list->GetCount() > 0)
+					std::lock_guard<std::mutex> lock_(_cached_raw_data_count_map_mutex);
+					std::map<unsigned int, int>::iterator iter = _cached_raw_data_count_map.find(data_->GetSourceID());
+					if (_cached_raw_data_count_map.end() != iter)
 					{
-						CZNodeSetImpl<unsigned long long >* znSet = new CZNodeSetImpl<unsigned long long >;
-						if (znSet)
+						if (iter->second > max_cache_frame)
 						{
-							int count = recv_handle_list->GetCount();
-							for (int index = 0; index < count; index++)
-							{
-								znSet->m_List.insert(recv_handle_list->GetItem(index));
-							}
-							recv_handle_list_tmp = znSet;
+							return;
+						}
+						else
+						{
+							++iter->second;
 						}
 					}
-
-					iter_->second->UpdateData(data_, recv_handle_list_tmp);
-					return;
+					else
+					{
+						_cached_raw_data_count_map.insert(std::make_pair(data_->GetSourceID(), 1));
+					}	
 				}
+				UVIPCMessage* rawdata_msg = MakeUVIPCMsg(data_, recv_handle_list, TYPE_VIDEO);
+				_uv_ipc_server.SendMessage(rawdata_msg);
 			}
-
-			class VideoRawDataTask : public IMainThreadTask
+		}
+		else
+		{
+			if (data_ && data_->CanAddRef())
 			{
-			public:
-				friend class VideoRawDataHelper;
-				explicit VideoRawDataTask(VideoRawDataHelper* helper, YUVRawDataI420* data, IVector<unsigned long long >* recv_handle_list)
+				data_->AddRef();
+
 				{
-					helper_ = helper;
-					data_ = data;
-					recv_handle_list_ = recv_handle_list;
-					if (helper_ && data_)
+					std::lock_guard<std::mutex> lock_(_cached_raw_data_mutex);
+					std::map<unsigned int, IMainThreadTask* >::iterator iter_ = _cached_raw_data.find(data_->GetSourceID());
+					if (_cached_raw_data.end() != iter_ && iter_->second)
 					{
-						std::lock_guard<std::mutex> lock_(helper_->_cached_raw_data_mutex);
-						helper_->_cached_raw_data.insert(std::make_pair(data_->GetSourceID(), this));
+						IVector<unsigned long long >* recv_handle_list_tmp = NULL;
+						if (recv_handle_list && recv_handle_list->GetCount() > 0)
+						{
+							CZNodeSetImpl<unsigned long long >* znSet = new CZNodeSetImpl<unsigned long long >;
+							if (znSet)
+							{
+								int count = recv_handle_list->GetCount();
+								for (int index = 0; index < count; index++)
+								{
+									znSet->m_List.insert(recv_handle_list->GetItem(index));
+								}
+								recv_handle_list_tmp = znSet;
+							}
+						}
+
+						iter_->second->UpdateData(data_, recv_handle_list_tmp);
+						return;
 					}
 				}
-				virtual ~VideoRawDataTask() {}
-				virtual void Run()
+
+				class VideoRawDataTask : public IMainThreadTask
 				{
-					if (helper_ && data_)
+				public:
+					friend class VideoRawDataHelper;
+					explicit VideoRawDataTask(VideoRawDataHelper* helper, YUVRawDataI420* data, IVector<unsigned long long >* recv_handle_list)
 					{
-						std::lock_guard<std::mutex> lock_(helper_->_cached_raw_data_mutex);
-						helper_->_cached_raw_data.erase(data_->GetSourceID());
+						helper_ = helper;
+						data_ = data;
+						recv_handle_list_ = recv_handle_list;
+						if (helper_ && data_)
+						{
+							std::lock_guard<std::mutex> lock_(helper_->_cached_raw_data_mutex);
+							helper_->_cached_raw_data.insert(std::make_pair(data_->GetSourceID(), this));
+						}
 					}
-					if (helper_)
-						helper_->onVideoRawDataReceived_MainThread(data_, recv_handle_list_);
-					if (data_)
-						data_->Release();
-					if (recv_handle_list_)
-						delete recv_handle_list_;
-
-					delete this;
-				}
-
-				virtual void UpdateData(void* data_new, void* recv_handle_list_new)
-				{
+					virtual ~VideoRawDataTask() {}
+					virtual void Run()
 					{
+						if (helper_ && data_)
+						{
+							std::lock_guard<std::mutex> lock_(helper_->_cached_raw_data_mutex);
+							helper_->_cached_raw_data.erase(data_->GetSourceID());
+						}
+						if (helper_)
+							helper_->onVideoRawDataReceived_MainThread(data_, recv_handle_list_);
 						if (data_)
 							data_->Release();
 						if (recv_handle_list_)
 							delete recv_handle_list_;
 
-						data_ = (YUVRawDataI420*)data_new;
-						recv_handle_list_ = (IVector<unsigned long long >*)recv_handle_list_new;
+						delete this;
 					}
-				}
 
-			private:
-				VideoRawDataHelper* helper_;
-				YUVRawDataI420* data_;
-				IVector<unsigned long long >* recv_handle_list_;
-			};
-
-			IVector<unsigned long long >* recv_handle_list_tmp = NULL;
-			if (recv_handle_list && recv_handle_list->GetCount() > 0)
-			{
-				CZNodeSetImpl<unsigned long long >* znSet = new CZNodeSetImpl<unsigned long long >;
-				if (znSet)
-				{
-					int count = recv_handle_list->GetCount();
-					for (int index = 0; index < count; index++)
+					virtual void UpdateData(void* data_new, void* recv_handle_list_new)
 					{
-						znSet->m_List.insert(recv_handle_list->GetItem(index));
+						{
+							if (data_)
+								data_->Release();
+							if (recv_handle_list_)
+								delete recv_handle_list_;
+
+							data_ = (YUVRawDataI420*)data_new;
+							recv_handle_list_ = (IVector<unsigned long long >*)recv_handle_list_new;
+						}
 					}
-					recv_handle_list_tmp = znSet;
+
+				private:
+					VideoRawDataHelper* helper_;
+					YUVRawDataI420* data_;
+					IVector<unsigned long long >* recv_handle_list_;
+				};
+
+				IVector<unsigned long long >* recv_handle_list_tmp = NULL;
+				if (recv_handle_list && recv_handle_list->GetCount() > 0)
+				{
+					CZNodeSetImpl<unsigned long long >* znSet = new CZNodeSetImpl<unsigned long long >;
+					if (znSet)
+					{
+						int count = recv_handle_list->GetCount();
+						for (int index = 0; index < count; index++)
+						{
+							znSet->m_List.insert(recv_handle_list->GetItem(index));
+						}
+						recv_handle_list_tmp = znSet;
+					}
 				}
+				if (!PostTaskToMainThread(new VideoRawDataTask(this, data_, recv_handle_list_tmp)))
+					data_->Release();
 			}
-			if (!PostTaskToMainThread(new VideoRawDataTask(this, data_, recv_handle_list_tmp)))
-				data_->Release();
 		}
 	}
 
@@ -255,6 +308,10 @@ private:
 	v8::Persistent<v8::Function, v8::CopyablePersistentTraits<v8::Function> > _onSubscribedVideoUserLeft;
 	std::mutex _cached_raw_data_mutex;
 	std::map<unsigned int, IMainThreadTask* > _cached_raw_data;
+	bool _libuv_option;
+	RawDataUVIPCServer _uv_ipc_server;
+	std::mutex _cached_raw_data_count_map_mutex;
+	std::map<unsigned int, int > _cached_raw_data_count_map;
 };
 VideoRawDataHelper g_video_rawdata;
 
@@ -274,14 +331,14 @@ void ZoomNodeVideoRawDataWrap::SetRawDataCB(const v8::FunctionCallbackInfo<v8::V
 	v8::Isolate* isolate = args.GetIsolate();
 	if (args.Length() < 1) {
 		isolate->ThrowException(v8::Exception::TypeError(
-			v8::String::NewFromUtf8(isolate, "Wrong number of arguments")));
+			v8::String::NewFromUtf8(isolate, "Wrong number of arguments", v8::NewStringType::kInternalized).ToLocalChecked()));
 		return;
 	}
-
+	if (args[0]->IsNull())	{		g_video_rawdata._onVideoRawDataReceived.Empty();		return;	}
 	if (!args[0]->IsFunction())
 	{
 		isolate->ThrowException(v8::Exception::TypeError(
-			v8::String::NewFromUtf8(isolate, "Wrong arguments")));
+			v8::String::NewFromUtf8(isolate, "Wrong arguments", v8::NewStringType::kInternalized).ToLocalChecked()));
 		return;
 	}
 
@@ -298,14 +355,14 @@ void ZoomNodeVideoRawDataWrap::SetRawDataVideoUserDataOnCB(const v8::FunctionCal
 	v8::Isolate* isolate = args.GetIsolate();
 	if (args.Length() < 1) {
 		isolate->ThrowException(v8::Exception::TypeError(
-			v8::String::NewFromUtf8(isolate, "Wrong number of arguments")));
+			v8::String::NewFromUtf8(isolate, "Wrong number of arguments", v8::NewStringType::kInternalized).ToLocalChecked()));
 		return;
 	}
-
+	if (args[0]->IsNull())	{		g_video_rawdata._onSubscribedVideoUserDataOn.Empty();		return;	}
 	if (!args[0]->IsFunction())
 	{
 		isolate->ThrowException(v8::Exception::TypeError(
-			v8::String::NewFromUtf8(isolate, "Wrong arguments")));
+			v8::String::NewFromUtf8(isolate, "Wrong arguments", v8::NewStringType::kInternalized).ToLocalChecked()));
 		return;
 	}
 
@@ -322,14 +379,14 @@ void ZoomNodeVideoRawDataWrap::SetRawDataVideoUserDataOffCB(const v8::FunctionCa
 	v8::Isolate* isolate = args.GetIsolate();
 	if (args.Length() < 1) {
 		isolate->ThrowException(v8::Exception::TypeError(
-			v8::String::NewFromUtf8(isolate, "Wrong number of arguments")));
+			v8::String::NewFromUtf8(isolate, "Wrong number of arguments", v8::NewStringType::kInternalized).ToLocalChecked()));
 		return;
 	}
-
+	if (args[0]->IsNull())	{		g_video_rawdata._onSubscribedVideoUserDataOff.Empty();		return;	}
 	if (!args[0]->IsFunction())
 	{
 		isolate->ThrowException(v8::Exception::TypeError(
-			v8::String::NewFromUtf8(isolate, "Wrong arguments")));
+			v8::String::NewFromUtf8(isolate, "Wrong arguments", v8::NewStringType::kInternalized).ToLocalChecked()));
 		return;
 	}
 
@@ -346,14 +403,14 @@ void ZoomNodeVideoRawDataWrap::SetRawDataVideoUserLeftCB(const v8::FunctionCallb
 	v8::Isolate* isolate = args.GetIsolate();
 	if (args.Length() < 1) {
 		isolate->ThrowException(v8::Exception::TypeError(
-			v8::String::NewFromUtf8(isolate, "Wrong number of arguments")));
+			v8::String::NewFromUtf8(isolate, "Wrong number of arguments", v8::NewStringType::kInternalized).ToLocalChecked()));
 		return;
 	}
-
+	if (args[0]->IsNull())	{		g_video_rawdata._onSubscribedVideoUserLeft.Empty();		return;	}
 	if (!args[0]->IsFunction())
 	{
 		isolate->ThrowException(v8::Exception::TypeError(
-			v8::String::NewFromUtf8(isolate, "Wrong arguments")));
+			v8::String::NewFromUtf8(isolate, "Wrong arguments", v8::NewStringType::kInternalized).ToLocalChecked()));
 		return;
 	}
 
@@ -369,20 +426,24 @@ void ZoomNodeVideoRawDataWrap::Start(const v8::FunctionCallbackInfo<v8::Value>& 
 	v8::Isolate* isolate = args.GetIsolate();
 	if (args.Length() < 1) {
 		isolate->ThrowException(v8::Exception::TypeError(
-			v8::String::NewFromUtf8(isolate, "Wrong number of arguments")));
+			v8::String::NewFromUtf8(isolate, "Wrong number of arguments", v8::NewStringType::kInternalized).ToLocalChecked()));
 		return;
 	}
 	if (!args[0]->IsNumber())
 	{
 		isolate->ThrowException(v8::Exception::TypeError(
-			v8::String::NewFromUtf8(isolate, "Wrong arguments")));
+			v8::String::NewFromUtf8(isolate, "Wrong arguments", v8::NewStringType::kInternalized).ToLocalChecked()));
 		return;
 	}
 	if (NULL == g_video_rawdata._channel)
 		Node_RetrieveVideoRawDataChannel(&g_video_rawdata._channel);
 	SDKRawDataError err = SDKRawDataError_UNINITIALIZED;
 	if (g_video_rawdata._channel)
+	{
+		if (g_video_rawdata._libuv_option)
+			g_video_rawdata._channel->EnableIntermediateRawDataCB(true);
 		err = g_video_rawdata._channel->Start(RawDataMemoryMode_Heap, &g_video_rawdata);
+	}
 	v8::Local<v8::Integer> bret = v8::Integer::New(isolate, (int32_t)err);
 	args.GetReturnValue().Set(bret);
 }
@@ -392,7 +453,7 @@ void ZoomNodeVideoRawDataWrap::Subscribe(const v8::FunctionCallbackInfo<v8::Valu
 	v8::Isolate* isolate = args.GetIsolate();
 	if (args.Length() < 3) {
 		isolate->ThrowException(v8::Exception::TypeError(
-			v8::String::NewFromUtf8(isolate, "Wrong number of arguments")));
+			v8::String::NewFromUtf8(isolate, "Wrong number of arguments", v8::NewStringType::kInternalized).ToLocalChecked()));
 		return;
 	}
 
@@ -401,7 +462,7 @@ void ZoomNodeVideoRawDataWrap::Subscribe(const v8::FunctionCallbackInfo<v8::Valu
 		!args[2]->IsNumber())
 	{
 		isolate->ThrowException(v8::Exception::TypeError(
-			v8::String::NewFromUtf8(isolate, "Wrong arguments")));
+			v8::String::NewFromUtf8(isolate, "Wrong arguments", v8::NewStringType::kInternalized).ToLocalChecked()));
 		return;
 	}
 	SDKRawDataError err = SDKRawDataError_UNINITIALIZED;
@@ -418,7 +479,7 @@ void ZoomNodeVideoRawDataWrap::UnSubscribe(const v8::FunctionCallbackInfo<v8::Va
 	v8::Isolate* isolate = args.GetIsolate();
 	if (args.Length() < 2) {
 		isolate->ThrowException(v8::Exception::TypeError(
-			v8::String::NewFromUtf8(isolate, "Wrong number of arguments")));
+			v8::String::NewFromUtf8(isolate, "Wrong number of arguments", v8::NewStringType::kInternalized).ToLocalChecked()));
 		return;
 	}
 
@@ -426,7 +487,7 @@ void ZoomNodeVideoRawDataWrap::UnSubscribe(const v8::FunctionCallbackInfo<v8::Va
 		!args[1]->IsNumber())
 	{
 		isolate->ThrowException(v8::Exception::TypeError(
-			v8::String::NewFromUtf8(isolate, "Wrong arguments")));
+			v8::String::NewFromUtf8(isolate, "Wrong arguments", v8::NewStringType::kInternalized).ToLocalChecked()));
 		return;
 	}
 	SDKRawDataError err = SDKRawDataError_UNINITIALIZED;
@@ -459,6 +520,32 @@ void ZoomNodeVideoRawDataWrap::Stop(const v8::FunctionCallbackInfo<v8::Value>& a
 	if (g_video_rawdata._channel)
 		err = g_video_rawdata._channel->Stop();
 	v8::Local<v8::Integer> bret = v8::Integer::New(isolate, (int32_t)err);
+	args.GetReturnValue().Set(bret);
+}
+
+void ZoomNodeVideoRawDataWrap::StartPipeServer(const v8::FunctionCallbackInfo<v8::Value>& args)
+{
+	v8::Isolate* isolate = args.GetIsolate();
+	bool err = false;
+	if (!g_video_rawdata._libuv_option)
+	{
+		err = g_video_rawdata._uv_ipc_server.StartPipeServer(VIDEO_PIPE_NAME, &g_video_rawdata);
+		g_video_rawdata._libuv_option = true;
+	}
+	v8::Local<v8::Boolean> bret = v8::Boolean::New(isolate, err);
+	args.GetReturnValue().Set(bret);
+
+}
+void ZoomNodeVideoRawDataWrap::StopPipeServer(const v8::FunctionCallbackInfo<v8::Value>& args)
+{
+	v8::Isolate* isolate = args.GetIsolate();
+	bool err = false;
+	if (g_video_rawdata._libuv_option)
+	{
+		g_video_rawdata._libuv_option = false;
+		err = g_video_rawdata._uv_ipc_server.StopPipeServer();
+	}
+	v8::Local<v8::Boolean> bret = v8::Boolean::New(isolate, err);
 	args.GetReturnValue().Set(bret);
 }
 

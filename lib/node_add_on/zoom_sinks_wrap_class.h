@@ -71,6 +71,19 @@ public:
 		auto fn = v8::Local<v8::Function>::New(isolate, ZoomNodeSinkHelper::GetInst().onZoomIdentityExpired);
 		fn->Call(context, global, 0, NULL);
 	}
+	virtual void onZoomAuthIdentityExpired()
+	{
+		if (ZoomNodeSinkHelper::GetInst().onZoomAuthIdentityExpired.IsEmpty())
+			return;
+
+		auto isolate = v8::Isolate::GetCurrent();
+		v8::HandleScope scope(isolate);
+		auto context = isolate->GetCurrentContext();
+		auto global = context->Global();
+
+		auto fn = v8::Local<v8::Function>::New(isolate, ZoomNodeSinkHelper::GetInst().onZoomAuthIdentityExpired);
+		fn->Call(context, global, 0, NULL);
+	}
 };
 ///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 class ZNativeSDKMeetingWrapSink
@@ -121,8 +134,8 @@ public:
 
 
 		v8::Local<v8::Object> node = v8::Object::New(isolate);
-		node->Set(v8::String::NewFromUtf8(isolate, "MeetingUniqueID"), v8::Number::New(isolate, (unsigned long long)meetingUniqueID));
-		node->Set(v8::String::NewFromUtf8(isolate, "PremeetingAPIResult"), v8::Integer::New(isolate, (int32_t)result));
+		node->Set(context, v8::String::NewFromUtf8(isolate, "MeetingUniqueID", v8::NewStringType::kInternalized).ToLocalChecked(), v8::Number::New(isolate, (unsigned long long)meetingUniqueID));
+		node->Set(context, v8::String::NewFromUtf8(isolate, "PremeetingAPIResult", v8::NewStringType::kInternalized).ToLocalChecked(), v8::Integer::New(isolate, (int32_t)result));
 
 		//
 		int argc = 1;
@@ -151,8 +164,8 @@ public:
 		for (unsigned int i = 0; i < lst_meeting_list.size(); ++i) {
 			v8::HandleScope scope(isolate);
 			v8::Local<v8::Object> node = v8::Object::New(isolate);
-			node->Set(v8::String::NewFromUtf8(isolate, "meetingID"), v8::Number::New(isolate, (unsigned long long)lst_meeting_list[i]));
-			nodes->Set(i, node);
+			node->Set(context, v8::String::NewFromUtf8(isolate, "meetingID", v8::NewStringType::kInternalized).ToLocalChecked(), v8::Number::New(isolate, (unsigned long long)lst_meeting_list[i]));
+			nodes->Set(context, i, node);
 		}
 
 		v8::Local<v8::Value> resultname = v8::String::NewFromUtf8(isolate, "premeeting_api_result", v8::NewStringType::kInternalized).ToLocalChecked();
@@ -184,7 +197,7 @@ public:
 
 
 		v8::Local<v8::Object> node = v8::Object::New(isolate);
-		node->Set(v8::String::NewFromUtf8(isolate, "PremeetingAPIResult"), v8::Integer::New(isolate, (int32_t)result));
+		node->Set(context, v8::String::NewFromUtf8(isolate, "PremeetingAPIResult", v8::NewStringType::kInternalized).ToLocalChecked(), v8::Integer::New(isolate, (int32_t)result));
 
 		//
 		int argc = 1;
@@ -216,8 +229,127 @@ public:
 		int argc = 1;
 		v8::Local<v8::Value> argv[1] = { v8_bHandled };
 		auto fn = v8::Local<v8::Function>::New(isolate, ZoomNodeSinkHelper::GetInst().onInviteBtnClicked);
+		v8::MaybeLocal<v8::Value> bReturnedValue = fn->Call(context, global, argc, argv);
+		bHandled = bReturnedValue.ToLocalChecked()->BooleanValue();
+	}
+
+	virtual void onStartShareBtnClicked()
+	{
+		if (ZoomNodeSinkHelper::GetInst().onStartShareBtnClicked.IsEmpty())
+			return;
+
+		auto isolate = v8::Isolate::GetCurrent();
+		v8::HandleScope scope(isolate);
+		auto context = isolate->GetCurrentContext();
+		auto global = context->Global();
+
+		auto fn = v8::Local<v8::Function>::New(isolate, ZoomNodeSinkHelper::GetInst().onStartShareBtnClicked);
+
+		fn->Call(context, global, 0, NULL);
+	}
+	virtual void onEndMeetingBtnClicked()
+	{
+		if (ZoomNodeSinkHelper::GetInst().onEndMeetingBtnClicked.IsEmpty())
+			return;
+
+		auto isolate = v8::Isolate::GetCurrent();
+		v8::HandleScope scope(isolate);
+		auto context = isolate->GetCurrentContext();
+		auto global = context->Global();
+
+		auto fn = v8::Local<v8::Function>::New(isolate, ZoomNodeSinkHelper::GetInst().onEndMeetingBtnClicked);
+
+		fn->Call(context, global, 0, NULL);
+	}
+	virtual void onParticipantListBtnClicked()
+	{
+		if (ZoomNodeSinkHelper::GetInst().onParticipantListBtnClicked.IsEmpty())
+			return;
+
+		auto isolate = v8::Isolate::GetCurrent();
+		v8::HandleScope scope(isolate);
+		auto context = isolate->GetCurrentContext();
+		auto global = context->Global();
+
+		auto fn = v8::Local<v8::Function>::New(isolate, ZoomNodeSinkHelper::GetInst().onParticipantListBtnClicked);
+
+		fn->Call(context, global, 0, NULL);
+	}
+	virtual void onCustomLiveStreamMenuClicked()
+	{
+		if (ZoomNodeSinkHelper::GetInst().onCustomLiveStreamMenuClicked.IsEmpty())
+			return;
+
+		auto isolate = v8::Isolate::GetCurrent();
+		v8::HandleScope scope(isolate);
+		auto context = isolate->GetCurrentContext();
+		auto global = context->Global();
+
+		auto fn = v8::Local<v8::Function>::New(isolate, ZoomNodeSinkHelper::GetInst().onCustomLiveStreamMenuClicked);
+
+		fn->Call(context, global, 0, NULL);
+	}
+	virtual void onZoomInviteDialogFailed()
+	{
+		if (ZoomNodeSinkHelper::GetInst().onZoomInviteDialogFailed.IsEmpty())
+			return;
+
+		auto isolate = v8::Isolate::GetCurrent();
+		v8::HandleScope scope(isolate);
+		auto context = isolate->GetCurrentContext();
+		auto global = context->Global();
+
+		auto fn = v8::Local<v8::Function>::New(isolate, ZoomNodeSinkHelper::GetInst().onZoomInviteDialogFailed);
+
+		fn->Call(context, global, 0, NULL);
+	}
+	virtual void onCCBTNClicked()
+	{
+		if (ZoomNodeSinkHelper::GetInst().onCCBTNClicked.IsEmpty())
+			return;
+
+		auto isolate = v8::Isolate::GetCurrent();
+		v8::HandleScope scope(isolate);
+		auto context = isolate->GetCurrentContext();
+		auto global = context->Global();
+
+		auto fn = v8::Local<v8::Function>::New(isolate, ZoomNodeSinkHelper::GetInst().onCCBTNClicked);
+
+		fn->Call(context, global, 0, NULL);
+	}
+	virtual void onAudioBtnClicked(ZNAudioBtnClickedCallbackInfo info)
+	{
+		if (ZoomNodeSinkHelper::GetInst().onAudioBtnClicked.IsEmpty())
+			return;
+
+		auto isolate = v8::Isolate::GetCurrent();
+		v8::HandleScope scope(isolate);
+		auto context = isolate->GetCurrentContext();
+		auto global = context->Global();
+
+		v8::Local<v8::Integer > v8_audio_clicked_action = v8::Integer::New(isolate, (int32_t)info.audio_clicked_action);
+		v8::Local<v8::Integer > v8_userid_MuteUnmute = v8::Integer::New(isolate, (uint32_t)info.userid_MuteUnmute);
+
+		int argc = 2;
+		v8::Local<v8::Value> argv[2] = { v8_audio_clicked_action, v8_userid_MuteUnmute };
+
+		auto fn = v8::Local<v8::Function>::New(isolate, ZoomNodeSinkHelper::GetInst().onAudioBtnClicked);
 
 		fn->Call(context, global, argc, argv);
+	}
+	virtual void onAudioMenuBtnClicked()
+	{
+		if (ZoomNodeSinkHelper::GetInst().onAudioMenuBtnClicked.IsEmpty())
+			return;
+
+		auto isolate = v8::Isolate::GetCurrent();
+		v8::HandleScope scope(isolate);
+		auto context = isolate->GetCurrentContext();
+		auto global = context->Global();
+
+		auto fn = v8::Local<v8::Function>::New(isolate, ZoomNodeSinkHelper::GetInst().onAudioMenuBtnClicked);
+
+		fn->Call(context, global, 0, NULL);
 	}
 };
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -245,9 +377,9 @@ public:
 		for (unsigned int i = 0; i < lstAudioStatusChange.size(); ++i) {
 			v8::HandleScope scope(isolate);
 			v8::Local<v8::Object> node = v8::Object::New(isolate);
-			node->Set(v8::String::NewFromUtf8(isolate, "userid"), v8::Integer::New(isolate, (int32_t)lstAudioStatusChange[i].userId));
-			node->Set(v8::String::NewFromUtf8(isolate, "audioStauts"), v8::Integer::New(isolate, (int32_t)lstAudioStatusChange[i].audioStauts));
-			nodes->Set(i, node);
+			node->Set(context, v8::String::NewFromUtf8(isolate, "userid", v8::NewStringType::kInternalized).ToLocalChecked(), v8::Integer::New(isolate, (int32_t)lstAudioStatusChange[i].userId));
+			node->Set(context, v8::String::NewFromUtf8(isolate, "audioStauts", v8::NewStringType::kInternalized).ToLocalChecked(), v8::Integer::New(isolate, (int32_t)lstAudioStatusChange[i].audioStauts));
+			nodes->Set(context, i, node);
 		}
 		//
 		int argc = 1;
@@ -275,8 +407,8 @@ public:
 		for (unsigned int i = 0; i < lstActiveAudio.size(); ++i) {
 			v8::HandleScope scope(isolate);
 			v8::Local<v8::Object> node = v8::Object::New(isolate);
-			node->Set(v8::String::NewFromUtf8(isolate, "userid"), v8::Integer::New(isolate, (int32_t)lstActiveAudio[i]));
-			nodes->Set(i, node);
+			node->Set(context, v8::String::NewFromUtf8(isolate, "userid", v8::NewStringType::kInternalized).ToLocalChecked(), v8::Integer::New(isolate, (int32_t)lstActiveAudio[i]));
+			nodes->Set(context, i, node);
 		}
 		//
 		int argc = 1;
@@ -310,8 +442,8 @@ public:
 		auto global = context->Global();
 
 		v8::Local<v8::Object> node = v8::Object::New(isolate);
-		node->Set(v8::String::NewFromUtf8(isolate, "userId"), v8::Integer::New(isolate, (int32_t)userId));
-		node->Set(v8::String::NewFromUtf8(isolate, "videoStatus"), v8::Integer::New(isolate, (int32_t)status));
+		node->Set(context, v8::String::NewFromUtf8(isolate, "userId", v8::NewStringType::kInternalized).ToLocalChecked(), v8::Integer::New(isolate, (int32_t)userId));
+		node->Set(context, v8::String::NewFromUtf8(isolate, "videoStatus", v8::NewStringType::kInternalized).ToLocalChecked(), v8::Integer::New(isolate, (int32_t)status));
 
 		int argc = 1;
 		v8::Local<v8::Value> argv[1] = { node };
@@ -380,8 +512,8 @@ public:
 
 
 		v8::Local<v8::Object> node = v8::Object::New(isolate);
-		node->Set(v8::String::NewFromUtf8(isolate, "userId"), v8::Integer::New(isolate, (int32_t)userId));
-		node->Set(v8::String::NewFromUtf8(isolate, "ShareStatus"), v8::Integer::New(isolate, (int32_t)status));
+		node->Set(context, v8::String::NewFromUtf8(isolate, "userId", v8::NewStringType::kInternalized).ToLocalChecked(), v8::Integer::New(isolate, (int32_t)userId));
+		node->Set(context, v8::String::NewFromUtf8(isolate, "ShareStatus", v8::NewStringType::kInternalized).ToLocalChecked(), v8::Integer::New(isolate, (int32_t)status));
 
 		int argc = 1;
 		v8::Local<v8::Value> argv[1] = { node };
@@ -412,8 +544,8 @@ public:
 		for (unsigned int i = 0; i < lstUserID.size(); ++i) {
 			v8::HandleScope scope(isolate);
 			v8::Local<v8::Object> node = v8::Object::New(isolate);
-			node->Set(v8::String::NewFromUtf8(isolate, "userid"), v8::Integer::New(isolate, (int32_t)lstUserID[i]));
-			nodes->Set(i, node);
+			node->Set(context, v8::String::NewFromUtf8(isolate, "userid", v8::NewStringType::kInternalized).ToLocalChecked(), v8::Integer::New(isolate, (int32_t)lstUserID[i]));
+			nodes->Set(context, i, node);
 		}
 		//
 		int argc = 1;
@@ -440,8 +572,8 @@ public:
 		for (unsigned int i = 0; i < lstUserID.size(); ++i) {
 			v8::HandleScope scope(isolate);
 			v8::Local<v8::Object> node = v8::Object::New(isolate);
-			node->Set(v8::String::NewFromUtf8(isolate, "userid"), v8::Integer::New(isolate, (int32_t)lstUserID[i]));
-			nodes->Set(i, node);
+			node->Set(context, v8::String::NewFromUtf8(isolate, "userid", v8::NewStringType::kInternalized).ToLocalChecked(), v8::Integer::New(isolate, (int32_t)lstUserID[i]));
+			nodes->Set(context, i, node);
 		}
 		//
 		int argc = 1;
@@ -513,8 +645,8 @@ public:
 		auto global = context->Global();
 
 		v8::Local<v8::Object> node = v8::Object::New(isolate);
-		node->Set(v8::String::NewFromUtf8(isolate, "giftUrl"), v8::String::NewFromUtf8(isolate, zs2s(gift_url).c_str()));
-		node->Set(v8::String::NewFromUtf8(isolate, "freeMeetingNeedUpgradeType"), v8::Integer::New(isolate, (int32_t)type));
+		node->Set(context, v8::String::NewFromUtf8(isolate, "giftUrl", v8::NewStringType::kInternalized).ToLocalChecked(), v8::String::NewFromUtf8(isolate, zs2s(gift_url).c_str(), v8::NewStringType::kInternalized).ToLocalChecked());
+		node->Set(context, v8::String::NewFromUtf8(isolate, "freeMeetingNeedUpgradeType", v8::NewStringType::kInternalized).ToLocalChecked(), v8::Integer::New(isolate, (int32_t)type));
 
 		int argc = 1;
 		v8::Local<v8::Value> argv[1] = { node };
@@ -533,14 +665,9 @@ public:
 		auto context = isolate->GetCurrentContext();
 		auto global = context->Global();
 
-		int32_t temp = 0;
-		v8::Local<v8::Integer> bret = v8::Integer::New(isolate, (int32_t)temp);
-		int argc = 1;
-		v8::Local<v8::Value> argv[1] = { bret };
-
 		auto fn = v8::Local<v8::Function>::New(isolate, ZoomNodeSinkHelper::GetInst().onFreeMeetingUpgradeToGiftFreeTrialStart);
 
-		fn->Call(context, global, argc, argv);
+		fn->Call(context, global, 0, NULL);
 	}
 	/// \brief Callback function of ending upgrade the free meeting by the gift link.
 	virtual void onFreeMeetingUpgradeToGiftFreeTrialStop()
@@ -553,14 +680,9 @@ public:
 		auto context = isolate->GetCurrentContext();
 		auto global = context->Global();
 
-		int32_t temp = 0;
-		v8::Local<v8::Integer> bret = v8::Integer::New(isolate, (int32_t)temp);
-		int argc = 1;
-		v8::Local<v8::Value> argv[1] = { bret };
-
 		auto fn = v8::Local<v8::Function>::New(isolate, ZoomNodeSinkHelper::GetInst().onFreeMeetingUpgradeToGiftFreeTrialStop);
 
-		fn->Call(context, global, argc, argv);
+		fn->Call(context, global, 0, NULL);
 	}
 	/// \brief Callback function of free meting upgrades successfully.
 	virtual void onFreeMeetingUpgradeToProMeeting()
@@ -573,14 +695,104 @@ public:
 		auto context = isolate->GetCurrentContext();
 		auto global = context->Global();
 
-		int32_t temp = 0;
-		v8::Local<v8::Integer> bret = v8::Integer::New(isolate, (int32_t)temp);
-		int argc = 1;
-		v8::Local<v8::Value> argv[1] = { bret };
-
 		auto fn = v8::Local<v8::Function>::New(isolate, ZoomNodeSinkHelper::GetInst().onFreeMeetingUpgradeToProMeeting);
 
+		fn->Call(context, global, 0, NULL);
+	}
+	virtual void onInputMeetingPasswordAndScreenNameNotification()
+	{
+		if (ZoomNodeSinkHelper::GetInst().onInputMeetingPasswordAndScreenNameNotification.IsEmpty())
+			return;
+
+		auto isolate = v8::Isolate::GetCurrent();
+		v8::HandleScope scope(isolate);
+		auto context = isolate->GetCurrentContext();
+		auto global = context->Global();
+
+		auto fn = v8::Local<v8::Function>::New(isolate, ZoomNodeSinkHelper::GetInst().onInputMeetingPasswordAndScreenNameNotification);
+
+		fn->Call(context, global, 0, NULL);
+	}
+	virtual void onAirPlayInstructionWndNotification(bool bShow, ZoomSTRING airhostName)
+	{
+		if (ZoomNodeSinkHelper::GetInst().onAirPlayInstructionWndNotification.IsEmpty())
+			return;
+
+		auto isolate = v8::Isolate::GetCurrent();
+		v8::HandleScope scope(isolate);
+		auto context = isolate->GetCurrentContext();
+		auto global = context->Global();
+
+		v8::Local<v8::Boolean> zn_bShow = v8::Boolean::New(isolate, bShow);
+		v8::Local<v8::String> zn_airhostName = v8::String::NewFromUtf8(isolate, zs2s(airhostName).c_str(), v8::NewStringType::kInternalized).ToLocalChecked();
+
+		int argc = 2;
+		v8::Local<v8::Value> argv[2] = { zn_bShow, zn_airhostName };
+
+		auto fn = v8::Local<v8::Function>::New(isolate, ZoomNodeSinkHelper::GetInst().onAirPlayInstructionWndNotification);
+
 		fn->Call(context, global, argc, argv);
+	}
+	
+	virtual void onWebinarNeedRegisterNotification()
+	{
+		if (ZoomNodeSinkHelper::GetInst().onWebinarNeedRegisterNotification.IsEmpty())
+			return;
+
+		auto isolate = v8::Isolate::GetCurrent();
+		v8::HandleScope scope(isolate);
+		auto context = isolate->GetCurrentContext();
+		auto global = context->Global();
+
+		auto fn = v8::Local<v8::Function>::New(isolate, ZoomNodeSinkHelper::GetInst().onWebinarNeedRegisterNotification);
+
+		fn->Call(context, global, 0, NULL);
+	}
+	
+	virtual void onEndOtherMeetingToJoinMeetingNotification()
+	{
+		if (ZoomNodeSinkHelper::GetInst().onEndOtherMeetingToJoinMeetingNotification.IsEmpty())
+			return;
+
+		auto isolate = v8::Isolate::GetCurrent();
+		v8::HandleScope scope(isolate);
+		auto context = isolate->GetCurrentContext();
+		auto global = context->Global();
+
+		auto fn = v8::Local<v8::Function>::New(isolate, ZoomNodeSinkHelper::GetInst().onEndOtherMeetingToJoinMeetingNotification);
+
+		fn->Call(context, global, 0, NULL);
+	}
+	virtual void onFreeMeetingRemainTime(unsigned int leftTime)
+	{
+		if (ZoomNodeSinkHelper::GetInst().onFreeMeetingRemainTime.IsEmpty())
+			return;
+
+		auto isolate = v8::Isolate::GetCurrent();
+		v8::HandleScope scope(isolate);
+		auto context = isolate->GetCurrentContext();
+		auto global = context->Global();
+
+		v8::Local<v8::Integer> v8_leftTime = v8::Integer::New(isolate, (int32_t)leftTime);
+		int argc = 1;
+		v8::Local<v8::Value> argv[1] = { v8_leftTime };
+		auto fn = v8::Local<v8::Function>::New(isolate, ZoomNodeSinkHelper::GetInst().onFreeMeetingRemainTime);
+
+		fn->Call(context, global, argc, argv);
+	}
+	virtual void onFreeMeetingRemainTimeStopCountDown()
+	{
+		if (ZoomNodeSinkHelper::GetInst().onFreeMeetingRemainTimeStopCountDown.IsEmpty())
+			return;
+
+		auto isolate = v8::Isolate::GetCurrent();
+		v8::HandleScope scope(isolate);
+		auto context = isolate->GetCurrentContext();
+		auto global = context->Global();
+
+		auto fn = v8::Local<v8::Function>::New(isolate, ZoomNodeSinkHelper::GetInst().onFreeMeetingRemainTimeStopCountDown);
+
+		fn->Call(context, global, 0, NULL);
 	}
 };
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
@@ -603,7 +815,7 @@ public:
 
 
 		v8::Local<v8::Object> node = v8::Object::New(isolate);
-		node->Set(v8::String::NewFromUtf8(isolate, "DirectShareStatus"), v8::Integer::New(isolate, (int32_t)status));
+		node->Set(context, v8::String::NewFromUtf8(isolate, "DirectShareStatus", v8::NewStringType::kInternalized).ToLocalChecked(), v8::Integer::New(isolate, (int32_t)status));
 
 		int argc = 1;
 		v8::Local<v8::Value> argv[1] = { node };
@@ -633,13 +845,13 @@ public:
 		{
 			v8::HandleScope scope(isolate);
 			v8::Local<v8::Object> node = v8::Object::New(isolate);
-			node->Set(v8::String::NewFromUtf8(isolate, "countryCode"), v8::String::NewFromUtf8(isolate, zs2s(support_country_list[i].countryCode).c_str()));
-			node->Set(v8::String::NewFromUtf8(isolate, "countryID"), v8::String::NewFromUtf8(isolate, zs2s(support_country_list[i].countryID).c_str()));
-			node->Set(v8::String::NewFromUtf8(isolate, "countryName"), v8::String::NewFromUtf8(isolate, zs2s(support_country_list[i].countryName).c_str()));
-			zn_support_country_list->Set(i, node);
+			node->Set(context, v8::String::NewFromUtf8(isolate, "countryCode", v8::NewStringType::kInternalized).ToLocalChecked(), v8::String::NewFromUtf8(isolate, zs2s(support_country_list[i].countryCode).c_str(), v8::NewStringType::kInternalized).ToLocalChecked());
+			node->Set(context, v8::String::NewFromUtf8(isolate, "countryID", v8::NewStringType::kInternalized).ToLocalChecked(), v8::String::NewFromUtf8(isolate, zs2s(support_country_list[i].countryID).c_str(), v8::NewStringType::kInternalized).ToLocalChecked());
+			node->Set(context, v8::String::NewFromUtf8(isolate, "countryName", v8::NewStringType::kInternalized).ToLocalChecked(), v8::String::NewFromUtf8(isolate, zs2s(support_country_list[i].countryName).c_str(), v8::NewStringType::kInternalized).ToLocalChecked());
+			zn_support_country_list->Set(context, i, node);
 		}
 		
-		v8::Local<v8::String> zn_privacy_url = v8::String::NewFromUtf8(isolate, zs2s(privacy_url).c_str());
+		v8::Local<v8::String> zn_privacy_url = v8::String::NewFromUtf8(isolate, zs2s(privacy_url).c_str(), v8::NewStringType::kInternalized).ToLocalChecked();
 
 		int argc = 2;
 		v8::Local<v8::Value> argv[2] = { zn_support_country_list, zn_privacy_url };
@@ -684,6 +896,189 @@ public:
 		fn->Call(context, global, argc, argv);
 	}
 };
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+class ZNativeSDKAudioSettingContextWrapSink
+{
+public:
+	/// \brief Callback event if the SDK detects that the computer mic devices have been changed.
+	/// \param newMicList The new list of all mic devices plugged into the computer.
+	virtual void onComputerMicDeviceChanged(ZNList<ZNMicInfo> newMicList)
+	{
+		if (ZoomNodeSinkHelper::GetInst().onComputerMicDeviceChanged.IsEmpty())
+			return;
+
+		auto isolate = v8::Isolate::GetCurrent();
+		v8::HandleScope scope(isolate);
+		auto context = isolate->GetCurrentContext();
+		auto global = context->Global();
+
+		v8::Local<v8::Array> nodes = v8::Array::New(isolate);
+		for (unsigned int i = 0; i < newMicList.size(); ++i) {
+			v8::HandleScope scope(isolate);
+			v8::Local<v8::Object> node = v8::Object::New(isolate);
+			node->Set(context, v8::String::NewFromUtf8(isolate, "deviceId", v8::NewStringType::kInternalized).ToLocalChecked(), v8::String::NewFromUtf8(isolate, zs2s(newMicList[i].deviceId).c_str(), v8::NewStringType::kInternalized).ToLocalChecked());
+			node->Set(context, v8::String::NewFromUtf8(isolate, "deviceName", v8::NewStringType::kInternalized).ToLocalChecked(), v8::String::NewFromUtf8(isolate, zs2s(newMicList[i].deviceName).c_str(), v8::NewStringType::kInternalized).ToLocalChecked());
+			node->Set(context, v8::String::NewFromUtf8(isolate, "isSelected", v8::NewStringType::kInternalized).ToLocalChecked(), v8::Boolean::New(isolate, newMicList[i].isSelectedDevice));
+			nodes->Set(context, i, node);
+		}
+
+		int argc = 1;
+		v8::Local<v8::Value> argv[1] = { nodes };
+		auto fn = v8::Local<v8::Function>::New(isolate, ZoomNodeSinkHelper::GetInst().onComputerMicDeviceChanged);
+
+		fn->Call(context, global, argc, argv);
+	}
+	/// \brief Callback event if the SDK detects that the computer speaker devices have been changed.
+	/// \param newSpeakerList The new list of all speaker devices plugged into the computer. 
+	virtual void onComputerSpeakerDeviceChanged(ZNList<ZNSpeakerInfo> newSpeakerList)
+	{
+		if (ZoomNodeSinkHelper::GetInst().onComputerSpeakerDeviceChanged.IsEmpty())
+			return;
+
+		auto isolate = v8::Isolate::GetCurrent();
+		v8::HandleScope scope(isolate);
+		auto context = isolate->GetCurrentContext();
+		auto global = context->Global();
+
+		v8::Local<v8::Array> nodes = v8::Array::New(isolate);
+		for (unsigned int i = 0; i < newSpeakerList.size(); ++i) {
+			v8::HandleScope scope(isolate);
+			v8::Local<v8::Object> node = v8::Object::New(isolate);
+			node->Set(context, v8::String::NewFromUtf8(isolate, "deviceId", v8::NewStringType::kInternalized).ToLocalChecked(), v8::String::NewFromUtf8(isolate, zs2s(newSpeakerList[i].deviceId).c_str(), v8::NewStringType::kInternalized).ToLocalChecked());
+			node->Set(context, v8::String::NewFromUtf8(isolate, "deviceName", v8::NewStringType::kInternalized).ToLocalChecked(), v8::String::NewFromUtf8(isolate, zs2s(newSpeakerList[i].deviceName).c_str(), v8::NewStringType::kInternalized).ToLocalChecked());
+			node->Set(context, v8::String::NewFromUtf8(isolate, "isSelected", v8::NewStringType::kInternalized).ToLocalChecked(), v8::Boolean::New(isolate, newSpeakerList[i].isSelectedDevice));
+			nodes->Set(context, i, node);
+		}
+
+		int argc = 1;
+		v8::Local<v8::Value> argv[1] = { nodes };
+		auto fn = v8::Local<v8::Function>::New(isolate, ZoomNodeSinkHelper::GetInst().onComputerSpeakerDeviceChanged);
+
+		fn->Call(context, global, argc, argv);
+	}
+	/// \brief Notify the user that a microphone device is selected.
+	/// \param deviceId Specify a device to be selected.
+	/// \param deviceName Specify the device name assigned by deviceId.
+	virtual void onDefaultMicDeviceChanged(ZoomSTRING deviceId, ZoomSTRING deviceName)
+	{
+		if (ZoomNodeSinkHelper::GetInst().onDefaultMicDeviceChanged.IsEmpty())
+			return;
+
+		auto isolate = v8::Isolate::GetCurrent();
+		v8::HandleScope scope(isolate);
+		auto context = isolate->GetCurrentContext();
+		auto global = context->Global();
+
+		v8::Local<v8::String> zn_deviceId = v8::String::NewFromUtf8(isolate, zs2s(deviceId).c_str(), v8::NewStringType::kInternalized).ToLocalChecked();
+		v8::Local<v8::String> zn_deviceName = v8::String::NewFromUtf8(isolate, zs2s(deviceName).c_str(), v8::NewStringType::kInternalized).ToLocalChecked();
+
+		int argc = 2;
+		v8::Local<v8::Value> argv[2] = { zn_deviceId, zn_deviceName };
+		auto fn = v8::Local<v8::Function>::New(isolate, ZoomNodeSinkHelper::GetInst().onDefaultMicDeviceChanged);
+
+		fn->Call(context, global, argc, argv);
+	}
+	/// \brief Notify the user that a speaker device is selected.
+	/// \param deviceId Specify a device to be selected.
+	/// \param deviceName Specify the device name assigned by deviceId.
+	virtual void onDefaultSpeakerDeviceChanged(ZoomSTRING deviceId, ZoomSTRING deviceName)
+	{
+		if (ZoomNodeSinkHelper::GetInst().onDefaultSpeakerDeviceChanged.IsEmpty())
+			return;
+
+		auto isolate = v8::Isolate::GetCurrent();
+		v8::HandleScope scope(isolate);
+		auto context = isolate->GetCurrentContext();
+		auto global = context->Global();
+
+		v8::Local<v8::String> zn_deviceId = v8::String::NewFromUtf8(isolate, zs2s(deviceId).c_str(), v8::NewStringType::kInternalized).ToLocalChecked();
+		v8::Local<v8::String> zn_deviceName = v8::String::NewFromUtf8(isolate, zs2s(deviceName).c_str(), v8::NewStringType::kInternalized).ToLocalChecked();
+
+		int argc = 2;
+		v8::Local<v8::Value> argv[2] = { zn_deviceId, zn_deviceName };
+		auto fn = v8::Local<v8::Function>::New(isolate, ZoomNodeSinkHelper::GetInst().onDefaultSpeakerDeviceChanged);
+
+		fn->Call(context, global, argc, argv);
+	}
+
+};
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+class ZNativeSDKVideoSettingContextWrapSink
+{
+public:
+	virtual void onComputerCamDeviceChanged(ZNList<ZNCameraInfo> newCameraList)
+	{
+		if (ZoomNodeSinkHelper::GetInst().onComputerCamDeviceChanged.IsEmpty())
+			return;
+
+		auto isolate = v8::Isolate::GetCurrent();
+		v8::HandleScope scope(isolate);
+		auto context = isolate->GetCurrentContext();
+		auto global = context->Global();
+
+		v8::Local<v8::Array> nodes = v8::Array::New(isolate);
+		for (unsigned int i = 0; i < newCameraList.size(); ++i) {
+			v8::HandleScope scope(isolate);
+			v8::Local<v8::Object> node = v8::Object::New(isolate);
+			node->Set(context, v8::String::NewFromUtf8(isolate, "deviceId", v8::NewStringType::kInternalized).ToLocalChecked(), v8::String::NewFromUtf8(isolate, zs2s(newCameraList[i].deviceId).c_str(), v8::NewStringType::kInternalized).ToLocalChecked());
+			node->Set(context, v8::String::NewFromUtf8(isolate, "deviceName", v8::NewStringType::kInternalized).ToLocalChecked(), v8::String::NewFromUtf8(isolate, zs2s(newCameraList[i].deviceName).c_str(), v8::NewStringType::kInternalized).ToLocalChecked());
+			node->Set(context, v8::String::NewFromUtf8(isolate, "isSelected", v8::NewStringType::kInternalized).ToLocalChecked(), v8::Boolean::New(isolate, newCameraList[i].isSelectedDevice));
+			nodes->Set(context, i, node);
+		}
+
+		int argc = 1;
+		v8::Local<v8::Value> argv[1] = { nodes };
+		auto fn = v8::Local<v8::Function>::New(isolate, ZoomNodeSinkHelper::GetInst().onComputerCamDeviceChanged);
+
+		fn->Call(context, global, argc, argv);
+	}
+	virtual void onDefaultCamDeviceChanged(ZoomSTRING deviceId, ZoomSTRING deviceName)
+	{
+		if (ZoomNodeSinkHelper::GetInst().onDefaultCamDeviceChanged.IsEmpty())
+			return;
+
+		auto isolate = v8::Isolate::GetCurrent();
+		v8::HandleScope scope(isolate);
+		auto context = isolate->GetCurrentContext();
+		auto global = context->Global();
+
+		v8::Local<v8::String> zn_deviceId = v8::String::NewFromUtf8(isolate, zs2s(deviceId).c_str(), v8::NewStringType::kInternalized).ToLocalChecked();
+		v8::Local<v8::String> zn_deviceName = v8::String::NewFromUtf8(isolate, zs2s(deviceName).c_str(), v8::NewStringType::kInternalized).ToLocalChecked();
+
+		int argc = 2;
+		v8::Local<v8::Value> argv[2] = { zn_deviceId, zn_deviceName };
+		auto fn = v8::Local<v8::Function>::New(isolate, ZoomNodeSinkHelper::GetInst().onDefaultCamDeviceChanged);
+
+		fn->Call(context, global, argc, argv);
+	}
+};
+////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+class ZNativeSDKRecordingSettingContextWrapSink
+{
+public:
+	void onCloudRecordingStorageInfo(signed long long storage_total_size, signed long long storage_used_size, bool allow_exceed_storage)
+	{
+		if (ZoomNodeSinkHelper::GetInst().onCloudRecordingStorageInfo.IsEmpty())
+			return;
+
+		auto isolate = v8::Isolate::GetCurrent();
+		v8::HandleScope scope(isolate);
+		auto context = isolate->GetCurrentContext();
+		auto global = context->Global();
+
+		v8::Local<v8::Integer> zn_storageTotalSize = v8::Integer::New(isolate, (int64_t)storage_total_size);
+		v8::Local<v8::Integer> zn_storageUsedSize = v8::Integer::New(isolate, (int64_t)storage_used_size);
+		v8::Local<v8::Boolean> zn_allowExceedStorage = v8::Boolean::New(isolate, allow_exceed_storage);
+
+
+		int argc = 3;
+		v8::Local<v8::Value> argv[3] = { zn_storageTotalSize, zn_storageUsedSize, zn_allowExceedStorage };
+		auto fn = v8::Local<v8::Function>::New(isolate, ZoomNodeSinkHelper::GetInst().onCloudRecordingStorageInfo);
+
+		fn->Call(context, global, argc, argv);
+	}
+
+};
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 class ZoomNodeSinkWrapMgr
 {
@@ -723,6 +1118,15 @@ public:
 
 	//sms_helper_cb
 	ZNativeSDKSMSHelperWrapSink m_smsHelperWrapSink;
+
+	//audio_setting_context_cb
+	ZNativeSDKAudioSettingContextWrapSink m_audioSettingContextWrapSink;
+
+	//video_setting_context_cb
+	ZNativeSDKVideoSettingContextWrapSink m_videoSettingContextWrapSink;
+
+	//recording_setting_context_cb
+	ZNativeSDKRecordingSettingContextWrapSink m_recordingSettingContextWrapSink;
 
 
 	static ZoomNodeSinkWrapMgr& GetInst()

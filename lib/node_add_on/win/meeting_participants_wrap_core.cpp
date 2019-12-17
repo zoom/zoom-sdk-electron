@@ -3,96 +3,24 @@
 #include "wrap/sdk_wrap.h"
 #include "wrap/meeting_service_components_wrap/meeting_participants_ctrl_wrap.h"
 #include "zoom_native_to_wrap.h"
-
+#include "sdk_events_wrap_class.h"
 extern ZOOM_SDK_NAMESPACE::IMeetingServiceWrap& g_meeting_service_wrap;
-class ZMeetingParticipantsCtrlEvent : public ZOOM_SDK_NAMESPACE::IMeetingParticipantsCtrlEvent
-{
-public:
-	void SetOwner(ZMeetingParticipantsWrap* obj) { owner_ = obj; }
-	virtual void onUserJoin(ZOOM_SDK_NAMESPACE::IList<unsigned int >* lstUserID, const wchar_t* strUserList)
-	{
-		if (owner_ && lstUserID) {
-			ZNList<unsigned int> userId_list;
-			ZoomSTRING zn_strUserList = L"";
-			if(strUserList)
-				zn_strUserList = strUserList;
-			for (int i = 0; i < lstUserID->GetCount(); ++i)
-			{
-
-				unsigned int zn_userid;
-				
-				zn_userid = lstUserID->GetItem(i);
-
-				userId_list.push_back(zn_userid);
-			}
-			
-			owner_->onUserJoin(userId_list, zn_strUserList);
-			
-		}
-	}
-	virtual void onUserLeft(ZOOM_SDK_NAMESPACE::IList<unsigned int >* lstUserID, const wchar_t* strUserList)
-	{
-		if (owner_ && lstUserID) {
-			ZNList<unsigned int> userId_list;
-			ZoomSTRING zn_strUserList = L"";
-			if (strUserList)
-				zn_strUserList = strUserList;
-			for (int i = 0; i < lstUserID->GetCount(); ++i)
-			{
-
-				unsigned int zn_userid;
-				
-				zn_userid = lstUserID->GetItem(i);
-
-				userId_list.push_back(zn_userid);
-			}
-
-			owner_->onUserLeft(userId_list, zn_strUserList);
-
-		}
-	}
-	virtual void onHostChangeNotification(unsigned int userId)
-	{
-		if (owner_) {
-			
-			owner_->onHostChangeNotification(userId);
-
-		}
-	}
-	virtual void onLowOrRaiseHandStatusChanged(bool bLow, unsigned int userid)
-	{
-
-	}
-	virtual void onUserNameChanged(unsigned int userId, const wchar_t* userName)
-	{
-
-	}
-	virtual void onCoHostChangeNotification(unsigned int userId, bool isCoHost)
-	{
-
-	}
-private:
-	ZMeetingParticipantsWrap* owner_;
-};
-
-static ZMeetingParticipantsCtrlEvent g_meeting_participants_ctrl_event;
-
 
 ZMeetingParticipantsWrap::ZMeetingParticipantsWrap()
 {
-	g_meeting_participants_ctrl_event.SetOwner(this);
+	SDKEventWrapMgr::GetInst().m_meetingParticipantsCtrlEvent.SetOwner(this);
 	m_pSink = 0;
 }
 ZMeetingParticipantsWrap::~ZMeetingParticipantsWrap()
 {
 	Uninit();
 	m_pSink = 0;
-	g_meeting_participants_ctrl_event.SetOwner(NULL);
+	SDKEventWrapMgr::GetInst().m_meetingParticipantsCtrlEvent.SetOwner(NULL);
 }
 void ZMeetingParticipantsWrap::Init()
 {
-	
-	ZOOM_SDK_NAMESPACE::CSDKWrap::GetInst().GetMeetingServiceWrap().T_GetMeetingParticipantsController().SetEvent(&g_meeting_participants_ctrl_event);
+	ZOOM_SDK_NAMESPACE::CSDKWrap::GetInst().GetMeetingServiceWrap().T_GetMeetingParticipantsController().Init_Wrap(&g_meeting_service_wrap);
+	ZOOM_SDK_NAMESPACE::CSDKWrap::GetInst().GetMeetingServiceWrap().T_GetMeetingParticipantsController().SetEvent(&SDKEventWrapMgr::GetInst().m_meetingParticipantsCtrlEvent);
 }
 void ZMeetingParticipantsWrap::Uninit()
 {

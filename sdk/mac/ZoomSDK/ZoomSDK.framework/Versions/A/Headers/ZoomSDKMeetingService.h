@@ -24,7 +24,7 @@
 #import "ZoomSDKCloseCaptionController.h"
 #import "ZoomSDKRawDataController.h"
 #import "ZoomSDKRealNameAuthenticationController.h"
-
+#import "ZoomSDKQAController.h"
 @interface ZoomSDKSecuritySessionKey : NSObject
 {
     SecuritySessionComponet _component;
@@ -124,6 +124,8 @@
     ZoomSDKCloseCaptionController*   _closeCaptionController;
     ZoomSDKRawDataController*        _rawDataController;
     ZoomSDKRealNameAuthenticationController*       _realNameController;
+    ZoomSDKQAController*             _QAController;
+    
 }
 /**
  * Callback of receiving meeting events.
@@ -218,6 +220,12 @@
  * @return If the function succeeds, it will return a ZoomSDKRealNameAuthenticationController object which you can use to Real-name authentication.
  */
 -(ZoomSDKRealNameAuthenticationController *)getRealNameController;
+
+/**
+ * @brief Get object of ZoomSDKQAController.
+ * @return If the function succeeds, it will return a ZoomSDKQAController object.
+ */
+-(ZoomSDKQAController *)getQAController;
 /**
  * @brief Start a ZOOM meeting with meeting number.
  * @note userId\userToken\username is for API user.

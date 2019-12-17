@@ -41,6 +41,7 @@ IMPL_FUNC_NORET_1(IMeetingConfiguration,EnableDeclineRemoteControlResponseDlg, v
 IMPL_FUNC_NORET_1(IMeetingConfiguration,EnableLeaveMeetingOptionForHost, void, bool, bEnable)
 IMPL_FUNC_NORET_1(IMeetingConfiguration,EnableInviteButtonOnMeetingUI, void, bool, bEnable)
 IMPL_FUNC_NORET_1(IMeetingConfiguration,EnableVideoButtonOnMeetingUI, void, bool, bEnable)
+IMPL_FUNC_NORET_1(IMeetingConfiguration,EnableAudioButtonOnMeetingUI, void, bool, bEnable)
 IMPL_FUNC_NORET_1(IMeetingConfiguration,EnableInputMeetingPasswordDlg, void, bool, bEnable)
 IMPL_FUNC_NORET_1(IMeetingConfiguration,EnableEnterAndExitFullScreenButtonOnMeetingUI, void, bool, bEnable)
 IMPL_FUNC_NORET_1(IMeetingConfiguration,EnableLButtonDBClick4SwitchFullScreenMode, void, bool, bEnable)
@@ -99,7 +100,10 @@ IMPL_FUNC_NORET_1(IMeetingConfiguration, ForceDisableMultiShare, void, bool, bDi
 IMPL_FUNC_NORET_1(IMeetingConfiguration, SetAlwaysShowMeetingIDOnTitle, void, bool, bAlwaysShow)
 //virtual void RedirectClickCustomLiveStreamMenuEvent(bool bRedirect) = 0;
 IMPL_FUNC_NORET_1(IMeetingConfiguration, RedirectClickCustomLiveStreamMenuEvent, void, bool, bRedirect)
-
+//virtual void RedirectClickAudioBTNEvent(bool bRedirect) = 0;
+IMPL_FUNC_NORET_1(IMeetingConfiguration, RedirectClickAudioBTNEvent, void, bool, bRedirect)
+//virtual void RedirectClickAudioMenuBTNEvent(bool bRedirect) = 0;
+IMPL_FUNC_NORET_1(IMeetingConfiguration, RedirectClickAudioMenuBTNEvent, void, bool, bRedirect)
 //virtual void RedirectClickCCBTNEvent(bool bRedirect) = 0;
 IMPL_FUNC_NORET_1(IMeetingConfiguration, RedirectClickCCBTNEvent, void, bool, bRedirect)
 //virtual SDKError SetUICustomizedString(SDKCustomizedStringType customizedType, const wchar_t* customizedString) = 0;
@@ -141,6 +145,8 @@ IMPL_FUNC_NORET_1(IMeetingConfiguration, EnableForceAutoStartMyVideoWhenJoinMeet
 IMPL_FUNC_NORET_1(IMeetingConfiguration, EnableForceAutoStopMyVideoWhenJoinMeeting, void, bool, bEnable)
 //virtual void DisableAutoShowSelectJoinAudioDlgWhenJoinMeeting(bool bDisable) = 0;
 IMPL_FUNC_NORET_1(IMeetingConfiguration, DisableAutoShowSelectJoinAudioDlgWhenJoinMeeting, void, bool, bDisable)
+//virtual void DisableShowJoinMeetingWnd(bool bDisable) = 0;
+IMPL_FUNC_NORET_1(IMeetingConfiguration, DisableShowJoinMeetingWnd, void, bool, bDisable)
 //virtual void SetMaxDurationForOnlyHostInMeeting(int nDuration) = 0;
 IMPL_FUNC_NORET_1(IMeetingConfiguration, SetMaxDurationForOnlyHostInMeeting, void, int, nDuration)
 

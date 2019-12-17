@@ -4,6 +4,14 @@
 #include "../zoom_node_addon.h"
 #include "sdk_native_error.h"
 extern ZNativeSDKWrap _g_native_wrap;
+
+@interface meetingServiceDelegate()
+@property(nonatomic,retain)ZoomSDKRetrieveSMSVerificationCodeController *retriveController;
+@property(nonatomic,retain)ZoomSDKVerifySMSVerificationCodeController *verifyCintroller;
+@property(nonatomic,retain)ZoomSDKWebinarRegisterHelper *webinarRegisterHelper;
+@property(nonatomic,retain)ZoomSDKJoinMeetingHelper *joinMeetingHelper;
+@end
+
 @implementation meetingServiceDelegate
 
 +(meetingServiceDelegate *)share
@@ -78,6 +86,40 @@ extern ZNativeSDKWrap _g_native_wrap;
     _g_native_wrap.GetMeetingServiceWrap().GetMeetingUICtrl().onInviteBtnClicked(isInvite);
 }
 
+-(void)onToolbarShareButtonClick
+{
+    _g_native_wrap.GetMeetingServiceWrap().GetMeetingUICtrl().onStartShareBtnClicked();
+}
+
+-(void)onParticipantButtonClicked
+{
+    _g_native_wrap.GetMeetingServiceWrap().GetMeetingUICtrl().onParticipantListBtnClicked();
+}
+
+-(void)onCustomLiveButtonClicked
+{
+    _g_native_wrap.GetMeetingServiceWrap().GetMeetingUICtrl().onCustomLiveStreamMenuClicked();
+}
+
+-(void)onNeedShowLeaveMeetingWindow
+{
+    _g_native_wrap.GetMeetingServiceWrap().GetMeetingUICtrl().onEndMeetingBtnClicked();
+}
+
+-(void)onAudioButtonClicked:(unsigned int)userid audioSession:(ZoomSDKAudioActionInfo)info
+{
+    nativeErrorTypeHelp help;
+    ZNAudioCallbackActionInfo Actioninfo = help.ZNSDKAudioCallbackAction(info);
+    ZNAudioBtnClickedCallbackInfo callbackInfo;
+    callbackInfo.userid_MuteUnmute = userid;
+    callbackInfo.audio_clicked_action = Actioninfo;
+    _g_native_wrap.GetMeetingServiceWrap().GetMeetingUICtrl().onAudioBtnClicked(callbackInfo);
+}
+
+-(void)onAudioSettingMenuButtonClicked
+{
+    _g_native_wrap.GetMeetingServiceWrap().GetMeetingUICtrl().onAudioMenuBtnClicked();
+}
 #pragma mark meeting action controller
 - (void)onVideoStatusChange:(BOOL)videoOn UserID:(unsigned int)userID
 {
@@ -239,5 +281,52 @@ extern ZNativeSDKWrap _g_native_wrap;
         return YES;
     }
     return NO;
+}
+
+-(ZoomSDKError)onWebinarNeedRegisterResponse:(ZoomSDKWebinarRegisterHelper *)webinarRegisterHelper
+{
+    self.webinarRegisterHelper = webinarRegisterHelper;
+}
+
+-(ZoomSDKWebinarRegisterHelper *)getWebinarRegisterHelper
+{
+    return self.webinarRegisterHelper;
+}
+
+-(void)onJoinMeetingResponse:(ZoomSDKJoinMeetingHelper *)joinMeetingHelper
+{
+    self.joinMeetingHelper = joinMeetingHelper;
+}
+
+-(ZoomSDKJoinMeetingHelper *)getJoinMeetingHelper
+{
+    return self.joinMeetingHelper;
+}
+
+-(void)cleanUp
+{
+    if (_verifyCintroller) {
+        [_verifyCintroller release];
+        _verifyCintroller = nil;
+    }
+    
+    if (_retriveController) {
+        [_retriveController release];
+        _retriveController = nil;
+    }
+    if (_webinarRegisterHelper) {
+        [_webinarRegisterHelper release];
+        _webinarRegisterHelper = nil;
+    }
+    if (_joinMeetingHelper) {
+        [_joinMeetingHelper release];
+        _joinMeetingHelper = nil;
+    }
+}
+
+-(void)dealloc
+{
+    [self cleanUp];
+    [super dealloc];
 }
 @end

@@ -12,7 +12,7 @@ public:
 	void SetSink(ZNativeSDKSMSHelperWrapSink* pSink);
 
 	bool EnableZoomAuthRealNameMeetingUIShown(bool enable);
-
+	bool SetDefaultCellPhoneInfo(ZoomSTRING country_code, ZoomSTRING phone_number);
 	bool GetResendSMSVerificationCodeHandler();
 	bool Retrieve(ZoomSTRING country_code, ZoomSTRING phone_number);
 	bool Retrieve_CancelAndLeaveMeeting();

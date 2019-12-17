@@ -14,7 +14,7 @@ void ZoomNodeMeetingAudioCtrlWrap::MuteAudio(const v8::FunctionCallbackInfo<v8::
 	v8::Isolate* isolate = args.GetIsolate();
 	if (args.Length() < 2) {
 		isolate->ThrowException(v8::Exception::TypeError(
-			v8::String::NewFromUtf8(isolate, "Wrong number of arguments")));
+			v8::String::NewFromUtf8(isolate, "Wrong number of arguments", v8::NewStringType::kInternalized).ToLocalChecked()));
 		return;
 	}
 
@@ -22,7 +22,7 @@ void ZoomNodeMeetingAudioCtrlWrap::MuteAudio(const v8::FunctionCallbackInfo<v8::
 		!args[1]->IsBoolean())
 	{
 		isolate->ThrowException(v8::Exception::TypeError(
-			v8::String::NewFromUtf8(isolate, "Wrong arguments")));
+			v8::String::NewFromUtf8(isolate, "Wrong arguments", v8::NewStringType::kInternalized).ToLocalChecked()));
 		return;
 	}
 
@@ -40,14 +40,14 @@ void ZoomNodeMeetingAudioCtrlWrap::UnMuteAudio(const v8::FunctionCallbackInfo<v8
 	v8::Isolate* isolate = args.GetIsolate();
 	if (args.Length() < 1) {
 		isolate->ThrowException(v8::Exception::TypeError(
-			v8::String::NewFromUtf8(isolate, "Wrong number of arguments")));
+			v8::String::NewFromUtf8(isolate, "Wrong number of arguments", v8::NewStringType::kInternalized).ToLocalChecked()));
 		return;
 	}
 
 	if (!args[0]->IsNumber())
 	{
 		isolate->ThrowException(v8::Exception::TypeError(
-			v8::String::NewFromUtf8(isolate, "Wrong arguments")));
+			v8::String::NewFromUtf8(isolate, "Wrong arguments", v8::NewStringType::kInternalized).ToLocalChecked()));
 		return;
 	}
 
@@ -76,14 +76,14 @@ void ZoomNodeMeetingAudioCtrlWrap::SetMeetingAudioStatusCB(const v8::FunctionCal
 	v8::Isolate* isolate = args.GetIsolate();
 	if (args.Length() < 1) {
 		isolate->ThrowException(v8::Exception::TypeError(
-			v8::String::NewFromUtf8(isolate, "Wrong number of arguments")));
+			v8::String::NewFromUtf8(isolate, "Wrong number of arguments", v8::NewStringType::kInternalized).ToLocalChecked()));
 		return;
 	}
-
+	if (args[0]->IsNull())	{		ZoomNodeSinkHelper::GetInst().onUserAudioStatusChange.Empty();		return;	}
 	if (!args[0]->IsFunction())
 	{
 		isolate->ThrowException(v8::Exception::TypeError(
-			v8::String::NewFromUtf8(isolate, "Wrong arguments")));
+			v8::String::NewFromUtf8(isolate, "Wrong arguments", v8::NewStringType::kInternalized).ToLocalChecked()));
 		return;
 	}
 
@@ -100,14 +100,14 @@ void ZoomNodeMeetingAudioCtrlWrap::SetUserActiveAudioChangeCB(const v8::Function
 	v8::Isolate* isolate = args.GetIsolate();
 	if (args.Length() < 1) {
 		isolate->ThrowException(v8::Exception::TypeError(
-			v8::String::NewFromUtf8(isolate, "Wrong number of arguments")));
+			v8::String::NewFromUtf8(isolate, "Wrong number of arguments", v8::NewStringType::kInternalized).ToLocalChecked()));
 		return;
 	}
-
+	if (args[0]->IsNull())	{		ZoomNodeSinkHelper::GetInst().onUserActiveAudioChange.Empty();		return;	}
 	if (!args[0]->IsFunction())
 	{
 		isolate->ThrowException(v8::Exception::TypeError(
-			v8::String::NewFromUtf8(isolate, "Wrong arguments")));
+			v8::String::NewFromUtf8(isolate, "Wrong arguments", v8::NewStringType::kInternalized).ToLocalChecked()));
 		return;
 	}
 

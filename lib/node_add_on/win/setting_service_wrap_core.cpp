@@ -3,6 +3,7 @@
 #include "wrap/sdk_wrap.h"
 #include "zoom_native_to_wrap.h"
 
+ZOOM_SDK_NAMESPACE::ISettingServiceWrap& g_setting_service_wrap = ZOOM_SDK_NAMESPACE::CSDKWrap::GetInst().GetSettingServiceWrap();
 ZSettingServiceWrap::ZSettingServiceWrap()
 {
 	
@@ -13,7 +14,10 @@ ZSettingServiceWrap::~ZSettingServiceWrap()
 }
 void ZSettingServiceWrap::Init()
 {
-	
+	ZOOM_SDK_NAMESPACE::CSDKWrap::GetInst().GetSettingServiceWrap().Init_Wrap();
+	m_setting_audio_ctrl.Init();
+	m_setting_video_ctrl.Init();
+	m_setting_recording_ctrl.Init();
 }
 void ZSettingServiceWrap::Uninit()
 {
@@ -39,6 +43,16 @@ ZSettingUIStrategyWrap& ZSettingServiceWrap::GetSettingStrategyCtrl()
 {
 	return m_setting_ui_strategy_ctrl;
 }
+///////////////////////////////////////////////////////////////////////////////////////
+ZSettingStatisticWrap& ZSettingServiceWrap::GetSettingStatisticCtrl()
+{
+	return m_setting_statistic_ctrl;
+}
+ZSettingAccessibilityWrap& ZSettingServiceWrap::GetSettingAccessibilityCtrl()
+{
+	return m_setting_accessibility_ctrl;
+}
+////////////////////////////////////////////////////////////////////////////////////
 ZNSDKError ZSettingServiceWrap::ShowSettingDlg(ZNShowSettingDlgParam param)
 {
 	ZOOM_SDK_NAMESPACE::ShowSettingDlgParam sdk_param;

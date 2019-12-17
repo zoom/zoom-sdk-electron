@@ -21,7 +21,12 @@ ZNShareStatus Map2WrapDefine(ZOOM_SDK_NAMESPACE::SharingStatus status);
 ZNAudioType Map2WrapDefine(ZOOM_SDK_NAMESPACE::AudioType type);
 ZNUserRole Map2WrapDefine(ZOOM_SDK_NAMESPACE::UserRole role);
 ZNSMSVerificationCodeErr Map2WrapDefine(SMSVerificationCodeErr err);
-
+/////////////////////////////////////////////////////////////////////////////////////////////////////////////
+ZNSettingsNetWorkType Map2WrapDefine(ZOOM_SDK_NAMESPACE::SettingsNetWorkType role);
+ZNSettingConnectionType Map2WrapDefine(ZOOM_SDK_NAMESPACE::SettingConnectionType role);
+ZNRequiredInfoType Map2WrapDefine(ZOOM_SDK_NAMESPACE::IMeetingPasswordAndScreenNameHandler::RequiredInfoType type);
+ZNWebinarNeedRegisterType Map2WrapDefine(ZOOM_SDK_NAMESPACE::IWebinarNeedRegisterHandler::WebinarNeedRegisterType type);
+ZNAudioCallbackActionInfo Map2WrapDefine(ZOOM_SDK_NAMESPACE::AudioCallbackActionInfo info);
 //convert js to sdk
 ZOOM_SDK_NAMESPACE::SDK_LANGUAGE_ID Map2SDKDefine(ZNSDK_LANGUAGE_ID id);
 ZOOM_SDK_NAMESPACE::SDKUserType Map2SDKDefine(ZNSDKUserType type);

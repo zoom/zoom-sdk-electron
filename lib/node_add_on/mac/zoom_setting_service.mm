@@ -37,7 +37,14 @@ ZSettingUIStrategyWrap &ZSettingServiceWrap::GetSettingStrategyCtrl()
 {
     return m_setting_ui_strategy_ctrl;
 }
-
+ZSettingStatisticWrap& ZSettingServiceWrap::GetSettingStatisticCtrl()
+{
+    return m_setting_statistic_ctrl;
+}
+ZSettingAccessibilityWrap& ZSettingServiceWrap::GetSettingAccessibilityCtrl()
+{
+    return m_setting_accessibility_ctrl;
+}
 void ZSettingServiceWrap::Init()
 {
     

@@ -90,6 +90,10 @@ _OBJC_IVAR_$_ZoomSDKAudioSetting._delegate
 _OBJC_CLASS_$_ZoomSDKSettingTestSpeakerDeviceHelper
 _OBJC_CLASS_$_ZoomSDKSettingTestMicrophoneDeviceHelper
 _OBJC_CLASS_$_ZoomSDKSettingTestVideoDeviceHelper
+_OBJC_IVAR_$_ZoomSDKVirtualBackgroundSetting._delegate
+_OBJC_CLASS_$_ZoomSDKVirtualBackgroundSetting
+
+
 _OBJC_CLASS_$_ZoomSDKRawDataController
 _OBJC_CLASS_$_ZoomSDKAudioRawDataHelper
 _OBJC_CLASS_$_ZoomSDKVideoRawDataHelper
@@ -111,3 +115,8 @@ _OBJC_CLASS_$_ZoomSDKVerifySMSVerificationCodeController
 _OBJC_CLASS_$_ZoomSDKRealNameAuthCountryInfo
 _OBJC_IVAR_$_ZoomSDKRealNameAuthenticationController._delegate
 
+
+_OBJC_CLASS_$_ZoomSDKQAController
+_OBJC_CLASS_$_ZoomSDKAnswerInfo
+_OBJC_CLASS_$_ZoomSDKQuestionInfo
+_OBJC_IVAR_$_ZoomSDKQAController._delegate

@@ -6,6 +6,9 @@
 #include "setting_recording_wrap_core.h"
 #include "setting_ui_strategy_wrap_core.h"
 
+#include "setting_statistic_wrap_core.h"
+#include "setting_accessibility_wrap_core.h"
+
 class ZSettingServiceWrap
 {
 public:
@@ -22,6 +25,9 @@ public:
 	ZSettingGeneralWrap& GetSettingGeneralCtrl();
 	ZSettingRecordingWrap& GetSettingRecordingCtrl();
 	ZSettingUIStrategyWrap& GetSettingStrategyCtrl();
+
+	ZSettingStatisticWrap& GetSettingStatisticCtrl();
+	ZSettingAccessibilityWrap& GetSettingAccessibilityCtrl();
 	
 private:
 	ZSettingVideoWrap m_setting_video_ctrl;
@@ -29,4 +35,7 @@ private:
 	ZSettingGeneralWrap m_setting_general_ctrl;
 	ZSettingRecordingWrap m_setting_recording_ctrl;
 	ZSettingUIStrategyWrap m_setting_ui_strategy_ctrl;
+
+	ZSettingStatisticWrap m_setting_statistic_ctrl;
+	ZSettingAccessibilityWrap m_setting_accessibility_ctrl;
 };

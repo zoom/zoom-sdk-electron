@@ -6,11 +6,11 @@
 	<dict>
 		<key>Resources/Info.plist</key>
 		<data>
-		IQvIi46kcjZ11oXvWZpd3kB8K2Q=
+		KDP0fXdk0gRRfpW5bExyZ1NoeM0=
 		</data>
 		<key>Resources/ZMDialogue.nib</key>
 		<data>
-		feWDmv/TbFt5vdx2/OkFfdi34tU=
+		ZaTtFpgvDs4rkIs7lXTPG+yZr3s=
 		</data>
 		<key>Resources/ZMHMenuItem.nib</key>
 		<data>
@@ -18,7 +18,7 @@
 		</data>
 		<key>Resources/ZPAlert.nib</key>
 		<data>
-		fI85BGd9SgAbQAXfVI1oFcFOdr0=
+		p19mJAJ7JHHTHAk1FXms8YfBnuM=
 		</data>
 		<key>Resources/en.lproj/InfoPlist.strings</key>
 		<dict>
@@ -399,22 +399,22 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			IQvIi46kcjZ11oXvWZpd3kB8K2Q=
+			KDP0fXdk0gRRfpW5bExyZ1NoeM0=
 			</data>
 			<key>hash2</key>
 			<data>
-			gWkZPWicy4tlvQtq4UTpACLPrULpg4QnGALeSDIUsMk=
+			gV5B4bXN4b7Z8wG3zkZot6M7zSgLEzPLS757N6PUwn0=
 			</data>
 		</dict>
 		<key>Resources/ZMDialogue.nib</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			feWDmv/TbFt5vdx2/OkFfdi34tU=
+			ZaTtFpgvDs4rkIs7lXTPG+yZr3s=
 			</data>
 			<key>hash2</key>
 			<data>
-			kK67rsNK+RFNRE2BEuvJbNqy08SLEgeM7P/ZHx4EG6U=
+			572byiFWop1C4bHREr2ptQB34u/1BX7ReWPQQswXI6U=
 			</data>
 		</dict>
 		<key>Resources/ZMHMenuItem.nib</key>
@@ -432,11 +432,11 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			fI85BGd9SgAbQAXfVI1oFcFOdr0=
+			p19mJAJ7JHHTHAk1FXms8YfBnuM=
 			</data>
 			<key>hash2</key>
 			<data>
-			uz9LmHOnixJJ0Z2iR3DwOAzVLIVuW1KXh4xHP79bYko=
+			5rK2kjXXfoUl8Hst/WxZ4SR+AeuT+BmOYUdaO3DfoCg=
 			</data>
 		</dict>
 		<key>Resources/en.lproj/InfoPlist.strings</key>

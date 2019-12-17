@@ -42,11 +42,7 @@
 		<button type="button" class="button-small" onclick="getReminderType()">Get ReminderType</button>
 		<button type="button" class="button-small" onclick="upgradeMeeting()">Upgrade Meeting</button>
 		<button type="button" class="button-small" onclick="upgradeAccount()">Upgrade Account</button>
-		<button type="button" class="button-small" onclick="cancelUpdate()">Cancel Update</button>
-		<button type="button" class="button-small" onclick="setFreeMeetingNeedToUpgradeCB()">Set FreeMeetingNeedToUpgradeCB</button>
-		<button type="button" class="button-small" onclick="setFreeMeetingUpgradeToGiftFreeTrialStartCB()">Set FreeMeetingUpgradeToGiftFreeTrialStartCB</button>
-		<button type="button" class="button-small" onclick="setFreeMeetingUpgradeToGiftFreeTrialStopCB()">Set FreeMeetingUpgradeToGiftFreeTrialStopCB</button>
-		<button type="button" class="button-small" onclick="setFreeMeetingUpgradeToProMeetingCB()">Set FreeMeetingUpgradeToProMeetingCB</button> -->
+    <button type="button" class="button-small" onclick="cancelUpdate()">Cancel Update</button> -->
     <div class="section">Meeting UI</div>
     <div>
       <input type="text" name="show" class="input-show" placeholder="empty is false otherwise is true" id="show"/>
@@ -111,8 +107,13 @@
     </div>
 		<button type="button" class="button-small" onclick="startAppShare()">Start AppShare</button>
 		<button type="button" class="button-small" onclick="startMonitorShare()">Start MonitorShare</button>
-		<button type="button" class="button-small" onclick="stopShare()">Stop Share</button>
-	</div>
+    <button type="button" class="button-small" onclick="stopShare()">Stop Share</button>
+    <!-- <div class="section">Setting Statistic</div>
+    <button type="button" class="button-small" onclick="queryOverallStatisticInfo()">Query Overall StatisticInfo</button>
+    <button type="button" class="button-small" onclick="queryAudioStatisticInfo()">Query Audio StatisticInfo</button>
+    <button type="button" class="button-small" onclick="queryVideoStatisticInfo()">Query Video StatisticInfo</button>
+    <button type="button" class="button-small" onclick="queryShareStatisticInfo()">Query Share StatisticInfo</button> -->
+  </div>
 </body>
 </html>
 
@@ -123,9 +124,9 @@
   let btnLock = document.querySelector('#btn-lock');
   let btnUnLock = document.querySelector('#btn-unlock');
   
-  let zoommeeting = remote.app.zoommeeting;
-  let userList = zoommeeting.GetParticipantsList();
-  let userObj = zoommeeting.GetUserInfoByUserID(userList[0].userid);
+  let zoomparticipantsctrl = remote.app.zoomparticipantsctrl;
+  let userList = zoomparticipantsctrl.GetParticipantsList();
+  let userObj = zoomparticipantsctrl.GetUserInfoByUserID(userList[0].userid);
   let isHost = userObj.isHost;
 
   if (isHost) {
@@ -454,22 +455,6 @@
   //   let email = document.getElementById("email").value;
   // 	ipcRenderer.send('asynchronous-message', 'enableInviteButtonOnMeetingUI', Boolean(email));
   // }
-
-  // function setFreeMeetingNeedToUpgradeCB() {
-  // 	ipcRenderer.send('asynchronous-message', 'setFreeMeetingNeedToUpgradeCB');
-  // }
-  
-  // function setFreeMeetingUpgradeToGiftFreeTrialStartCB() {
-  // 	ipcRenderer.send('asynchronous-message', 'setFreeMeetingUpgradeToGiftFreeTrialStartCB');
-  // }
-
-  // function setFreeMeetingUpgradeToGiftFreeTrialStopCB() {
-  // 	ipcRenderer.send('asynchronous-message', 'setFreeMeetingUpgradeToGiftFreeTrialStopCB');
-  // }
-  
-  // function setFreeMeetingUpgradeToProMeetingCB() {
-  // 	ipcRenderer.send('asynchronous-message', 'setFreeMeetingUpgradeToProMeetingCB');
-  // }
       
   // function getReminderType() {
   // 	ipcRenderer.send('asynchronous-message', 'getReminderType');
@@ -486,4 +471,20 @@
   // function cancelUpdate() {
   // 	ipcRenderer.send('asynchronous-message', 'cancelUpdate');
   // }
+
+  function queryOverallStatisticInfo() {
+    ipcRenderer.send('asynchronous-message', 'queryOverallStatisticInfo');
+  }
+
+  function queryAudioStatisticInfo() {
+    ipcRenderer.send('asynchronous-message', 'queryAudioStatisticInfo');
+  }
+
+  function queryVideoStatisticInfo() {
+    ipcRenderer.send('asynchronous-message', 'queryVideoStatisticInfo');
+  }
+
+  function queryShareStatisticInfo() {
+    ipcRenderer.send('asynchronous-message', 'queryShareStatisticInfo');
+  }
 </script>

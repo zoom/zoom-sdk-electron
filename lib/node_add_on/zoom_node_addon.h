@@ -19,6 +19,7 @@ public:
 	/// \return If the function succeeds, the return value is ZNSDKERR_SUCCESS.
 	///Otherwise failed. To get extended error information, see \link ZNSDKError \endlink enum.
 	static void Auth(const v8::FunctionCallbackInfo<v8::Value>& args);
+	static void AuthWithJwtToken(const v8::FunctionCallbackInfo<v8::Value>& args);
 	/// \brief Account login with email.
 	/// \param 1. user_name(string)  Username. It is usually working mailbox or other mailbox.
 	/// \param 2. psw(string)  Account password.
@@ -64,7 +65,7 @@ public:
 	static void SetOnZoomIdentityExpiredCB(const v8::FunctionCallbackInfo<v8::Value>& args);
 	/// \brief Get Zoom SDK Direct Share Service Module.
 	static void GetDirectShareHelperObj(const v8::FunctionCallbackInfo<v8::Value>& args);
-
+	static void SetOnZoomAuthIdentityExpiredCB(const v8::FunctionCallbackInfo<v8::Value>& args);
 
 	static v8::Persistent<v8::Function> constructor;
 };
@@ -73,11 +74,12 @@ template<>
 static void InitClassAttribute<ZoomNodeAuthWrap >(const v8::Local<v8::FunctionTemplate>& tpl, v8::Isolate* isolate)
 {
 	tpl->SetClassName(v8::String::NewFromUtf8(
-		isolate, "ZoomNodeAuthWrap"));
+		isolate, "ZoomNodeAuthWrap", v8::NewStringType::kInternalized).ToLocalChecked());
 	tpl->InstanceTemplate()->SetInternalFieldCount(1);
 
 	// Prototype
 	NODE_SET_PROTOTYPE_METHOD(tpl, "Auth", ZoomNodeAuthWrap::Auth);
+	NODE_SET_PROTOTYPE_METHOD(tpl, "AuthWithJwtToken", ZoomNodeAuthWrap::AuthWithJwtToken);
 	NODE_SET_PROTOTYPE_METHOD(tpl, "Login", ZoomNodeAuthWrap::Login);
 	NODE_SET_PROTOTYPE_METHOD(tpl, "LoginWithSSOToken", ZoomNodeAuthWrap::LoginWithSSOToken);
 	NODE_SET_PROTOTYPE_METHOD(tpl, "Logout", ZoomNodeAuthWrap::Logout);
@@ -88,7 +90,7 @@ static void InitClassAttribute<ZoomNodeAuthWrap >(const v8::Local<v8::FunctionTe
 	NODE_SET_PROTOTYPE_METHOD(tpl, "GetDirectShareHelperObj", ZoomNodeAuthWrap::GetDirectShareHelperObj);
 	NODE_SET_PROTOTYPE_METHOD(tpl, "SetOnAuthReturnCB", ZoomNodeAuthWrap::SetOnAuthReturnCB);
 	NODE_SET_PROTOTYPE_METHOD(tpl, "SetOnZoomIdentityExpiredCB", ZoomNodeAuthWrap::SetOnZoomIdentityExpiredCB);
-
+	NODE_SET_PROTOTYPE_METHOD(tpl, "SetOnZoomAuthIdentityExpiredCB", ZoomNodeAuthWrap::SetOnZoomAuthIdentityExpiredCB);
 }
 template<>
 static v8::Persistent<v8::Function>* GetConstructor<ZoomNodeAuthWrap >() {
@@ -149,7 +151,7 @@ template<>
 static void InitClassAttribute<ZoomNodeWrap >(const v8::Local<v8::FunctionTemplate>& tpl, v8::Isolate* isolate)
 {
 	tpl->SetClassName(v8::String::NewFromUtf8(
-		isolate, "ZoomNodeWrap"));
+		isolate, "ZoomNodeWrap", v8::NewStringType::kInternalized).ToLocalChecked());
 	tpl->InstanceTemplate()->SetInternalFieldCount(1);
 
 	// Prototype
@@ -181,7 +183,7 @@ private:
 	~ZoomNodeMeetingWrap();
 public:
 	/// \brief Start meeting.
-	/// \param 1. meetingNumber(string)  Meeting number.
+	/// \param 1. meetingNumber(number)  Meeting number.
 	/// \param 2. hDirectShareAppWnd(string)  The window handle of the direct sharing application.
 	/// \param 3. participantId(number)  The ID of attendees. The SDK will set this value when the associated settings are turned on.
 	/// \param 4. isVideoOff(boolean)  Turn off video or not. True indicates to turn off. In addition, this flag is affected by meeting attributes.
@@ -191,23 +193,23 @@ public:
 	///Otherwise failed. To get extended error information, see \link ZNSDKError \endlink enum.
 	static void Start(const v8::FunctionCallbackInfo<v8::Value>& args);
 	/// \brief Start meeting without login.
-	/// \param 1. userId(string)  User ID.
-	/// \param 2. userToken(string)  User token.
-	/// \param 3. userZAK(string)  ZOOM access token.
-	/// \param 4. username(string)  Username when logged in the meeting.
-	/// \param 5. userType(number)  User type. See \link ZNZoomUserType \endlink enum.
-	/// \param 6. meetingNumber(string)  Meeting number.
-	/// \param 7. sdkVanityID(string)  Meeting vanity ID
-	/// \param 8. hDirectShareAppWnd(string) The window handle of the direct sharing application.
-	/// \param 9. participantId(string) The ID of attendees. The SDK will set this value when the associated settings are turned on.
-	/// \param 10. isDirectShareDesktop(boolean) Share the desktop directly or not. True indicates to share.
-	/// \param 11. isVideoOff(boolean) Turn off the video or not. True indicates to turn off. In addition, this flag is affected by meeting attributes.
-	/// \param 12. isAudioOff(boolean) Turn off the audio or not. True indicates to turn off. In addition, this flag is affected by meeting attributes.
+	/// \param 1. userId(string)  [Required] User ID.  
+	/// \param 2. userToken(string) [Required]  User token. 
+	/// \param 3. userZAK(string)  [Required] ZOOM access token. 
+	/// \param 4. username(string) [Required] Username. 
+	/// \param 5. zoomuserType(number) [Required] Zoom user type. See \link ZNZoomUserType \endlink enum.
+	/// \param 6. meetingNumber(number) [Optinal] Meeting number.
+	/// \param 7. sdkVanityID(string) [Optinal] Meeting vanity ID
+	/// \param 8. hDirectShareAppWnd(string) [Optinal] The window handle of the direct sharing application.
+	/// \param 9. participantId(string) [Optinal] The ID of attendees. The SDK will set this value when the associated settings are turned on.
+	/// \param 10. isDirectShareDesktop(boolean) [Optinal] Share the desktop directly or not. True indicates to share.
+	/// \param 11. isVideoOff(boolean) [Optinal] Turn off the video or not. True indicates to turn off. In addition, this flag is affected by meeting attributes.
+	/// \param 12. isAudioOff(boolean) [Optinal] Turn off the audio or not. True indicates to turn off. In addition, this flag is affected by meeting attributes.
 	/// \return If the function succeeds, the return value is ZNSDKERR_SUCCESS.
 	///Otherwise failed. To get extended error information, see \link ZNSDKError \endlink enum.
 	static void Start_WithoutLogin(const v8::FunctionCallbackInfo<v8::Value>& args);
 	/// \brief Join meeting.
-	/// \param 1. meetingNumber(string)  Meeting number.
+	/// \param 1. meetingNumber(number)  Meeting number.
 	/// \param 2. sdkVanityID(string)  Meeting vanity ID.
 	/// \param 3. username(string)  Username when logged in the meeting.
 	/// \param 4. psw(string) Meeting password.
@@ -221,17 +223,17 @@ public:
 	///Otherwise failed. To get extended error information, see \link ZNSDKError \endlink enum.
 	static void Join(const v8::FunctionCallbackInfo<v8::Value>& args);
 	/// \brief Join meeting without login.
-	/// \param 1. meetingNumber(string)  Meeting number.
-	/// \param 2. sdkVanityID(string)  Meeting vanity ID.
-	/// \param 3. username(string)  Username when logged in the meeting.
-	/// \param 4. psw(string) Meeting password.
-	/// \param 5. hDirectShareAppWnd(string) The window handle of the direct sharing application.
-	/// \param 6. token4EnforceLogin(string) Use the token if the meeting requests to login.
-	/// \param 7. participantId(string) The ID of attendees. The SDK will set this value when the associated settings are turned on.
-	/// \param 8. webinarToken(string) Webinar token.
-	/// \param 9. isDirectShareDesktop(boolean) Share the desktop directly or not. True indicates to share.
-	/// \param 10. isVideoOff(boolean) Turn off the video or not. True indicates to turn off. In addition, this flag is affected by meeting attributes.
-	/// \param 11. isAudioOff(boolean) Turn off the audio or not. True indicates to turn off. In addition, this flag is affected by meeting attributes.
+	/// \param 1. meetingNumber(number)  [Required] Meeting number. Meeting number or VanityID is required.
+	/// \param 2. sdkVanityID(string)  [Optinal] Meeting vanity ID. Meeting number or VanityID is required.
+	/// \param 3. username(string) [Optinal] Username 
+	/// \param 4. psw(string) [Optinal] Meeting password.
+	/// \param 5. hDirectShareAppWnd(string) [Optinal] The window handle of the direct sharing application.
+	/// \param 6. token4EnforceLogin(string) [Optinal] Use the token if the meeting requests to login.
+	/// \param 7. participantId(string) [Optinal] The ID of attendees. The SDK will set this value when the associated settings are turned on.
+	/// \param 8. webinarToken(string) [Optinal] Webinar token.
+	/// \param 9. isDirectShareDesktop(boolean) [Optinal] Share the desktop directly or not. True indicates to share.
+	/// \param 10. isVideoOff(boolean) [Optinal] Turn off the video or not. True indicates to turn off. In addition, this flag is affected by meeting attributes.
+	/// \param 11. isAudioOff(boolean) [Optinal] Turn off the audio or not. True indicates to turn off. In addition, this flag is affected by meeting attributes.
 	/// \return If the function succeeds, the return value is ZNSDKERR_SUCCESS.
 	///Otherwise failed. To get extended error information, see \link ZNSDKError \endlink enum.
 	static void Join_WithoutLogin(const v8::FunctionCallbackInfo<v8::Value>& args);
@@ -292,7 +294,7 @@ template<>
 static void InitClassAttribute<ZoomNodeMeetingWrap >(const v8::Local<v8::FunctionTemplate>& tpl, v8::Isolate* isolate)
 {
 	tpl->SetClassName(v8::String::NewFromUtf8(
-		isolate, "ZoomNodeMeetingWrap"));
+		isolate, "ZoomNodeMeetingWrap", v8::NewStringType::kInternalized).ToLocalChecked());
 	tpl->InstanceTemplate()->SetInternalFieldCount(1);
 
 	// Prototype
@@ -369,7 +371,7 @@ template<>
 static void InitClassAttribute<ZoomNodeMeetingInfoWrap >(const v8::Local<v8::FunctionTemplate>& tpl, v8::Isolate* isolate)
 {
 	tpl->SetClassName(v8::String::NewFromUtf8(
-		isolate, "ZoomNodeMeetingInfoWrap"));
+		isolate, "ZoomNodeMeetingInfoWrap", v8::NewStringType::kInternalized).ToLocalChecked());
 	tpl->InstanceTemplate()->SetInternalFieldCount(1);
 
 	// Prototype
@@ -537,6 +539,15 @@ public:
 	/// \return If the function succeeds, the return value is a object which includes "err" ZNSDKError,
 	///"bCan" TRUE means Can, otherwise not. To get extended error information, see \link ZNSDKError \endlink enum.
 	static void CanSwapToShowShareViewOrVideo(const v8::FunctionCallbackInfo<v8::Value>& args);
+	///////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	static void SetonStartShareBtnClickedCB(const v8::FunctionCallbackInfo<v8::Value>& args);
+	static void SetonEndMeetingBtnClickedCB(const v8::FunctionCallbackInfo<v8::Value>& args);
+	static void SetonParticipantListBtnClickedCB(const v8::FunctionCallbackInfo<v8::Value>& args);
+	static void SetonCustomLiveStreamMenuClickedCB(const v8::FunctionCallbackInfo<v8::Value>& args);
+	static void SetonZoomInviteDialogFailedCB(const v8::FunctionCallbackInfo<v8::Value>& args);
+	static void SetonCCBTNClickedCB(const v8::FunctionCallbackInfo<v8::Value>& args);
+	static void SetonAudioBTNClickedCB(const v8::FunctionCallbackInfo<v8::Value>& args);
+	static void SetonAudioMenuBTNClickedCB(const v8::FunctionCallbackInfo<v8::Value>& args);
 
 	static v8::Persistent<v8::Function> constructor;
 };
@@ -544,7 +555,7 @@ template<>
 static void InitClassAttribute<ZoomNodeMeetingUICtrlWrap >(const v8::Local<v8::FunctionTemplate>& tpl, v8::Isolate* isolate)
 {
 	tpl->SetClassName(v8::String::NewFromUtf8(
-		isolate, "ZoomNodeMeetingUICtrlWrap"));
+		isolate, "ZoomNodeMeetingUICtrlWrap", v8::NewStringType::kInternalized).ToLocalChecked());
 	tpl->InstanceTemplate()->SetInternalFieldCount(1);
 
 	// Prototype
@@ -577,6 +588,16 @@ static void InitClassAttribute<ZoomNodeMeetingUICtrlWrap >(const v8::Local<v8::F
 	NODE_SET_PROTOTYPE_METHOD(tpl, "SwapToShowShareViewOrVideo", ZoomNodeMeetingUICtrlWrap::SwapToShowShareViewOrVideo);
 	NODE_SET_PROTOTYPE_METHOD(tpl, "IsDisplayingShareViewOrVideo", ZoomNodeMeetingUICtrlWrap::IsDisplayingShareViewOrVideo);
 	NODE_SET_PROTOTYPE_METHOD(tpl, "CanSwapToShowShareViewOrVideo", ZoomNodeMeetingUICtrlWrap::CanSwapToShowShareViewOrVideo);
+
+	/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	NODE_SET_PROTOTYPE_METHOD(tpl, "SetonStartShareBtnClickedCB", ZoomNodeMeetingUICtrlWrap::SetonStartShareBtnClickedCB);
+	NODE_SET_PROTOTYPE_METHOD(tpl, "SetonEndMeetingBtnClickedCB", ZoomNodeMeetingUICtrlWrap::SetonEndMeetingBtnClickedCB);
+	NODE_SET_PROTOTYPE_METHOD(tpl, "SetonParticipantListBtnClickedCB", ZoomNodeMeetingUICtrlWrap::SetonParticipantListBtnClickedCB);
+	NODE_SET_PROTOTYPE_METHOD(tpl, "SetonCustomLiveStreamMenuClickedCB", ZoomNodeMeetingUICtrlWrap::SetonCustomLiveStreamMenuClickedCB);
+	NODE_SET_PROTOTYPE_METHOD(tpl, "SetonZoomInviteDialogFailedCB", ZoomNodeMeetingUICtrlWrap::SetonZoomInviteDialogFailedCB);
+	NODE_SET_PROTOTYPE_METHOD(tpl, "SetonCCBTNClickedCB", ZoomNodeMeetingUICtrlWrap::SetonCCBTNClickedCB);
+	NODE_SET_PROTOTYPE_METHOD(tpl, "SetonAudioBTNClickedCB", ZoomNodeMeetingUICtrlWrap::SetonAudioBTNClickedCB);
+	NODE_SET_PROTOTYPE_METHOD(tpl, "SetonAudioMenuBTNClickedCB", ZoomNodeMeetingUICtrlWrap::SetonAudioMenuBTNClickedCB);
 }
 template<>
 static v8::Persistent<v8::Function>* GetConstructor<ZoomNodeMeetingUICtrlWrap >() {
@@ -616,6 +637,9 @@ public:
 	/// \brief Get Zoom SDK Setting UI Strategy Controller Module.
 	static void GetSettingUIStrategyCtrl(const v8::FunctionCallbackInfo<v8::Value>& args);
 
+	static void GetSettingStatisticCtrl(const v8::FunctionCallbackInfo<v8::Value>& args);
+	static void GetSettingAccessibilityCtrl(const v8::FunctionCallbackInfo<v8::Value>& args);
+
 	static v8::Persistent<v8::Function> constructor;
 };
 
@@ -623,7 +647,7 @@ template<>
 static void InitClassAttribute<ZoomNodeSettingWrap >(const v8::Local<v8::FunctionTemplate>& tpl, v8::Isolate* isolate)
 {
 	tpl->SetClassName(v8::String::NewFromUtf8(
-		isolate, "ZoomNodeSettingWrap"));
+		isolate, "ZoomNodeSettingWrap", v8::NewStringType::kInternalized).ToLocalChecked());
 	tpl->InstanceTemplate()->SetInternalFieldCount(1);
 
 	// Prototype
@@ -634,7 +658,8 @@ static void InitClassAttribute<ZoomNodeSettingWrap >(const v8::Local<v8::Functio
 	NODE_SET_PROTOTYPE_METHOD(tpl, "GetSettingGeneralCtrl", ZoomNodeSettingWrap::GetSettingGeneralCtrl);
 	NODE_SET_PROTOTYPE_METHOD(tpl, "GetSettingRecordingCtrl", ZoomNodeSettingWrap::GetSettingRecordingCtrl);
 	NODE_SET_PROTOTYPE_METHOD(tpl, "GetSettingUIStrategyCtrl", ZoomNodeSettingWrap::GetSettingUIStrategyCtrl);
-
+	NODE_SET_PROTOTYPE_METHOD(tpl, "GetSettingStatisticCtrl", ZoomNodeSettingWrap::GetSettingStatisticCtrl);
+	NODE_SET_PROTOTYPE_METHOD(tpl, "GetSettingAccessibilityCtrl", ZoomNodeSettingWrap::GetSettingAccessibilityCtrl);
 }
 template<>
 static v8::Persistent<v8::Function>* GetConstructor<ZoomNodeSettingWrap >() {
@@ -713,7 +738,7 @@ template<>
 static void InitClassAttribute<ZoomNodePremeetingWrap >(const v8::Local<v8::FunctionTemplate>& tpl, v8::Isolate* isolate)
 {
 	tpl->SetClassName(v8::String::NewFromUtf8(
-		isolate, "ZoomNodePremeetingWrap"));
+		isolate, "ZoomNodePremeetingWrap", v8::NewStringType::kInternalized).ToLocalChecked());
 	tpl->InstanceTemplate()->SetInternalFieldCount(1);
 
 	// Prototype

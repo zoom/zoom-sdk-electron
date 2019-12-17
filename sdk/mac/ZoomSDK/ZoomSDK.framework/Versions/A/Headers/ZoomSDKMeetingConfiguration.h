@@ -102,6 +102,15 @@
     BOOL                _hideChatItemInMeeting;
     //Hide remote control item on more menu.
     BOOL                _hideRemoteControlItemOnMoreMenu;
+    //Hide choose save recording file path window.
+    BOOL                _hideChooseSaveRecordingFilePathWindow;
+    //Disable ZOOM original actions of clicking Audio button.
+    BOOL                _disableAudioButtonClickOriginAction;
+    //Disable audio menu item original action in-meeting.
+    BOOL                _disableAudioSettingMenuButtonClickOriginAction;
+    //Hide loading window when start meeting without login.
+    BOOL                _hideLoadingWindow;
+                 
 }
 @property(nonatomic, assign)CGDirectDisplayID displayAppID;
 @property(nonatomic, assign)CGDirectDisplayID monitorID;
@@ -148,6 +157,10 @@
 @property(nonatomic, assign)BOOL hideCopyInvitationButtonWhenInviteOthers;
 @property(nonatomic, assign)BOOL hideChatItemInMeeting;
 @property(nonatomic, assign)BOOL hideRemoteControlItemOnMoreMenu;
+@property(nonatomic, assign)BOOL hideChooseSaveRecordingFilePathWindow;
+@property(nonatomic, assign)BOOL disableAudioButtonClickOriginAction;
+@property(nonatomic, assign)BOOL disableAudioSettingMenuButtonClickOriginAction;
+@property(nonatomic, assign)BOOL hideLoadingWindow;
 
 - (ZoomSDKError)prefillWebinarUserName:(NSString*)userName Email:(NSString*)email;
 - (ZoomSDKError)hideSDKButtons:(BOOL)hide ButtonType:(SDKButton)button;

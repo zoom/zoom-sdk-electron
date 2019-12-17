@@ -54,6 +54,25 @@ public:
 	/// \brief Determine if the split screen mode is enabled.
 	/// \return TRUE indicates enabled. FALSE not.
 	static void IsSplitScreenModeEnabled(const v8::FunctionCallbackInfo<v8::Value>& args);
+
+	///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+	static void EnableAutoFullScreenVideoWhenViewShare(const v8::FunctionCallbackInfo<v8::Value>& args);
+	static void IsAutoFullScreenVideoWhenViewShareEnabled(const v8::FunctionCallbackInfo<v8::Value>& args);
+
+	static void EnableDisplayReminderWindowWhenExit(const v8::FunctionCallbackInfo<v8::Value>& args);
+	static void IsDisplayReminderWindowWhenExitEnabled(const v8::FunctionCallbackInfo<v8::Value>& args);
+
+	static void EnableShowMyMeetingElapseTime(const v8::FunctionCallbackInfo<v8::Value>& args);
+	static void IsShowMyMeetingElapseTimeEnabled(const v8::FunctionCallbackInfo<v8::Value>& args);
+
+	static void IsCurrentOSSupportAccelerateGPUWhenShare(const v8::FunctionCallbackInfo<v8::Value>& args);
+
+	static void EnableAccelerateGPUWhenShare(const v8::FunctionCallbackInfo<v8::Value>& args);
+	static void IsAccelerateGPUWhenShareEnabled(const v8::FunctionCallbackInfo<v8::Value>& args);
+
+	static void EnableRemoteControlAllApplications(const v8::FunctionCallbackInfo<v8::Value>& args);
+	static void IsRemoteControlAllApplicationsEnabled(const v8::FunctionCallbackInfo<v8::Value>& args);
 	
 	static v8::Persistent<v8::Function> constructor;
 };
@@ -61,7 +80,7 @@ template<>
 static void InitClassAttribute<ZoomNodeSettingGeneralCtrlWrap >(const v8::Local<v8::FunctionTemplate>& tpl, v8::Isolate* isolate)
 {
 	tpl->SetClassName(v8::String::NewFromUtf8(
-		isolate, "ZoomNodeSettingGeneralCtrlWrap"));
+		isolate, "ZoomNodeSettingGeneralCtrlWrap", v8::NewStringType::kInternalized).ToLocalChecked());
 	tpl->InstanceTemplate()->SetInternalFieldCount(1);
 
 	// Prototype
@@ -76,6 +95,23 @@ static void InitClassAttribute<ZoomNodeSettingGeneralCtrlWrap >(const v8::Local<
 	NODE_SET_PROTOTYPE_METHOD(tpl, "IsAutoFullScreenVideoWhenJoinMeetingEnabled", ZoomNodeSettingGeneralCtrlWrap::IsAutoFullScreenVideoWhenJoinMeetingEnabled);
 	NODE_SET_PROTOTYPE_METHOD(tpl, "IsSplitScreenModeEnabled", ZoomNodeSettingGeneralCtrlWrap::IsSplitScreenModeEnabled);
 
+	/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+	NODE_SET_PROTOTYPE_METHOD(tpl, "EnableAutoFullScreenVideoWhenViewShare", ZoomNodeSettingGeneralCtrlWrap::EnableAutoFullScreenVideoWhenViewShare);
+	NODE_SET_PROTOTYPE_METHOD(tpl, "IsAutoFullScreenVideoWhenViewShareEnabled", ZoomNodeSettingGeneralCtrlWrap::IsAutoFullScreenVideoWhenViewShareEnabled);
+
+	NODE_SET_PROTOTYPE_METHOD(tpl, "EnableDisplayReminderWindowWhenExit", ZoomNodeSettingGeneralCtrlWrap::EnableDisplayReminderWindowWhenExit);
+	NODE_SET_PROTOTYPE_METHOD(tpl, "IsDisplayReminderWindowWhenExitEnabled", ZoomNodeSettingGeneralCtrlWrap::IsDisplayReminderWindowWhenExitEnabled);
+
+	NODE_SET_PROTOTYPE_METHOD(tpl, "EnableShowMyMeetingElapseTime", ZoomNodeSettingGeneralCtrlWrap::EnableShowMyMeetingElapseTime);
+	NODE_SET_PROTOTYPE_METHOD(tpl, "IsShowMyMeetingElapseTimeEnabled", ZoomNodeSettingGeneralCtrlWrap::IsShowMyMeetingElapseTimeEnabled);
+
+	NODE_SET_PROTOTYPE_METHOD(tpl, "IsCurrentOSSupportAccelerateGPUWhenShare", ZoomNodeSettingGeneralCtrlWrap::IsCurrentOSSupportAccelerateGPUWhenShare);
+
+	NODE_SET_PROTOTYPE_METHOD(tpl, "EnableAccelerateGPUWhenShare", ZoomNodeSettingGeneralCtrlWrap::EnableAccelerateGPUWhenShare);
+	NODE_SET_PROTOTYPE_METHOD(tpl, "IsAccelerateGPUWhenShareEnabled", ZoomNodeSettingGeneralCtrlWrap::IsAccelerateGPUWhenShareEnabled);
+
+	NODE_SET_PROTOTYPE_METHOD(tpl, "EnableRemoteControlAllApplications", ZoomNodeSettingGeneralCtrlWrap::EnableRemoteControlAllApplications);
+	NODE_SET_PROTOTYPE_METHOD(tpl, "IsRemoteControlAllApplicationsEnabled", ZoomNodeSettingGeneralCtrlWrap::IsRemoteControlAllApplicationsEnabled);
 }
 template<>
 static v8::Persistent<v8::Function>* GetConstructor<ZoomNodeSettingGeneralCtrlWrap >() {

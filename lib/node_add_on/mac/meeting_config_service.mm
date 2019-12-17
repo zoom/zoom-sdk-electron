@@ -2,6 +2,7 @@
 #include "../meeting_config_wrap_core.h"
 #include "sdk_native_error.h"
 #include "../meeting_service_wrap_core.h"
+#import "meetingServiceDelegate.h"
 ZMeetingConfigWrap &ZMeetingServiceWrap::GetMeetingConfigCtrl()
 {
     return m_meeting_config_ctrl;
@@ -14,6 +15,7 @@ ZMeetingConfigWrap::ZMeetingConfigWrap()
 
 ZMeetingConfigWrap::~ZMeetingConfigWrap()
 {
+    [[[[ZoomSDK sharedSDK] getMeetingService] getWebinarController] setDelegate:nil];
     m_pSink = 0;
 }
 
@@ -30,6 +32,7 @@ void ZMeetingConfigWrap::Uninit()
 
 void ZMeetingConfigWrap::SetSink(ZNativeSDKMeetingConfigWrapFreemeetingSink *pSink)
 {
+    [[[[ZoomSDK sharedSDK] getMeetingService] getWebinarController] setDelegate:[meetingServiceDelegate share]];
     m_pSink = pSink;
 }
 
@@ -272,21 +275,6 @@ void ZMeetingConfigWrap::EnableHideFullPhoneNumber4PureCallinUser(bool bHide)
     }
 }
 
-void ZMeetingConfigWrap::EnableLengthLimitationOfMeetingNumber(bool bEnable)
-{
-    
-}
-
-void ZMeetingConfigWrap::EnableShareIOSDevice(bool bEnable)
-{
-    
-}
-
-void ZMeetingConfigWrap::EnableShareWhiteBoard(bool bEnable)
-{
-
-}
-
 void ZMeetingConfigWrap::ForceDisableMultiShare(bool bDisable)
 {
     ZoomSDKMeetingService *service = [[ZoomSDK sharedSDK] getMeetingService];
@@ -296,11 +284,6 @@ void ZMeetingConfigWrap::ForceDisableMultiShare(bool bDisable)
             config.forceDisableMultiShare = bDisable;
         }
     }
-}
-
-void ZMeetingConfigWrap::SetMaxDurationForOnlyHostInMeeting(int nDuration)
-{
-
 }
 
 void ZMeetingConfigWrap::EnableLocalRecordingConvertProgressBarDialog(bool bShow)
@@ -314,51 +297,120 @@ void ZMeetingConfigWrap::EnableLocalRecordingConvertProgressBarDialog(bool bShow
     }
 }
 
-void ZMeetingConfigWrap::EnableApproveRemoteControlDlg(bool bEnable)
-{
-    
-}
-void ZMeetingConfigWrap::EnableDeclineRemoteControlResponseDlg(bool bEnable)
-{
-    
-}
 void ZMeetingConfigWrap::EnableLeaveMeetingOptionForHost(bool bEnable)
 {
-    
+    ZoomSDKMeetingService *service = [[ZoomSDK sharedSDK]  getMeetingService];
+    if (service) {
+        ZoomSDKMeetingConfiguration *config = [service getMeetingConfiguration];
+        if (config) {
+            BOOL enable = (bEnable == true) ? YES : NO;
+            config.hideLeaveMeetingWindow = enable;
+        }
+    }
 }
 void ZMeetingConfigWrap::EnableVideoButtonOnMeetingUI(bool bEnable)
 {
-    
+    ZoomSDKMeetingService *service = [[ZoomSDK sharedSDK]  getMeetingService];
+    if (service) {
+        ZoomSDKMeetingConfiguration *config = [service getMeetingConfiguration];
+        if (config) {
+            [config  hideSDKButtons:bEnable ButtonType:ToolBarVideoButton];
+            [config  hideSDKButtons:bEnable ButtonType:FitBarVideoButton];
+        }
+    }
 }
 void ZMeetingConfigWrap::EnableEnterAndExitFullScreenButtonOnMeetingUI(bool bEnable)
 {
-    
+    ZoomSDKMeetingService *service = [[ZoomSDK sharedSDK]  getMeetingService];
+    if (service) {
+        ZoomSDKMeetingConfiguration *config = [service getMeetingConfiguration];
+        if (config) {
+            BOOL enable = (bEnable == true) ? YES : NO;
+            [config hideSDKButtons:enable ButtonType:MainExitFullScreenButton] ;
+        }
+    }
 }
+
+
 void ZMeetingConfigWrap::RedirectClickShareBTNEvent(bool bRedirect)
 {
-    
+    ZoomSDKMeetingService *service = [[ZoomSDK sharedSDK]  getMeetingService];
+    if (service) {
+        ZoomSDKMeetingConfiguration *config = [service getMeetingConfiguration];
+        if (config) {
+            config.disableShareButtonClickOriginAction = bRedirect;
+        }
+    }
 }
-void ZMeetingConfigWrap::RedirectClickEndMeetingBTNEvent(bool bRedirect)
+
+void ZMeetingConfigWrap::RedirectClickParticipantListBTNEvent(bool bRedirect)
 {
-    
+    ZoomSDKMeetingService *service = [[ZoomSDK sharedSDK]  getMeetingService];
+    if (service) {
+        ZoomSDKMeetingConfiguration *config = [service getMeetingConfiguration];
+        if (config) {
+            config.disableParticipantButtonClickOriginAction = bRedirect;
+        }
+    }
 }
+
+void ZMeetingConfigWrap::RedirectMeetingWarningMsg(ZNZoomRedirectWarningMsgOption redirectOption)
+{
+    ZoomSDKMeetingService *service = [[ZoomSDK sharedSDK]  getMeetingService];
+    if (service) {
+        ZoomSDKMeetingConfiguration *config = [service getMeetingConfiguration];
+        if (config) {
+            config.hideMeetingStaticBadNetWorkWaring = redirectOption.bRedirectBadNetwork;
+            config.hideMeetingStaticSystemBusyWaring = redirectOption.bRedirectWarnHighCPU;
+        }
+    }
+}
+
+void ZMeetingConfigWrap::EnableClaimHostFeature(bool bEnable)
+{
+    ZoomSDKMeetingService *service = [[ZoomSDK sharedSDK]  getMeetingService];
+    if (service) {
+        ZoomSDKMeetingConfiguration *config = [service getMeetingConfiguration];
+        if (config) {
+            BOOL enable = (bEnable == true) ? NO : YES;
+            [config hideSDKButtons:enable ButtonType:ClaimHostButton];
+        }
+    }
+}
+
 void ZMeetingConfigWrap::RedirectFreeMeetingEndingReminderDlg(bool bRedirect)
 {
-    
+    ZoomSDKMeetingService *service = [[ZoomSDK sharedSDK]  getMeetingService];
+    if (service) {
+        ZoomSDKMeetingConfiguration *config = [service getMeetingConfiguration];
+        if (config) {
+            config.disableFreeUserOriginAction = bRedirect;
+        }
+    }
 }
 void ZMeetingConfigWrap::RedirectClickCustomLiveStreamMenuEvent(bool bRedirect)
-{}
-void ZMeetingConfigWrap::RedirectClickParticipantListBTNEvent(bool bRedirect)
-{}
+{
+    ZoomSDKMeetingService *service = [[ZoomSDK sharedSDK]  getMeetingService];
+    if (service) {
+        ZoomSDKMeetingConfiguration *config = [service getMeetingConfiguration];
+        if (config) {
+            config.disableCustomLiveStreamAction = bRedirect;
+        }
+    }
+}
+
+void ZMeetingConfigWrap::HideUpgradeWarningMsgForFreeUserWhenSchedule(bool bHide)
+{
+    ZoomSDKPremeetingService *service = [[ZoomSDK sharedSDK]  getPremeetingService];
+    if (service) {
+        [service hideScheduleComponent:ScheduleComponent_UpgradeAccountTipForFreeUser hide:bHide];
+    }
+}
 void ZMeetingConfigWrap::RedirectClickCCBTNEvent(bool bRedirect)
-{}
-void ZMeetingConfigWrap::RedirectMeetingWarningMsg(ZNZoomRedirectWarningMsgOption redirectOption)
 {}
 void ZMeetingConfigWrap::EnableToolTipsShow(bool bEnable)
 {}
 void ZMeetingConfigWrap::EnableAirplayInstructionWindow(bool bEnable)
-{}
-void ZMeetingConfigWrap::EnableClaimHostFeature(bool bEnable)
 {}
 void ZMeetingConfigWrap::EnableAutoHideJoinAudioDialog(bool bEnable)
 {}
@@ -369,9 +421,27 @@ void ZMeetingConfigWrap::DisableSplitScreenModeUIElements(bool bDisable)
 void ZMeetingConfigWrap::SetShowAudioUseComputerSoundChkbox(bool bShow)
 {}
 void ZMeetingConfigWrap::SetShowCallInTab(bool bShow)
-{}
+{
+    ZoomSDKMeetingService *service = [[ZoomSDK sharedSDK]  getMeetingService];
+    if (service) {
+        ZoomSDKMeetingConfiguration *config = [service getMeetingConfiguration];
+        if (config) {
+            BOOL  isHide = (bShow == true) ? NO : YES;
+            config.hideTelephoneInAudiowWindow = isHide;
+        }
+    }
+}
 void ZMeetingConfigWrap::SetShowCallMeTab(bool bShow)
-{}
+{
+    ZoomSDKMeetingService *service = [[ZoomSDK sharedSDK]  getMeetingService];
+    if (service) {
+        ZoomSDKMeetingConfiguration *config = [service getMeetingConfiguration];
+        if (config) {
+            BOOL  isHide = (bShow == true) ? NO : YES;
+            config.hideCallMeInAudioWindow = isHide;
+        }
+    }
+}
 void ZMeetingConfigWrap::SetAlwaysShowMeetingIDOnTitle(bool bAlwaysShow)
 {}
 void ZMeetingConfigWrap::DisableTopMostAttr4SettingDialog(bool bDisable)
@@ -380,67 +450,350 @@ void ZMeetingConfigWrap::EnableGrabShareWithoutReminder(bool bEnable)
 {}
 void ZMeetingConfigWrap::EnableShowShareSwitchMultiToSingleConfirmDlg(bool bEnable)
 {}
-void ZMeetingConfigWrap::DisableFreeMeetingRemainTimeNotify(bool bDisable)
-{}
-void ZMeetingConfigWrap::HideChatItemOnMeetingUI(bool bHide)
-{}
 void ZMeetingConfigWrap::HideRecordItemOnMeetingUI(bool bHide)
 {}
 void ZMeetingConfigWrap::HideUpgradeFreeMeetingButton(bool bHide)
-{}
+{
+    ZoomSDKMeetingService *service = [[ZoomSDK sharedSDK]  getMeetingService];
+    if (service) {
+        ZoomSDKMeetingConfiguration *config = [service getMeetingConfiguration];
+        if (config) {
+            [config  hideSDKButtons:bHide ButtonType:UpgradeButtonInFreeMeetingRemainTimeTooltip];
+        }
+    }
+}
 void ZMeetingConfigWrap::SetShowInviteDlgTabPage(ZNSDKInviteDlgTabPage tabPage, bool bShow)
 {}
-void ZMeetingConfigWrap::SetShowH323SubTabPage(ZNSDKH323TabPage tabPage, bool bShow)
+void ZMeetingConfigWrap::RedirectClickEndMeetingBTNEvent(bool bRedirect)
+{
+    ZoomSDKMeetingService *service = [[ZoomSDK sharedSDK]  getMeetingService];
+    if (service) {
+        ZoomSDKMeetingConfiguration *config = [service getMeetingConfiguration];
+        if (config) {
+            config.hideLeaveMeetingWindow = bRedirect;
+        }
+    }
+}
+void ZMeetingConfigWrap::EnableLengthLimitationOfMeetingNumber(bool bEnable)
+{
+}
+void ZMeetingConfigWrap::EnableShareIOSDevice(bool bEnable)
+{
+}
+void ZMeetingConfigWrap::EnableShareWhiteBoard(bool bEnable)
+{
+}
+void ZMeetingConfigWrap::SetMaxDurationForOnlyHostInMeeting(int nDuration)
+{
+}
+void ZMeetingConfigWrap::DisableRemoteCtrlCopyPasteFeature(bool bDisable)
+{
+}
+void ZMeetingConfigWrap::EnableApproveRemoteControlDlg(bool bEnable)
 {}
-void ZMeetingConfigWrap::HideUpgradeWarningMsgForFreeUserWhenSchedule(bool bHide)
-{}
-void ZMeetingConfigWrap::HideSwitchCameraButton(bool bHide)
-{}
-void ZMeetingConfigWrap::HideCopyUrlOnInviteWindow(bool bHide)
-{}
-void ZMeetingConfigWrap::HideCopyInvitationOnInviteWindow(bool bHide)
-{}
-void ZMeetingConfigWrap::HideKeypadButtonOnMeetingWindow(bool bHide)
-{}
-void ZMeetingConfigWrap::HideRemoteControlOnMeetingUI(bool bHide)
-{}
-void ZMeetingConfigWrap::HideQAOnMeetingUI(bool bHide)
-{}
-void ZMeetingConfigWrap::HidePollOnMeetingUI(bool bHide)
-{}
-void ZMeetingConfigWrap::EnableInputMeetingPasswordDlg(bool bEnable)
+void ZMeetingConfigWrap::EnableDeclineRemoteControlResponseDlg(bool bEnable)
 {}
 void ZMeetingConfigWrap::EnableInputMeetingScreenNameDlg(bool bEnable)
 {}
 void ZMeetingConfigWrap::RedirectWebinarNeedRegister(bool bRedirect)
 {}
-void ZMeetingConfigWrap::RedirectEndOtherMeeting(bool bRedirect)
-{}
-void ZMeetingConfigWrap::EnableForceAutoStartMyVideoWhenJoinMeeting(bool bEnable)
-{}
-void ZMeetingConfigWrap::EnableForceAutoStopMyVideoWhenJoinMeeting(bool bEnable)
-{}
-void ZMeetingConfigWrap::DisableAutoShowSelectJoinAudioDlgWhenJoinMeeting(bool bDisable)
-{}
-void ZMeetingConfigWrap::DisableRemoteCtrlCopyPasteFeature(bool bDisable)
-{}
 
-//ZNFreeMeetingEndingReminderType ZMeetingConfigWrap::GetReminderType()
-//{
-//    return ZN_FreeMeetingEndingReminder_NONE;
-//}
-//ZNSDKError ZMeetingConfigWrap::UpgradeMeeting()
-//{
-//    return ZNSDKERR_NO_IMPL;
-//}
-//ZNSDKError ZMeetingConfigWrap::UpgradeAccount()
-//{
-//    return ZNSDKERR_NO_IMPL;
-//}
-//ZNSDKError ZMeetingConfigWrap::CancelUpdate()
-//{
-//    return ZNSDKERR_NO_IMPL;
-//}
+void ZMeetingConfigWrap::EnableForceAutoStartMyVideoWhenJoinMeeting(bool bEnable)
+{
+    ZoomSDKPremeetingService *service = [[ZoomSDK sharedSDK]  getPremeetingService];
+    if (service) {
+        [service enableForceAutoStartMyVideoWhenJoinMeeting:bEnable];
+    }
+}
+void ZMeetingConfigWrap::EnableForceAutoStopMyVideoWhenJoinMeeting(bool bEnable)
+{
+    ZoomSDKPremeetingService *service = [[ZoomSDK sharedSDK]  getPremeetingService];
+    if (service) {
+        [service enableForceAutoStopMyVideoWhenJoinMeeting:bEnable];
+    }
+}
+
+
+void ZMeetingConfigWrap::DisableAutoShowSelectJoinAudioDlgWhenJoinMeeting(bool bDisable)
+{
+    ZoomSDKPremeetingService *service = [[ZoomSDK sharedSDK]  getPremeetingService];
+    if (service) {
+        [service disableAutoShowSelectJoinAudioDlgWhenJoinMeeting:NO];
+    }
+}
+
+
+void ZMeetingConfigWrap::DisableFreeMeetingRemainTimeNotify(bool bDisable)
+{
+    ZoomSDKMeetingService *service = [[ZoomSDK sharedSDK]  getMeetingService];
+    if (service) {
+        ZoomSDKMeetingConfiguration *config = [service getMeetingConfiguration];
+        if (config) {
+            config.disableFreeMeetingRemainTimeNotify = bDisable;
+        }
+    }
+}
+
+
+void ZMeetingConfigWrap::HideChatItemOnMeetingUI(bool bHide)
+{
+    ZoomSDKMeetingService *service = [[ZoomSDK sharedSDK]  getMeetingService];
+    if (service) {
+        ZoomSDKMeetingConfiguration *config = [service getMeetingConfiguration];
+        if (config) {
+            config.hideChatItemInMeeting = bHide;
+        }
+    }
+}
+
+void ZMeetingConfigWrap::SetShowH323SubTabPage(ZNSDKH323TabPage tabPage, bool bShow)
+{
+    ZoomSDKMeetingService *service = [[ZoomSDK sharedSDK]  getMeetingService];
+    if (!service) {
+        return;
+    }
+    ZoomSDKMeetingConfiguration *config = [service getMeetingConfiguration];
+    if (!config) {
+        return;
+    }
+    if (tabPage == SDK_INVITEDLG_H323_DIALIN) {
+        config.hideInviteInMeetingH323CallInTab = bShow;
+    }
+    if (tabPage == SDK_INVITEDLG_H323_CALLOUT) {
+        config.hideInviteInMeetingH323CallOutTab = bShow;
+    }
+}
+
+void ZMeetingConfigWrap::HideSwitchCameraButton(bool bHide)
+{
+    ZoomSDKMeetingService *service = [[ZoomSDK sharedSDK]  getMeetingService];
+    if (service) {
+        ZoomSDKMeetingConfiguration *config = [service getMeetingConfiguration];
+        if (config) {
+            config.hideSwitchCameraButton = bHide;
+        }
+    }
+}
+void ZMeetingConfigWrap::HideCopyUrlOnInviteWindow(bool bHide)
+{
+    ZoomSDKMeetingService *service = [[ZoomSDK sharedSDK]  getMeetingService];
+    if (service) {
+        ZoomSDKMeetingConfiguration *config = [service getMeetingConfiguration];
+        if (config) {
+            config.hideCopyURLButtonWhenInviteOthers = bHide;
+        }
+    }
+}
+void ZMeetingConfigWrap::HideCopyInvitationOnInviteWindow(bool bHide)
+{
+    ZoomSDKMeetingService *service = [[ZoomSDK sharedSDK]  getMeetingService];
+    if (service) {
+        ZoomSDKMeetingConfiguration *config = [service getMeetingConfiguration];
+        if (config) {
+            config.hideCopyInvitationButtonWhenInviteOthers = bHide;
+        }
+    }
+}
+
+//
+void ZMeetingConfigWrap::HideKeypadButtonOnMeetingWindow(bool bHide)
+{
+    ZoomSDKMeetingService *service = [[ZoomSDK sharedSDK]  getMeetingService];
+    if (service) {
+        ZoomSDKMeetingConfiguration *config = [service getMeetingConfiguration];
+        if (config) {
+            config.hideShowKeypadButton = bHide;
+        }
+    }
+}
+void ZMeetingConfigWrap::HideRemoteControlOnMeetingUI(bool bHide)
+{
+    ZoomSDKMeetingService *service = [[ZoomSDK sharedSDK]  getMeetingService];
+    if (service) {
+        ZoomSDKMeetingConfiguration *config = [service getMeetingConfiguration];
+        if (config) {
+            [config hideSDKButtons:bHide ButtonType:FitBarRemoteControlButton];
+        }
+    }
+}
+void ZMeetingConfigWrap::HideQAOnMeetingUI(bool bHide)
+{
+    ZoomSDKMeetingService *service = [[ZoomSDK sharedSDK]  getMeetingService];
+    if (service) {
+        ZoomSDKMeetingConfiguration *config = [service getMeetingConfiguration];
+        if (config) {
+            [config hideSDKButtons:bHide ButtonType:ToolBarQandAButton];
+        }
+    }
+}
+void ZMeetingConfigWrap::HidePollOnMeetingUI(bool bHide)
+{
+    ZoomSDKMeetingService *service = [[ZoomSDK sharedSDK]  getMeetingService];
+    if (service) {
+        ZoomSDKMeetingConfiguration *config = [service getMeetingConfiguration];
+        if (config) {
+            [config hideSDKButtons:bHide ButtonType:ToolBarPollingButton];
+        }
+    }
+}
+
+void ZMeetingConfigWrap::EnableInputMeetingPasswordDlg(bool bEnable)
+{
+    ZoomSDKMeetingService *service = [[ZoomSDK sharedSDK]  getMeetingService];
+    if (service) {
+        ZoomSDKMeetingConfiguration *config = [service getMeetingConfiguration];
+        if (config) {
+            config.disableInputPasswordWindow = bEnable;
+        }
+    }
+}
+
+void ZMeetingConfigWrap::RedirectEndOtherMeeting(bool bRedirect)
+{
+    ZoomSDKMeetingService *service = [[ZoomSDK sharedSDK]  getMeetingService];
+    if (service) {
+        ZoomSDKMeetingConfiguration *config = [service getMeetingConfiguration];
+        if (config) {
+            config.disableEndOtherMeetingAlert = bRedirect;
+        }
+    }
+}
+
+void ZMeetingConfigWrap::RedirectClickAudioBTNEvent(bool bRedirect)
+{
+    ZoomSDKMeetingService *service = [[ZoomSDK sharedSDK]  getMeetingService];
+    if (service) {
+        ZoomSDKMeetingConfiguration *config = [service getMeetingConfiguration];
+        if (config) {
+            config.disableAudioButtonClickOriginAction = bRedirect;
+        }
+    }
+}
+
+void ZMeetingConfigWrap::RedirectClickAudioMenuBTNEvent(bool bRedirect)
+{
+    ZoomSDKMeetingService *service = [[ZoomSDK sharedSDK]  getMeetingService];
+    if (service) {
+        ZoomSDKMeetingConfiguration *config = [service getMeetingConfiguration];
+        if (config) {
+            config.disableAudioSettingMenuButtonClickOriginAction = bRedirect;
+        }
+    }
+}
+
+void ZMeetingConfigWrap::EnableAudioButtonOnMeetingUI(bool bEnable)
+{
+    return;
+}
+
+void ZMeetingConfigWrap::DisableShowJoinMeetingWnd(bool bDisable)
+{
+    ZoomSDKMeetingService *service = [[ZoomSDK sharedSDK]  getMeetingService];
+    if (service) {
+        ZoomSDKMeetingConfiguration *config = [service getMeetingConfiguration];
+        if (config) {
+            config.hideLoadingWindow = bDisable;
+        }
+    }
+}
+
+void ZMeetingConfigWrap::SetShowVideoOptimizeChkbox(bool bShow)
+{
+    return;
+}
+
+ZNRequiredInfoType ZMeetingConfigWrap::GetRequiredInfoType()
+{
+    ZoomSDKJoinMeetingHelper *helper = [[meetingServiceDelegate share] getJoinMeetingHelper];
+    if (helper) {
+        JoinMeetingReqInfoType type = [helper getReqInfoType];
+        nativeErrorTypeHelp help;
+        return help.ZNSDKRequiredInfoType(type);
+    }
+    return ZNREQUIRED_INFO_TYPE_NONE;
+}
+
+bool ZMeetingConfigWrap::InputMeetingPasswordAndScreenName(ZoomSTRING meetingPassword, ZoomSTRING screenName)
+{
+    ZoomSDKJoinMeetingHelper *helper = [[meetingServiceDelegate share] getJoinMeetingHelper];
+    if (helper) {
+        if (!meetingPassword.empty()) {
+            NSString *psdStr = [NSString stringWithCString:meetingPassword.c_str() encoding:NSUTF8StringEncoding];
+            ZoomSDKError ret = [helper inputPassword:psdStr];
+            return (ret == ZoomSDKError_Success) ? true : false;
+        }
+    }
+    return false;
+}
+
+bool ZMeetingConfigWrap::InputMeetingIDAndScreenName(ZoomSTRING meetingID, ZoomSTRING screenName)
+{
+    return false;
+}
+
+bool ZMeetingConfigWrap::InputMeetingScreenName(ZoomSTRING screenName)
+{
+    return false;
+}
+
+void ZMeetingConfigWrap::MeetingPasswordAndScreenNameHandler_Cancel()
+{
+    ZoomSDKJoinMeetingHelper *helper = [[meetingServiceDelegate share] getJoinMeetingHelper];
+    if (helper) {
+        [helper cancel];
+    }
+}
+
+ZNWebinarNeedRegisterType ZMeetingConfigWrap::GetWebinarNeedRegisterType()
+{
+    ZoomSDKWebinarRegisterHelper *helper = [[meetingServiceDelegate share] getWebinarRegisterHelper];
+    if (!helper) {
+        return ZNWebinarReg_NONE;
+    }
+    WebinarRegisterType type = [helper getWebinarRegisterType];
+    nativeErrorTypeHelp help;
+    return help.ZNSDKWebinarNeedRegisterType(type);
+}
+
+ZoomSTRING ZMeetingConfigWrap::GetWebinarRegisterUrl()
+{
+    ZoomSDKWebinarRegisterHelper *helper = [[meetingServiceDelegate share] getWebinarRegisterHelper];
+    if (helper) {
+        NSURL *url = [helper getWebinarRegisterURL];
+        if (url) {
+            NSString *urlStr = [url absoluteString];
+            return urlStr.UTF8String;
+        }
+    }
+    return "";
+}
+
+void ZMeetingConfigWrap::ReleaseRegisterWebinarByUrl()
+{
+    return;
+}
+
+ZNSDKError ZMeetingConfigWrap::InputWebinarRegisterEmailAndScreenName(ZoomSTRING email, ZoomSTRING screenName)
+{
+    ZoomSDKWebinarRegisterHelper *helper = [[meetingServiceDelegate share] getWebinarRegisterHelper];
+    if (!helper) {
+        return ZNSDKERR_SERVICE_FAILED;
+    }
+    NSString *emailStr = [NSString stringWithCString:email.c_str() encoding:NSUTF8StringEncoding];
+    NSString *screenNameStr = [NSString stringWithCString:screenName.c_str() encoding:NSUTF8StringEncoding];
+    ZoomSDKError ret = [helper inputEmail:emailStr screenName:screenNameStr];
+    nativeErrorTypeHelp help;
+    return help.ZoomSDKErrorType(ret);
+}
+
+void ZMeetingConfigWrap::CancelRegisterWebinarByEmail()
+{
+    ZoomSDKWebinarRegisterHelper *helper = [[meetingServiceDelegate share] getWebinarRegisterHelper];
+    if (helper) {
+        [helper cancel];
+    }
+}
+
 //callback
 void  ZMeetingConfigWrap::onFreeMeetingNeedToUpgrade(ZNFreeMeetingNeedUpgradeType type, ZoomSTRING gift_url)
 {

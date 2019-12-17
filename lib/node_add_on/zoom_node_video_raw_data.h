@@ -57,6 +57,9 @@ public:
 	/// \return If the function succeeds, the return value is SDKRawDataError_SUCCESS.
 	///Otherwise failed. To get extended error information, see \link SDKRawDataError \endlink enum.
 	static void Stop(const v8::FunctionCallbackInfo<v8::Value>& args);
+
+	static void StartPipeServer(const v8::FunctionCallbackInfo<v8::Value>& args);
+	static void StopPipeServer(const v8::FunctionCallbackInfo<v8::Value>& args);
 	
 	static v8::Persistent<v8::Function> constructor;
 };
@@ -64,7 +67,7 @@ template<>
 static void InitClassAttribute<ZoomNodeVideoRawDataWrap >(const v8::Local<v8::FunctionTemplate>& tpl, v8::Isolate* isolate)
 {
 	tpl->SetClassName(v8::String::NewFromUtf8(
-		isolate, "ZoomNodeVideoRawDataWrap"));
+		isolate, "ZoomNodeVideoRawDataWrap", v8::NewStringType::kInternalized).ToLocalChecked());
 	tpl->InstanceTemplate()->SetInternalFieldCount(1);
 
 	// Prototype
@@ -78,6 +81,9 @@ static void InitClassAttribute<ZoomNodeVideoRawDataWrap >(const v8::Local<v8::Fu
 	NODE_SET_PROTOTYPE_METHOD(tpl, "GetLocalDeviceStatus", ZoomNodeVideoRawDataWrap::GetLocalDeviceStatus);
 	NODE_SET_PROTOTYPE_METHOD(tpl, "RotateLocalDevice", ZoomNodeVideoRawDataWrap::RotateLocalDevice);
 	NODE_SET_PROTOTYPE_METHOD(tpl, "Stop", ZoomNodeVideoRawDataWrap::Stop);
+
+	NODE_SET_PROTOTYPE_METHOD(tpl, "StartPipeServer", ZoomNodeVideoRawDataWrap::StartPipeServer);
+	NODE_SET_PROTOTYPE_METHOD(tpl, "StopPipeServer", ZoomNodeVideoRawDataWrap::StopPipeServer);
 }
 template<>
 static v8::Persistent<v8::Function>* GetConstructor<ZoomNodeVideoRawDataWrap >() {

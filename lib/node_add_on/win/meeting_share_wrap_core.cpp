@@ -3,55 +3,26 @@
 #include "wrap/sdk_wrap.h"
 #include "wrap/meeting_service_components_wrap/meeting_sharing_wrap.h"
 #include "zoom_native_to_wrap.h"
-
+#include "sdk_events_wrap_class.h"
 
 extern ZOOM_SDK_NAMESPACE::IMeetingServiceWrap& g_meeting_service_wrap;
-class ZMeetingShareCtrlWrapEvent : public ZOOM_SDK_NAMESPACE::IMeetingShareCtrlEvent
-{
-public:
-	void SetOwner(ZMeetingShareWrap* obj) { owner_ = obj; }
-	virtual void onSharingStatus(ZOOM_SDK_NAMESPACE::SharingStatus status, unsigned int userId)
-	{
-		if (owner_) {
-			
-				owner_->onSharingStatus(Map2WrapDefine(status), userId);
-			}
-		
-	}
-	virtual void onLockShareStatus(bool bLocked)
-	{
-
-	}
-	virtual void onShareContentNotification(ZOOM_SDK_NAMESPACE::ShareInfo& shareInfo)
-	{
-
-	}
-	virtual void onMultiShareSwitchToSingleShareNeedConfirm(ZOOM_SDK_NAMESPACE::IShareSwitchMultiToSingleConfirmHandler* handler_)
-	{
-
-	}
-private:
-	ZMeetingShareWrap* owner_;
-};
-
-static ZMeetingShareCtrlWrapEvent g_meeting_share_ctrl_event;
 
 ZMeetingShareWrap::ZMeetingShareWrap()
 {
-	g_meeting_share_ctrl_event.SetOwner(this);
+	SDKEventWrapMgr::GetInst().m_meetingShareCtrlWrapEvent.SetOwner(this);
 	m_pSink = 0;
 }
 ZMeetingShareWrap::~ZMeetingShareWrap()
 {
 	Uninit();
 	m_pSink = 0;
-	g_meeting_share_ctrl_event.SetOwner(NULL);
+	SDKEventWrapMgr::GetInst().m_meetingShareCtrlWrapEvent.SetOwner(NULL);
 }
 void ZMeetingShareWrap::Init()
 {
 	
-
-	ZOOM_SDK_NAMESPACE::CSDKWrap::GetInst().GetMeetingServiceWrap().T_GetMeetingShareController().SetEvent(&g_meeting_share_ctrl_event);
+	ZOOM_SDK_NAMESPACE::CSDKWrap::GetInst().GetMeetingServiceWrap().T_GetMeetingShareController().Init_Wrap(&g_meeting_service_wrap);
+	ZOOM_SDK_NAMESPACE::CSDKWrap::GetInst().GetMeetingServiceWrap().T_GetMeetingShareController().SetEvent(&SDKEventWrapMgr::GetInst().m_meetingShareCtrlWrapEvent);
 }
 void ZMeetingShareWrap::Uninit()
 {

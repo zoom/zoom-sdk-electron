@@ -597,6 +597,132 @@ ZNSMSVerificationCodeErr Map2WrapDefine(SMSVerificationCodeErr err)
 	}
 	return zn_err;
 }
+ZNSettingsNetWorkType Map2WrapDefine(ZOOM_SDK_NAMESPACE::SettingsNetWorkType role)
+{
+	ZNSettingsNetWorkType zn_type = ZNSETTINGS_NETWORK_UNKNOWN;
+	switch (role)
+	{
+	case ZOOMSDK::SETTINGS_NETWORK_WIRED:
+		zn_type = ZNSETTINGS_NETWORK_WIRED;
+		break;
+	case ZOOMSDK::SETTINGS_NETWORK_WIFI:
+		zn_type = ZNSETTINGS_NETWORK_WIFI;
+		break;
+	case ZOOMSDK::SETTINGS_NETWORK_PPP:
+		zn_type = ZNSETTINGS_NETWORK_PPP;
+		break;
+	case ZOOMSDK::SETTINGS_NETWORK_3G:
+		zn_type = ZNSETTINGS_NETWORK_3G;
+		break;
+	case ZOOMSDK::SETTINGS_NETWORK_OTHERS:
+		zn_type = ZNSETTINGS_NETWORK_OTHERS;
+		break;
+	case ZOOMSDK::SETTINGS_NETWORK_UNKNOWN:
+		zn_type = ZNSETTINGS_NETWORK_UNKNOWN;
+		break;
+	default:
+		break;
+	}
+	return zn_type;
+}
+ZNSettingConnectionType Map2WrapDefine(ZOOM_SDK_NAMESPACE::SettingConnectionType role)
+{
+	ZNSettingConnectionType zn_type = ZNSETTINGS_CONNECTION_TYPE_UNKNOWN;
+	switch (role)
+	{
+	case ZOOMSDK::SETTINGS_CONNECTION_TYPE_CLOUD:
+		zn_type = ZNSETTINGS_CONNECTION_TYPE_CLOUD;
+		break;
+	case ZOOMSDK::SETTINGS_CONNECTION_TYPE_DIRECT:
+		zn_type = ZNSETTINGS_CONNECTION_TYPE_DIRECT;
+		break;
+	case ZOOMSDK::SETTINGS_CONNECTION_TYPE_UNKNOWN:
+		zn_type = ZNSETTINGS_CONNECTION_TYPE_UNKNOWN;
+		break;
+	default:
+		break;
+	}
+	return zn_type;
+}
+
+ZNRequiredInfoType Map2WrapDefine(ZOOM_SDK_NAMESPACE::IMeetingPasswordAndScreenNameHandler::RequiredInfoType type)
+{
+	ZNRequiredInfoType zn_type = ZNREQUIRED_INFO_TYPE_NONE;
+	switch (type)
+	{
+	case ZOOMSDK::IMeetingPasswordAndScreenNameHandler::REQUIRED_INFO_TYPE_NONE:
+		zn_type = ZNREQUIRED_INFO_TYPE_NONE;
+		break;
+	case ZOOMSDK::IMeetingPasswordAndScreenNameHandler::REQUIRED_INFO_TYPE_Password:
+		zn_type = ZNREQUIRED_INFO_TYPE_Password;
+		break;
+	case ZOOMSDK::IMeetingPasswordAndScreenNameHandler::REQUIRED_INFO_TYPE_Password4WrongPassword:
+		zn_type = ZNREQUIRED_INFO_TYPE_Password4WrongPassword;
+		break;
+	case ZOOMSDK::IMeetingPasswordAndScreenNameHandler::REQUIRED_INFO_TYPE_PasswordAndScreenName:
+		zn_type = ZNREQUIRED_INFO_TYPE_PasswordAndScreenName;
+		break;
+	case ZOOMSDK::IMeetingPasswordAndScreenNameHandler::REQUIRED_INFO_TYPE_ScreenName:
+		zn_type = ZNREQUIRED_INFO_TYPE_ScreenName;
+		break;
+	case ZOOMSDK::IMeetingPasswordAndScreenNameHandler::REQUIRED_INFO_TYPE_MeetingIDAndScreenName:
+		zn_type = ZNREQUIRED_INFO_TYPE_MeetingIDAndScreenName;
+		break;
+	default:
+		break;
+	}
+	return zn_type;
+}
+ZNWebinarNeedRegisterType Map2WrapDefine(ZOOM_SDK_NAMESPACE::IWebinarNeedRegisterHandler::WebinarNeedRegisterType type)
+{
+	ZNWebinarNeedRegisterType zn_type = ZNWebinarReg_NONE;
+	switch (type)
+	{
+	case ZOOMSDK::IWebinarNeedRegisterHandler::WebinarReg_NONE:
+		zn_type = ZNWebinarReg_NONE;
+		break;
+	case ZOOMSDK::IWebinarNeedRegisterHandler::WebinarReg_By_Register_Url:
+		zn_type = ZNWebinarReg_By_Register_Url;
+		break;
+	case ZOOMSDK::IWebinarNeedRegisterHandler::WebinarReg_By_Email_and_DisplayName:
+		zn_type = ZNWebinarReg_By_Email_and_DisplayName;
+		break;
+	default:
+		break;
+	}
+	return zn_type;
+}
+ZNAudioCallbackActionInfo Map2WrapDefine(ZOOM_SDK_NAMESPACE::AudioCallbackActionInfo info)
+{
+	ZNAudioCallbackActionInfo zn_info;
+	switch (info)
+	{
+	case ZOOMSDK::ACTION_NONE:
+		zn_info = ZNACTION_INFO_NONE;
+		break;
+	case ZOOMSDK::ACTION_CHOOSE_AUDIO_DEVICE_NOAUDIODEVICECONNECTTED:
+		zn_info = ZNACTION_INFO_CHOOSE_AUDIO_DEVICE_NOAUDIODEVICECONNECTTED;
+		break;
+	case ZOOMSDK::ACTION_CHOOSE_AUDIO_DEVICE_COMPUTERAUDIODEVICEERROR:
+		zn_info = ZNACTION_INFO_CHOOSE_AUDIO_DEVICE_COMPUTERAUDIODEVICEERROR;
+		break;
+	case ZOOMSDK::ACTION_CHOOSE_AUDIO_DEVICE_PHONECALLDEVICEERROR:
+		zn_info = ZNACTION_INFO_CHOOSE_AUDIO_DEVICE_PHONECALLDEVICEERROR;
+		break;
+	case ZOOMSDK::ACTION_NEED_JOIN_VOIP:
+		zn_info = ZNACTION_INFO_NEED_JOIN_VOIP;
+		break;
+	case ZOOMSDK::ACTION_MUTE_UNMUTE_AUDIO:
+		zn_info = ZNACTION_INFO_MUTE_UNMUTE_AUDIO;
+		break;
+	case ZOOMSDK::ACTION_SHOW_AUDIO_SETTING_WINDOW:
+		zn_info = ZNACTION_INFO_SHOW_AUDIO_SETTING_WINDOW;
+		break;
+	default:
+		break;
+	}
+	return zn_info;
+}
 
 /////Covert JS define to SDK
 ZOOM_SDK_NAMESPACE::SDK_LANGUAGE_ID Map2SDKDefine(ZNSDK_LANGUAGE_ID id)

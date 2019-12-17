@@ -57,5 +57,12 @@ IVector<IZoomRealNameAuthCountryInfo* >* IZoomRealNameAuthMeetingHelperWrap::Get
 		return m_obj->GetSupportPhoneNumberCountryList();
 	return NULL;
 }
+//virtual bool SetDefaultCellPhoneInfo(const zTCHAR* country_code, const zTCHAR* phone_number) = 0;
+bool IZoomRealNameAuthMeetingHelperWrap::SetDefaultCellPhoneInfo(const zTCHAR* country_code, const zTCHAR* phone_number)
+{
+	if (m_obj)
+		return m_obj->SetDefaultCellPhoneInfo(country_code, phone_number);
+	return false;
+}
 
 END_ZOOM_SDK_NAMESPACE

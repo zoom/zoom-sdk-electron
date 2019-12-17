@@ -1,55 +1,96 @@
 <html>
 <head>
-	<link rel="stylesheet" type="text/css" href="./css/style.css" />
-	<script>
-		const {ipcRenderer} = require('electron');
+  <link rel="stylesheet" type="text/css" href="./css/style.css" />
+</head>
+
+<title>Zoom Electron Demo</title>
+<body>
+  <div class="center1">
+      <div class="center">
+        <img class="logo" src="./images/fte_Logo.png" />
+      </div> 
+      <br/><br />
+      <div class="center"><input type="text" name="sdkkey" placeholder="input sdk key"size="50" id="sdkkey"/></div>
+      <div class="tip" id="keytip">
+        your input key is empty
+      </div>
+      <br/>
+      <div class="center relative">
+        <input type="text" name="sdksecret" placeholder="input sdk secret" size="50" id="sdksecret"/>
+        <label class="jwt"><input type="checkbox" name="jwt" id="jwt">Auth with JWT token</label>
+      </div>
+      <div class="tip" id="secrettip">
+        your input secret is empty
+      </div>
+      <br>
+      <br/>
+      <div class="center"><button type="button" onclick="dosdkauth()">SDKAuth</button></div>
+  </div>
+  <script>
+    const {ipcRenderer} = require('electron');
+    let jwt = document.querySelector('#jwt');
+    jwt.addEventListener('change', handleJWT);
+    let sdkkey = document.querySelector('#sdkkey');
+    let sdksecret = document.querySelector('#sdksecret');
+    let reg = /\S/;
 
 		function sendsdkauthmsg(sdkkey, sdksecret){
 			ipcRenderer.send('asynchronous-message', 'sdkauth', sdkkey, sdksecret);
 		}
 
 		function dosdkauth(){
-			let sdkkey = document.getElementById("sdkkey").value.replace(/^\s+|\s+$/g, ''); 
-      let sdksecret = document.getElementById("sdksecret").value.replace(/^\s+|\s+$/g, ''); 
-      let reg = /\S/;
-      let retkey = reg.test(sdkkey);
-      let retsecret = reg.test(sdksecret);
-      if (retkey == true && retsecret == true) {
-        document.getElementById("keytip").style.cssText="display: none;";
-        document.getElementById("secrettip").style.cssText="display: none;";
-				sendsdkauthmsg(sdkkey, sdksecret);
-			} else {
-        if (!retkey) {
-          document.getElementById("keytip").style.cssText="display: block;";
-        } else {
+      if (jwt.checked) {
+        let sdk_context = document.getElementById("sdkkey").value.replace(/^\s+|\s+$/g, ''); 
+        let retkey = reg.test(sdk_context);
+        if (retkey == true) {
           document.getElementById("keytip").style.cssText="display: none;";
-        }
-        if (!retsecret) {
-          document.getElementById("secrettip").style.cssText="display: block;";
+          ipcRenderer.send('asynchronous-message', 'authWithJwtToken', sdk_context);
         } else {
+          if (!retkey) {
+            document.getElementById("keytip").innerText = 'your input jwt token is empty';
+            document.getElementById("keytip").style.cssText="display: block;";
+          } else {
+            document.getElementById("keytip").style.cssText="display: none;";
+          }
+        }
+      } else {
+        let sdkkey = document.getElementById("sdkkey").value.replace(/^\s+|\s+$/g, ''); 
+        let sdksecret = document.getElementById("sdksecret").value.replace(/^\s+|\s+$/g, ''); 
+        let retkey = reg.test(sdkkey);
+        let retsecret = reg.test(sdksecret);
+        if (retkey == true && retsecret == true) {
+          document.getElementById("keytip").style.cssText="display: none;";
           document.getElementById("secrettip").style.cssText="display: none;";
+          sendsdkauthmsg(sdkkey, sdksecret);
+        } else {
+          if (!retkey) {
+            document.getElementById("keytip").innerText = 'your input key is empty'
+            document.getElementById("keytip").style.cssText="display: block;";
+          } else {
+            document.getElementById("keytip").style.cssText="display: none;";
+          }
+          if (!retsecret) {
+            document.getElementById("secrettip").style.cssText="display: block;";
+          } else {
+            document.getElementById("secrettip").style.cssText="display: none;";
+          }
         }
       }
 		}
-	</script>
-</head>
 
-<title>Zoom Electron Demo</title>
-<body>
-	<div class="center">
-		<img class="logo" src="./images/fte_Logo.png" />
-	</div> 
-	<br/><br />
-  <div class="center"><input type="text" name="sdkkey" placeholder="input sdk key"size="50" id="sdkkey"/></div>
-  <div class="tip" id="keytip">
-    your input key is empty
-  </div>
-	<br/>
-  <div class="center"><input type="text" name="sdksecret" placeholder="input sdk secret" size="50" id="sdksecret"/></div>
-  <div class="tip" id="secrettip">
-    your input secret is empty
-  </div>
-	<br/>
-	<div class="center"><button type="button" onclick="dosdkauth()">SDKAuth</button></div>
+    function handleJWT(e) {
+      if (jwt.checked) {
+        sdksecret.disabled = true
+        sdksecret.classList.add('input-disabled');
+        sdkkey.placeholder = 'input jwt token'
+        sdksecret.placeholder = 'No Use'
+      } else {
+        sdksecret.disabled = false
+        sdksecret.classList.remove('input-disabled');
+        sdkkey.placeholder = 'input sdk key'
+        sdksecret.placeholder = 'input sdk secret'
+      }
+    }
+	</script>
 </body>
 </html>

@@ -84,9 +84,6 @@ ZNSDKError ZNativeSDKWrap::InitSDK(ZNInitParam& initParam)
 	if (ZNSDKERR_SUCCESS == err)
 	{
 		_z_auth_service_wrap.Init();
-		_z_meeting_service_wrap.Init();
-		_z_premeeting_service_wrap.Init();
-		//_z_customized_resource_wrap.Init();
 	}
 	return err;
 }

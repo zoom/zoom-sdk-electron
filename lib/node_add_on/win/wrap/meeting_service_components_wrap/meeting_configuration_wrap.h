@@ -47,6 +47,8 @@ DEFINE_FUNC_1(EnableLeaveMeetingOptionForHost, void, bool, bEnable)
 DEFINE_FUNC_1(EnableInviteButtonOnMeetingUI, void, bool, bEnable)
 //virtual void EnableVideoButtonOnMeetingUI(bool bEnable) = 0;
 DEFINE_FUNC_1(EnableVideoButtonOnMeetingUI, void, bool, bEnable)
+//virtual void EnableAudioButtonOnMeetingUI(bool bEnable) = 0;
+DEFINE_FUNC_1(EnableAudioButtonOnMeetingUI, void, bool, bEnable)
 //virtual void EnableInputMeetingPasswordDlg(bool bEnable) = 0;
 DEFINE_FUNC_1(EnableInputMeetingPasswordDlg, void, bool, bEnable)
 //virtual void EnableEnterAndExitFullScreenButtonOnMeetingUI(bool bEnable) = 0;
@@ -103,7 +105,10 @@ DEFINE_FUNC_1(ForceDisableMultiShare, void, bool, bDisable)
 DEFINE_FUNC_1(SetAlwaysShowMeetingIDOnTitle, void, bool, bAlwaysShow)
 //virtual void RedirectClickCustomLiveStreamMenuEvent(bool bRedirect) = 0;
 DEFINE_FUNC_1(RedirectClickCustomLiveStreamMenuEvent, void, bool, bRedirect)
-
+//virtual void RedirectClickAudioBTNEvent(bool bRedirect) = 0;
+DEFINE_FUNC_1(RedirectClickAudioBTNEvent, void, bool, bRedirect)
+//virtual void RedirectClickAudioMenuBTNEvent(bool bRedirect) = 0;
+DEFINE_FUNC_1(RedirectClickAudioMenuBTNEvent, void, bool, bRedirect)
 //virtual void RedirectClickCCBTNEvent(bool bRedirect) = 0;
 DEFINE_FUNC_1(RedirectClickCCBTNEvent, void, bool, bRedirect)
 //virtual SDKError SetUICustomizedString(SDKCustomizedStringType customizedType, const wchar_t* customizedString) = 0;
@@ -139,6 +144,8 @@ DEFINE_FUNC_1(EnableForceAutoStartMyVideoWhenJoinMeeting, void, bool, bEnable)
 DEFINE_FUNC_1(EnableForceAutoStopMyVideoWhenJoinMeeting, void, bool, bEnable)
 //virtual void DisableAutoShowSelectJoinAudioDlgWhenJoinMeeting(bool bDisable) = 0;
 DEFINE_FUNC_1(DisableAutoShowSelectJoinAudioDlgWhenJoinMeeting, void, bool, bDisable)
+//virtual void DisableShowJoinMeetingWnd(bool bDisable) = 0;
+DEFINE_FUNC_1(DisableShowJoinMeetingWnd, void, bool, bDisable)
 //virtual void RedirectMeetingWarningMsg(RedirectWarningMsgOption redirectOption) = 0;
 DEFINE_FUNC_1(RedirectMeetingWarningMsg, void, RedirectWarningMsgOption, redirectOption)
 //virtual void HideUpgradeWarningMsgForFreeUserWhenSchedule(bool bHide) = 0;

@@ -14,14 +14,14 @@ void ZoomNodeSDKSMSHelperWrap::EnableZoomAuthRealNameMeetingUIShown(const v8::Fu
 	v8::Isolate* isolate = args.GetIsolate();
 	if (args.Length() < 1) {
 		isolate->ThrowException(v8::Exception::TypeError(
-			v8::String::NewFromUtf8(isolate, "Wrong number of arguments")));
+			v8::String::NewFromUtf8(isolate, "Wrong number of arguments", v8::NewStringType::kInternalized).ToLocalChecked()));
 		return;
 	}
 
 	if (!args[0]->IsBoolean())
 	{
 		isolate->ThrowException(v8::Exception::TypeError(
-			v8::String::NewFromUtf8(isolate, "Wrong arguments")));
+			v8::String::NewFromUtf8(isolate, "Wrong arguments", v8::NewStringType::kInternalized).ToLocalChecked()));
 		return;
 	}
 
@@ -44,7 +44,7 @@ void ZoomNodeSDKSMSHelperWrap::Retrieve(const v8::FunctionCallbackInfo<v8::Value
 	v8::Isolate* isolate = args.GetIsolate();
 	if (args.Length() < 2) {
 		isolate->ThrowException(v8::Exception::TypeError(
-			v8::String::NewFromUtf8(isolate, "Wrong number of arguments")));
+			v8::String::NewFromUtf8(isolate, "Wrong number of arguments", v8::NewStringType::kInternalized).ToLocalChecked()));
 		return;
 	}
 
@@ -52,7 +52,7 @@ void ZoomNodeSDKSMSHelperWrap::Retrieve(const v8::FunctionCallbackInfo<v8::Value
 		!args[1]->IsString())
 	{
 		isolate->ThrowException(v8::Exception::TypeError(
-			v8::String::NewFromUtf8(isolate, "Wrong arguments")));
+			v8::String::NewFromUtf8(isolate, "Wrong arguments", v8::NewStringType::kInternalized).ToLocalChecked()));
 		return;
 	}
 
@@ -84,7 +84,7 @@ void ZoomNodeSDKSMSHelperWrap::Verify(const v8::FunctionCallbackInfo<v8::Value>&
 	v8::Isolate* isolate = args.GetIsolate();
 	if (args.Length() < 2) {
 		isolate->ThrowException(v8::Exception::TypeError(
-			v8::String::NewFromUtf8(isolate, "Wrong number of arguments")));
+			v8::String::NewFromUtf8(isolate, "Wrong number of arguments", v8::NewStringType::kInternalized).ToLocalChecked()));
 		return;
 	}
 
@@ -93,7 +93,7 @@ void ZoomNodeSDKSMSHelperWrap::Verify(const v8::FunctionCallbackInfo<v8::Value>&
 		!args[2]->IsString())
 	{
 		isolate->ThrowException(v8::Exception::TypeError(
-			v8::String::NewFromUtf8(isolate, "Wrong arguments")));
+			v8::String::NewFromUtf8(isolate, "Wrong arguments", v8::NewStringType::kInternalized).ToLocalChecked()));
 		return;
 	}
 
@@ -118,6 +118,7 @@ void ZoomNodeSDKSMSHelperWrap::Verify_CancelAndLeaveMeeting(const v8::FunctionCa
 void ZoomNodeSDKSMSHelperWrap::GetSupportPhoneNumberCountryList(const v8::FunctionCallbackInfo<v8::Value>& args)
 {
 	v8::Isolate* isolate = args.GetIsolate();
+	auto context = isolate->GetCurrentContext();
 	ZNList<ZNZoomRealNameAuthCountryInfo> zn_support_phone_number_country_lst;
 	zn_support_phone_number_country_lst = _g_native_wrap.GetMeetingServiceWrap().GetSDKSMSHelper().GetSupportPhoneNumberCountryList();
 
@@ -126,10 +127,10 @@ void ZoomNodeSDKSMSHelperWrap::GetSupportPhoneNumberCountryList(const v8::Functi
 	{
 		v8::HandleScope scope(isolate);
 		v8::Local<v8::Object> node = v8::Object::New(isolate);
-		node->Set(v8::String::NewFromUtf8(isolate, "countryCode"), v8::String::NewFromUtf8(isolate, zs2s(zn_support_phone_number_country_lst[i].countryCode).c_str()));
-		node->Set(v8::String::NewFromUtf8(isolate, "countryID"), v8::String::NewFromUtf8(isolate, zs2s(zn_support_phone_number_country_lst[i].countryID).c_str()));
-		node->Set(v8::String::NewFromUtf8(isolate, "countryName"), v8::String::NewFromUtf8(isolate, zs2s(zn_support_phone_number_country_lst[i].countryName).c_str()));
-		nodes->Set(i, node);
+		node->Set(context, v8::String::NewFromUtf8(isolate, "countryCode", v8::NewStringType::kInternalized).ToLocalChecked(), v8::String::NewFromUtf8(isolate, zs2s(zn_support_phone_number_country_lst[i].countryCode).c_str(), v8::NewStringType::kInternalized).ToLocalChecked());
+		node->Set(context, v8::String::NewFromUtf8(isolate, "countryID", v8::NewStringType::kInternalized).ToLocalChecked(), v8::String::NewFromUtf8(isolate, zs2s(zn_support_phone_number_country_lst[i].countryID).c_str(), v8::NewStringType::kInternalized).ToLocalChecked());
+		node->Set(context, v8::String::NewFromUtf8(isolate, "countryName", v8::NewStringType::kInternalized).ToLocalChecked(), v8::String::NewFromUtf8(isolate, zs2s(zn_support_phone_number_country_lst[i].countryName).c_str(), v8::NewStringType::kInternalized).ToLocalChecked());
+		nodes->Set(context, i, node);
 	}
 	args.GetReturnValue().Set(nodes);
 }
@@ -138,14 +139,14 @@ void ZoomNodeSDKSMSHelperWrap::SetNeedRealNameAuthMeetingNotificationCB(const v8
 	v8::Isolate* isolate = args.GetIsolate();
 	if (args.Length() < 1) {
 		isolate->ThrowException(v8::Exception::TypeError(
-			v8::String::NewFromUtf8(isolate, "Wrong number of arguments")));
+			v8::String::NewFromUtf8(isolate, "Wrong number of arguments", v8::NewStringType::kInternalized).ToLocalChecked()));
 		return;
 	}
-
+	if (args[0]->IsNull())	{		ZoomNodeSinkHelper::GetInst().onNeedRealNameAuthMeetingNotification.Empty();		return;	}
 	if (!args[0]->IsFunction())
 	{
 		isolate->ThrowException(v8::Exception::TypeError(
-			v8::String::NewFromUtf8(isolate, "Wrong arguments")));
+			v8::String::NewFromUtf8(isolate, "Wrong arguments", v8::NewStringType::kInternalized).ToLocalChecked()));
 		return;
 	}
 
@@ -162,14 +163,14 @@ void ZoomNodeSDKSMSHelperWrap::SetRetrieveSMSVerificationCodeResultNotificationC
 	v8::Isolate* isolate = args.GetIsolate();
 	if (args.Length() < 1) {
 		isolate->ThrowException(v8::Exception::TypeError(
-			v8::String::NewFromUtf8(isolate, "Wrong number of arguments")));
+			v8::String::NewFromUtf8(isolate, "Wrong number of arguments", v8::NewStringType::kInternalized).ToLocalChecked()));
 		return;
 	}
-
+	if (args[0]->IsNull())	{		ZoomNodeSinkHelper::GetInst().onRetrieveSMSVerificationCodeResultNotification.Empty();		return;	}
 	if (!args[0]->IsFunction())
 	{
 		isolate->ThrowException(v8::Exception::TypeError(
-			v8::String::NewFromUtf8(isolate, "Wrong arguments")));
+			v8::String::NewFromUtf8(isolate, "Wrong arguments", v8::NewStringType::kInternalized).ToLocalChecked()));
 		return;
 	}
 
@@ -186,14 +187,14 @@ void ZoomNodeSDKSMSHelperWrap::SetVerifySMSVerificationCodeResultNotificationCB(
 	v8::Isolate* isolate = args.GetIsolate();
 	if (args.Length() < 1) {
 		isolate->ThrowException(v8::Exception::TypeError(
-			v8::String::NewFromUtf8(isolate, "Wrong number of arguments")));
+			v8::String::NewFromUtf8(isolate, "Wrong number of arguments", v8::NewStringType::kInternalized).ToLocalChecked()));
 		return;
 	}
-
+	if (args[0]->IsNull())	{		ZoomNodeSinkHelper::GetInst().onVerifySMSVerificationCodeResultNotification.Empty();		return;	}
 	if (!args[0]->IsFunction())
 	{
 		isolate->ThrowException(v8::Exception::TypeError(
-			v8::String::NewFromUtf8(isolate, "Wrong arguments")));
+			v8::String::NewFromUtf8(isolate, "Wrong arguments", v8::NewStringType::kInternalized).ToLocalChecked()));
 		return;
 	}
 
@@ -203,5 +204,31 @@ void ZoomNodeSDKSMSHelperWrap::SetVerifySMSVerificationCodeResultNotificationCB(
 
 	ZNSDKError err = ZNSDKERR_SUCCESS;
 	v8::Local<v8::Integer> bret = v8::Integer::New(isolate, (int32_t)err);
+	args.GetReturnValue().Set(bret);
+}
+void ZoomNodeSDKSMSHelperWrap::SetDefaultCellPhoneInfo(const v8::FunctionCallbackInfo<v8::Value>& args)
+{
+	v8::Isolate* isolate = args.GetIsolate();
+	if (args.Length() < 2) {
+		isolate->ThrowException(v8::Exception::TypeError(
+			v8::String::NewFromUtf8(isolate, "Wrong number of arguments", v8::NewStringType::kInternalized).ToLocalChecked()));
+		return;
+	}
+
+	if (!args[0]->IsString() ||
+		!args[1]->IsString())
+	{
+		isolate->ThrowException(v8::Exception::TypeError(
+			v8::String::NewFromUtf8(isolate, "Wrong arguments", v8::NewStringType::kInternalized).ToLocalChecked()));
+		return;
+	}
+
+	ZoomSTRING zn_countryCode;
+	zoom_v8toc(args[0].As<v8::String>(), zn_countryCode);
+	ZoomSTRING zn_phoneNum;
+	zoom_v8toc(args[1].As<v8::String>(), zn_phoneNum);
+
+	bool err = _g_native_wrap.GetMeetingServiceWrap().GetSDKSMSHelper().SetDefaultCellPhoneInfo(zn_countryCode, zn_phoneNum);
+	v8::Local<v8::Boolean> bret = v8::Boolean::New(isolate, err);
 	args.GetReturnValue().Set(bret);
 }

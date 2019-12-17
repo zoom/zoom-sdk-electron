@@ -1,6 +1,7 @@
 #ifndef _ZOOM_RAW_DATA_WARP_H_
 #define _ZOOM_RAW_DATA_WARP_H_
 #ifdef _WIN32
+#define WIN32_LEAN_AND_MEAN
 #include <Windows.h>
 #include "./win/h/zoom_sdk_raw_data_helper_interface.h"
 #else

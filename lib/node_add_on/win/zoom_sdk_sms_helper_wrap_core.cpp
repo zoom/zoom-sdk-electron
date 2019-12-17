@@ -3,145 +3,24 @@
 #include "wrap/sdk_wrap.h"
 #include "wrap/meeting_service_components_wrap/meeting_realname_auth_helper_wrap.h"
 #include "zoom_native_to_wrap.h"
-
-class ZoomRetrieveSMSVerificationCodeHandler
-{
-public:
-	static ZoomRetrieveSMSVerificationCodeHandler& GetInst()
-	{
-		static ZoomRetrieveSMSVerificationCodeHandler inst;
-		return inst;
-	}
-	void SetHandler(IZoomRetrieveSMSVerificationCodeHandler* handler)
-	{
-		m_pHandler = handler;
-	}
-	bool Retrieve(const zTCHAR* country_code, const zTCHAR* phone_number)
-	{
-		bool b_ret = false;
-		if (m_pHandler)
-		{
-			b_ret = m_pHandler->Retrieve(country_code, phone_number);
-		}
-		m_pHandler = NULL;
-		return b_ret;
-	}
-	bool CancelAndLeaveMeeting()
-	{
-		bool b_ret = false;
-		if (m_pHandler)
-		{
-			b_ret = m_pHandler->CancelAndLeaveMeeting();
-		}
-		m_pHandler = NULL;
-		return b_ret;
-	}
-private:
-	ZoomRetrieveSMSVerificationCodeHandler() :m_pHandler(NULL) {}
-	IZoomRetrieveSMSVerificationCodeHandler* m_pHandler;
-};
-class ZoomVerifySMSVerificationCodeHandler
-{
-public:
-	static ZoomVerifySMSVerificationCodeHandler& GetInst()
-	{
-		static ZoomVerifySMSVerificationCodeHandler inst;
-		return inst;
-	}
-	void SetHandler(IZoomVerifySMSVerificationCodeHandler* handler)
-	{
-		m_pHandler = handler;
-	}
-	bool Verify(const zTCHAR* country_code, const zTCHAR* phone_number, const zTCHAR* verification_code)
-	{
-		bool b_ret = false;
-		if (m_pHandler)
-		{
-			b_ret = m_pHandler->Verify(country_code, phone_number, verification_code);
-		}
-		m_pHandler = NULL;
-		return b_ret;
-	}
-	bool CancelAndLeaveMeeting()
-	{
-		bool b_ret = false;
-		if (m_pHandler)
-		{
-			b_ret = m_pHandler->CancelAndLeaveMeeting();
-		}
-		m_pHandler = NULL;
-		return b_ret;
-	}
-private:
-	ZoomVerifySMSVerificationCodeHandler() :m_pHandler(NULL) {}
-	IZoomVerifySMSVerificationCodeHandler* m_pHandler;
-};
-
-class ZZoomRealNameAuthMeetingWrapEvent : public IZoomRealNameAuthMeetingEvent
-{
-public:
-	void SetOwner(ZSDKSMSHelperWrap* obj) { owner_ = obj; }
-	virtual void onNeedRealNameAuthMeetingNotification(IVector<IZoomRealNameAuthCountryInfo* >* support_country_list, const zTCHAR* privacy_url, IZoomRetrieveSMSVerificationCodeHandler* handler)
-	{
-		if (owner_ && support_country_list && handler)
-		{
-			ZoomRetrieveSMSVerificationCodeHandler::GetInst().SetHandler(handler);
-			ZNList<ZNZoomRealNameAuthCountryInfo> SMSCountryInfo_list;
-			for (int i = 0; i < support_country_list->GetCount(); ++i)
-			{
-				ZNZoomRealNameAuthCountryInfo countryInfo;
-				IZoomRealNameAuthCountryInfo* temp_pCountryInfo = support_country_list->GetItem(i);
-				if (temp_pCountryInfo)
-				{
-					countryInfo.countryID = (const wchar_t*)temp_pCountryInfo->GetCountryID();
-					countryInfo.countryName = (const wchar_t*)temp_pCountryInfo->GetCountryName();
-					countryInfo.countryCode = (const wchar_t*)temp_pCountryInfo->GetCountryCode();
-				}
-				SMSCountryInfo_list.push_back(countryInfo);
-			}
-			ZoomSTRING zn_privacy_url;
-			zn_privacy_url = (const wchar_t*)privacy_url;
-			owner_->onNeedRealNameAuthMeetingNotification(SMSCountryInfo_list, zn_privacy_url);
-		}
-	}
-	virtual void onRetrieveSMSVerificationCodeResultNotification(SMSVerificationCodeErr result, IZoomVerifySMSVerificationCodeHandler* handler)
-	{
-		if (owner_)
-		{
-			if (SMSVerificationCodeErr_Success == result)
-			{
-				ZoomVerifySMSVerificationCodeHandler::GetInst().SetHandler(handler);
-			}
-			owner_->onRetrieveSMSVerificationCodeResultNotification(Map2WrapDefine(result));
-		}
-	}
-	virtual void onVerifySMSVerificationCodeResultNotification(SMSVerificationCodeErr result)
-	{
-		if (owner_)
-		{
-			owner_->onRetrieveSMSVerificationCodeResultNotification(Map2WrapDefine(result));
-		}
-	}
-private:
-	ZSDKSMSHelperWrap* owner_;
-};
-
-static ZZoomRealNameAuthMeetingWrapEvent g_zoom_real_name_auth_meeting_event;
+#include "sdk_events_wrap_class.h"
+extern ZOOM_SDK_NAMESPACE::IMeetingServiceWrap& g_meeting_service_wrap;
 
 ZSDKSMSHelperWrap::ZSDKSMSHelperWrap()
 {
-	g_zoom_real_name_auth_meeting_event.SetOwner(this);
+	SDKEventWrapMgr::GetInst().m_zoomRealNameAuthMeetingWrapEvent.SetOwner(this);
 	m_pSink = NULL;
 }
 ZSDKSMSHelperWrap::~ZSDKSMSHelperWrap()
 {
 	Uninit();
 	m_pSink = NULL;
-	g_zoom_real_name_auth_meeting_event.SetOwner(NULL);
+	SDKEventWrapMgr::GetInst().m_zoomRealNameAuthMeetingWrapEvent.SetOwner(NULL);
 }
 void ZSDKSMSHelperWrap::Init()
 {
-	ZOOM_SDK_NAMESPACE::CSDKWrap::GetInst().GetMeetingServiceWrap().T_GetMeetingRealNameAuthController().SetEvent(&g_zoom_real_name_auth_meeting_event);
+	ZOOM_SDK_NAMESPACE::CSDKWrap::GetInst().GetMeetingServiceWrap().T_GetMeetingRealNameAuthController().Init_Wrap(&g_meeting_service_wrap);
+	ZOOM_SDK_NAMESPACE::CSDKWrap::GetInst().GetMeetingServiceWrap().T_GetMeetingRealNameAuthController().SetEvent(&SDKEventWrapMgr::GetInst().m_zoomRealNameAuthMeetingWrapEvent);
 }
 void ZSDKSMSHelperWrap::Uninit()
 {
@@ -158,7 +37,12 @@ bool ZSDKSMSHelperWrap::EnableZoomAuthRealNameMeetingUIShown(bool enable)
 	b_ret = ZOOM_SDK_NAMESPACE::CSDKWrap::GetInst().GetMeetingServiceWrap().T_GetMeetingRealNameAuthController().EnableZoomAuthRealNameMeetingUIShown(enable);
 	return b_ret;
 }
-
+bool ZSDKSMSHelperWrap::SetDefaultCellPhoneInfo(ZoomSTRING country_code, ZoomSTRING phone_number)
+{
+	bool b_ret = false;
+	b_ret = ZOOM_SDK_NAMESPACE::CSDKWrap::GetInst().GetMeetingServiceWrap().T_GetMeetingRealNameAuthController().SetDefaultCellPhoneInfo((const zTCHAR*)country_code.c_str(), (const zTCHAR*)phone_number.c_str());
+	return b_ret;
+}
 bool ZSDKSMSHelperWrap::Retrieve(ZoomSTRING country_code, ZoomSTRING phone_number)
 {
 	bool b_ret = false;

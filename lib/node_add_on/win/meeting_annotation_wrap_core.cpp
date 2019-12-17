@@ -15,7 +15,7 @@ ZMeetingAnnotationWrap::~ZMeetingAnnotationWrap()
 }
 void ZMeetingAnnotationWrap::Init()
 {
-	
+	ZOOM_SDK_NAMESPACE::CSDKWrap::GetInst().GetMeetingServiceWrap().T_GetAnnotationController().Init_Wrap(&g_meeting_service_wrap);
 }
 void ZMeetingAnnotationWrap::Uninit()
 {

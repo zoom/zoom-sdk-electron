@@ -20,11 +20,6 @@
           <div>
             <div class="section">Video</div>
             <div class="handle-section">
-              <!-- <select id="videoCBOption">
-                <option value="0" selected>Main Process</option>
-                <option value="1">Render Process</option>
-              </select>
-              <button type="button" class="button-small" onclick="setVideoRawDataCB()">Set VideoRawDataCB</button> -->
               <button type="button" class="button-small button-disabled" onclick="startVideoRawData(event)" disabled id="startVideoRawDataBtn">Start Video RawData</button>
             </div>
             <div class="handle-section">
@@ -62,11 +57,6 @@
             <ul id='shareUl' style="display: none">
             </ul>
             <div class="handle-section">
-              <!-- <select id="shareCBOption">
-                <option value="0" selected>Main Process</option>
-                <option value="1">Render Process</option>
-              </select>
-              <button type="button" class="button-small" onclick="setShareRawDataCB()">Set ShareRawDataCB</button> -->
               <button type="button" class="button-small button-disabled" onclick="startShareRawData(event)" disabled id="startShareRawDataBtn">Start Share RawData</button>
             </div>
             <div class="handle-section">
@@ -77,22 +67,10 @@
                 <option value="2">360P</option>
                 <option value="3">720P</option>
               </select>
-              <!-- <select id="shareReceverHandle">
-                <option value="0" selected>recever_handle_0</option>
-                <option value="1">recever_handle_1</option>
-                <option value="2">recever_handle_2</option>
-                <option value="3">recever_handle_3</option>
-              </select> -->
               <button type="button" class="button-small button-disabled" onclick="subscribeShare(event)" disabled id="subscribeShareBtn">Subscribe Share</button>
             </div>
             <div class="handle-section">
               <input name="shareNodeID1" placeholder="nodeID" class="input-width input-disabled" disabled id="shareNodeID1" />
-              <!-- <select id="shareReceverHandle1">
-                <option value="0" selected>recever_handle_0</option>
-                <option value="1">recever_handle_1</option>
-                <option value="2">recever_handle_2</option>
-                <option value="3">recever_handle_3</option>
-              </select> -->
               <button type="button" class="button-small button-disabled" onclick="unSubscribeShare()" disabled id="unsubscribeShareBtn">UnSubscribe Share</button>
             </div>
             <div class="handle-section">
@@ -102,11 +80,6 @@
           <div>
             <div class="section">Audio</div>
             <div class="handle-section">
-              <!-- <select id="audioCBOption">
-                <option value="0" selected>Main Process</option>
-                <option value="1">Render Process</option>
-              </select> -->
-              <!-- <button type="button" class="button-small" onclick="setAudioRawDataCB()">Set AudioRawDataCB</button> -->
               <button type="button" class="button-small" onclick="startAudioRawData()" id="startAudioRawDataBtn">start Audio RawData</button>
             </div>
             <div class="handle-section">
@@ -140,14 +113,88 @@
         </div>
       </div>
     </div>
+    <div id="serverTip" class="serverTip"></div>
   </div>
 </body>
 </html>
 <script>
   const {ipcRenderer, remote} = require('electron');
 
+  // if startCBOption is 2, init zoomsdk_render.node
+  let serverTip = document.querySelector('#serverTip');
   let startCBOption = remote.getGlobal('startCBOption');
-  // let videoCBOption = document.getElementById("videoCBOption");
+  let libuvAddon;
+  
+  if (startCBOption == 'pipe') {
+    const os = require('os');
+    const platform = os.platform();
+    const arch = os.arch();
+    const path = platform == 'darwin' ? '../../sdk/mac/' : arch == 'x64' ? '../../sdk/win64/' : '../../sdk/win32/';
+    const _path = path || './bin/';
+    const zoomnodepath = _path + 'zoomsdk_render.node';
+    libuvAddon = require(zoomnodepath)();
+    let startVideoServer = remote.app.startVideoServer;
+    let startShareServer = remote.app.startShareServer;
+    console.log('startVideoServer', startVideoServer);
+    console.log('startShareServer', startShareServer);
+
+    if (startVideoServer) {
+      StartVideoClient();
+    } else {
+      serverTip.innerText = 'start video server is error, please try after a moment';
+      serverTip.style.cssText="display: block";
+      setTimeout(() => {
+        serverTip.style.cssText="display: none";
+      }, 10000);
+    }
+
+    if (startShareServer) {
+      StartShareClient();
+    } else {
+      serverTip.innerText = 'start share server is error, please try after a moment';
+      serverTip.style.cssText="display: block";
+      setTimeout(() => {
+        serverTip.style.cssText="display: none";
+      }, 10000);
+    }
+
+    if (!startVideoServer) {
+      serverTip.innerText = 'start video server is error, please try after a moment';
+      serverTip.style.cssText="display: block";
+      setTimeout(() => {
+        serverTip.style.cssText="display: none";
+      }, 10000);
+    }
+
+    if (!startShareServer) {
+      serverTip.innerText = 'start share server is error, please try after a moment';
+      serverTip.style.cssText="display: block";
+      setTimeout(() => {
+        serverTip.style.cssText="display: none";
+      }, 10000);
+    }
+
+    if (!startVideoServer && !startShareServer) {
+      serverTip.innerText = 'start video and share server is error, please try after a moment';
+      serverTip.style.cssText="display: block";
+      setTimeout(() => {
+        serverTip.style.cssText="display: none";
+      }, 10000);
+    }
+  } 
+
+  function StartVideoClient() {
+    let ret = libuvAddon.GetVideoLibuvClientObj().StartVideoClient();
+    console.log('StartVideoClient', ret);
+  }
+
+  function StartShareClient() {
+    let ret = libuvAddon.GetShareLibuvClientObj().StartShareClient();
+    console.log('StartShareClient', ret)
+  }
+
+  // init option and button
+
   let videoNodeID = document.getElementById("videoNodeID");
   let videoRawDataResolution = document.getElementById("videoRawDataResolution");
   let videoReceverHandle = document.getElementById("videoReceverHandle");
@@ -157,7 +204,6 @@
   let unsubscribeVideoBtn = document.getElementById("unsubscribeVideoBtn");
   let stopVideoBtn = document.querySelector('#stopVideoBtn');
 
-  // let shareCBOption = document.getElementById("shareCBOption");
   let shareUl = document.querySelector('#shareUl');
   let shareNodeID = document.getElementById("shareNodeID");
   let shareRawDataResolution = document.getElementById("shareRawDataResolution");
@@ -168,12 +214,63 @@
   let unsubscribeShareBtn = document.getElementById("unsubscribeShareBtn");
   let stopShareBtn = document.querySelector('#stopShareBtn');
 
-  // let audioCBOption = document.getElementById('audioCBOption');
   let stopAudioBtn = document.querySelector('#stopAudioBtn');
 
   let startVideoRawDataBtn = document.querySelector('#startVideoRawDataBtn');
   let startShareRawDataBtn = document.querySelector('#startShareRawDataBtn');
   let startAudioRawDataBtn = document.querySelector('#startAudioRawDataBtn');
+
+  ipcRenderer.on('main-process-meetingstatus', (event, arg) => {
+    let data = arg;
+    if (data == 'connecting') {
+      startVideoRawDataBtn.disabled = 'disabled';
+      startVideoRawDataBtn.classList.add("button-disabled");
+      subscribeVideoBtn.disabled = 'disabled';
+      subscribeVideoBtn.classList.add("button-disabled");
+      unsubscribeVideoBtn.disabled = 'disabled';
+      unsubscribeVideoBtn.classList.add("button-disabled");
+      startShareRawDataBtn.disabled = 'disabled';
+      startShareRawDataBtn.classList.add("button-disabled");
+      subscribeShareBtn.disabled = 'disabled';
+      subscribeShareBtn.classList.add("button-disabled");
+      unsubscribeShareBtn.disabled = 'disabled';
+      unsubscribeShareBtn.classList.add("button-disabled");
+      startAudioRawDataBtn.disabled = 'disabled';
+      startAudioRawDataBtn.classList.add("button-disabled");
+      stopVideoBtn.disabled = 'disabled';
+      stopVideoBtn.classList.add('button-disabled');
+      stopShareBtn.disabled = 'disabled';
+      stopShareBtn.classList.add('button-disabled');
+      stopAudioBtn.disabled = 'disabled';
+      stopAudioBtn.classList.add('button-disabled');
+    } else if (data == 'inmeeting') {
+      subscribeVideoBtn.disabled = false;
+      subscribeVideoBtn.classList.remove("button-disabled");
+      unsubscribeVideoBtn.disabled = false;
+      unsubscribeVideoBtn.classList.remove("button-disabled");
+      stopVideoBtn.disabled = false;
+      stopVideoBtn.classList.remove('button-disabled');
+      stopShareBtn.disabled = false;
+      stopShareBtn.classList.remove('button-disabled');
+      startAudioRawDataBtn.disabled = false;
+      startAudioRawDataBtn.classList.remove("button-disabled");
+      stopAudioBtn.disabled = 'disabled';
+      stopAudioBtn.classList.add('button-disabled');
+
+      ipcRenderer.send('asynchronous-message', 'unsubscribeVideo', 0, videoReceverHandle.value);
+      setTimeout(() => {
+        displayList[videoReceverHandle.value].clear();
+        videoReceverHandle.value = '0';
+      }, 50);
+      subVideoBtnCheck();
+    } else if (data == 'ended') {
+      stopVideo();
+      stopShare();
+      stopAudio();
+    }
+  });
+
+  // init canvas
 
   let userList = [];
   let videoList = [];
@@ -210,6 +307,22 @@
     height: 720
   }
 
+  // units
+
+  function subVideoBtnCheck() {
+    subscribeVideoBtn.disabled = 'disabled';
+    subscribeVideoBtn.classList.add('button-disabled');
+    if (startVideoRawDataBtn.disabled) {
+      for (let i=0; i<4; i++) {
+        if (!videoReceverHandle.options[i].disabled) {
+          subscribeVideoBtn.disabled = false;
+          subscribeVideoBtn.classList.remove('button-disabled');
+          break;
+        }
+      }
+    }
+  }
+
   function checkExist(obj, list, flag) {
     for (let i = 0; i < list.length; i++) {
       if (list[i] && list[i][flag] && obj[flag] && list[i][flag] == obj[flag]) {
@@ -218,7 +331,194 @@
     }
     return false;
   }
-  
+
+  function getUint64FromUint8Array(array, index) {
+    let uint64 = 0;
+    let begin_pos = index * 8;
+    let end_pos = begin_pos + 8;
+    while (begin_pos < end_pos) {
+      let int8 = array[begin_pos];
+      uint64 |= int8;
+      begin_pos++;
+    }
+    return uint64;
+  }
+
+  // init rawdata
+
+  function onRenderVideoRawDataReceived (format, recv_list, databuf) {
+    let formatList = format.split(';');
+    croppingParams.width = formatList[2];
+    croppingParams.height = formatList[3];
+    croppingParams.rotation = formatList[4];
+    let length = recv_list.length;
+    for (let i = 0; i < length; i++) {
+      let data = new Uint8Array(databuf);
+      displayList[recv_list[i]].drawNextOuptutPictureGL(croppingParams.width, croppingParams.height, croppingParams, data, croppingParams.rotation, 1);
+    }
+  }
+
+  function SetRenderVideoRawDataCB() {
+    let ret = libuvAddon.GetVideoLibuvClientObj().SetRenderVideoRawDataCB(onRenderVideoRawDataReceived);
+    console.log('SetRenderVideoRawDataCB', ret)
+  }
+
+  function onRenderShareRawDataReceived (format, recv_list, databuf) {
+    let formatList = format.split(';');
+    croppingParams.width = formatList[2];
+    croppingParams.height = formatList[3];
+    croppingParams.rotation = formatList[4];
+    let data = new Uint8Array(databuf);
+    drawShare.drawNextOuptutPictureGL(croppingParams.width, croppingParams.height, croppingParams, data, croppingParams.rotation, 1);
+  }
+
+  function SetRenderShareRawDataCB() {
+    let ret = libuvAddon.GetShareLibuvClientObj().SetRenderShareRawDataCB(onRenderShareRawDataReceived);
+    console.log('SetRenderVideoRawDataCB', ret)
+  }
+
+  function initRawData () {
+   if (startCBOption == 'pipe') {
+      SetRenderVideoRawDataCB();
+      SetRenderShareRawDataCB();
+    } else {
+      setVideoRawDataCB();
+      setShareRawDataCB();
+      setAudioRawDataCB();
+    }
+    startVideoRawData();
+    startPreviewDevice();
+    startShareRawData();
+  }
+
+  initRawData();
+
+  // user status change
+
+  function getParticipantsList() {
+    userList = remote.app.zoomparticipantsctrl.GetParticipantsList();
+    for (let i = 0; i < userList.length; i++) {
+      let userObj = zoomparticipantsctrl.GetUserInfoByUserID(userList[i].userid);
+      if (userObj.userName && userObj.userID) {
+        let li = document.createElement("li"); 
+        li.innerHTML = userObj && userObj.isVideoOn ?  `${userObj.userName} (${userObj.userID}) | VideoOn` : `${userObj.userName} (${userObj.userID}) | VideoOff`;
+        li.userid = userObj.userID;
+        ul.appendChild(li);
+      }
+    }
+  }
+
+  getParticipantsList();
+
+  function onUserJoin(userId_List) {
+    console.log('onUserJoin', userId_List)
+    for (let i = 0; i < userId_List.length; i++) {
+      if (checkExist(userId_List[i], ul.children, 'userid') === false) {
+        let userObj = remote.app.zoomparticipantsctrl.GetUserInfoByUserID(userId_List[i].userid);
+        if (userObj.userName && userObj.userID) {
+          let li = document.createElement("li"); 
+          li.innerHTML = userObj && userObj.isVideoOn ?  `${userObj.userName} (${userObj.userID}) | VideoOn` : `${userObj.userName} (${userObj.userID}) | VideoOff`;
+          li.userid = userObj.userID;
+          ul.appendChild(li);
+        }
+      }
+    }
+  }
+
+  function SetMeetingUserJoinCB() {
+    remote.app.zoomparticipantsctrl.SetMeetingUserJoinCB(onUserJoin);
+  }
+
+  SetMeetingUserJoinCB();
+
+  function onUserLeft(userId_List) {
+    console.log('onUserLeft', userId_List);
+    for (let i = 0; i < userId_List.length; i++) {
+      for (let k = 0; k < ul.children.length; k++) {
+        if (ul.children[k].userid == userId_List[i].userid) {
+          ul.children[k].remove();
+        }
+      }
+    }
+    for (let i = 0; i < userId_List.length; i++) {
+      for (let j = 0; j < videoList.length; j++) {
+        if (videoList[j] && videoList[j].userid == userId_List[i].userid) {
+          ipcRenderer.send('asynchronous-message', 'unsubscribeVideo', videoList[j].nodeID, videoList[j].recever_handle);
+          let e = {
+            target: {
+              value: videoList[j].userid
+            }
+          }
+          videoReceverHandle.options[videoList[j].recever_handle].disabled = false;
+          setTimeout(() => {
+            videoList[j] ? displayList[videoList[j].recever_handle].clear(): null;
+            videoList[j] = null;
+            nameList[j].innerHTML = '';
+            subVideoBtnCheck();
+          }, 50);
+        }
+      }
+    }
+    for (let i = 0; i < userId_List.length; i++) {
+      for (let j = 0; j < shareList.length; j++) {
+        if (shareList[j] && shareList[j].userid == userId_List[i].userid) {
+          ipcRenderer.send('asynchronous-message', 'unsubscribeShare', shareList[j].nodeID, shareList[j].recever_handle);
+          shareNodeID.value = '';
+          shareNodeID1.value = '';
+          let e = {
+            target: {
+              value: shareList[j].userid
+            }
+          }
+          setTimeout(() => {
+            drawShare.clear();
+            shareList[j] = null;
+            subShareBtnCheck();
+          }, 50);
+        }
+      }
+    }
+
+    for (let i = 0; i < userId_List.length; i++) {
+      for (let j = 0; j < shareUl.children.length; j++) {
+        if (userId_List[i].userid == shareUl.children[j].userId) {
+          shareUl.children[j].remove();
+        }
+      }
+    }
+  }
+
+  function SetMeetingUserLeftCB() {
+    remote.app.zoomparticipantsctrl.SetMeetingUserLeftCB(onUserLeft);
+  }
+
+  SetMeetingUserLeftCB();
+
+  function onHostChangeNotification(userid) {
+    console.log('onHostChangeNotification', userid);
+  }
+
+  function SetMeetingHostChangeCB() {
+    remote.app.zoomparticipantsctrl.SetMeetingHostChangeCB(onHostChangeNotification);
+  }
+
+  SetMeetingHostChangeCB();
+
+  // init video rawdata
+
+  function startPreviewDevice () {
+    ipcRenderer.send('asynchronous-message', 'subscribeVideo', 0, 3, videoReceverHandle.value);
+  }
+
+  function startVideoRawData(e) {
+    ipcRenderer.send('asynchronous-message', 'startVideoRawData', 1);
+    stopVideoBtn.disabled = false;
+    stopVideoBtn.classList.remove('button-disabled');
+    startVideoRawDataBtn.disabled = 'disabled';
+    startVideoRawDataBtn.classList.add("button-disabled");
+    subVideoBtnCheck();
+  }
+
   function onUserVideoStatusChange(videoStatus) {
     console.log('onUserVideoStatusChange', videoStatus)
     for (let k = 0; k < ul.children.length; k++) {
@@ -226,45 +526,6 @@
         let oldLi = ul.children[k].innerHTML.split('|')[0];
         let newVideo = videoStatus.videoStatus == 0 ? 'VideoOn' : 'VideoOff';
         ul.children[k].innerHTML = `${oldLi} | ${newVideo}`;
-      }
-    }
-  }
-
-  function setMeetingVideoStatusCB () {
-    let ret = remote.app.zoommeeting.GetMeetingVideo().SetMeetingVideoStatusCB(onUserVideoStatusChange);
-    console.log('setMeetingVideoStatusCB', ret);
-  }
-
-  setMeetingVideoStatusCB();
-
-  function onSubscribedVideoUserDataOn (videoOn) {
-    console.log('onSubscribedVideoUserDataOn', getUint64FromUint8Array(videoOn, 0))
-  }
-
-  function SetRawDataVideoUserDataOnCB() {
-    let ret = remote.app.zoomvideorawdata.SetRawDataVideoUserDataOnCB(onSubscribedVideoUserDataOn);
-  }
-
-  SetRawDataVideoUserDataOnCB();
-
-  function onSubscribedVideoUserDataOff (videoOff) {
-    let length = videoOff.length / 8;
-    for (let i = 0; i< length; i++) {
-      let videoOffIndex = getUint64FromUint8Array(videoOff, i);
-      console.log('onSubscribedVideoUserDataOff', videoOffIndex);
-      if (videoList[videoOffIndex] && videoList[videoOffIndex].nodeID) {
-        ipcRenderer.send('asynchronous-message', 'unsubscribeVideo', videoList[videoOffIndex].nodeID, videoList[videoOffIndex].recever_handle);
-        for (let j = 0; j< videoReceverHandle.options.length; j++) {
-        	if (videoReceverHandle.options[j].value == videoList[videoOffIndex].recever_handle) {
-        	  videoReceverHandle.options[j].disabled = false;
-        	}
-        }
-        setTimeout(() => {
-          videoList[videoOffIndex] ? displayList[videoList[videoOffIndex].recever_handle].clear(): null;
-          videoList[videoOffIndex] = null;
-          nameList[videoOffIndex].innerHTML = '';
-          subVideoBtnCheck();
-        }, 50);
       }
     }
   }
@@ -303,28 +564,43 @@
 
   SetRawDataVideoUserLeftCB();
 
-  function initRawData () {
-    setVideoRawDataCB();
-    startVideoRawData();
-    startPreviewDevice();
-    setShareRawDataCB();
-    startShareRawData();
-    setAudioRawDataCB();
+  function onSubscribedVideoUserDataOn (videoOn) {
+    console.log('onSubscribedVideoUserDataOn', getUint64FromUint8Array(videoOn, 0))
   }
 
-  initRawData();
-
-  function startVideoRawData(e) {
-    ipcRenderer.send('asynchronous-message', 'startVideoRawData', 1);
-    stopVideoBtn.disabled = false;
-    stopVideoBtn.classList.remove('button-disabled');
-    startVideoRawDataBtn.disabled = 'disabled';
-    startVideoRawDataBtn.classList.add("button-disabled");
-    subVideoBtnCheck();
+  function SetRawDataVideoUserDataOnCB() {
+    let ret = remote.app.zoomvideorawdata.SetRawDataVideoUserDataOnCB(onSubscribedVideoUserDataOn);
   }
 
-  function startPreviewDevice () {
-    ipcRenderer.send('asynchronous-message', 'subscribeVideo', 0, 3, videoReceverHandle.value);
+  SetRawDataVideoUserDataOnCB();
+
+  function setMeetingVideoStatusCB () {
+    let ret = remote.app.zoomvideo.SetMeetingVideoStatusCB(onUserVideoStatusChange);
+    console.log('setMeetingVideoStatusCB', ret);
+  }
+
+  setMeetingVideoStatusCB();
+
+  function onSubscribedVideoUserDataOff (videoOff) {
+    let length = videoOff.length / 8;
+    for (let i = 0; i< length; i++) {
+      let videoOffIndex = getUint64FromUint8Array(videoOff, i);
+      console.log('onSubscribedVideoUserDataOff', videoOffIndex);
+      if (videoList[videoOffIndex] && videoList[videoOffIndex].nodeID) {
+        ipcRenderer.send('asynchronous-message', 'unsubscribeVideo', videoList[videoOffIndex].nodeID, videoList[videoOffIndex].recever_handle);
+        for (let j = 0; j< videoReceverHandle.options.length; j++) {
+        	if (videoReceverHandle.options[j].value == videoList[videoOffIndex].recever_handle) {
+        	  videoReceverHandle.options[j].disabled = false;
+        	}
+        }
+        setTimeout(() => {
+          videoList[videoOffIndex] ? displayList[videoList[videoOffIndex].recever_handle].clear(): null;
+          videoList[videoOffIndex] = null;
+          nameList[videoOffIndex].innerHTML = '';
+          subVideoBtnCheck();
+        }, 50);
+      }
+    }
   }
 
   function subscribeVideo() {
@@ -349,18 +625,6 @@
           videoReceverHandle.options[i].disabled = true;
         }
       }
-    }
-  }
-
-  videoReceverHandle1.addEventListener('change', changeVideoReceverHandle1);
-   
-  function changeVideoReceverHandle1(e) {
-    e.target.recever_handle = e.target.value;
-    let flag = checkExist(e.target, videoList, 'recever_handle');
-    if (flag === false) {
-      videoNodeID1.value = '';
-    } else {
-      videoNodeID1.value = videoList[flag].nodeID;
     }
   }
 
@@ -411,19 +675,85 @@
     videoList = [];
   }
 
-  function subVideoBtnCheck() {
-    subscribeVideoBtn.disabled = 'disabled';
-    subscribeVideoBtn.classList.add('button-disabled');
-    if (startVideoRawDataBtn.disabled) {
-      for (let i=0; i<4; i++) {
+  ipcRenderer.on('main-process-videomessages', (event, arg) => {
+    let data = arg;
+    let formatList = data.format.split(';');
+    croppingParams.width = formatList[2];
+    croppingParams.height = formatList[3];
+    croppingParams.rotation = formatList[4];
+    let length = data.receivers.length / 8;
+    for (let i = 0; i < length; i++) {
+      let renderIndex = getUint64FromUint8Array(data.receivers, i);
+      displayList[renderIndex].drawNextOuptutPictureGL(croppingParams.width, croppingParams.height, croppingParams, data.databuf, croppingParams.rotation, 1);
+    }
+  });
+
+  function onVideoRawDataReceived(databuf, format, receivers) {
+    let formatList = format.split(';');
+    croppingParams.width = formatList[2];
+    croppingParams.height = formatList[3];
+    croppingParams.rotation = formatList[4];
+    let length = receivers.length / 8;
+    for (let i = 0; i < length; i++) {
+      let renderIndex = getUint64FromUint8Array(receivers, i);
+      displayList[renderIndex].drawNextOuptutPictureGL(croppingParams.width, croppingParams.height, croppingParams, databuf, croppingParams.rotation, 1);
+    }
+  }
+
+  function setVideoRawDataCB() {
+    if (startCBOption == 'main') {
+      ipcRenderer.send('asynchronous-message', 'setVideoRawDataCB');
+    } else {
+      let ret = remote.app.zoomvideorawdata.SetRawDataCB(onVideoRawDataReceived);
+      console.log('setVideoRawDataCB', ret);
+    }
+    startVideoRawDataBtn.disabled = false;
+    startVideoRawDataBtn.classList.remove("button-disabled");
+  }
+
+  
+  videoReceverHandle1.addEventListener('change', changeVideoReceverHandle1);
+   
+  function changeVideoReceverHandle1(e) {
+    e.target.recever_handle = e.target.value;
+    let flag = checkExist(e.target, videoList, 'recever_handle');
+    if (flag === false) {
+      videoNodeID1.value = '';
+    } else {
+      videoNodeID1.value = videoList[flag].nodeID;
+    }
+  }
+
+  ul.addEventListener('click', function(e) {
+    for (let i = 0; i < ul.children.length; i++) {
+      ul.children[i].removeAttribute("style");
+    }
+    e.target.value = e.target.userid; 
+
+    let ulIndex = checkExist(e.target, ul.children, 'userid');
+    if (ulIndex !== false) {
+      ul.children[ulIndex].style = "color: red";
+    }
+
+    subscribeName = e.target.textContent ? e.target.textContent.split('(')[0]: null;
+    let videoIndex = checkExist(e.target, videoList, 'userid');
+    if (videoIndex === false) {
+      videoNodeID.value = e.target.userid;
+      for (let i = 0; i< videoReceverHandle.options.length; i++) {
         if (!videoReceverHandle.options[i].disabled) {
-          subscribeVideoBtn.disabled = false;
-          subscribeVideoBtn.classList.remove('button-disabled');
+          videoReceverHandle.value = videoReceverHandle.options[i].value;
           break;
         }
       }
+      subVideoBtnCheck();
+    } else {
+      videoNodeID.value = videoList[videoIndex].nodeID;
+      videoRawDataResolution.value = videoList[videoIndex].RawDataResolution;
+      videoReceverHandle.value = videoList[videoIndex].recever_handle;
     }
-  }
+  })
+
+  // share rawdata
 
   function subShareBtnCheck() {
     if (!startShareRawDataBtn.disabled) {
@@ -551,128 +881,33 @@
 
   SetRawDataShareUserLeftCB();
 
-  function getParticipantsList() {
-    let zoommeeting = remote.app.zoommeeting;
-    userList = zoommeeting.GetParticipantsList();
-    for (let i = 0; i < userList.length; i++) {
-      let userObj = zoommeeting.GetUserInfoByUserID(userList[i].userid);
-      if (userObj.userName && userObj.userID) {
-        let li = document.createElement("li"); 
-        li.innerHTML = userObj && userObj.isVideoOn ?  `${userObj.userName} (${userObj.userID}) | VideoOn` : `${userObj.userName} (${userObj.userID}) | VideoOff`;
-        li.userid = userObj.userID;
-        ul.appendChild(li);
-      }
-    }
+  ipcRenderer.on('main-process-sharemessages', (event, arg) => {
+    let data = arg;
+    let formatList = data.format.split(';');
+    croppingParams.width = formatList[2];
+    croppingParams.height = formatList[3];
+    croppingParams.rotation = formatList[4];
+    drawShare.drawNextOuptutPictureGL(croppingParams.width, croppingParams.height, null, data.databuf, croppingParams.rotation, 1);
+  });
+
+  function onShareRawDataReceived(databuf, format, receivers) {
+    let formatList = format.split(';');
+    croppingParams.width = formatList[2];
+    croppingParams.height = formatList[3];
+    croppingParams.rotation = formatList[4];
+    drawShare.drawNextOuptutPictureGL(croppingParams.width, croppingParams.height, null, databuf, croppingParams.rotation, 1);
   }
 
-  getParticipantsList();
-
-  function onUserJoin(userId_List) {
-    console.log('onUserJoin', userId_List)
-    for (let i = 0; i < userId_List.length; i++) {
-      if (checkExist(userId_List[i], ul.children, 'userid') === false) {
-        let userObj = remote.app.zoommeeting.GetUserInfoByUserID(userId_List[i].userid);
-        if (userObj.userName && userObj.userID) {
-          let li = document.createElement("li"); 
-          li.innerHTML = userObj && userObj.isVideoOn ?  `${userObj.userName} (${userObj.userID}) | VideoOn` : `${userObj.userName} (${userObj.userID}) | VideoOff`;
-          li.userid = userObj.userID;
-          ul.appendChild(li);
-        }
-      }
-    }
-  }
-
-  function SetMeetingUserJoinCB() {
-    remote.app.zoommeeting.SetMeetingUserJoinCB(onUserJoin);
-  }
-
-  SetMeetingUserJoinCB();
-
-  function onUserLeft(userId_List) {
-    console.log('onUserLeft', userId_List);
-    for (let i = 0; i < userId_List.length; i++) {
-      for (let k = 0; k < ul.children.length; k++) {
-        if (ul.children[k].userid == userId_List[i].userid) {
-          ul.children[k].remove();
-        }
-      }
-    }
-    for (let i = 0; i < userId_List.length; i++) {
-      for (let j = 0; j < videoList.length; j++) {
-        if (videoList[j] && videoList[j].userid == userId_List[i].userid) {
-          ipcRenderer.send('asynchronous-message', 'unsubscribeVideo', videoList[j].nodeID, videoList[j].recever_handle);
-          let e = {
-            target: {
-              value: videoList[j].userid
-            }
-          }
-          videoReceverHandle.options[videoList[j].recever_handle].disabled = false;
-          setTimeout(() => {
-            videoList[j] ? displayList[videoList[j].recever_handle].clear(): null;
-            videoList[j] = null;
-            nameList[j].innerHTML = '';
-            subVideoBtnCheck();
-          }, 50);
-        }
-      }
-    }
-    for (let i = 0; i < userId_List.length; i++) {
-      for (let j = 0; j < shareList.length; j++) {
-        if (shareList[j] && shareList[j].userid == userId_List[i].userid) {
-          ipcRenderer.send('asynchronous-message', 'unsubscribeShare', shareList[j].nodeID, shareList[j].recever_handle);
-          shareNodeID.value = '';
-          shareNodeID1.value = '';
-          let e = {
-            target: {
-              value: shareList[j].userid
-            }
-          }
-          setTimeout(() => {
-            drawShare.clear();
-            shareList[j] = null;
-            subShareBtnCheck();
-          }, 50);
-        }
-      }
-    }
-
-    for (let i = 0; i < userId_List.length; i++) {
-      for (let j = 0; j < shareUl.children.length; j++) {
-        if (userId_List[i].userid == shareUl.children[j].userId) {
-          shareUl.children[j].remove();
-        }
-      }
-    }
-  }
-
-  ul.addEventListener('click', function(e) {
-    for (let i = 0; i < ul.children.length; i++) {
-      ul.children[i].removeAttribute("style");
-    }
-    e.target.value = e.target.userid; 
-
-    let ulIndex = checkExist(e.target, ul.children, 'userid');
-    if (ulIndex !== false) {
-      ul.children[ulIndex].style = "color: red";
-    }
-
-    subscribeName = e.target.textContent ? e.target.textContent.split('(')[0]: null;
-    let videoIndex = checkExist(e.target, videoList, 'userid');
-    if (videoIndex === false) {
-      videoNodeID.value = e.target.userid;
-      for (let i = 0; i< videoReceverHandle.options.length; i++) {
-        if (!videoReceverHandle.options[i].disabled) {
-          videoReceverHandle.value = videoReceverHandle.options[i].value;
-          break;
-        }
-      }
-      subVideoBtnCheck();
+  function setShareRawDataCB() {
+    if (startCBOption == 'main') {
+      ipcRenderer.send('asynchronous-message', 'setShareRawDataCB');
     } else {
-      videoNodeID.value = videoList[videoIndex].nodeID;
-      videoRawDataResolution.value = videoList[videoIndex].RawDataResolution;
-      videoReceverHandle.value = videoList[videoIndex].recever_handle;
+      let ret = remote.app.zoomsharerawdata.SetRawDataCB(onShareRawDataReceived);
+      console.log('setShareRawDataCB', ret);
     }
-  })
+    startShareRawDataBtn.disabled = false;
+    startShareRawDataBtn.classList.remove("button-disabled");
+  }
 
   shareUl.addEventListener('click', function(e) {
     for (let i = 0; i < shareUl.children.length; i++) {
@@ -689,16 +924,10 @@
     subShareBtnCheck();
   })
 
-  function SetMeetingUserLeftCB() {
-    remote.app.zoommeeting.SetMeetingUserLeftCB(onUserLeft);
-  }
-
-  SetMeetingUserLeftCB();
-
   function onSharingStatus (status) {
     console.log('onSharingStatus', status);
     if (status.ShareStatus == 3) {
-      let userObj = remote.app.zoommeeting.GetUserInfoByUserID(status.userId);
+      let userObj = remote.app.zoomparticipantsctrl.GetUserInfoByUserID(status.userId);
       if (userObj.userName) {
         shareUl.style = 'display: block';
         let shareLi = document.createElement("li"); 
@@ -744,145 +973,11 @@
   }
 
   SetOnSharingStatusCB();
-  
-  function onHostChangeNotification(userid) {
-    console.log('onHostChangeNotification', userid);
-  }
 
-  function SetMeetingHostChangeCB() {
-    remote.app.zoommeeting.SetMeetingHostChangeCB(onHostChangeNotification);
-  }
-
-  SetMeetingHostChangeCB();
-
-  ipcRenderer.on('main-process-meetingstatus', (event, arg) => {
-    let data = arg;
-    if (data == 'connecting') {
-      startVideoRawDataBtn.disabled = 'disabled';
-      startVideoRawDataBtn.classList.add("button-disabled");
-      subscribeVideoBtn.disabled = 'disabled';
-      subscribeVideoBtn.classList.add("button-disabled");
-      unsubscribeVideoBtn.disabled = 'disabled';
-      unsubscribeVideoBtn.classList.add("button-disabled");
-      startShareRawDataBtn.disabled = 'disabled';
-      startShareRawDataBtn.classList.add("button-disabled");
-      subscribeShareBtn.disabled = 'disabled';
-      subscribeShareBtn.classList.add("button-disabled");
-      unsubscribeShareBtn.disabled = 'disabled';
-      unsubscribeShareBtn.classList.add("button-disabled");
-      startAudioRawDataBtn.disabled = 'disabled';
-      startAudioRawDataBtn.classList.add("button-disabled");
-      stopVideoBtn.disabled = 'disabled';
-      stopVideoBtn.classList.add('button-disabled');
-      stopShareBtn.disabled = 'disabled';
-      stopShareBtn.classList.add('button-disabled');
-      stopAudioBtn.disabled = 'disabled';
-      stopAudioBtn.classList.add('button-disabled');
-    } else if (data == 'inmeeting') {
-      subscribeVideoBtn.disabled = false;
-      subscribeVideoBtn.classList.remove("button-disabled");
-      unsubscribeVideoBtn.disabled = false;
-      unsubscribeVideoBtn.classList.remove("button-disabled");
-      stopVideoBtn.disabled = false;
-      stopVideoBtn.classList.remove('button-disabled');
-      stopShareBtn.disabled = false;
-      stopShareBtn.classList.remove('button-disabled');
-      startAudioRawDataBtn.disabled = false;
-      startAudioRawDataBtn.classList.remove("button-disabled");
-      stopAudioBtn.disabled = 'disabled';
-      stopAudioBtn.classList.add('button-disabled');
-
-      ipcRenderer.send('asynchronous-message', 'unsubscribeVideo', 0, videoReceverHandle.value);
-      setTimeout(() => {
-        displayList[videoReceverHandle.value].clear();
-        videoReceverHandle.value = '0';
-      }, 50);
-      subVideoBtnCheck();
-    } else if (data == 'ended') {
-      stopVideo();
-      stopShare();
-      stopAudio();
-    }
-  });
-
-  function getUint64FromUint8Array(array, index) {
-    let uint64 = 0;
-    let begin_pos = index * 8;
-    let end_pos = begin_pos + 8;
-    while (begin_pos < end_pos) {
-      let int8 = array[begin_pos];
-      uint64 |= int8;
-      begin_pos++;
-    }
-    return uint64;
-  }
-
-  ipcRenderer.on('main-process-videomessages', (event, arg) => {
-    let data = arg;
-    let formatList = data.format.split(';');
-    croppingParams.width = formatList[2];
-    croppingParams.height = formatList[3];
-    croppingParams.rotation = formatList[4];
-    let length = data.receivers.length / 8;
-    for (let i = 0; i < length; i++) {
-      let renderIndex = getUint64FromUint8Array(data.receivers, i);
-      displayList[renderIndex].drawNextOuptutPictureGL(croppingParams.width, croppingParams.height, croppingParams, data.databuf, croppingParams.rotation, 1);
-    }
-  });
-
-  function onVideoRawDataReceived(databuf, format, receivers) {
-    let formatList = format.split(';');
-    croppingParams.width = formatList[2];
-    croppingParams.height = formatList[3];
-    croppingParams.rotation = formatList[4];
-    let length = receivers.length / 8;
-    for (let i = 0; i < length; i++) {
-      let renderIndex = getUint64FromUint8Array(receivers, i);
-      displayList[renderIndex].drawNextOuptutPictureGL(croppingParams.width, croppingParams.height, croppingParams, databuf, croppingParams.rotation, 1);
-    }
-  }
-
-  function setVideoRawDataCB() {
-    if (startCBOption == 0) {
-      ipcRenderer.send('asynchronous-message', 'setVideoRawDataCB');
-    } else {
-      let ret = remote.app.zoomvideorawdata.SetRawDataCB(onVideoRawDataReceived);
-      console.log('setVideoRawDataCB', ret);
-    }
-    startVideoRawDataBtn.disabled = false;
-    startVideoRawDataBtn.classList.remove("button-disabled");
-  }
-
-  ipcRenderer.on('main-process-sharemessages', (event, arg) => {
-    let data = arg;
-    let formatList = data.format.split(';');
-    croppingParams.width = formatList[2];
-    croppingParams.height = formatList[3];
-    croppingParams.rotation = formatList[4];
-    drawShare.drawNextOuptutPictureGL(croppingParams.width, croppingParams.height, null, data.databuf, croppingParams.rotation, 1);
-  });
-
-  function onShareRawDataReceived(databuf, format, receivers) {
-    let formatList = format.split(';');
-    croppingParams.width = formatList[2];
-    croppingParams.height = formatList[3];
-    croppingParams.rotation = formatList[4];
-    drawShare.drawNextOuptutPictureGL(croppingParams.width, croppingParams.height, null, databuf, croppingParams.rotation, 1);
-  }
-
-  function setShareRawDataCB() {
-    if (startCBOption == 0) {
-      ipcRenderer.send('asynchronous-message', 'setShareRawDataCB');
-    } else {
-      let ret = remote.app.zoomsharerawdata.SetRawDataCB(onShareRawDataReceived);
-      console.log('setShareRawDataCB', ret);
-    }
-    startShareRawDataBtn.disabled = false;
-    startShareRawDataBtn.classList.remove("button-disabled");
-  }
+  // audio rawdata
 
   function setAudioRawDataCB() {
-    if (startCBOption == 0) {
+    if (startCBOption == 'main') {
       ipcRenderer.send('asynchronous-message', 'setAudioRawDataCB');
     } else {
       let ret = remote.app.zoomaudiorawdata.SetRawDataCB(onMixedAudioRawDataReceived, onOneWayAudioRawDataReceived);

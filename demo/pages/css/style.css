@@ -10,7 +10,7 @@ body {
   display: none;
 }
 
-input {
+input[type="text"], input[type="password"], .handle-section input {
   -webkit-appearance: none;
   background-color: #fff;
   background-image: none;
@@ -25,32 +25,22 @@ input {
   outline: none;
   padding: 0 15px;
   transition: border-color 0.2s cubic-bezier(0.645, 0.045, 0.355, 1);
+}
+
+input[type="text"], input[type="password"] {
   width: 90%;
 }
 
-input[type="radio"] + label::before {
-  content: "\a0";
-  display: inline-block;
-  vertical-align: middle;
-  font-size: 12px;
-  width: .8em;
-  height: .8em;
-  margin-right: .4em;
-  border-radius: 50%;
-  border: 1px solid #409EFF;
-  text-indent: .15em;
-  line-height: 1; 
+.relative {
+  position: relative;
 }
 
-input[type="radio"]:checked + label::before {
-  background-color: #409EFF;
-  background-clip: content-box;
-  padding: .1em;
-}
-
-input[type="radio"] {
+.jwt {
   position: absolute;
-  clip: rect(0, 0, 0, 0);
+  top: 50px;
+  left: 0;
+  color: #606266;
+  cursor: pointer;
 }
 
 .input-show {
@@ -58,9 +48,9 @@ input[type="radio"] {
 }
 
 .input-disabled {
-  background-color: #f5f7fa;
-  border-color: #e4e7ed;
-  color: #c0c4cc;
+  background-color: #f5f7fa !important;
+  border-color: #e4e7ed !important;
+  color: #c0c4cc !important;
   cursor: not-allowed;
 }
 
@@ -108,6 +98,15 @@ button {
   text-align: center;
 }
 
+.center1 {
+  width: 90%;
+  margin: 0 auto;
+}
+
+.center1 input[type="text"] {
+  width: 100%;
+}
+
 .section {
   color: #333;
   margin: 8px 0;
@@ -122,6 +121,20 @@ button {
   position: fixed;
   top: 8px;
   right: 8px;
+}
+
+.serverTip {
+  color: #fff;
+  font-weight: 100;
+  background: rgba(0, 0, 0, 0.6);
+  border-radius: 4px;
+  font-size: 16px;
+  padding: 10px 15px;
+  position: absolute;
+  top: 50px;
+  left: 50%;
+  transform: translateX(-50%);
+  display: none;
 }
 
 select {
@@ -196,4 +209,23 @@ li {
   position: absolute;
   bottom: 0;
   left: 0;
+}
+
+.divider {
+  background-color: #dcdfe6;
+  position: relative;
+  height: 1px;
+  width: 100%;
+  margin: 20px 0;
+}
+
+.divider-text {
+  position: absolute;
+  background-color: #f5f5f5;
+  padding: 0 20px;
+  font-weight: 500;
+  color: #303133;
+  font-size: 14px;
+  left: 50%;
+  transform: translateX(-50%) translateY(-50%);
 }

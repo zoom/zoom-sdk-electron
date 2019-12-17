@@ -3,140 +3,26 @@
 #include "wrap/sdk_wrap.h"
 #include "wrap/meeting_service_components_wrap/meeting_configuration_wrap.h"
 #include "zoom_native_to_wrap.h"
-
+#include "sdk_events_wrap_class.h"
 extern ZOOM_SDK_NAMESPACE::IMeetingServiceWrap& g_meeting_service_wrap;
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-class FreeMeetingReminderHandler
-{
-public:
-	static FreeMeetingReminderHandler& GetInst()
-	{
-		static FreeMeetingReminderHandler inst;
-		return inst;
-	}
-	void SetHandler(ZOOM_SDK_NAMESPACE::IFreeMeetingEndingReminderHandler *handler)
-	{
-		m_pHandler = handler;
-	}
-	ZNFreeMeetingEndingReminderType GetType()
-	{
-		ZOOM_SDK_NAMESPACE::IFreeMeetingEndingReminderHandler::FreeMeetingEndingReminderType winDefinedType = ZOOM_SDK_NAMESPACE::IFreeMeetingEndingReminderHandler::FreeMeetingEndingReminder_NONE;
-		int nMapToMACDefinedType = 5;
-		if (m_pHandler)
-			winDefinedType = m_pHandler->GetType();
-		return Map2WrapDefine(winDefinedType);
-	}
-
-	ZOOM_SDK_NAMESPACE::SDKError UpgradeMeeting()
-	{
-		ZOOM_SDK_NAMESPACE::SDKError err = ZOOM_SDK_NAMESPACE::SDKERR_WRONG_USEAGE;
-		if (m_pHandler)
-			err = m_pHandler->UpgradeMeeting();
-		m_pHandler = NULL;
-		return err;
-	}
-
-	ZOOM_SDK_NAMESPACE::SDKError UpgradeAccount()
-	{
-		ZOOM_SDK_NAMESPACE::SDKError err = ZOOM_SDK_NAMESPACE::SDKERR_WRONG_USEAGE;
-		if (m_pHandler)
-			err = m_pHandler->UpgradeAccount();
-		m_pHandler = NULL;
-		return err;
-	}
-
-	ZOOM_SDK_NAMESPACE::SDKError Cancel()
-	{
-		ZOOM_SDK_NAMESPACE::SDKError err = ZOOM_SDK_NAMESPACE::SDKERR_WRONG_USEAGE;
-		if (m_pHandler)
-			err = m_pHandler->Cancel();
-		m_pHandler = NULL;
-		return err;
-	}
-private:
-	FreeMeetingReminderHandler() {}
-	ZOOM_SDK_NAMESPACE::IFreeMeetingEndingReminderHandler* m_pHandler;
-};
-/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
-class ZMeetingConfigCtrlWrapFreeMeetingEvent : public ZOOM_SDK_NAMESPACE::IMeetingConfigurationEvent
-{
-public:
-	void SetOwner(ZMeetingConfigWrap* obj) { owner_ = obj; }
-	virtual void onFreeMeetingRemainTime(unsigned int leftTime)
-	{
-	}
-	virtual void onFreeMeetingRemainTimeStopCountDown()
-	{
-	}
-	virtual void onFreeMeetingEndingReminderNotification(ZOOM_SDK_NAMESPACE::IFreeMeetingEndingReminderHandler* handler_)
-	{
-		FreeMeetingReminderHandler::GetInst().SetHandler(handler_);
-	}
-	virtual void onFreeMeetingNeedToUpgrade(ZOOM_SDK_NAMESPACE::IMeetingConfigurationFreeMeetingEvent::FreeMeetingNeedUpgradeType type_, const wchar_t* gift_url)
-	{
-		if (owner_) {
-			ZoomSTRING zn_gift_url = gift_url;
-			owner_->onFreeMeetingNeedToUpgrade(Map2WrapDefine(type_), zn_gift_url);
-		}
-	}
-	virtual void onFreeMeetingUpgradeToGiftFreeTrialStart()
-	{
-		if (owner_) {
-			owner_->onFreeMeetingUpgradeToGiftFreeTrialStart();
-		}
-	}
-	virtual void onFreeMeetingUpgradeToGiftFreeTrialStop()
-	{
-		if (owner_) {
-			owner_->onFreeMeetingUpgradeToGiftFreeTrialStop();
-		}
-	}
-	virtual void onFreeMeetingUpgradeToProMeeting()
-	{
-		if (owner_) {
-			owner_->onFreeMeetingUpgradeToProMeeting();
-		}
-	}
-	virtual void onInputMeetingPasswordAndScreenNameNotification(ZOOM_SDK_NAMESPACE::IMeetingPasswordAndScreenNameHandler* pHandler)
-	{
-
-	}
-	virtual void onAirPlayInstructionWndNotification(bool bShow, const wchar_t* airhostName)
-	{
-
-	}
-	virtual void onWebinarNeedRegisterNotification(ZOOM_SDK_NAMESPACE::IWebinarNeedRegisterHandler* handler_)
-	{
-
-	}
-	virtual void onEndOtherMeetingToJoinMeetingNotification(ZOOM_SDK_NAMESPACE::IEndOtherMeetingToJoinMeetingHandler* handler_)
-	{
-
-	}
-private:
-	ZMeetingConfigWrap* owner_;
-};
-
-static ZMeetingConfigCtrlWrapFreeMeetingEvent g_meeting_config_ctrl_event;
-
 
 /////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 
 ZMeetingConfigWrap::ZMeetingConfigWrap()
 {
-	g_meeting_config_ctrl_event.SetOwner(this);
+	SDKEventWrapMgr::GetInst().m_meetingConfigCtrlWrapEvent.SetOwner(this);
 	m_pSink = 0;
 }
 ZMeetingConfigWrap::~ZMeetingConfigWrap()
 {
 	Uninit();
 	m_pSink = 0;
-	g_meeting_config_ctrl_event.SetOwner(NULL);
+	SDKEventWrapMgr::GetInst().m_meetingConfigCtrlWrapEvent.SetOwner(NULL);
 }
 void ZMeetingConfigWrap::Init()
 {
-	
-	ZOOM_SDK_NAMESPACE::CSDKWrap::GetInst().GetMeetingServiceWrap().T_GetMeetingConfiguration().SetEvent(&g_meeting_config_ctrl_event);
+	ZOOM_SDK_NAMESPACE::CSDKWrap::GetInst().GetMeetingServiceWrap().T_GetMeetingConfiguration().Init_Wrap(&g_meeting_service_wrap);
+	ZOOM_SDK_NAMESPACE::CSDKWrap::GetInst().GetMeetingServiceWrap().T_GetMeetingConfiguration().SetEvent(&SDKEventWrapMgr::GetInst().m_meetingConfigCtrlWrapEvent);
 	
 }
 void ZMeetingConfigWrap::Uninit()
@@ -283,6 +169,10 @@ void ZMeetingConfigWrap:: EnableVideoButtonOnMeetingUI(bool bEnable)
 {
 	ZOOM_SDK_NAMESPACE::CSDKWrap::GetInst().GetMeetingServiceWrap().T_GetMeetingConfiguration().EnableVideoButtonOnMeetingUI(bEnable);
 }
+void ZMeetingConfigWrap::EnableAudioButtonOnMeetingUI(bool bEnable)
+{
+	ZOOM_SDK_NAMESPACE::CSDKWrap::GetInst().GetMeetingServiceWrap().T_GetMeetingConfiguration().EnableAudioButtonOnMeetingUI(bEnable);
+}
 void ZMeetingConfigWrap:: EnableEnterAndExitFullScreenButtonOnMeetingUI(bool bEnable)
 {
 	ZOOM_SDK_NAMESPACE::CSDKWrap::GetInst().GetMeetingServiceWrap().T_GetMeetingConfiguration().EnableEnterAndExitFullScreenButtonOnMeetingUI(bEnable);
@@ -310,6 +200,14 @@ void ZMeetingConfigWrap:: RedirectClickParticipantListBTNEvent(bool bRedirect)
 void ZMeetingConfigWrap:: RedirectClickCCBTNEvent(bool bRedirect)
 {
 	ZOOM_SDK_NAMESPACE::CSDKWrap::GetInst().GetMeetingServiceWrap().T_GetMeetingConfiguration().RedirectClickCCBTNEvent(bRedirect);
+}
+void ZMeetingConfigWrap::RedirectClickAudioBTNEvent(bool bRedirect)
+{
+	ZOOM_SDK_NAMESPACE::CSDKWrap::GetInst().GetMeetingServiceWrap().T_GetMeetingConfiguration().RedirectClickAudioBTNEvent(bRedirect);
+}
+void ZMeetingConfigWrap::RedirectClickAudioMenuBTNEvent(bool bRedirect)
+{
+	ZOOM_SDK_NAMESPACE::CSDKWrap::GetInst().GetMeetingServiceWrap().T_GetMeetingConfiguration().RedirectClickAudioMenuBTNEvent(bRedirect);
 }
 void ZMeetingConfigWrap:: RedirectMeetingWarningMsg(ZNZoomRedirectWarningMsgOption redirectOption)
 {
@@ -481,6 +379,10 @@ void ZMeetingConfigWrap:: DisableAutoShowSelectJoinAudioDlgWhenJoinMeeting(bool 
 {
 	ZOOM_SDK_NAMESPACE::CSDKWrap::GetInst().GetMeetingServiceWrap().T_GetMeetingConfiguration().DisableAutoShowSelectJoinAudioDlgWhenJoinMeeting(bDisable);
 }
+void ZMeetingConfigWrap::DisableShowJoinMeetingWnd(bool bDisable)
+{
+	ZOOM_SDK_NAMESPACE::CSDKWrap::GetInst().GetMeetingServiceWrap().T_GetMeetingConfiguration().DisableShowJoinMeetingWnd(bDisable);
+}
 void ZMeetingConfigWrap:: DisableRemoteCtrlCopyPasteFeature(bool bDisable)
 {
 	ZOOM_SDK_NAMESPACE::CSDKWrap::GetInst().GetMeetingServiceWrap().T_GetMeetingConfiguration().DisableRemoteCtrlCopyPasteFeature(bDisable);
@@ -523,4 +425,80 @@ void ZMeetingConfigWrap::onFreeMeetingUpgradeToProMeeting()
 {
 	if (m_pSink)
 		m_pSink->onFreeMeetingUpgradeToProMeeting();
+}
+
+void ZMeetingConfigWrap::SetShowVideoOptimizeChkbox(bool bShow)
+{
+	ZOOM_SDK_NAMESPACE::CSDKWrap::GetInst().GetMeetingServiceWrap().T_GetMeetingConfiguration().SetShowVideoOptimizeChkbox(bShow);
+}
+ZNRequiredInfoType ZMeetingConfigWrap::GetRequiredInfoType()
+{
+	return ZMeetingPasswordAndScreenNameHandler::GetInst().GetRequiredInfoType();
+}
+bool ZMeetingConfigWrap::InputMeetingPasswordAndScreenName(ZoomSTRING meetingPassword, ZoomSTRING screenName)
+{
+	return ZMeetingPasswordAndScreenNameHandler::GetInst().InputMeetingPasswordAndScreenName(meetingPassword, screenName);
+}
+bool ZMeetingConfigWrap::InputMeetingIDAndScreenName(ZoomSTRING meetingID, ZoomSTRING screenName)
+{
+	return ZMeetingPasswordAndScreenNameHandler::GetInst().InputMeetingIDAndScreenName(meetingID, screenName);
+}
+bool ZMeetingConfigWrap::InputMeetingScreenName(ZoomSTRING screenName)
+{
+	return ZMeetingPasswordAndScreenNameHandler::GetInst().InputMeetingScreenName(screenName);
+}
+void ZMeetingConfigWrap::MeetingPasswordAndScreenNameHandler_Cancel()
+{
+	return ZMeetingPasswordAndScreenNameHandler::GetInst().Cancel();
+}
+void ZMeetingConfigWrap::onInputMeetingPasswordAndScreenNameNotification()
+{
+	if (m_pSink)
+		m_pSink->onInputMeetingPasswordAndScreenNameNotification();
+}
+void ZMeetingConfigWrap::onAirPlayInstructionWndNotification(bool bShow, ZoomSTRING airhostName)
+{
+	if (m_pSink)
+		m_pSink->onAirPlayInstructionWndNotification(bShow, airhostName);
+}
+void ZMeetingConfigWrap::onWebinarNeedRegisterNotification()
+{
+	if (m_pSink)
+		m_pSink->onWebinarNeedRegisterNotification();
+}
+void ZMeetingConfigWrap::onEndOtherMeetingToJoinMeetingNotification()
+{
+	if (m_pSink)
+		m_pSink->onEndOtherMeetingToJoinMeetingNotification();
+}
+void ZMeetingConfigWrap::onFreeMeetingRemainTime(unsigned int leftTime)
+{
+	if (m_pSink)
+		m_pSink->onFreeMeetingRemainTime(leftTime);
+}
+void ZMeetingConfigWrap::onFreeMeetingRemainTimeStopCountDown()
+{
+	if (m_pSink)
+		m_pSink->onFreeMeetingRemainTimeStopCountDown();
+}
+
+ZNWebinarNeedRegisterType ZMeetingConfigWrap::GetWebinarNeedRegisterType()
+{
+	return ZWebinarNeedRegisterHandler::GetInst().GetWebinarNeedRegisterType();
+}
+ZoomSTRING ZMeetingConfigWrap::GetWebinarRegisterUrl()
+{
+	return ZWebinarNeedRegisterHandler::GetInst().GetWebinarRegisterUrl();
+}
+void ZMeetingConfigWrap::ReleaseRegisterWebinarByUrl()
+{
+	ZWebinarNeedRegisterHandler::GetInst().Release();
+}
+ZNSDKError ZMeetingConfigWrap::InputWebinarRegisterEmailAndScreenName(ZoomSTRING email, ZoomSTRING screenName)
+{
+	return ZWebinarNeedRegisterHandler::GetInst().InputWebinarRegisterEmailAndScreenName(email, screenName);
+}
+void ZMeetingConfigWrap::CancelRegisterWebinarByEmail()
+{
+	ZWebinarNeedRegisterHandler::GetInst().Cancel();
 }

@@ -81,5 +81,9 @@ CallBack_FUNC_0(onCustomLiveStreamMenuClicked)
 CallBack_FUNC_0(onZoomInviteDialogFailed)
 //virtual void onCCBTNClicked() = 0;
 CallBack_FUNC_0(onCCBTNClicked)
+//virtual void onAudioBtnClicked(AudioBtnClickedCallbackInfo info) = 0;
+CallBack_FUNC_1(onAudioBtnClicked, AudioBtnClickedCallbackInfo, info)
+//virtual void onAudioMenuBtnClicked() = 0;
+CallBack_FUNC_0(onAudioMenuBtnClicked)
 END_CLASS_DEFINE(IMeetingUIController)
 END_ZOOM_SDK_NAMESPACE

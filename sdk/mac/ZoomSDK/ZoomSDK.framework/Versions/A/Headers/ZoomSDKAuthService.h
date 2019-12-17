@@ -34,10 +34,8 @@
  */
 @interface ZoomSDKAuthService : NSObject
 {
-    BOOL _isAuthorized;
     BOOL _isLogin;
     id<ZoomSDKAuthDelegate> _delegate;
-    
 }
 @property (assign, nonatomic) id<ZoomSDKAuthDelegate> delegate;
 
@@ -52,6 +50,14 @@
 - (ZoomSDKError)sdkAuth:(NSString*)key appSecret:(NSString*)secret;
 
 /**
+ @brief New authenticate SDK.
+ @param jwttoken The strcut type of param.
+ @return If the function succeeds, it will return ZoomSDKError_success.
+ @note If the jwttoken expired,will return "onZoomAuthIdentityExpired" callback.
+ */
+- (ZoomSDKError)sdkAuth:(ZoomSDKAuthContext)jwttoken;
+
+/**
  * @brief Determine if SDK is authorized.
  * @return YES means that it is authorized, otherwise failed.
  */
@@ -62,7 +68,7 @@
  * @param userName The email for login.
  * @param password The password for login.
  * @param rememberMe Set it to YES so that user can login automatically next time, otherwise not.
- * @return If the function succeeds, it will return ZoomSDKError_success, meanwhile it will return SDK authentication when calling asynchronously onZoomSDKAuthReturn. 
+ * @return If the function succeeds, it will return ZoomSDKError_success, meanwhile it will return SDK login result when calling asynchronously onZoomSDKLogin.
  */
 - (ZoomSDKError)login:(NSString*)userName Password:(NSString*)password RememberMe:(BOOL)rememberMe;
 
@@ -103,6 +109,11 @@
  *
  */
 - (void)onZoomSDKAuthReturn:(ZoomSDKAuthError)returnValue;
+
+/**
+ @brief Specify to get the response of ZOOM SDK authorization identity expired.
+ */
+ - (void)onZoomAuthIdentityExpired;
 
 @optional
 /**

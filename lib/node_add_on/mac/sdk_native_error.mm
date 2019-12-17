@@ -894,7 +894,7 @@ ZNMeetingFailCode  nativeErrorTypeHelp::ZNSDKMeetingFailCode(ZoomSDKMeetingError
 
 ZoomSDKLocale nativeErrorTypeHelp::ZNSDKAPPLocalType(ZNSDK_APP_Locale &local)
 {
-    ZoomSDKLocale applocal = ZoomSDKLocale_CN;
+    ZoomSDKLocale applocal = ZoomSDKLocale_Def;
     switch (local) {
         case ZNSDK_APP_Locale_CN:
             applocal = ZoomSDKLocale_CN;
@@ -938,6 +938,69 @@ ZNSMSVerificationCodeErr nativeErrorTypeHelp::ZNSDKSMSVerificationCodeError(Zoom
             break;
         case ZoomSDKSMSError_Verify_UnknownError:
             ret = ZNSMSVerificationCodeErr_Verify_UnknownError;
+            break;
+        default:
+            break;
+    }
+    return ret;
+}
+
+ZNAudioCallbackActionInfo nativeErrorTypeHelp::ZNSDKAudioCallbackAction(ZoomSDKAudioActionInfo &info)
+{
+    ZNAudioCallbackActionInfo ret = ZNACTION_INFO_NONE;
+    switch (info) {
+        case ZoomSDKAudioActionInfo_none:
+            ret = ZNACTION_INFO_NONE;
+            break;
+        case ZoomSDKAudioActionInfo_needJoinVoip:
+            ret = ZNACTION_INFO_NEED_JOIN_VOIP;
+            break;
+        case ZoomSDKAudioActionInfo_muteOrUnmenuAudio:
+            ret = ZNACTION_INFO_MUTE_UNMUTE_AUDIO;
+            break;
+        case ZoomSDKAudioActionInfo_noAudioDeviceConnected:
+            ret = ZNACTION_INFO_CHOOSE_AUDIO_DEVICE_NOAUDIODEVICECONNECTTED;
+            break;
+        case ZoomSDKAudioActionInfo_computerAudioDeviceError:
+            ret = ZNACTION_INFO_CHOOSE_AUDIO_DEVICE_COMPUTERAUDIODEVICEERROR;
+            break;
+        default:
+            break;
+    }
+    return ret;
+}
+
+ZNWebinarNeedRegisterType nativeErrorTypeHelp::ZNSDKWebinarNeedRegisterType(WebinarRegisterType &type)
+{
+    ZNWebinarNeedRegisterType ret = ZNWebinarReg_NONE;
+    switch (type) {
+        case WebinarRegisterType_None:
+            ret = ZNWebinarReg_NONE;
+            break;
+        case WebinarRegisterType_URL:
+            ret = ZNWebinarReg_By_Register_Url;
+            break;
+        case WebinarRegisterType_Email:
+            ret = ZNWebinarReg_By_Email_and_DisplayName;
+            break;
+        default:
+            break;
+    }
+    return ret;
+}
+
+ZNRequiredInfoType nativeErrorTypeHelp::ZNSDKRequiredInfoType(JoinMeetingReqInfoType &type)
+{
+    ZNRequiredInfoType ret = ZNREQUIRED_INFO_TYPE_NONE;
+    switch (type) {
+        case JoinMeetingReqInfoType_None:
+            ret = ZNREQUIRED_INFO_TYPE_NONE;
+            break;
+        case JoinMeetingReqInfoType_Password:
+            ret = ZNREQUIRED_INFO_TYPE_Password;
+            break;
+        case JoinMeetingReqInfoType_Password_Wrong:
+            ret = ZNREQUIRED_INFO_TYPE_Password4WrongPassword;
             break;
         default:
             break;

@@ -5,6 +5,3 @@
 # Handling Reading
 include             : ["*.html"]
 keep_files          : [".git", ".svn"]
-
-gems:
-  - jekyll-redirect-from

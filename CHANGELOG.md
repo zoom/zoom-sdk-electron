@@ -45,6 +45,7 @@ You do not need to secret base64 encoded your signature. Once the JWT token is g
 * New enhancements follow the changes in Windows SDK and Mac OS SDK.
 
 ## Changed & Fixed:
+* Enhanced security and upgraded OpenSSL to 1.0.2u.
 * Changes and fixes follow the changes in Windows SDK and Mac OS SDK.
 
 ## 2019-12-16 @ [v4.4.57220.1211](https://github.com/zoom/zoom-sdk-electron/releases/tag/v4.4.57220.1211)

@@ -508,6 +508,8 @@ typedef enum{
     ZoomSDKRecordingStatus_Stop,
 	//The space of storage is full.
     ZoomSDKRecordingStatus_DiskFull,
+    //Pause recording.
+    ZoomSDKRecordingStatus_Pause,
 }ZoomSDKRecordingStatus;
 
 /**
@@ -1180,12 +1182,6 @@ typedef enum {
     ZoomSDKAudioActionInfo_computerAudioDeviceError,
 }ZoomSDKAudioActionInfo;
 
-/**
- *@brief Struct type of auth param.
- */
-typedef struct{
-    //The jwtToken of your auth.
-    NSString* jwtToken;
-}ZoomSDKAuthContext;
+
 
 

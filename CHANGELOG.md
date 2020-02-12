@@ -39,6 +39,14 @@ HMACSHA256(
 ```
 You do not need to secret base64 encoded your signature. Once the JWT token is generated, please do not reveal it or publish it. **It is highly recommended to handle your SDK key and secret and generate JWT in a backend server to be consumed by your application. Do not generate JWT in a production application.**
 
+## 2020-02-10 @ [v4.6.15088.0210](https://github.com/zoom/zoom-sdk-electron/releases/tag/v4.6.15088.0210)
+
+## Added:
+* New enhancements follow the changes in Windows SDK and Mac OS SDK.
+
+## Changed & Fixed:
+* Changes and fixes follow the changes in Windows SDK and Mac OS SDK.
+
 ## 2019-12-16 @ [v4.4.57220.1211](https://github.com/zoom/zoom-sdk-electron/releases/tag/v4.4.57220.1211)
 
 ## Added:

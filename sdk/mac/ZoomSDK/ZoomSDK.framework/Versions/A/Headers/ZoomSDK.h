@@ -156,6 +156,13 @@ typedef enum
  */
 - (ZoomSDKError)switchDomain:(NSString*)newDomain force:(BOOL)force;
 
+/**
+ * @brief Set support dark model to the app.
+ * @param isSupport YES means support dark model,NO is not support.
+ * @note Support for Mac OS 10.14 and above
+ * @note Call Api firstly before you call [[ZoomSDK sharedSDK]initSDK:NO/YES] in the App.
+ */
+- (ZoomSDKError)setSupportDarkModel:(BOOL)isSupport;
 @end
 
 

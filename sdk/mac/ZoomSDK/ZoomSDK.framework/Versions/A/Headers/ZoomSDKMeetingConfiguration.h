@@ -72,7 +72,7 @@
     BOOL                _hideCallMeInAudioWindow;
     //Forbid multi-participants sharing at the same time.
     BOOL                _forceDisableMultiShare;
-    //Set whether to enable global shortcuts in configuration.
+    //Set whether to enable global shortcuts in configuration.not support since version 4.6.
     BOOL                _enableGlobalShortcuts;
 	//Disable custom live stream.
     BOOL                _disableCustomLiveStreamAction;

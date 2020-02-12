@@ -15,6 +15,16 @@ message AttendeeListProto {
   repeated AttendeeProto attendee = 1;
 }
 
+message InterpreterProto {
+   required string email = 1;
+   required string firstLanguage = 2;
+   required string secondLanguage = 3;
+}
+
+message InterpreterListProto{
+   repeated InterpreterProto interpreters = 1;
+}
+
 message CountryCodeProto {
   optional string id     = 1; // country id, such as 'CA' for Canada
   optional string name   = 2; // country name, such as 'Canada'
@@ -22,7 +32,7 @@ message CountryCodeProto {
   optional string number = 4; // call-in number (not formatted as zoomconference page), such as '+1 6475580588'
   optional string displayNumber = 5; // call-in display number (formatted as zoomconference page), such as '+1 647 558 0588', new client should use this
   optional int32 callType  = 6; //0: toll, 1: toll-free, 10: premium, 999: internal call out
-  
+  optional string areaCodes =7; //area code,such as '684,264', multiple codes are separated by comma 
 }
 
 message CountryCodeListProto {
@@ -52,6 +62,11 @@ message RCProto{
   required string token=2;
 }
 
+message PreAssignBoItemProto {
+  optional string BoName = 1;
+  repeated string email = 2;
+}
+
 message MeetingProto {
   enum Status {
     NOT_START  = 0;
@@ -68,6 +83,7 @@ message MeetingProto {
     NORMAL  = 0;
     PMI     = 1;
     WEBINAR = 2;
+    SIMULIVEWEBINAR = 3;
   }
   enum CalloutType {
     NONE          = 0;
@@ -191,17 +207,38 @@ message MeetingProto {
   optional string tgBridgeId                 = 110; // USTB EUTB. Tg bridge for each host,ZOOM-66757
   optional string launchDropboxShareInMeetingUrl = 111;    // DEPRECATED!! dropbox share in meeting url for launch
   optional FileIntegrationList shareFileInMeetingIntegrations = 112; //ZOOM-64503 deep link to share from dropbox
+  optional string removeNumberLeading0Codes      =113; // ZOOM-78993, country codes which need remove leading 0 for account
+  optional string attendeeToken                  = 114;	//ZOOM-72051 webinar attendees in TG join mmr with this token 
   repeated KeyValOption launchExtParameters = 115; // ZOOM-75897 Add dropbox file id to the share url - initiated from Dropbox surface 
-  
-  //miss some items, keep be consistent with web in ep branch
+  optional int64 scheduleOptions3             = 116; // schedule option3 from web
+  optional string userIdentifyToken           = 117; // client use this token to send API request to servers like CRC, and pass to Web for some function authentication
+  optional string breakoutRoomInfo         = 118; // breakout room if empty (this meeting don't have bo, else breakoutRoomInfo will be a link , can download bo configuration)
+  optional FileIntegrationList shareFileInChatIntegrations = 119; // ZOOM-83814
+  optional FileIntegrationList saveFileInChatIntegrations  = 120; // ZOOM-83814
+  optional InterpreterListProto interpreters = 121; // interpreter list
+  repeated KeyValOption zoomTunnelServer = 122; // ZOOM-84982
   optional string participantSecretKey256         = 123; //ZOOM-87204
   optional int32 asyncLoadOptions	   = 124; //ZOOM-87204
-  
+  optional RecordingReminderProto recordingReminderProto = 125;// ZOOM-99848 conf/j¡¢conf/i response, recording reminder custom text
+  optional string pluginIntegrationUrl   = 126; //ZOOM-92273 the url for redirecting to the download-extension-plugins page
   //miss some items, keep be consistent with web in ep branch
   optional string smsuuid = 129;
+  repeated KeyValOption keyValOption = 130;	//This is for key value options features, please ensure every key is unique
+  repeated KeyValOption sdkCommonOptions = 132; //ZOOM-119841 sdk common options
+  optional int32 jbhPriorMeetingStart = 133; //unit:minutes //ZOOM-41183 JBH - Only 15 minutes prior to meeting starting; 
 }
 
+message RecordingReminderProto {
+    optional string language    = 1;
+    optional string title       = 2;
+    optional string description = 3;
+    optional string link_url    = 4;
+    optional string link_text   = 5;
+}
 
+message PreAssignBoListProto {
+  repeated PreAssignBoItemProto PreAssignBoList = 1;
+}
 
 message CalloutSIPTrunk {
   optional string name                       = 1;
@@ -240,6 +277,8 @@ message UserGroup {
 message BrandingInfo {  
   optional string backgroundImgUrl = 1;
   optional string zrpBackgroundImgUrl = 2;
+  optional string backgroundImgUrlOnFileServer = 3;
+  optional string zrpBackgroundImgUrlOnFileServer = 4;
 }
 
 message FileIntegration {
@@ -252,6 +291,24 @@ message FileIntegration {
 message FileIntegrationList {
   required string launchUrl          = 1;
   repeated FileIntegration instances = 2;
+}
+
+message E2EKMSInfo {
+  optional string alias = 1;
+  optional string serviceUrl = 2;
+}
+
+message BandwidthLimitation {
+	optional int32 bandwidth_limit_type = 1;
+	optional string bandwidth_limit_name = 2;
+	optional string bandwidth_limit_ip_range = 3;
+	optional int32 bandwidth_limit_up = 4;
+	optional int32 bandwidth_limit_down = 5;
+	optional int32 config_option = 6;	//for other config option, ex: video/audio on or off, and so on
+}
+
+message BandwidthLimitationList {
+	repeated BandwidthLimitation bandwidthLimitList = 1;
 }
 
 message UserProfile {
@@ -341,8 +398,18 @@ message UserProfile {
   optional int32 userRegistrationType = 84; // ZOOM-44755 - Web API: Client can schedule meeting with "Registration"  0-disable 1-enable
   optional FileIntegrationList shareFileInChatIntegrations = 85; // ZOOM-71079 Web Integration-File storage integrations (Dropbox)
   optional FileIntegrationList saveFileInChatIntegrations  = 86; // ZOOM-71079 Web Integration-File storage integrations (Dropbox)
+  optional int32 releaseNotesRefreshInterval               = 87;  // unit: second, for zr
+	optional BandwidthLimitationList bandwidthLimitList = 88;	//ZOOM-79851 Zoom Desktop Client - Bandwidth Limit Option New
   optional ZREncryptionInfo zrEncForDirectShare          = 90;  // return aesKey, aesIV to client for direct share encryption
   optional bool isZRSupportEncForDirectShare             = 91;  // return whether zr support direct share encryption
+  optional string serviceEmail                           = 92;  // service email for user email/calendar/contacts integration
+  optional string supportInterpretationLanguages         = 93;	// return support languageId list
+  optional ZRVirtualBackgroundList zrVirtualBackgroundList = 94;  //Virtual Background for ZR
+  optional string clientPassphrase 						 = 95;  //	Provide passphrase in web login response
+  repeated RoomProfileTemplate roomProfileTemplate       = 96;
+  optional E2EKMSInfo e2eKmsInfo                         = 97;
+  optional int32 calendarType                            = 98; // None = 0; Google = 1; Exchange_Online = 2; Exchange_On_Premise = 3;
+  optional int32 calendarRefreshInterval                 = 99; // ZOOM-113578: in seconds, valid range [60, 15*60], only used for Exchange_On_Premise
 }
 
 message ZREncryptionInfo {
@@ -388,6 +455,8 @@ message MessengerOptions{
   optional string giphy_preload_list = 5;		//giphy preload list
   optional string local_storage_time = 6;		//local storage period of time. 
   optional int64 im_options = 7;				//IM options, enable/disable flag, use bit
+  optional string announcementInfo = 8;		//AnnouncementInfo 
+  optional int32 e2e_kms_key_expire_time = 9;		//im_ciphered_key_expire_time, in minutes
 }
 
 message OperationTime {
@@ -436,6 +505,15 @@ message SipPhoneIntegration {
   optional int32 registrationExpiry =         11;//Registration Expiry in minutes
   optional string voiceMail =                 12;
   optional int32 dtmfPayloadType =            13;
+  optional string registerServer2 =           14; // ip address like 10.100.1.1
+  optional string proxyServer2 =              15; // ip address like 10.100.1.1
+  optional int32 protocol2 =                  16; // 0: UDP, 1: TCP, 2: TLS, default is 0 UDP
+  optional string registerServer3 =           17;
+  optional string proxyServer3 =              18;
+  optional int32 protocol3 =                  19;
+  optional string activeRegisterServer =      20;
+  optional string activeProxyServer =         21;
+  optional int32 activeProtocol =             22;
 }
 
 message TrackingField {
@@ -454,13 +532,13 @@ message ProfileAmendment {
   repeated ChangedBits changedBits =          5;
   optional int64 changedRepeats =             6; // Set bit for changed repeated fields. 0x1: changedBits, 0x2: deviceSetting etc
   optional MeetingProto meeting =             7;
-  repeated AlternativeHost altHost =          8; // schedule for alternative hosts 
+  repeated AlternativeHost altHost =          8; // schedule for alternative hosts
 }
 
 message ChangedBits {
 // 1: UserProfile.featureOptions, 2: UserProfile.featureOptions2, 3: UserProfile.ClientSettings.bitOptions, 
 // 4: UserProfile.zrOptions1, 5: UserProfile.zrOptions2
-// 20: MeetingProto.scheduleOptions, 21: MeetingProto.scheduleOptions2, 22: MeetingProto.identityOptions
+    // 20: MeetingProto.scheduleOptions, 21: MeetingProto.scheduleOptions2, 22: MeetingProto.identityOptions, 23: MeetingProto.scheduleOptions3
   required int32 field =                      1; 
   required int64 changedBit =                 2; // long, bit, example 0x80000000000L
   required bool newValue =                    3; // true: set the bit, false: unset the bit
@@ -486,6 +564,7 @@ message MediaDeviceSetting {
 //        TEST_RECORD_END             = 10; // web not support 
 //        DISABLE_SUPPRESS_NOISE      = 11;
 //        SET_MIC_PICKUP_RANGE        = 12;
+//        SET_DEVICE_DISPLAY_NAME     = 13; // web not support
 //    }
 
     optional string device_id                   = 1; //in client to web  id-1
@@ -502,12 +581,22 @@ message MediaDeviceSetting {
 	
 	optional bool   is_combined_device          = 11;
     optional int32  combined_device_count       = 12;
-    optional bool is_hrr_enabled                = 13; //Highly reverberant room 
+    optional bool is_hrr_enabled                = 13;   //Highly reverberant room
     optional bool  is_suppress_noise_disable    = 14;   // suppress excessive noise.
     optional int32 mic_pickup_range             = 15;   // 0 = none, 1 = small, 2 = middle, 3 = big.
+    optional string device_display_name         = 16;   //in client to web, now renamed camera have, other device do not have.
+    optional int32 advanced_noise_suppression_state = 17; //0: moderate 1: aggressive 2:disable
 }
 
-
+message RoomProfileTemplate{
+    optional string templateID                            = 1;
+    optional bool isSelected                              = 2;
+    optional string templateName                          = 3;
+    optional RoomRendererOptions renderContent            = 4;
+    optional MediaDeviceSetting microphoneSetting         = 5;
+    optional MediaDeviceSetting speakerSetting            = 6;
+    optional MediaDeviceSetting cameraSetting             = 7;
+}
 
 message RemoteControlRequestProto {
 //    enum ControlEvent {
@@ -522,7 +611,10 @@ message RemoteControlRequestProto {
 //        RC_SCHEDULE_MEETING                  = 9;
 //        RC_CANCEL_MEETING                    = 10;
 //        RC_SET_AUTO_LOGIN                    = 11;
-
+//        RC_RESTART_OS                        = 12;
+//        RC_UPGRADE_A_DOWNGRADE               = 13;
+//        RC_UPGRADE_ROM                       = 14; // Upgrade third party device ROM. eg. DTEN D7
+    
 //    }
 
 	required string rcRequestId                              = 1;
@@ -541,10 +633,25 @@ message RemoteControlRequestProto {
     optional int64 options                                   = 13; //0x1: need_response_when_received, 0x2: need_response_when_handled
     optional AutoLoginREQ auto_login                         = 14;
     optional RestartOSREQ restart_os                         = 15;
+    optional UpgradeDowngradeREQ upgrade_downgrade           = 16;
+	optional UpgradeRomREQ upgrade_rom                       = 17;
+    optional DeviceInfo to_device                            = 18; //need device_id and app_type here
+}
+
+message UpgradeRomREQ {
+    optional string package_url                  = 1;
+    optional string package_version              = 2;
+    optional string rom_device_id                = 3;
+    optional int32  when_to_upgrade              = 4; // 0: idle time; 1: at night 
+    optional int32  random_delay_second_min      = 5;
+    optional int32  random_delay_second_max      = 6;
+}
+
+message UpgradeDowngradeREQ {
+    optional int32 action                        = 1;   // 1:upgrade, 2:downgrade, 3: cancel
 }
 
 message RestartOSREQ {
-
      optional bool restart                      = 1;
 }
 
@@ -644,6 +751,14 @@ message ZRInfos {
     optional ZRSettingsDeviceInfos devices_info                     = 2;
 	optional SipPhoneIntegration sipPhoneIntegration                = 3;
 	repeated ChangedBits changedBits                                = 4;
+	repeated ZRMeetingPeopleCount zrMeetingPeopleCount              = 5; // max people count in one meeting
+    optional string selectedRoomProfileTemplateID                   = 6;
+}
+
+message ZRMeetingPeopleCount {
+	required string meeting_id         = 1;
+	required int32 count	           = 2;
+	
 }
 
 message ZRSettingsDeviceInfos {                    //Return all device infos together, client to web
@@ -662,6 +777,7 @@ message ZRSettingsDeviceInfos {                    //Return all device infos tog
     optional bool is_hrr_enabled                = 13; //Highly reverberant room 
     optional bool is_suppress_noise_disable     = 14;
     optional int32 mic_pickup_range             = 15; // 0 = none, 1 = small, 2 = middle, 3 = big.
+    optional int32 advanced_noise_suppression_state = 16; //0: moderate 1: aggressive 2:disable
 }
 
 //APP device, which should login with Zoom APP, like ZRC/ZRP, ZR/ZOOM etc.
@@ -686,8 +802,44 @@ message DeviceInfo {
     optional string displays_info       = 18;  //"{{0, 0}, {1920, 1080}}, {{0, 0}, {3840, 2160}}"
     optional string serial_number       = 19;
     optional int32  is_iot_device       = 20;  // 0: normal device; 1: IoT device
-    optional string app_display_version = 21; //4.1.1 (12345.0525)
-    optional string os_build_number    = 22; //17D47
+    optional string app_display_version = 21;  //4.1.1 (12345.0525)
+    optional string os_build_number     = 22;  //17D47
+    optional string mac_addr	        = 23;  // split by ","
+    optional bool with_internal_zrc     = 24;  //
+	optional string patches_info        = 25;  // Data format for Windows OS is
+											   // {
+											   //	"patches": [
+											   //		{
+											   //			"Caption":"http://support.microsoft.com/?kbid=4100347",
+											   //			"CSName":"REED-DELL",
+											   //			"Description":"Update",
+											   //			"FixComments":"",
+											   //			"HotFixID":"KB4100347",
+											   //			"InstallDate":"",
+											   //			"InstalledBy":"NT AUTHORITY\SYSTEM",
+											   //			"InstalledOn":"3/4/2019",
+											   //			"Name":"",
+											   //			"ServicePackInEffect":"",
+											   //			"Status":""
+											   //		},
+											   //		{
+											   //			"Caption":"http://support.microsoft.com/?kbid=4343669",
+											   //			"CSName":"REED-DELL",
+											   //			"Description":"Update",
+											   //			"FixComments":"",
+											   //			"HotFixID":"KB4343669",
+											   //			"InstallDate":"",
+											   //			"InstalledBy":"NT AUTHORITY\SYSTEM",
+											   //			"InstalledOn":"7/11/2018",
+											   //			"Name":"",
+											   //			"ServicePackInEffect":"",
+											   //			"Status":""
+											   //		}
+											   //	]
+											   // }
+     optional string computer_name        = 26; //ZR computer name, now only maczr/winzr fill value
+     optional string rom_device_id        = 27;
+     optional string rom_version          = 28;
 }
 
 message MDMDeviceInfo {
@@ -699,6 +851,18 @@ message VirtualBackground {
 	optional string zoomUrl = 2; //virtual background img url(zoom)
 	optional string name = 3; //virtual background img name
 	optional int32 type = 4;  //virtual background img type 0:default,1:custom
+}
+
+message ZRVirtualBackground {
+	optional string id                      = 1; //img id
+	optional string big_img_url             = 2; //big image for ZR
+	optional string small_img_url           = 3; //small image for ZRC
+	optional string name                    = 4; //virtual background img name
+	optional bool is_default                = 5;
+}
+
+message ZRVirtualBackgroundList{
+    repeated ZRVirtualBackground zr_virtual_background = 1;
 }
 
 message Rooms {
@@ -845,6 +1009,10 @@ message ContactProto {
   optional int32 isSameDomain   = 8; // is in same domain shared group
   optional int32 isSameAccount  = 9; // is in same account shared group
   optional string sipPhone =10; // User sip phone number
+  optional string pbx = 11; // user pbx number, json format
+  optional string phoneNumber = 12; // phone number to bind
+  optional string countryCode = 13;
+  optional int32 contactType = 14;   //contact Type
 }
 
 message ContactListProto {
@@ -935,6 +1103,10 @@ message ZoomPresence {
 	DISPLAY_UNPLUGGED			= 32; //value: 0 normal, 1 no tv plugged
     ZRC_MICROPHONE_ACCESS_STATUS = 33; // 0 Unknown, 1 Not determined yet, 2 Agreed, 3 Declined, ZOOM-56888
     DEVICE_ASAM_STATUS           = 34; // 0 - in asam, 1 - out of asam
+	DISABLE_TOUCH_SCREEN_FEATURES = 35; //value: 0 enable touch screen features/1 Disable touch screen features
+    DEVICE_MIC_NOCALLBACK         = 36; //value: 0 callback, 1 no callback
+	DAL_APPLY_THIRTY_DAYS 		  = 37;
+    CONTROL_SYSTEM_CONFIG_STATUS  = 38; // ZRCSErrorCode
   }
   enum AlertValueType {
     INT_TYPE                 = 1;  
@@ -991,7 +1163,7 @@ message Request {
   optional LocalRecordingListProto localRecordings      = 12; //client report local recording items to web
   optional RemoteSessionProto remoteSessionProto      	= 13; //remote session proto
   optional SipPhoneIntegration sipPhoneIntegration		= 14; //sip phone account registration status
-  optional DeviceInfo appDeviceInfo                     = 15;
+  optional DeviceInfo appDeviceInfo                     = 15; // if used for releatenotes api, need device_id and app_type here
   repeated SubscribeData subscribeDataList              = 16; // get data, query update by version, subscribe update
   optional RemoteControlResponseProto rcResponse        = 17; // response for remote control request
   optional CloudPBXCallLog cloudPBXCallLog              = 18; // Cloud PBX call log
@@ -1024,6 +1196,8 @@ message ServerDomain {
   optional string monitorDomain   = 15; // logfile.zoom.us, monitor user behavior data
   optional string contactDomain   = 16; // Private Address book for PBX, contact server domain
   optional string pbxWebDomain    = 17; // pbx web server domain
+  optional string webinarJidDomain = 18; // webinar jid domain
+  optional string ucsDomain       = 19; // UCS server domain
 }                                                       
 
 //{"notifyZrcDisconnect":true,"notifyDeviceDisconnect":true, "notifyZrHeartbeat":true,"notifyZrcNotCharging":true, "notifyAudioIssue":true ???}
@@ -1102,17 +1276,29 @@ message Response {
   optional int64 supportFeatureOptions					= 51; // Current version Web supported features
   optional string callinBlockNumbers		            = 52; //callin block numbers ZOOM-30911
   optional int32 timeToLive								= 53; // zr pairing code expired time, unit seconds
-  repeated KeyValOption keyValOptions 					= 54; // key: zr_calendars, zr_locations, calendar_parse_json_template
+  repeated KeyValOption keyValOptions 					= 54; // key: zr_calendars, zr_locations, calendar_parse_json_template,InternalZRCWhiteList,CameraConfigList,zr_control_system_gui
   optional string entCalloutBlockNumbers		        = 55; //enterprice accout's callout block numbers
   optional string rcMessageAttachmentUri 				= 56; // message attachment uri in RC
   optional PBXSyncResponse pbxSyncResponse 				= 57; // return pbx sync record
   optional Marketplace  marketplace              =58;  //The marketplace related information
   repeated string optionKeys                            = 59; // for client callback identify, e.g:/profile/get api
   optional string zpnsNotifyUrl                           = 60;  //web push zpns notify url,except zr
+  repeated CountryCodeProto countryAreaCodes            = 61;  //return country's area codes to TG.
+  optional PreAssignBoListProto PreAssignBoList         = 62;
+  repeated KeyValOption optionalVanityUrl 				= 63; // ZOOM-69133, personal vanity url map, key is PMI, value is url
+  optional RefreshGoogleToken refreshGoogleToken  =64;
+}
+
+message RefreshGoogleToken {
+  optional string accessToken                         = 1;
+  optional int32 timeToLive                           = 2;
+  optional string refreshToken                        = 3;
+  optional string refreshTokenUrl                     = 4;
 }
 
 message Marketplace {
 	optional string homeUrl = 1;
+	optional string apiUrl	= 2;
 }
 
 message SubscribeData {
@@ -1260,6 +1446,8 @@ message LaunchConfParameter
 	optional string launchapp = 67;						//Dropbox Integration,web browser name such as chrome|firefox|safari or app name
 	optional string launchapptitle = 68;				//Dropbox Integration,the title of the web page
 	optional string meetingNonce = 69;					// ZOOM-75897 used for getting ext parameters for monitor log case, when request conf/j
+	
+	optional int64  meetingItemUpdateTime = 70;         // ZOOM-100934
 }                                                       
 //                                                      
 /////////////////////////////                           
@@ -1272,9 +1460,13 @@ message RecordingProto {
   repeated int64 file_size	= 5; // file size           in byte
   repeated string file_name	= 6; // s3://zoomd          ev-log/cmr/<meeting-number>/<meeting-id>-<meeting_topic>/xxx.mp4
   optional string video_poster	= 7; // width:           160px, height: 90px  s3://zoomdev-log/cmr/<meeting-number>/<meeting-id>-<meeting_topic>/xxx.jpg
-  optional int32  video_width	= 8; // video           size width in px
-  optional int32  video_height	= 9; // video           size height in px
+  optional int32  video_width	= 8; // video           size width in px, use video_width_file instead of video_width, keting 2019-07-26
+  optional int32  video_height	= 9; // video           size height in px, use video_height_file instrad of video_height, 2019-07-26
   repeated string zoomfs_file_id = 10; // ZOOM-62569 file id generated by zoom fileserver, keting 2018-11-28
+  optional string account_id = 11; // ZOOM-98501, account id of recording, keting 2019-07-26
+  repeated int64  video_duration_file = 12;  // ZOOM-98501, video duration for each file in ms, keting 2019-07-26
+  repeated int32  video_width_file= 13; // ZOOM-98501, video width for each file in px, keting 2019-07-26
+  repeated int32  video_height_file= 14; // ZOOM-98501, video height for each file in px, keting 2019-07-26
 }                                                       
                                                         
 message RecordMeetingListProto {                        
@@ -1341,7 +1533,8 @@ message AllDailinNumbers {
 	optional bool is_shared				                = 3; 
 	optional bool is_did				                = 4; 
 	optional string customized_audio_files	            = 5; // welcome|value,hold|value
-	optional string language_list		                = 6; //en-US,zh-CN  (default: en-US)
+  optional string language_list		                = 6; //en-US,zh-CN  (default: en-US)
+  optional bool is_sip_trunk_num                      = 7; // Sip internal number or not
 }
 message TSPProto {
 	optional string serviceProvider			  = 1; //Telephony service provider, example: InterCall
@@ -1352,7 +1545,9 @@ message TSPProto {
 	optional string hostPasscode			  = 6;
 	optional string participantPasscode		  = 7;
 	optional int32 passcodeType				  = 8; //default is 1:conference code + leader pin
-  optional CountryCodeListProto mediaNumber         = 9; //ATT media link phone number
+	optional CountryCodeListProto mediaNumber = 9; //ATT media link phone number
+	optional string globalDialinUrl 		  = 10; //ATT global dialin url
+	optional string dailinString          	  = 11; //mobile auto dailin
 }
 
 message TSPAccountProto {

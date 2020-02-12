@@ -8,10 +8,19 @@
 
 #import <Foundation/Foundation.h>
 
-typedef struct ZoomSDKProxySettings{
-    NSString*     _proxy;
-    BOOL          _autoDetct;
-}ZoomSDKProxySettings;
+@interface ZoomSDKProxySettings : NSObject
+
+/**
+ *@brief Set the network proxy.
+ */
+@property(nonatomic,copy)NSString   *proxy;
+
+/**
+ *@brief Set the network autoDetect
+ */
+@property(nonatomic,assign)BOOL  autoDetct;
+
+@end
 
 @interface ZoomSDKProxySettingHelper : NSObject
 {
@@ -111,5 +120,6 @@ typedef struct ZoomSDKProxySettings{
  * @param ZoomSDKProxySettings A struct object containing proxy information.
  * @return If the function succeeds, it will return ZoomSDKError_Success. Otherwise failed.
  */
-- (ZoomSDKError)ConfigureProxy:(ZoomSDKProxySettings)settings;
+- (ZoomSDKError)ConfigureProxy:(ZoomSDKProxySettings*)settings;
+
 @end

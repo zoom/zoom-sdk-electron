@@ -9,6 +9,15 @@
 #import <Cocoa/Cocoa.h>
 #import "ZoomSDKErrors.h"
 
+@interface ZoomSDKAuthContext : NSObject
+
+/**
+ *@brief jwtToken The new auth token.
+ */
+@property(nonatomic, copy) NSString *jwtToken;
+
+@end
+
 @interface ZoomSDKAccountInfo : NSObject
 {
     ZoomSDKUserType _userType;
@@ -39,7 +48,6 @@
 }
 @property (assign, nonatomic) id<ZoomSDKAuthDelegate> delegate;
 
-
 /**
  * @brief Authenticate SDK.
  * @param key The key of your client, also known as API key. 
@@ -51,11 +59,11 @@
 
 /**
  @brief New authenticate SDK.
- @param jwttoken The strcut type of param.
+ @param jwttoken A Class object containing auth information.
  @return If the function succeeds, it will return ZoomSDKError_success.
  @note If the jwttoken expired,will return "onZoomAuthIdentityExpired" callback.
  */
-- (ZoomSDKError)sdkAuth:(ZoomSDKAuthContext)jwttoken;
+- (ZoomSDKError)sdkAuth:(ZoomSDKAuthContext *)jwttoken;
 
 /**
  * @brief Determine if SDK is authorized.
@@ -97,6 +105,7 @@
  * @return The SDK identity.
  */
 - (NSString*)getSDKIdentity;
+
 @end
 
 

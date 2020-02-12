@@ -17,11 +17,11 @@
 	<key>CFBundlePackageType</key>
 	<string>BNDL</string>
 	<key>CFBundleShortVersionString</key>
-	<string>4.4.57220.1210</string>
+	<string>ZoomBundleDisplayVersion</string>
 	<key>CFBundleSignature</key>
 	<string>????</string>
 	<key>CFBundleVersion</key>
-	<string>4.4.57220.1210</string>
+	<string>4.6.15088.0210</string>
 	<key>CFPlugInDynamicRegisterFunction</key>
 	<string></string>
 	<key>CFPlugInDynamicRegistration</key>
@@ -41,6 +41,6 @@
 	<key>CFPlugInUnloadFunction</key>
 	<string></string>
 	<key>NSHumanReadableCopyright</key>
-	<string>Copyright ©2012-2019 Zoom Video Communications, Inc. All rights reserved</string>
+	<string>Copyright ©2012-2020 Zoom Video Communications, Inc. All rights reserved</string>
 </dict>
 </plist>

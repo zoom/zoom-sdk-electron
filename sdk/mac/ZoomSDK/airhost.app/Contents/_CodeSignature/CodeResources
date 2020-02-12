@@ -4,6 +4,10 @@
 <dict>
 	<key>files</key>
 	<dict>
+		<key>Resources/Dark_Instruction for iPhoneiPad.png</key>
+		<data>
+		X+PMrMfCP/dkyZyUE8jW4ARBZSc=
+		</data>
 		<key>Resources/Error.jpg</key>
 		<data>
 		XZ93EC5H6QXIEkmUrakscQaM/Yw=
@@ -18,11 +22,11 @@
 		</data>
 		<key>Resources/MainWindow.nib</key>
 		<data>
-		SPypoxyntIhdBRANNbbEoVww1UA=
+		9BMNVYMSm5rpPOe7dx6wJjC0Ut0=
 		</data>
 		<key>Resources/PassWindow.nib</key>
 		<data>
-		56mONscbjwXX+njk2WwE1lvTC90=
+		EE8sIyWynmeTrgi93/fTRIFpSxM=
 		</data>
 		<key>Resources/ZP share iOS.png</key>
 		<data>
@@ -59,6 +63,10 @@
 			<key>optional</key>
 			<true/>
 		</dict>
+		<key>Resources/nydusDefault.metallib</key>
+		<data>
+		g9JupAXUSruI6JCFRlx6+F+jcUs=
+		</data>
 		<key>Resources/passcode.png</key>
 		<data>
 		8dpzEvZ9NsJk5bFwnIgpGaS9nOU=
@@ -124,6 +132,17 @@
 			<key>requirement</key>
 			<string>identifier "libswscale.2" and anchor apple generic and certificate 1[field.1.2.840.113635.100.6.2.6] /* exists */ and certificate leaf[field.1.2.840.113635.100.6.1.13] /* exists */ and certificate leaf[subject.OU] = BJ4HAAB9B3</string>
 		</dict>
+		<key>Resources/Dark_Instruction for iPhoneiPad.png</key>
+		<dict>
+			<key>hash</key>
+			<data>
+			X+PMrMfCP/dkyZyUE8jW4ARBZSc=
+			</data>
+			<key>hash2</key>
+			<data>
+			ahkPprz3ijDGUy5r+EZV7n13tjhrJIbFF6dwtBAIn1s=
+			</data>
+		</dict>
 		<key>Resources/Error.jpg</key>
 		<dict>
 			<key>hash</key>
@@ -161,22 +180,22 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			SPypoxyntIhdBRANNbbEoVww1UA=
+			9BMNVYMSm5rpPOe7dx6wJjC0Ut0=
 			</data>
 			<key>hash2</key>
 			<data>
-			l9DbUDPpbuCKvFvKEvF6FKVscJGewKGlTfmymxtkoJo=
+			qyYabfHy7wKXIbRQ2gMtjB2taK80caFqABr65zY3Ug0=
 			</data>
 		</dict>
 		<key>Resources/PassWindow.nib</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			56mONscbjwXX+njk2WwE1lvTC90=
+			EE8sIyWynmeTrgi93/fTRIFpSxM=
 			</data>
 			<key>hash2</key>
 			<data>
-			qRGg75JnV4tOhQClmoprSymlSu/8UwAd7sPzwkagycI=
+			jTdyqCKHuv4IpaHvVitMQVUMGaBj6ie5tGhoj7oxxuc=
 			</data>
 		</dict>
 		<key>Resources/ZP share iOS.png</key>
@@ -239,6 +258,17 @@
 			</data>
 			<key>optional</key>
 			<true/>
+		</dict>
+		<key>Resources/nydusDefault.metallib</key>
+		<dict>
+			<key>hash</key>
+			<data>
+			g9JupAXUSruI6JCFRlx6+F+jcUs=
+			</data>
+			<key>hash2</key>
+			<data>
+			LQmOWXyqYpNJUDK37kZAU3MJL5VoKnBjwDcA0Ei5128=
+			</data>
 		</dict>
 		<key>Resources/passcode.png</key>
 		<dict>

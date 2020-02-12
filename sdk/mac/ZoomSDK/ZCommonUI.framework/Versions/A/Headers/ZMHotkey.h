@@ -7,7 +7,6 @@
 //
 
 #import <Cocoa/Cocoa.h>
-#import <Carbon/Carbon.h>
 
 typedef void(^keyDownAction)(id attachment,NSEvent* event);
 typedef void(^keyUpAction)(id attachment, NSEvent* event);
@@ -31,34 +30,36 @@ typedef void(^keyUpAction)(id attachment, NSEvent* event);
     CGFloat         _keyDownLongPressDelay;
     
     UInt32          _carbonHotKeyID;
-    EventHotKeyRef	_eventHotKeyRef;
-    
-    short           _skipWhenTyping;
+    void*       	_eventHotKeyRef;
     
     ZMHotkeyCenter* _hotkeyCenter;
     NSEvent*        _downEvent;
-    BOOL            _isKeyDownForLastEvent;
+    BOOL            _isKeyDown;
 }
-@property(nonatomic, readwrite, copy) NSString* identifier;
+@property(nonatomic, copy) NSString* identifier;
 @property(nonatomic, readwrite, copy) ZMHotkeyCombo*  hotkeyCombo;
-@property(nonatomic, readwrite, retain) id attachment;
-@property(nonatomic, readwrite, assign) id target;
-@property(nonatomic, readwrite, assign) SEL action;
-@property(nonatomic, readwrite, assign) SEL keyUpAction;
-@property(nonatomic, readwrite, copy) keyDownAction keyDownActionBlock;
-@property(nonatomic, readwrite, copy) keyUpAction keyUpActionBlock;
-@property(nonatomic, readwrite, assign) CGFloat keyDownLongPressDelay;
-@property(nonatomic, readwrite, assign) UInt32 carbonHotKeyID;
-@property(nonatomic, readwrite, assign) EventHotKeyRef eventHotKeyRef;
+@property(nonatomic, retain) id attachment;
+
+@property(nonatomic, assign) id target;
+@property(nonatomic, assign) SEL action;
+@property(nonatomic, assign) SEL keyUpAction;
+@property(nonatomic, copy) keyDownAction keyDownActionBlock;
+@property(nonatomic, copy) keyUpAction keyUpActionBlock;
+
+@property(nonatomic, assign) CGFloat keyDownLongPressDelay;
+@property(nonatomic, assign) UInt32 carbonHotKeyID;
+@property(nonatomic, assign) void* eventHotKeyRef;
 @property(nonatomic, readonly, assign) BOOL isSingleKeyCombo;
-@property(nonatomic, readwrite, assign) ZMHotkeyCenter* hotkeyCenter;
-@property(nonatomic, readonly, assign) BOOL isKeyDownForLastEvent;
+@property(nonatomic, assign) ZMHotkeyCenter* hotkeyCenter;
+
+@property(nonatomic, readonly, assign) BOOL isKeyDown;
+@property(nonatomic, readonly, assign) BOOL isLongPressHotkey;
 /**
- * the property is effect for app leve hot key;
  * if the hotcombo modifier is equal 0, the default value is YES
  * otherwise the default value is NO.
  */
-@property(nonatomic, readwrite, assign) BOOL skipWhenTyping;
+@property(nonatomic, assign) BOOL skipWhenTyping;
++ (id)hotkeyWithIdentifier:(NSString*)identifier withObject:(id)attachment;
 + (id)hotkeyWithIdentifier:(NSString*)identifier keyCombo:(ZMHotkeyCombo*)combo withObject:(id)attachment;
 - (id)init;
 - (id)initWithIdentifier:(NSString*)identifier keyCombo:(ZMHotkeyCombo*)combo;

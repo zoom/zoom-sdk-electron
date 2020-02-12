@@ -12,6 +12,7 @@
 #import "ZMPRemoteControlPTNotifyProtocol.h"
 #import "ZMPRemoteControlMTResponseProtocol.h"
 #import "ZMPRemoteControlMTNotifyProtocol.h"
+#import "ZMPRemoteControlMTZRWRequestProtocol.h"
 #import "ZMPConfDataProtocol.h"
 #import "ZMRemoteControlCommonActionProtocol.h"
 #import "ZMPPTDataProtocol.h"
@@ -37,6 +38,7 @@
     id<ZMPRemoteControlPTNotifyProtocol>                _zmpRCPTNotify;
     id<ZMPRemoteControlMTResponseProtocol>              _zmpRCMTResponse;
     id<ZMPRemoteControlMTNotifyProtocol>                _zmpRCMTNotify;
+    id<ZMPRemoteControlMTZRWRequestProtocol>            _zmpRCMTZRWRequest;
     id<ZMPConfDataProtocol>                             _zmpMTData;
     id<ZMRemoteControlCommonActionProtocol>             _zmRCCommonAction;
     id<ZMPPTDataProtocol>                               _zmPTData;
@@ -49,6 +51,7 @@
 @property(nonatomic, readwrite, assign) id<ZMPRemoteControlPTNotifyProtocol>                zmpRCPTNotify;
 @property(nonatomic, readwrite, assign) id<ZMPRemoteControlMTResponseProtocol>              zmpRCMTResponse;
 @property(nonatomic, readwrite, assign) id<ZMPRemoteControlMTNotifyProtocol>                zmpRCMTNotify;
+@property(nonatomic, readwrite, assign) id<ZMPRemoteControlMTZRWRequestProtocol>            zmpRCMTZRWRequest;
 @property(nonatomic, readwrite, assign) id<ZMPConfDataProtocol>                             zmpMTData;
 @property(nonatomic, readwrite, assign) id<ZMRemoteControlCommonActionProtocol>             zmRCCommonAction;
 @property(nonatomic, readwrite, assign) id<ZMPPTDataProtocol>                               zmPTData;

@@ -35,7 +35,7 @@ typedef BOOL(^ZMHMenuItemBackgroundDrawer)(NSRect bounds, NSRect dirtyRect, BOOL
 @property (nonatomic, retain) NSColor *highlightTitleColor;
 
 @property (nonatomic, assign) NSInteger tag;
-
+@property (nonatomic, retain, nullable) id representedValue;
 @property (nullable, assign) id target;
 @property (nullable) SEL action;
 
@@ -48,9 +48,13 @@ typedef BOOL(^ZMHMenuItemBackgroundDrawer)(NSRect bounds, NSRect dirtyRect, BOOL
 
 @property (readonly, nonatomic) BOOL isRoot;
 @property (readonly, nonatomic) BOOL isSeparated;
-@property (nonatomic) BOOL canSelect;
+@property (nonatomic) BOOL canSelect;//can highlight
 @property (nonatomic) BOOL enable;
 @property (nullable, copy) ZMHMenuItemBackgroundDrawer backgroundDrawer;
+
+@property (nonatomic) BOOL eventFree;
+
+@property (nonatomic) BOOL checked;
 
 @property (nonatomic, assign) CGFloat minWidth;
 

@@ -53,11 +53,12 @@ ZNSDKError ZAuthServiceWrap::AuthSDK(ZNAuthContext& authContext)
     if (!jwtToken || jwtToken.length == 0) {
         return ZNSDKERR_INVALID_PARAMETER;
     }
-    ZoomSDKAuthContext context = {jwtToken};
     ZoomSDKAuthService *auth = [[ZoomSDK sharedSDK] getAuthService];
     if (!auth) {
         return ZNSDKERR_SERVICE_FAILED;
     }
+    ZoomSDKAuthContext *context = [[ZoomSDKAuthContext alloc] init];
+    context.jwtToken = jwtToken;
     ZoomSDKError ret = [auth sdkAuth:context];
     nativeErrorTypeHelp error;
     return error.ZoomSDKErrorType(ret);

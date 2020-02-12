@@ -37,11 +37,15 @@ NS_ASSUME_NONNULL_BEGIN
 
 - (void)popupAtPosition:(NSPoint)position inView:(nullable NSView *)view anchorCorner:(NSRectCorner)corner;
 - (void)close;
+- (void)reloadMenuDataSource;
+- (ZMHMenuItem *)getSelectedItem;
 @property (readonly) BOOL shown;
 - (void)cleanUp;
 
 @property (copy) NSColor *backgroundColor;//default is White
 @property (nonatomic) NSEdgeInsets edgePaddings;//Not working
+
+@property (assign) BOOL assignKeyWindow;
 
 @property (assign) BOOL paddingTopAndBottom;
 

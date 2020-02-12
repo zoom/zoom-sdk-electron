@@ -20,5 +20,7 @@
 - (void)cleanup;
 - (BOOL)didDisplayUnplugged;
 - (void)updateScreensForStartZR;
+- (void)updateScreens2UnmirrorMode;
+- (void)updateScreens2MirrorMode;
 
 @end

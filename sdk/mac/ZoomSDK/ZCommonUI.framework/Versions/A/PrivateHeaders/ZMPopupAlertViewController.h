@@ -30,12 +30,16 @@ typedef enum : NSUInteger {
 
 @property (nonatomic,assign) BOOL showCancelButton;
 
+@property (nonatomic,assign) BOOL showConfirmButton;
+
 @property (nonatomic,copy) void(^actionBlock)(ZMPopupAlertIndex index);
 
 @property (nonatomic,retain) NSDictionary *userInfo;
 
+//default NO(NSLineBreakByTruncatingTail)
+@property (nonatomic,assign) BOOL isTitleBreakByWord;
 - (void)dismiss;
 
-
+- (__kindof NSButton *)buttonAtIndex:(ZMPopupAlertIndex)index;
 
 @end

@@ -120,3 +120,5 @@ _OBJC_CLASS_$_ZoomSDKQAController
 _OBJC_CLASS_$_ZoomSDKAnswerInfo
 _OBJC_CLASS_$_ZoomSDKQuestionInfo
 _OBJC_IVAR_$_ZoomSDKQAController._delegate
+_OBJC_CLASS_$_ZoomSDKAuthContext
+_OBJC_CLASS_$_ZoomSDKProxySettings

@@ -23,6 +23,7 @@
 @property NSRectCorner preferredAnchorConner;
 @property (assign) NSSize maxListSize;
 @property (assign) BOOL hasSearchField;
+@property (assign) BOOL assignKeyWindow;
 
 - (instancetype)initWithMenu:(ZMHMenu *)menu representedItem:(ZMHMenuItem *)item;
 - (instancetype)initWithMenu:(ZMHMenu *)menu representedItem:(ZMHMenuItem *)item maxSize:(NSSize)maxSize;
@@ -35,6 +36,10 @@
 - (BOOL)mouseOnSelfOrDescendantWindows;
 
 - (void)performShowSubWindowWithItem:(ZMHMenuItem *)menuItem;
+
+- (void)reloadMenuData;
+
+- (ZMHMenuItem *)getSelectedItem;
 
 //- (void)noteViewCliked:(NSView *)view;//
 

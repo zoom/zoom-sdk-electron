@@ -285,7 +285,7 @@ void ZoomNodeAuthWrap::Login(const v8::FunctionCallbackInfo<v8::Value>& args)
 void ZoomNodeAuthWrap::LoginWithSSOToken(const v8::FunctionCallbackInfo<v8::Value>& args)
 {
 	v8::Isolate* isolate = args.GetIsolate();
-	if (args.Length() < 1)
+	if (args.Length() < 2)
 	{
 		isolate->ThrowException(v8::Exception::TypeError(
 			v8::String::NewFromUtf8(isolate, "Wrong number of arguments", v8::NewStringType::kInternalized).ToLocalChecked()));
@@ -300,12 +300,8 @@ void ZoomNodeAuthWrap::LoginWithSSOToken(const v8::FunctionCallbackInfo<v8::Valu
 	}
 	ZNLoginParam param;
 	zoom_v8toc(args[0].As<v8::String>(), param.ssotoken);
+	zoom_v8toc(args[1].As<v8::Boolean>(), param.remember_me);
 	
-	if (args.Length() == 2)
-	{
-		zoom_v8toc(args[1].As<v8::Boolean>(), param.remember_me);
-	}
-
 	ZNSDKError err = _g_native_wrap.GetAuthServiceWrap().LoginWithSSOToken(param);
 	v8::Local<v8::Integer> bret = v8::Integer::New(isolate, (int32_t)err);
 	args.GetReturnValue().Set(bret);

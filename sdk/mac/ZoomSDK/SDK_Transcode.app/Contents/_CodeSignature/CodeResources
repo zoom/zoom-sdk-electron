@@ -6,21 +6,21 @@
 	<dict>
 		<key>Resources/SDK_Transcode-Info.plist</key>
 		<data>
-		a8FvxXi5VNKT0+XVqcKj7zv4ank=
+		iViZP29EZrAN0+caS8CbQyHS92Q=
 		</data>
 		<key>Resources/TranscodeFolderController.nib</key>
 		<data>
-		qdYF5uLOIbnAjphf6TLPziBONfw=
+		N4FN+M/JPfesb/3oAEcCobU+/wM=
 		</data>
 		<key>Resources/TranscodeWindowController.nib</key>
 		<data>
-		UJWpcil1OjvkC0rsCLMeZR1Sdz0=
+		BHlBilYdK+Dc+m8KO2hkGi04Syg=
 		</data>
 		<key>Resources/de.lproj/InfoPlist.strings</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			FmyG4+ei6fAakaVJs/nUVA1PuJo=
+			fFcdl0XWbb1Tw4MZ0SGS22tfeNY=
 			</data>
 			<key>optional</key>
 			<true/>
@@ -38,7 +38,7 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			G8ElPvRV1JoQfWGUB3BqnT4fuhk=
+			nyMuxxTeP6uNiuA9OP+XtAKHpV4=
 			</data>
 			<key>optional</key>
 			<true/>
@@ -56,7 +56,7 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			Ybi48U+f0ziAhOtbD4xSxl7bZpg=
+			wQ7m//vtBwefHHtFCRf4IwbY6Rk=
 			</data>
 			<key>optional</key>
 			<true/>
@@ -65,29 +65,20 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			lalHNfruuFFA1hntD61OiNCb5V4=
-			</data>
-			<key>optional</key>
-			<true/>
-		</dict>
-		<key>Resources/it.lproj/InfoPlist.strings</key>
-		<dict>
-			<key>hash</key>
-			<data>
-			rthwIj6UAueb4JRRwqqvCkUvRGk=
+			8IzVECyATv4Tl0iwJRF0l0lY8yc=
 			</data>
 			<key>optional</key>
 			<true/>
 		</dict>
 		<key>Resources/logo.icns</key>
 		<data>
-		b99Zm5BmbXc6Esaolht6G2AnOp4=
+		AHp3b5qdDZpUoo62WXjh95WoiuY=
 		</data>
 		<key>Resources/zh-Hans.lproj/InfoPlist.strings</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			WTJd5YHSI4ppR/WV7ZlIk4In2Sw=
+			jNZxx1265399ri0P+LSwR9F8lRw=
 			</data>
 			<key>optional</key>
 			<true/>
@@ -96,7 +87,7 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			bKEBsMLpbDH1gDMgUBf9ntWEwC4=
+			enr7YQwH2Ozotk/sLCAXtK0qQww=
 			</data>
 			<key>optional</key>
 			<true/>
@@ -108,44 +99,44 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			a8FvxXi5VNKT0+XVqcKj7zv4ank=
+			iViZP29EZrAN0+caS8CbQyHS92Q=
 			</data>
 			<key>hash2</key>
 			<data>
-			B85hXKV3X/A6IQLYt2XRxT+l3pRDWVbDxmfzYUzUASA=
+			TCxMYKjTmrcRpWFLkuxTVtsG/1KIWuv02nxIh86FKzk=
 			</data>
 		</dict>
 		<key>Resources/TranscodeFolderController.nib</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			qdYF5uLOIbnAjphf6TLPziBONfw=
+			N4FN+M/JPfesb/3oAEcCobU+/wM=
 			</data>
 			<key>hash2</key>
 			<data>
-			2rW959vmbHUZI1sfjgFtjpzAquXpXzkFsHFy7ALmhWA=
+			U4vWMOYizH0xG9ntMgIXwFfRvazhikGPvo7Np0wV0KM=
 			</data>
 		</dict>
 		<key>Resources/TranscodeWindowController.nib</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			UJWpcil1OjvkC0rsCLMeZR1Sdz0=
+			BHlBilYdK+Dc+m8KO2hkGi04Syg=
 			</data>
 			<key>hash2</key>
 			<data>
-			erBjv6DmNqk6GsG5zQbWz2kNnzL5FntW/jmINAGuiIU=
+			KfPbH4yOShCL4lYhfLQfHhYqpVHHw99bO2537vDo2oI=
 			</data>
 		</dict>
 		<key>Resources/de.lproj/InfoPlist.strings</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			FmyG4+ei6fAakaVJs/nUVA1PuJo=
+			fFcdl0XWbb1Tw4MZ0SGS22tfeNY=
 			</data>
 			<key>hash2</key>
 			<data>
-			+mGAjMECJ1LwTNj/i6DyO7TrsQn//jWKL5kMZWfRZ8A=
+			oK2X0jnpt4sf0lRn1qavBkLeHVG5js+EawzLLg5Wfvc=
 			</data>
 			<key>optional</key>
 			<true/>
@@ -167,11 +158,11 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			G8ElPvRV1JoQfWGUB3BqnT4fuhk=
+			nyMuxxTeP6uNiuA9OP+XtAKHpV4=
 			</data>
 			<key>hash2</key>
 			<data>
-			RKnvCm0crGz9zEXsdbslJPtAM1hNYXoU/bOBAzVHTUM=
+			xs3gTDp6qNfjTRPwDtyp6EAREydQST+LxZTlj89xOcQ=
 			</data>
 			<key>optional</key>
 			<true/>
@@ -193,11 +184,11 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			Ybi48U+f0ziAhOtbD4xSxl7bZpg=
+			wQ7m//vtBwefHHtFCRf4IwbY6Rk=
 			</data>
 			<key>hash2</key>
 			<data>
-			ko2aSS5VIbCDui04Qm4UzuY7VwuWhovKvYcZ0RauEno=
+			9yTmsD4R/pVzL5Os7JRCjpmSbOM+3OO+yXnSmv5rqr4=
 			</data>
 			<key>optional</key>
 			<true/>
@@ -206,24 +197,11 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			lalHNfruuFFA1hntD61OiNCb5V4=
+			8IzVECyATv4Tl0iwJRF0l0lY8yc=
 			</data>
 			<key>hash2</key>
 			<data>
-			fkPEbj8pwAlH6p6uyit9RW9hAftIHCSTkpDXJ5ifZmQ=
-			</data>
-			<key>optional</key>
-			<true/>
-		</dict>
-		<key>Resources/it.lproj/InfoPlist.strings</key>
-		<dict>
-			<key>hash</key>
-			<data>
-			rthwIj6UAueb4JRRwqqvCkUvRGk=
-			</data>
-			<key>hash2</key>
-			<data>
-			WpnwIbQE3Ih7NphFscFTclRrbP766SjQ9j9wbfjlnAY=
+			x7QBLdH5HHtyqVkkUXoyR6mxeLj9isYsEN3hzGyoqGU=
 			</data>
 			<key>optional</key>
 			<true/>
@@ -232,22 +210,22 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			b99Zm5BmbXc6Esaolht6G2AnOp4=
+			AHp3b5qdDZpUoo62WXjh95WoiuY=
 			</data>
 			<key>hash2</key>
 			<data>
-			acmBJiaqcS033LTcb5Ersp6NeGBq1rQ/snMiH6iberE=
+			WnELSr9aT0dbX7dic1yuBKhkgf9bLXSfS6/MQqtqzQs=
 			</data>
 		</dict>
 		<key>Resources/zh-Hans.lproj/InfoPlist.strings</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			WTJd5YHSI4ppR/WV7ZlIk4In2Sw=
+			jNZxx1265399ri0P+LSwR9F8lRw=
 			</data>
 			<key>hash2</key>
 			<data>
-			r7c4Ik6Aiykl1C1GwZ8LzrEIgeHlapShNcONMDPK/BM=
+			YkCskUtI7vbxSMEVpObcpDBKfA5fAcnH/FnuRqLgG3s=
 			</data>
 			<key>optional</key>
 			<true/>
@@ -256,11 +234,11 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			bKEBsMLpbDH1gDMgUBf9ntWEwC4=
+			enr7YQwH2Ozotk/sLCAXtK0qQww=
 			</data>
 			<key>hash2</key>
 			<data>
-			4cB1a+j28xqlF8CCUlaqgTLhmn2QvmDOV/Ums73lvoA=
+			HsZr3++H9lsiUsIaYKE4yTauyp14EX+HllIOpCs+UjA=
 			</data>
 			<key>optional</key>
 			<true/>

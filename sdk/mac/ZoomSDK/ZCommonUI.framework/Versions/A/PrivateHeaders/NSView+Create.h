@@ -12,10 +12,8 @@
 
 typedef enum : NSUInteger {
     ZMButtonStyleRoundFillBlue,
-    ZMButtonStyleRoundFillGray,
     ZMButtonStyleRoundFillRed,
     ZMButtonStyleRoundBorderHoverBlue,
-    ZMButtonStyleRoundBorderHoverRed,
     ZMButtonStyleRoundNoBorer,
 } ZMButtonStyle;
 

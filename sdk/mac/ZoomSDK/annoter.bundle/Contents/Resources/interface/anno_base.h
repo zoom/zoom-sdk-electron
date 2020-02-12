@@ -80,6 +80,18 @@ public:
 	//
 	//
 	//	ANNO_EVENT_REQUEST_ANNOTATOR_NAME	appId										not used
+	//
+	//
+	//  ANNO_EVENT_SNAPSHOT_CHANGED			not used									not used
+	//
+	//
+	//	ANNO_EVENT_CONTENT_SAVING_STATE		1: pdf saving start							not used
+	//										0: pdf saving end					
+	//
+	//  ANNO_EVENT_ZR_TAP_DETECTED			not used									not used
+	//
+	//
+	//	ANNO_EVENT_TOOL_STATE_CHANGED		the tool type, in AnnoToolType				the tool state, in AnnoToolState
 	virtual int OnAnnoBaseEvent(
 		IN	const AnnoEventType eventType, 
 		IN	const WPARAM wParam, 
@@ -277,6 +289,13 @@ public:
         ) = 0;
 
 	//
+	// Call this method to reset the state of current selected annotation tool
+    
+     virtual int ConfirmDetectionText(
+		IN NODEID recognIndex
+		) = 0;
+    
+	//
 	// Call this method to undo a undoable action
 	virtual int Undo(
 		) = 0;
@@ -370,15 +389,22 @@ public:
 
 	//	// Call this method to close the current whiteboard
 	virtual int CloseWhiteboard(
+		) = 0;
 
+	// Call this method to load image file to current whiteboard page
+	virtual int OpenLocalFile(
+		IN const wchar_t* filePath
 		) = 0;
 
 	//
 	// Call this method to save current snapshot of shared region to file, in PNG format
 	// @savePath:		file path the snapshot will be saved to
+	// @type  :         file type for saving
 	virtual int SaveSnapshotToPath(
-		IN	const wchar_t* savePath
-		) = 0;
+		IN	const wchar_t* savePath,
+		IN	const void*	   savePageList,
+		IN  AnnoSaveType   type = ANNO_SAVE_IMG
+		)=0;
 	//
 	// Call this method to save a bitmap data buffer to file, in PNG format
 	// @bitmapWidth:	width of the bitmap, in piexles
@@ -473,6 +499,11 @@ public:
 	// Call this method to synch attendee annoter page info 
 	// 
 	virtual int SynchPageInfo(
+		) = 0;
+	
+	// Call this method to set new AppId
+	virtual int AmendAppId( 
+		NODEID appId
 		) = 0;
 };
 

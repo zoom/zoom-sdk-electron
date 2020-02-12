@@ -20,6 +20,8 @@ typedef enum{
     SettingComponent_StatisticsFeatureTab,
     SettingComponent_FeedbackFeatureTab,
     SettingComponent_AccessibilityFeatureTab,
+    SettingComponent_ScreenShareFeatureTab,
+    SettingComponent_ShortCutFeatureTab,
 }SettingComponent;
 
 typedef enum{

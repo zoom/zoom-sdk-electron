@@ -81,6 +81,10 @@
   typedef int Int32;
 #endif
 
+#ifndef Int64
+  typedef long long Int64;
+#endif
+
 #ifndef Float32
   typedef float Float32;
 #endif
@@ -101,6 +105,10 @@
   #define BROADCAST_NODE_ID		0x00000000
 #endif
 
+#ifndef INT_MAX
+    #define INT_MAX		0xffffffff
+#endif
+
 #ifndef AnnoWnd
   typedef void *AnnoWnd;	// handle
 #endif
@@ -109,15 +117,19 @@
   typedef void *AnnoGc;	// handle
 #endif
 
+#ifndef AnnoImage
+  typedef void *AnnoImage;	// handle
+#endif
+
 #ifndef WPARAM
   #if defined (__IOS__) || defined (__MACOS__)
     typedef unsigned long WPARAM;
   #elif defined (__LINUX_CLIENT__)
     typedef unsigned long WPARAM;
   #elif defined _WIN64
-    typedef unsigned __int64 WPARAM;
+	typedef unsigned __int64 WPARAM;
   #elif defined __aarch64__  || defined __x86_64__
-		typedef unsigned long WPARAM;
+	typedef unsigned long WPARAM;
   #else
     typedef unsigned int WPARAM;
   #endif
@@ -132,17 +144,51 @@
     typedef long LPARAM;
   #endif
 #endif
-#if defined __aarch64__  || defined __x86_64__
-	#define cmm_reinterpret_cast_wparam reinterpret_cast<intptr_t>
-#else
-	#define cmm_reinterpret_cast_wparam reinterpret_cast<WPARAM>
-#endif
+
+typedef struct tagAnnoPoint
+{
+	Int32	x;
+	Int32	y;
+	bool operator < (const tagAnnoPoint& point) const
+	{
+		return this->x < point.x || ((this->x == point.x) && this->y < point.y);
+	}
+
+	bool IsEmpty()
+	{
+        return (x == INT_MAX) || (y == INT_MAX) ;
+	}
+
+} AnnoPoint;
+
+typedef struct tagAnnoPointF
+{
+	Float32   x;
+	Float32   y;
+	tagAnnoPointF(Float32 __x, Float32 __y)
+	{
+		x = __x;
+		y = __y;
+	}
+
+	tagAnnoPointF()
+	{
+		x = (Float32) 0xffffffff;
+		y = (Float32) 0xffffffff;
+	}
+} AnnoPointF;
 
 typedef struct tagAnnoSize
 {
     Int32        width;
     Int32        height;
 } AnnoSize;
+
+typedef struct tagAnnoSizeF
+{
+	Float32   width;
+	Float32   height;
+} AnnoSizeF;
 
 typedef struct tagAnnoOffset
 {
@@ -152,15 +198,59 @@ typedef struct tagAnnoOffset
 
 #define AnnoOffsetEqual(o1, o2) ((o1.x == o2.x) && (o1.y == o2.y))
 
+#define AnnoFloatEqual(f1, f2) ( (f1) >= (f2) ? ((f1) - (f2)) <= 1E-6: ((f2) - (f1)) <= 1E-6 )
+
 typedef struct tagAnnoRect
 {
 	Int32		left;
 	Int32		top;
 	Int32		right;
 	Int32		bottom;
+
+	bool IsEmpty()
+	{
+		if(left == 0 && top == 0 && right == 0 && bottom == 0)
+			return true;
+		return false;
+	}
 } AnnoRect;
 
 #define AnnoRectEqual(r1, r2) ((r1.left == r2.left) && (r1.top == r2.top) && (r1.right == r2.right) && (r1.bottom == r2.bottom))
+
+typedef struct tagAnnoRectF
+{
+    Float32        left;
+    Float32        top;
+    Float32        right;
+    Float32        bottom;
+
+    tagAnnoRectF()
+        :left(0)
+        ,top(0)
+        ,right(0)
+        ,bottom(0)
+    {
+    }
+    tagAnnoRectF(Float32 left, Float32 top, Float32 width, Float32 height)
+    {
+        this->left = left;
+        this->top = top;
+        this->right = left + width;
+        this->bottom = top + height;
+    }
+    Float32 Width() const
+    {
+        return right - left;
+    }
+    Float32 Height() const
+    {
+        return bottom - left;
+    }
+    bool IsEmpty()
+    {
+        return (AnnoFloatEqual(left, right) || AnnoFloatEqual(top, bottom));
+    }
+} AnnoRectF;
 
 typedef struct tagAnnoWindow
 {
@@ -230,10 +320,13 @@ typedef enum tagAnnoToolType
 	ANNO_TOOL_TYPE_MULTI_FLAT_PEN,
 	ANNO_TOOL_TYPE_MULTI_FLAT_ERASER,
 	ANNO_TOOL_TYPE_MULTI_THICKNESS_PEN,
-	// added 6.7 June 2018 
+	// added June 2018 
 	ANNO_TOOL_TYPE_AUTO_STAMP_STAR,
 	ANNO_TOOL_TYPE_AUTO_STAMP_HEART,
 	ANNO_TOOL_TYPE_AUTO_STAMP_QM,
+	// added for ZRT Mar 2019
+	ANNO_TOOL_TYPE_MULTI_SHAPE_DETECTOR,
+	ANNO_TOOL_TYPE_MULTI_TEXT_DETECTOR,
 	NUMBER_OF_ANNO_TOOL_TYPE
 } AnnoToolType;
 
@@ -270,23 +363,39 @@ typedef enum tagAnnoWhiteboardEvent
 
 typedef enum tagAnnoEventType
 {
-	ANNO_EVENT_STARTED_UP           = 0,		// to notify that annotation session has just started up
-	ANNO_EVENT_SHUT_DOWN            = 1,		// to notify that annotation session has just shut down
-	ANNO_EVENT_ROOT_WND             = 2,		// to notify that annotation windows has been created to ensure other windows to be on top of it
-	ANNO_EVENT_TOOL_CHANGED         = 3,		// to notify that current annotation tool has been changed (by mouse right click or whatever means that unknown to uppper layer)
-	ANNO_EVENT_CAN_UNDO_REDO        = 4,		// to notify if or not undo/redo are available so that UI can enable/disable menu/toolbar respondingly
-	ANNO_EVENT_HAS_ANNOTATION       = 5,		// to notify if or not current page has annotation so that UI can enable/disable menu/toolbar icon "Clear All"
-	ANNO_EVENT_REMOTE_DRAW_FINISHED = 6,		// to notify that a remote drawing command has been just executed on local so that uppper layer (AS) sampling program knows where to retrive the dirty region for best perofrmance
-	ANNO_EVENT_LOCAL_DRAWING_STATE  = 7,		// to notify that local drawing has been started (ready to accpet local mouse or touch events to draw, or drawing is in progress, etc.) or stopped (not to accpet local mouse or touch events, for example "Mouse" mode)
-    ANNO_EVENT_KEYBOARD_STATE       = 8,		// to notify container window that keyboard will show or hide on iOS and Android
-	ANNO_EVENT_WB_WINDOW_STATE	    = 9,		// to notify that WB window has been showed up or hidden
-	ANNO_EVENT_DRAW_CHANGED			= 10,		// to notify that draw changed
-	ANNO_EVENT_REMOTE_DRAWING_TO_START = 11,	// to notify AS module know that remote participants are going to add annotation to presenter's shared screen.
-    ANNO_EVENT_APPLE_STYLUS_DETECTED= 12,		// to notify that an stylus type input detected on IOS
-	ANNO_EVENT_ZR_WINDOW_CHANGED	= 13,		// to notify that ZR windows has been changed
-	ANNO_EVENT_REQUEST_ANNOTATOR_NAME  = 14,	// to notify that current drawing changed
-	ANNO_EVENT_ZR_DRAW_ANNOTATE		= 15,		// to notify that zr draw annotate
-	ANNO_EVENT_PAGE_CHANGED			= 16,		// to notify that page number has changed
+	//notify to session
+	ANNO_EVENT_STARTED_UP				= 0x0000,		// to notify that annotation session has just started up
+	ANNO_EVENT_SHUT_DOWN				= 0x0001,		// to notify that annotation session has just shut down
+	ANNO_EVENT_ROOT_WND					= 0x0002,		// to notify that annotation windows has been created to ensure other windows to be on top of it
+	ANNO_EVENT_TOOL_CHANGED				= 0x0003,		// to notify that current annotation tool has been changed (by mouse right click or whatever means that unknown to uppper layer)
+	ANNO_EVENT_CAN_UNDO_REDO			= 0x0004,		// to notify if or not undo/redo are available so that UI can enable/disable menu/toolbar respondingly
+	ANNO_EVENT_HAS_ANNOTATION			= 0x0005,		// to notify if or not current page has annotation so that UI can enable/disable menu/toolbar icon "Clear All"
+	ANNO_EVENT_LOCAL_DRAWING_STATE		= 0x0006,		// to notify that local drawing has been started (ready to accpet local mouse or touch events to draw, or drawing is in progress, etc.) or stopped (not to accpet local mouse or touch events, for example "Mouse" mode)
+	ANNO_EVENT_WB_WINDOW_STATE			= 0x0007,		// to notify that WB window has been showed up or hidden
+	ANNO_EVENT_DRAW_CHANGED				= 0x0008,		// to notify that draw changed
+	ANNO_EVENT_APPLE_STYLUS_DETECTED	= 0x0009,		// to notify that an stylus type input detected on IOS
+	ANNO_EVENT_ZR_WINDOW_CHANGED		= 0x000A,		// to notify that ZR windows has been changed
+	ANNO_EVENT_REQUEST_ANNOTATOR_NAME	= 0x000B,		// to notify that current drawing changed
+	ANNO_EVENT_ZR_DRAW_ANNOTATE			= 0x000C,		// to notify that zr draw annotate
+	ANNO_EVENT_PAGE_CHANGED				= 0x000D,		// to notify that page number has changed
+	ANNO_EVENT_RECOGNIZE_CHANGED		= 0x000E,		// to notify that reconization text changed
+	ANNO_EVENT_PENCIL_DOUBLETAP_PALETTE	= 0x000F,		// to notify that a double tap event has been detected to show color palette
+	ANNO_EVENT_UPDATE_TOOLBAR_UI		= 0x0010,		// to notify that toobard ui need to changed
+	ANNO_EVENT_RENDER_NOTIFY			= 0x0011,		// to notify that render asynchronous processing return(ios save content..)
+	ANNO_EVENT_CONTENT_SAVING_STATE     = 0x0012,		// to notify that the pdfsaving start or the pdfsaving end;
+	ANNO_EVENT_ZR_TAP_DETECTED			= 0x0013,		// to notify that tap detected from input and ZRT should show/hide the toolbar, zoom room only
+	ANNO_EVENT_TOOL_STATE_CHANGED		= 0x0014,		// to notify that tool state has changed, this is used by VDI & ZR auto hide
+	//notify to Media client manage module
+	//...0x1000
+
+	//notify to Nydus module
+	ANNO_EVENT_SHARER_PROPERTY_CHANGED	= 0x0200,		// to notify Nydus module that remote sharer's doc property has been changed and need Nydus to reset annowindow
+
+	//notify to AS module
+	ANNO_EVENT_REMOTE_DRAWING_TO_START	= 0x0300,		// to notify AS module know that remote participants are going to add annotation to presenter's shared screen.
+	ANNO_EVENT_REMOTE_DRAW_FINISHED		= 0x0301,		// to notify that a remote drawing command has been just executed on local so that uppper layer (AS) sampling program knows where to retrive the dirty region for best perofrmance
+	ANNO_EVENT_CAPTURE_CHANGED			= 0x0302,		// to notify AS module that new difference of frame has been made and needs AS to refresh
+
 	NUMBER_OF_ANNO_EVENT_TYPE
 } AnnoEventType;
 
@@ -339,8 +448,22 @@ typedef enum tagAnnoInputType
     ANNO_INPUT_TYPE_FLAGS_CHANGED   = 0x600, // Mac OSX flagsChanged
     
     ANNO_INPUT_TYPE_STYLUS = 0x700, // IOS Stylus
-    ANNO_INPUT_TYPE_PENCIL_TAP = 0x701
+    ANNO_INPUT_TYPE_PENCIL_DOUBLETAP_ERASER = 0x701,
+    ANNO_INPUT_TYPE_PENCIL_DOUBLETAP_PREVIOUS = 0x702,
+    ANNO_INPUT_TYPE_PENCIL_DOUBLETAP_PALETTE = 0x703
 } AnnoInputType;
+
+// ----------------------------------------------------------------------------
+//the local File type
+// ----------------------------------------------------------------------------
+typedef enum tagAnnoFileType
+{
+	ANNO_FILE_TYPE_UNDEFINED			= 0x00,
+	ANNO_FILE_TYPE_IMAGE_PNG			= 0x01,
+	ANNO_FILE_TYPE_IMAGE_JPG			= 0x02,
+	//ANNO_FILE_TYPE_SVG_NATIVE			= 3, // internal binary format
+	NUMBER_OF_ANNO_FILE_TYPE
+}AnnoFileType;
 
 typedef enum tagAnnoVirtualKey
 {
@@ -420,12 +543,82 @@ typedef enum tagAnnoConfigMask
 	ANNO_CONFIG_NULL					= 0x00000000,
 	ANNO_CONFIG_NEEDS_VIRTUAL_KEYBOARD	= 0x00000001,
 	ANNO_CONFIG_ENABLE_MULTI_TOUCH		= 0x00000002,
-	ANNO_CONFIG_DISABLE_DESKTOP_HOOK	= 0x00000004,
-	ANNO_CONFIG_DISABLE_ARROW_WINDOW	= 0x00000008,
+	ANNO_CONFIG_DISABLE_DESKTOP_HOOK	= 0x00000004,	
+	ANNO_CONFIG_DISABLE_ARROW_WINDOW	= 0x00000008,	
 	ANNO_CONFIG_ENABLE_DIRTY_REFRESH	= 0x00000010,
-	ANNO_CONFIG_MOBILE_SHARE_WB			= 0x00000020
+	ANNO_CONFIG_MOBILE_SHARE_WB			= 0x00000020,
+	ANNO_CONFIG_ENABLE_SHARE_ZOOM_WINDOW = 0x00000040
 } AnnoConfigMask;
 
 typedef UInt32 AnnoConfig;
+
+// ----------------------------------------------------------------------------
+//	The bitmap data storage format type
+// ----------------------------------------------------------------------------
+typedef enum tagAnnoBitmapFormat
+{
+	ANNO_BITMAP_FORMAT_NULL		= 0x0000,
+	ANNO_BITMAP_FORMAT_BGRA32	= 0x0001,	// Windows DIB
+	ANNO_BITMAP_FORMAT_RGBA32	= 0x0002,	// Mac CGContext
+    ANNO_BITMAP_FORMAT_RGB24    = 0x0003,
+    ANNO_BITMAP_FORMAT_RGB32    = 0x0004,
+    ANNO_BITMAP_FORMAT_ARGB32   = 0x0005,
+    ANNO_BITMAP_FORMAT_PARGB32  = 0x0006,
+	ANNO_BITMAP_FORMAT_NUMBER
+}AnnoBitmapFormat;
+
+// ----------------------------------------------------------------------------
+//	Type used by AnnoBase::GetAnnoBitmapInfo
+// ----------------------------------------------------------------------------
+typedef struct tagAnnoBitmapInfo
+{
+	UInt8*				bmData;
+	AnnoBitmapFormat	bmFormat;
+	UInt32				bmWidth;
+	UInt32				bmHeight;
+
+	tagAnnoBitmapInfo()
+	{
+		bmData		= 0;
+		bmFormat	= ANNO_BITMAP_FORMAT_NULL;
+		bmWidth		= 0;
+		bmHeight	= 0;
+	}
+}AnnoBitmapInfo;
+
+// ----------------------------------------------------------------------------
+//	Page Operation Type used by AnnoEvent::ANNO_EVENT_PAGE_CHANGED
+// ----------------------------------------------------------------------------
+typedef enum tagAnnoPageOperation
+{
+	ANNO_PAGE_OPRATION_NONE		= 0x0000,
+	ANNO_PAGE_OPRATION_ADD		= 0x0001,
+	ANNO_PAGE_OPRATION_REMOVE	= 0x0002,
+	ANNO_PAGE_OPRATION_RESTORE	= 0x0003,
+	ANNO_PAGE_OPRATION_SWITCH	= 0x0004,
+	ANNO_PAGE_OPRATION_NUMBER
+}AnnoPageOperation;
+
+typedef struct tagAnnoPageChangeInfo
+{
+	AnnoPageOperation	pageOp;
+	NODEID				pageId;
+	Int32				curPageIdx;
+	Int32				totalPageNum;
+
+	tagAnnoPageChangeInfo()
+	{
+		pageOp = ANNO_PAGE_OPRATION_NONE;
+		pageId = NULL_NODE_ID;
+		curPageIdx = totalPageNum = 0;
+	}
+}AnnoPageChangeInfo;
+
+typedef enum tagAnnoSaveType
+{
+	ANNO_SAVE_IMG = 0,
+	ANNO_SAVE_PDF = 1,
+	ANNO_SAVE_NUMBER
+}AnnoSaveType;
 
 #endif // __ANNO_TYPES_H__

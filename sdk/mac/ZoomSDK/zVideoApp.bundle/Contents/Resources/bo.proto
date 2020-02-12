@@ -46,3 +46,32 @@ message BOListProto
 	optional uint32 TimerDuration = 9;	//BO schedule duration, in seconds
 	optional uint32 StartTimeOnMMR = 10; //BO start time, in seconds
 }
+
+enum InterpreteAction
+{
+	ACTION_NONE = 1;
+	ACTION_START = 2;
+	ACTION_STOP = 3;
+	ACTION_UPDATE = 4;
+}
+
+enum InterpreteStatus
+{
+	STATUS_STOPPED = 1;
+	STATUS_STARTING = 2; //=> reset to stopped
+	STATUS_STARTED = 3;
+	STATUS_UPDATING = 4; //=>reset to started
+}
+
+message Interpreter {
+	required string userGuid = 1;
+	required string userEmail = 2;
+	required int32 firstLan = 3;
+	required int32 secondLan = 4;
+}
+
+message InterpreteData{
+	repeated Interpreter interpreters = 1;
+	required InterpreteStatus status = 2;
+	required InterpreteAction action = 3;
+}

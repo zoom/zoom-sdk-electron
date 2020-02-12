@@ -20,7 +20,7 @@
 #define DRGBA(r,g,b,a)  [NSColor colorWithDeviceRed:r/255.0 green:g/255.0 blue:b/255.0 alpha:a]
 
 #ifndef IsEmptyString
-#define IsEmptyString(str) (![str isKindOfClass:[NSString class]] || (!str || ![str length]))
+#define IsEmptyString(str) ([ZMUtil isEmptyString:str])
 #endif
 
 #ifndef IsFloatEqualToZero
@@ -77,7 +77,8 @@ typedef enum
     ID_Spanish_Language,
     ID_Japanese_Language,
     ID_Portuguese_Language,
-    ID_Russian_Language
+    ID_Russian_Language,
+    ID_Korean_Language
 } ID_CLIENT_LANGUAGE;
 
 @interface ZMUtil : NSObject
@@ -85,7 +86,7 @@ typedef enum
 //change key event to mouse event, change menu location
 + (NSEvent*)zmEventWithEvent:(NSEvent*)inOldEvent newLocation:(NSPoint)inNewLocation;
 + (ID_CLIENT_LANGUAGE)getCurrentLaguageIdentifer;
-+ (NSString*)getCurrentLaguageCodeForTele;
++ (NSString*)getCurrentLaguageCode;
 
 //get view rect at screen coordinates
 + (NSRect)getScreenCoordinatesRectForView:(NSView*)inView;
@@ -96,6 +97,7 @@ typedef enum
 //check if email is valid
 + (BOOL)isValidEmail:(NSString*)inEmail;
 
++ (BOOL)isEmptyString:(NSString *)string;
 
 /**
  check if Contain Email
@@ -108,6 +110,7 @@ typedef enum
 + (NSString*)clipString:(NSString*)string limitHeight:(CGFloat)limitHeight limitWidth:(CGFloat)limitWidth attribute:(NSDictionary*)attr isMyNote:(BOOL)isMyNote;
 + (NSMutableArray*)parseHTTPURLs:(NSString*)body;
 + (NSArray*)parseURLs:(NSMutableAttributedString*)inMsg;
++ (NSArray*)parseURLs:(NSMutableAttributedString*)inMsg forCommonApp:(BOOL)isCommonApp;
 
 #pragma mark - window level
 + (NSInteger)getNormalWindowLevel;//0
@@ -122,5 +125,14 @@ typedef enum
 + (NSString *)getFileIntegrationTypeString:(NSInteger)fileIntegrationType defaultRetString:(NSString*)ret;
 + (NSComparisonResult)compareVersionString:(NSString*)string1 with:(NSString*)string2;//ZOOM-68189
 + (BOOL)recreateSymbolicLinkForLib:(NSString*)libName inPath:(NSString*)path error:(NSError **)error;//ZOOM-68189
++ (NSSize)calculateAttributeString:(NSAttributedString *)string maxWidth:(CGFloat)maxWidth textContainer:(NSTextContainer *)textContainer isBotFieldMessage:(BOOL)isBotField;
++ (NSSize)calculateAttributeString:(NSAttributedString *)string maxWidth:(CGFloat)maxWidth textContainer:(NSTextContainer *)textContainer;
++ (NSSize)calculateAttributeString:(NSAttributedString *)string maxWidth:(CGFloat)maxWidth textContainer:(NSTextContainer *)textContainer isBotFieldMessage:(BOOL)isBotField font:(NSFont*)font;
 
+#pragma mark - draw elements
+//ZOOM-72640 RTT
+//draw arrow(type==0) or triangle(type==1);  up(direction=0),down(1),left(2),right(3)
++ (void)drawArrow:(NSRect)rect lineWidth:(float)width color:(NSColor*)color direction:(int)direction type:(int)type;
++ (void)drawTick:(NSRect)rect lineWidth:(float)width color:(NSColor*)color;
++ (void)drawCross:(NSRect)rect lineWidth:(float)width color:(NSColor*)color;
 @end

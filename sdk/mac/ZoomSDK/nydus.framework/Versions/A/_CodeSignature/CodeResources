@@ -6,7 +6,11 @@
 	<dict>
 		<key>Resources/Info.plist</key>
 		<data>
-		m+iq5rTT5YIf/j3FIp1fB1NKE6g=
+		kkFf4kg/6HXCZWXoAssbV7aUm8Y=
+		</data>
+		<key>Resources/nydusDefault.metallib</key>
+		<data>
+		g9JupAXUSruI6JCFRlx6+F+jcUs=
 		</data>
 	</dict>
 	<key>files2</key>
@@ -15,11 +19,22 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			m+iq5rTT5YIf/j3FIp1fB1NKE6g=
+			kkFf4kg/6HXCZWXoAssbV7aUm8Y=
 			</data>
 			<key>hash2</key>
 			<data>
-			K9mflL1AsqiqXplY9t/MNptXeJaKN7iPPB7Ctj/7374=
+			MHxSO9cQ9b1mz6A5XCSvb+lfaixmQRpqyr8x9fWmvoM=
+			</data>
+		</dict>
+		<key>Resources/nydusDefault.metallib</key>
+		<dict>
+			<key>hash</key>
+			<data>
+			g9JupAXUSruI6JCFRlx6+F+jcUs=
+			</data>
+			<key>hash2</key>
+			<data>
+			LQmOWXyqYpNJUDK37kZAU3MJL5VoKnBjwDcA0Ei5128=
 			</data>
 		</dict>
 	</dict>

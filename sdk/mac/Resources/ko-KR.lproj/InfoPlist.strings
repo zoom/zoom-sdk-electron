@@ -1,0 +1,4 @@
+/* Localized versions of Info.plist keys */
+
+NSMicrophoneUsageDescription = "참가자에게 이야기하려면 Zoom에는 귀하의 마이크에 대한 액세스 권한이 필요합니다.";
+NSCameraUsageDescription = "참가자가 귀하의 모습을 볼 수 있도록 하려면 Zoom에는 귀하의 카메라에 대한 액세스 권한이 필요합니다.";

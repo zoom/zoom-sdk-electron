@@ -3,7 +3,7 @@
 <plist version="1.0">
 <dict>
 	<key>NSHumanReadableCopyright</key>
-	<string>Copyright ©2012-2019 Zoom Video Communications, Inc. All rights reserved</string>
+	<string>ZoomCopyRight</string>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>English</string>
 	<key>CFBundleExecutable</key>
@@ -17,9 +17,9 @@
 	<key>CFBundlePackageType</key>
 	<string>BNDL</string>
 	<key>CFBundleShortVersionString</key>
-	<string>4.4.57220.1210</string>
+	<string>ZoomBundleDisplayVersion</string>
 	<key>CFBundleVersion</key>
-	<string>4.4.57220.1210</string>
+	<string>ZoomBundleVersionNumber</string>
 	<key>LSMinimumSystemVersion</key>
 	<string>$(MACOSX_DEPLOYMENT_TARGET)</string>
 	<key>NSPrincipalClass</key>

@@ -133,11 +133,16 @@ void ZoomNodeWrap::InitSDK(const v8::FunctionCallbackInfo<v8::Value>& args){
 	if (args.Length() > 6)
 	{
 		zoom_v8toc(args[6].As<v8::Boolean>(), param.enable_log);
-		if (args.Length() > 7)
-		{
-			int zn_locale = (int)args[7].As<v8::Integer >()->Value();
-			param.locale = (ZNSDK_APP_Locale)zn_locale;
-		}
+	}
+	if (args.Length() > 7)
+	{
+		int zn_locale = (int)args[7].As<v8::Integer >()->Value();
+		param.locale = (ZNSDK_APP_Locale)zn_locale;
+	}
+	if (args.Length() > 8)
+	{
+		unsigned int zn_logfilesize = (unsigned int)args[8].As<v8::Integer >()->Value();
+		param.logFileSize = zn_logfilesize;
 	}
 	ZNSDKError err = _g_native_wrap.InitSDK(param);
 	v8::Local<v8::Integer> bret = v8::Integer::New(isolate, (int32_t)err);

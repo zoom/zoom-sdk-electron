@@ -112,11 +112,13 @@ typedef struct _ZNInitParam
 	ZoomSTRING strSupportUrl;///<Support URL.
 	ZoomSTRING strBrandingName;///<Branding name.
 	ZNConfigurableOptions obConfigOpts;///<The configuration options of the SDK.
+	unsigned int logFileSize; ///<Size of a log file in M(megabyte). The default size is 5M. There are 5 log files in total and the file size varies from 1M to 50M.
 	ZNSDK_APP_Locale locale;
 	_ZNInitParam(){
 		enable_log = true;
 		langid = ZNLANGUAGE_English;
 		locale = ZNSDK_APP_Locale_Default;
+		logFileSize = 5;
 	}
 }ZNInitParam;
 

@@ -194,6 +194,13 @@ public:
 			owner_->onAudioMenuBtnClicked();
 		}
 	}
+	virtual void onBreakoutRoomBtnClicked()
+	{
+		if (owner_)
+		{
+			//fix me
+		}
+	}
 private:
 	ZMeetingUICtrlWrap* owner_;
 };

@@ -13,7 +13,7 @@ ZNSDKError ZNativeSDKWrap::InitSDK(ZNInitParam &initParam)
     {
         [[ZoomSDK sharedSDK] setPreferLanguage:lanStr];
     }
-    [[ZoomSDK sharedSDK] enableDefaultLog:initParam.enable_log fileSize:5];
+    [[ZoomSDK sharedSDK] enableDefaultLog:initParam.enable_log fileSize:initParam.logFileSize];
     ZoomSDKLocale local = help.ZNSDKAPPLocalType(initParam.locale);
     [[ZoomSDK sharedSDK] setAppLocale:local];
     [[ZoomSDK sharedSDK] initSDK:NO];

@@ -626,7 +626,9 @@ let functionObj = {
       path: '', // win require absolute path, mac require ''
       domain: domain,
       enable_log: enable_log,
-      langid: ZoomSDK_LANGUAGE_ID.LANGUAGE_English
+      langid: ZoomSDK_LANGUAGE_ID.LANGUAGE_English,
+      locale: ZoomAPPLocale.ZNSDK_APP_Locale_Default,
+      logfilesize: 5
     }
     if (platform == 'win32') {
       customizedresource(); // CustomizedResource only support windows, should call before initSDK

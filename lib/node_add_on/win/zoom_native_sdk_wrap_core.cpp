@@ -35,6 +35,7 @@
 #include "wrap/meeting_service_components_wrap/meeting_webinar_ctrl_wrap.cpp"
 #include "wrap/meeting_service_components_wrap/meeting_closedcaption_ctrl_wrap.cpp"
 #include "wrap/customized_ui_components_wrap/customized_ui_mgr_wrap.cpp"
+#include "wrap/customized_ui_components_wrap/customized_annotation_wrap.cpp"
 
 
 
@@ -70,6 +71,7 @@ ZNSDKError ZNativeSDKWrap::InitSDK(ZNInitParam& initParam)
 	param.obConfigOpts.customizedLang.langName = wsTOs(initParam.obConfigOpts.customizedLang.langName).c_str();
 	param.obConfigOpts.customizedLang.langInfo = wsTOs(initParam.obConfigOpts.customizedLang.langInfo).c_str();
 	param.locale = Map2SDKDefine(initParam.locale);
+	param.uiLogFileSize = initParam.logFileSize;
 
 	HMODULE hRes = NULL;
 	param.uiWindowIconSmallID = IDI_SDK_ICON;

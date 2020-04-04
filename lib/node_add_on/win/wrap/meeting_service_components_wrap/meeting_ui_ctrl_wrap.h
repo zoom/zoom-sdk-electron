@@ -85,5 +85,7 @@ CallBack_FUNC_0(onCCBTNClicked)
 CallBack_FUNC_1(onAudioBtnClicked, AudioBtnClickedCallbackInfo, info)
 //virtual void onAudioMenuBtnClicked() = 0;
 CallBack_FUNC_0(onAudioMenuBtnClicked)
+//virtual void onBreakoutRoomBtnClicked() = 0;
+CallBack_FUNC_0(onBreakoutRoomBtnClicked)
 END_CLASS_DEFINE(IMeetingUIController)
 END_ZOOM_SDK_NAMESPACE

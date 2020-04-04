@@ -980,8 +980,10 @@
     if (startCBOption == 'main') {
       ipcRenderer.send('asynchronous-message', 'setAudioRawDataCB');
     } else {
-      let ret = remote.app.zoomaudiorawdata.SetRawDataCB(onMixedAudioRawDataReceived, onOneWayAudioRawDataReceived);
-      console.log('setAudioRawDataCB', ret);
+      let SetMixedAudioRawDataCB = remote.app.zoomaudiorawdata.SetMixedAudioRawDataCB(onMixedAudioRawDataReceived);
+      console.log('SetMixedAudioRawDataCB', SetMixedAudioRawDataCB);
+      let SetOneWayAudioRawDataCB = remote.app.zoomaudiorawdata.SetOneWayAudioRawDataCB(onOneWayAudioRawDataReceived);
+      console.log('SetOneWayAudioRawDataCB', SetOneWayAudioRawDataCB);
     }
     startAudioRawDataBtn.disabled = false;
     startAudioRawDataBtn.classList.remove("button-disabled");

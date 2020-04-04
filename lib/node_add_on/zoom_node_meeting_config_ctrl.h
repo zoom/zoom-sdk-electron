@@ -197,6 +197,7 @@ public:
 	static void DisableAutoShowSelectJoinAudioDlgWhenJoinMeeting(const v8::FunctionCallbackInfo<v8::Value>& args);
 	static void DisableShowJoinMeetingWnd(const v8::FunctionCallbackInfo<v8::Value>& args);
 	static void DisableRemoteCtrlCopyPasteFeature(const v8::FunctionCallbackInfo<v8::Value>& args);
+	static void DisableToolbarInviteButtonClickOriginAction(const v8::FunctionCallbackInfo<v8::Value>& args);
 
 	static void SetShowVideoOptimizeChkbox(const v8::FunctionCallbackInfo<v8::Value>& args);
 	static void GetRequiredInfoType(const v8::FunctionCallbackInfo<v8::Value>& args);
@@ -291,6 +292,7 @@ static void InitClassAttribute<ZoomNodeMeetingConfigCtrlWrap >(const v8::Local<v
 	NODE_SET_PROTOTYPE_METHOD(tpl, "DisableAutoShowSelectJoinAudioDlgWhenJoinMeeting", ZoomNodeMeetingConfigCtrlWrap::DisableAutoShowSelectJoinAudioDlgWhenJoinMeeting);
 	NODE_SET_PROTOTYPE_METHOD(tpl, "DisableShowJoinMeetingWnd", ZoomNodeMeetingConfigCtrlWrap::DisableShowJoinMeetingWnd);
 	NODE_SET_PROTOTYPE_METHOD(tpl, "DisableRemoteCtrlCopyPasteFeature", ZoomNodeMeetingConfigCtrlWrap::DisableRemoteCtrlCopyPasteFeature);
+	NODE_SET_PROTOTYPE_METHOD(tpl, "DisableToolbarInviteButtonClickOriginAction", ZoomNodeMeetingConfigCtrlWrap::DisableToolbarInviteButtonClickOriginAction);
 
 	NODE_SET_PROTOTYPE_METHOD(tpl, "PrePopulateWebinarRegistrationInfo", ZoomNodeMeetingConfigCtrlWrap::PrePopulateWebinarRegistrationInfo);
 	NODE_SET_PROTOTYPE_METHOD(tpl, "GetReminderType", ZoomNodeMeetingConfigCtrlWrap::GetReminderType);

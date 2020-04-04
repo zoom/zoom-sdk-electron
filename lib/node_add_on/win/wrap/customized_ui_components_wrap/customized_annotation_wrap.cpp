@@ -1,26 +1,30 @@
 #include "customized_annotation_wrap.h"
 #include "../meeting_service_components_wrap/meeting_annotation_wrap.h"
 BEGIN_ZOOM_SDK_NAMESPACE
-ICustomizedAnnotationController* InitICustomizedAnnotationControllerFunc(ICustomizedAnnotationControllerEvent* pEvent, IAnnotationControllerWrap* pOwner)
+ICustomizedAnnotationControllerWrap::~ICustomizedAnnotationControllerWrap()
 {
-	if (pOwner && pOwner->GetSDKObj())
+	UnInit();
+}
+void ICustomizedAnnotationControllerWrap::Init(ICustomizedAnnotationController* pObj)
+{
+	if (m_obj)
 	{
-		ZOOM_SDK_NAMESPACE::ICustomizedAnnotationController* pObj = pOwner->GetSDKObj()->GetCustomizedAnnotationController();
-		if (pObj)
-		{
-			pObj->SetEvent(pEvent);
-		}
-		return pObj;
+		UnInit();
 	}
 
-	return NULL;
+	m_obj = pObj;
+	if (m_obj)
+	{
+		m_obj->SetEvent(this);
+	}
 }
 
-void UninitIMeetingParticipantsControllerFunc(ICustomizedAnnotationController* obj)
+void ICustomizedAnnotationControllerWrap::UnInit()
 {
-	if (obj)
+	if (m_obj)
 	{
-		obj->SetEvent(NULL);
+		m_obj->SetEvent(NULL);
+		m_obj = NULL;
 	}
 }
 

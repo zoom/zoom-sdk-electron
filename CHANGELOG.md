@@ -39,7 +39,21 @@ HMACSHA256(
 ```
 You do not need to secret base64 encoded your signature. Once the JWT token is generated, please do not reveal it or publish it. **It is highly recommended to handle your SDK key and secret and generate JWT in a backend server to be consumed by your application. Do not generate JWT in a production application.**
 
-## 2020-02-10 @ [v4.6.15088.0210](https://github.com/zoom/zoom-sdk-electron/releases/tag/v4.6.15088.0210)
+## 2020-04-04 @ [v4.6.15798.0403](https://github.com/zoom/zoom-sdk-electron/releases/tag/v4.6.15798.0403)
+
+## Added:
+* [Electron SDK on Mac only]Add a new interface to disable the toolbar invite button
+  * `MeetingConfig_DisableToolbarInviteButtonClickOriginAction` in `zoom_meeting_configuration.js`
+* Add a new interface to control the chime sound when someone enters or exits the meeting
+  * `MeetingAudio_EnablePlayChimeWhenEnterOrExit` in `zoom_meeting_audio.js`
+* Add new option in InitSDK to configure the size of the log file
+  * Use the new option `InitSDK.logfilesize` in `zoom_sdk.js` to customize the log file size. The unit of the file size is MB, with default size 5MB.
+
+## Changed & Fixed:
+* Fixed an issue that the interface `MeetingUI_BackToMeeting` does not work as expected for webinar attendee on Windows
+* Fixed an issue that user could not join a meeting with vanityID
+
+## 2020-02-10 @ v4.6.15088.0210
 
 ## Added:
 * New enhancements follow the changes in Windows SDK and Mac OS SDK.
@@ -48,7 +62,7 @@ You do not need to secret base64 encoded your signature. Once the JWT token is g
 * Enhanced security and upgraded OpenSSL to 1.0.2u.
 * Changes and fixes follow the changes in Windows SDK and Mac OS SDK.
 
-## 2019-12-16 @ [v4.4.57220.1211](https://github.com/zoom/zoom-sdk-electron/releases/tag/v4.4.57220.1211)
+## 2019-12-16 @ v4.4.57220.1211
 
 ## Added:
 * Add new interfaces for SDK initialization with JWT token.
@@ -78,7 +92,7 @@ You do not need to secret base64 encoded your signature. Once the JWT token is g
 * Fixed an issue that the callback of direct share can not be received accidentally.
 * Fixed an issue that the meeting restarts for a few times after pressing the end meeting button.
 
-## 2019-11-04 @ [v4.4.56616.1029](https://github.com/zoom/zoom-sdk-electron/releases/tag/v4.4.56616.1029)
+## 2019-11-04 @ v4.4.56616.1029
 
 ## Added
 * Add new interfaces for meeting config controller (locate in `zoom_meeting_configuration.js`)
@@ -136,7 +150,7 @@ You do not need to secret base64 encoded your signature. Once the JWT token is g
       * bit 8: indicates whether to show the advance feature page. "1" show, "0" not show
       * bit 9: indicates whether to show the accessibility page. "1" show, "0" not show
 
-## 2019-09-04 @ [v4.4.55968.0904](https://github.com/zoom/zoom-sdk-electron/releases/tag/v4.4.55968.0904)
+## 2019-09-04 @ v4.4.55968.0904
 
 ## Added
 *  Add pre-meeting features that include schedule/edit/delete a meeting, get a list of current meetings or set corresponding callbacks. All new interfaces are available in `ZoomNodePremeetingWrap`:
@@ -176,7 +190,7 @@ You do not need to secret base64 encoded your signature. Once the JWT token is g
 *  Optimized the way of setting callback functions. Most of the callbacks are now set by using "Set###CB" interfaces, such as `ZoomNodeAuthWrap::SetOnAuthReturnCB`. Some of the interfaces, such as `ZoomNodeAuthWrap::Auth`, need not pass a callback function as a parameter
 *  Modified the types of `userId` and `meetingNumber` from String to Number.
 
-## 2019-07-15 @ [v4.4.55130.0712](https://github.com/zoom/zoom-sdk-electron/releases/tag/v4.4.55130.0712)
+## 2019-07-15 @ v4.4.55130.0712
 
 We have merged and unified the `windows-electron-sdk` and the `mac-electron-sdk` into one single SDK.
 

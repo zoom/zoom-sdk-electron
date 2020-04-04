@@ -43,6 +43,8 @@ public:
 	/// \return If the function succeeds, the return value is ZNSDKERR_SUCCESS.
 	///Otherwise failed. To get extended error information, see \link ZNSDKError \endlink enum.
 	static void SetUserActiveAudioChangeCB(const v8::FunctionCallbackInfo<v8::Value>& args);
+
+	static void EnablePlayChimeWhenEnterOrExit(const v8::FunctionCallbackInfo<v8::Value>& args);
 	
 	static v8::Persistent<v8::Function> constructor;
 };
@@ -60,6 +62,7 @@ static void InitClassAttribute<ZoomNodeMeetingAudioCtrlWrap >(const v8::Local<v8
 	NODE_SET_PROTOTYPE_METHOD(tpl, "LeaveVoip", ZoomNodeMeetingAudioCtrlWrap::LeaveVoip);
 	NODE_SET_PROTOTYPE_METHOD(tpl, "SetMeetingAudioStatusCB", ZoomNodeMeetingAudioCtrlWrap::SetMeetingAudioStatusCB);
 	NODE_SET_PROTOTYPE_METHOD(tpl, "SetUserActiveAudioChangeCB", ZoomNodeMeetingAudioCtrlWrap::SetUserActiveAudioChangeCB);
+	NODE_SET_PROTOTYPE_METHOD(tpl, "EnablePlayChimeWhenEnterOrExit", ZoomNodeMeetingAudioCtrlWrap::EnablePlayChimeWhenEnterOrExit);
 
 }
 template<>

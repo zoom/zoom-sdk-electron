@@ -119,3 +119,27 @@ void ZoomNodeMeetingAudioCtrlWrap::SetUserActiveAudioChangeCB(const v8::Function
 	v8::Local<v8::Integer> bret = v8::Integer::New(isolate, (int32_t)err);
 	args.GetReturnValue().Set(bret);
 }
+void ZoomNodeMeetingAudioCtrlWrap::EnablePlayChimeWhenEnterOrExit(const v8::FunctionCallbackInfo<v8::Value>& args)
+{
+	v8::Isolate* isolate = args.GetIsolate();
+	if (args.Length() < 1) {
+		isolate->ThrowException(v8::Exception::TypeError(
+			v8::String::NewFromUtf8(isolate, "Wrong number of arguments", v8::NewStringType::kInternalized).ToLocalChecked()));
+		return;
+	}
+
+	if (!args[0]->IsBoolean()
+		)
+	{
+		isolate->ThrowException(v8::Exception::TypeError(
+			v8::String::NewFromUtf8(isolate, "Wrong arguments", v8::NewStringType::kInternalized).ToLocalChecked()));
+		return;
+	}
+	bool zn_bEnable;
+	zoom_v8toc(args[0].As<v8::Boolean>(), zn_bEnable);
+
+
+	ZNSDKError err = _g_native_wrap.GetMeetingServiceWrap().GetMeetingAudioCtrl().EnablePlayChimeWhenEnterOrExit(zn_bEnable);
+	v8::Local<v8::Integer> bret = v8::Integer::New(isolate, (int32_t)err);
+	args.GetReturnValue().Set(bret);
+}

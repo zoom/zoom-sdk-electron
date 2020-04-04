@@ -231,6 +231,24 @@ typedef enum{
 @property(nonatomic, readwrite, retain) NSString* displayName;
 @end
 
+@interface InterpreterLanguageInfo : NSObject
+
+/**
+ *@brief The email of the language interpretation user.
+ */
+@property(nonatomic, readwrite, copy) NSString* email;
+
+/**
+ *@brief The language interpretation used first language.
+ */
+@property(nonatomic, readwrite, assign) ZoomSDKInterpreLanguage firstLanguage;
+
+/**
+ *@brief The language interpretation used second language.
+ */
+@property(nonatomic, readwrite, assign) ZoomSDKInterpreLanguage secondLanguage;
+@end
+
 @interface IMeetingConfigOption : NSObject
 /**
  * @brief Get the meeting topic.
@@ -301,7 +319,38 @@ typedef enum{
  * @param canModify The pointer to Bool. YES means that the meeting supports to schedule meeting for others, otherwise not.
  * @return An NSArray of users for whom the meeting is scheduled.
  */
--(NSArray*)getScheduleForUser:(BOOL*)canModify;  
+-(NSArray*)getScheduleForUser:(BOOL*)canModify;
+
+/**
+ *@brief Get the waitingRooms is enable of meeting.
+ *@return YES means enabled the feature of waitingRooms, otherwise not.
+ */
+-(BOOL)enableWaitingRooms;
+
+/**
+ *@brief Get the list in the public event list is enable.
+ *@return YES means enabled the feature of meeting to public, otherwise not.
+ */
+-(BOOL)enableMeetingToPublic;
+
+/**
+ *@brief Get the language inerpretation is enable.
+ *@return YES means enabled the feature of language interpretation, otherwise not.
+ */
+-(BOOL)enableLanguageInterpretation;
+
+/**
+ *@brief Get the URL of the public event list.
+ *@return The meeting to public event URL.
+ */
+-(NSString *)getPublicEventListUrl;
+
+/**
+ *@brief Get the array of language interpretation information.
+ *@return An NSArray of language interpretation.
+ */
+-(NSArray *)getInterpreterInfoList;
+
 @end
 
 @interface ScheduleMeetingConfigOption: IMeetingConfigOption
@@ -377,6 +426,31 @@ typedef enum{
  * @return If the function succeeds, it will return ZoomSDKError_Success. Otherwise failed.
  */
 -(ZoomSDKError)selectScheduleForUser:(NSArray*)users;
+
+/**
+ *@brief Set if it is enabled to set use waitingRooms.
+ *@param enable YES means enabled, NO disabled.
+ */
+-(void)setEnableWaitingRooms:(BOOL)enable;
+
+/**
+ *@brief Set if it is enabled to set meeting to public.
+ *@param enable YES means enabled, NO disabled.
+ */
+-(void)setEnableMeetingToPublic:(BOOL)enable;
+
+/**
+ *@brief Set if it is enabled to use Language Interpretation.
+ *@param enable YES means enabled, NO disabled.
+ */
+-(ZoomSDKError)setEnableLanguageInterpretation:(BOOL)enable;
+
+/**
+ *@brief Set the language interpretation info.
+ *@param arr The array of language interpretation info of set.
+ *@return If the function succeeds, it will return ZoomSDKError_Success. Otherwise failed.
+ */
+-(ZoomSDKError)setInterpreterInfo:(NSArray *)arr;
 @end
 
 @interface ZoomSDKScheduleMeetingItem : NSObject

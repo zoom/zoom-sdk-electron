@@ -12,3 +12,6 @@ __ZTV16ZMShareEventSink
 _InitModule
 _TermModule
 _OBJC_CLASS_$_ZMConfRenderAvatarView
+_OBJC_CLASS_$_ZPConfImageMgr
+_OBJC_IVAR_$_ZPConfImageMgr._waterMarkHD
+_OBJC_IVAR_$_ZPConfImageMgr._waterMark

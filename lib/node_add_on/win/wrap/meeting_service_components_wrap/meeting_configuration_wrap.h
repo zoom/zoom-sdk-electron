@@ -166,6 +166,10 @@ DEFINE_FUNC_1(HideRemoteControlOnMeetingUI, void, bool, bHide)
 DEFINE_FUNC_1(HideQAOnMeetingUI, void, bool, bHide)
 //virtual void HidePollOnMeetingUI(bool bHide) = 0;
 DEFINE_FUNC_1(HidePollOnMeetingUI, void, bool, bHide)
+//virtual void HideReactionsOnMeetingUI(bool bHide) = 0;
+DEFINE_FUNC_1(HideReactionsOnMeetingUI, void, bool, bHide)
+//virtual void HideMeetingInfoOnMeetingUI(bool bHide) = 0;
+DEFINE_FUNC_1(HideMeetingInfoOnMeetingUI, void, bool, bHide)
 
 //virtual void SetMaxDurationForOnlyHostInMeeting(int nDuration) = 0;
 DEFINE_FUNC_1(SetMaxDurationForOnlyHostInMeeting, void, int, nDuration)

@@ -3,11 +3,11 @@
 BEGIN_ZOOM_SDK_NAMESPACE
 
 class IAnnotationControllerWrap;
-ICustomizedAnnotationController* InitICustomizedAnnotationControllerFunc(ICustomizedAnnotationControllerEvent* pEvent, IAnnotationControllerWrap* pOwner);
-void UninitICustomizedAnnotationControllerFunc(ICustomizedAnnotationController* obj);
 BEGIN_CLASS_DEFINE_WITHCALLBACK(ICustomizedAnnotationController, ICustomizedAnnotationControllerEvent)
 NORMAL_CLASS(ICustomizedAnnotationController)
-INIT_UNINIT_WITHEVENT_AND_OWNSERVICE(ICustomizedAnnotationController, IAnnotationControllerWrap)
+~ICustomizedAnnotationControllerWrap();
+void Init(ICustomizedAnnotationController* pObj);
+void UnInit();
 
 //virtual SDKError CreateAnnoObj(ICustomizedShareRender* view_share_render, ICustomizedAnnotationObj** pp_obj) = 0;
 DEFINE_FUNC_2(CreateAnnoObj, SDKError, ICustomizedShareRender*, view_share_render, ICustomizedAnnotationObj**, pp_obj)

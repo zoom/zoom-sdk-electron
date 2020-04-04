@@ -387,7 +387,10 @@ void ZMeetingConfigWrap:: DisableRemoteCtrlCopyPasteFeature(bool bDisable)
 {
 	ZOOM_SDK_NAMESPACE::CSDKWrap::GetInst().GetMeetingServiceWrap().T_GetMeetingConfiguration().DisableRemoteCtrlCopyPasteFeature(bDisable);
 }
-
+void ZMeetingConfigWrap::DisableToolbarInviteButtonClickOriginAction(bool bDisable)
+{
+	//This interface is only for Mac.
+}
 
 ZNFreeMeetingEndingReminderType ZMeetingConfigWrap::GetReminderType()
 {

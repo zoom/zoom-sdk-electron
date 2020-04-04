@@ -135,6 +135,8 @@ typedef enum {
     MeetingPropertyCmd_HostTag, 
 	//Meeting ID.
     MeetingPropertyCmd_MeetingID,
+    //Meeting password.
+    MeetingPropertyCmd_MeetingPassword
 }MeetingPropertyCmd;
 
 /**
@@ -791,7 +793,9 @@ typedef enum
     //Question and answer(QA) button on toolbar. Available only in webinar.
     ToolBarQandAButton,
     //Poll button: questionnaire.
-    ToolBarPollingButton
+    ToolBarPollingButton,
+    //Reaction Button on tool bar.
+    ToolBarReactionsButton
 }SDKButton;
 
 /**
@@ -1182,6 +1186,62 @@ typedef enum {
     ZoomSDKAudioActionInfo_computerAudioDeviceError,
 }ZoomSDKAudioActionInfo;
 
+/**
+ * @brief Enumerations of breakout meeting status.
+ */
+typedef  enum{
+    //the breakout meeting status is unknow.
+    ZoomSDKBOUserStatus_Unknow = 0,
+    //the breakout meeting status is unassigned.
+    ZoomSDKBOUserStatus_UnAssigned,
+    //the breakout meeting status is not join breakout meeting.
+    ZoomSDKBOUserStatus_Assigned_Not_Join,
+    //the breakout meeting status is in breakout meeting.
+    ZoomSDKBOUserStatus_InBreakOutMeeting,
+}ZoomSDKBOUserStatus;
 
+/**
+ * @brief Enumerations of Interpreter Language.
+ */
+typedef enum{
+    //For initialization.
+    ZoomSDKInterpreLanguage_NONE,
+    //English
+    ZoomSDKInterpreLanguage_US,
+    //Chinese
+    ZoomSDKInterpreLanguage_CN,
+    //Japanese
+    ZoomSDKInterpreLanguage_JP,
+    //German
+    ZoomSDKInterpreLanguage_DE,
+    //French
+    ZoomSDKInterpreLanguage_FR,
+    //Russian
+    ZoomSDKInterpreLanguage_RU,
+    //Portuguese
+    ZoomSDKInterpreLanguage_PT,
+    //Spanish
+    ZoomSDKInterpreLanguage_ES,
+    //Korean
+    ZoomSDKInterpreLanguage_KR,
+} ZoomSDKInterpreLanguage;
 
-
+/**
+ * @brief Enumerations of limited FPS value.
+ */
+typedef enum {
+    //The value is one.
+    ZoomSDKFPSValue_One,
+    //The value is two.
+    ZoomSDKFPSValue_Two,
+    //The value is four.
+    ZoomSDKFPSValue_Four,
+    //The value is six.
+    ZoomSDKFPSValue_Six,
+    //The value is eight.
+    ZoomSDKFPSValue_Eight,
+    //The value is ten.
+    ZoomSDKFPSValue_Ten,
+    //The value is fifteen.
+    ZoomSDKFPSValue_Fifteen,
+}ZoomSDKFPSValue;

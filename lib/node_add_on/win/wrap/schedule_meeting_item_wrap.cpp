@@ -52,6 +52,11 @@ IMPL_FUNC_1(IScheduleMeetingItem, SelectHostVideoOnOrOff, SDKError, bool, bOn, S
 IMPL_FUNC_1(IScheduleMeetingItem, SelectAttendeeVideoOnOrOff, SDKError, bool, bOn, SDKERR_UNINITIALIZE);
 IMPL_FUNC_1(IScheduleMeetingItem, IsSupportAudioType, SDKError, SCHEDULEAUDIOTYPE, audio_type, SDKERR_UNINITIALIZE);
 IMPL_FUNC_1(IScheduleMeetingItem, SelectAudioType, SDKError, SCHEDULEAUDIOTYPE, audio_type, SDKERR_UNINITIALIZE);
+IMPL_FUNC_1(IScheduleMeetingItem, EnableWaitingRoom, SDKError, bool, bEnable, SDKERR_UNINITIALIZE)
+IMPL_FUNC_1(IScheduleMeetingItem, EnableMeetingToPublic, SDKError, bool, bEnable, SDKERR_UNINITIALIZE)
+IMPL_FUNC_1(IScheduleMeetingItem, EnableLanguageInterpretation, SDKError, bool, bEnable, SDKERR_UNINITIALIZE)
+IMPL_FUNC_1(IScheduleMeetingItem, SetInterpreterInfoList, SDKError, IList<IInterpreterInfo* >*, lst_interpreters, SDKERR_UNINITIALIZE)
+IMPL_FUNC_1(IScheduleMeetingItem, SetAlternativeHostList, SDKError, IList<IAlternativeHostInfo* >*, lst_althosts, SDKERR_UNINITIALIZE)
 IMPL_FUNC_0(IScheduleMeetingItem, GetScheduleTelAudioHelper, ISelectMeetingItemTelAudioHelper*, NULL);
 IMPL_FUNC_1(IScheduleMeetingItem, SetMeetingTopic, SDKError, const wchar_t*, topic, SDKERR_UNINITIALIZE);
 IMPL_FUNC_1(IScheduleMeetingItem, EnableMeetingPassword, SDKError, bool, bEnable, SDKERR_UNINITIALIZE);
@@ -82,6 +87,12 @@ IMPL_FUNC_1(IScheduleMeetingItem, IsOnlySignedInUserCanJoinEnabled, bool, bool&,
 IMPL_FUNC_1(IScheduleMeetingItem, GetSpecifiedDomainCanJoin, const wchar_t*, bool&, can_change, NULL);
 IMPL_FUNC_1(IScheduleMeetingItem, IsHostInChinaEnabled, bool, bool&, can_change, false);
 IMPL_FUNC_2(IScheduleMeetingItem, IsAutoRecordEnabled, bool, bool&, can_change, int&, support_rec_type, false);
+IMPL_FUNC_1(IScheduleMeetingItem, IsWaitingRoomEnabled, bool, bool&, can_change, false)
+IMPL_FUNC_1(IScheduleMeetingItem, IsMeetingToPublicEnabled, bool, bool&, can_change, false)
+IMPL_FUNC_0(IScheduleMeetingItem, GetPublicEventListUrl, const wchar_t*, NULL)
+IMPL_FUNC_1(IScheduleMeetingItem, IsLanguageInterpretationEnabled, bool, bool&, can_change, false)
+IMPL_FUNC_0(IScheduleMeetingItem, GetInterpreterInfoList, IList<IInterpreterInfo* >*, NULL)
+IMPL_FUNC_0(IScheduleMeetingItem, GetAlternativeHostInfoList, IList<IAlternativeHostInfo* >*, NULL)
 IMPL_FUNC_0(IScheduleMeetingItem, GetSelectedAutoRecordType, SCHEDULERECTYPE, SCHEDULERECTYPE::SCHEDULERecordType_none);
 IMPL_FUNC_0(IScheduleMeetingItem, GetQueryScheduleForHelper, IQueryMeetingItemScheduleForHelper*, NULL);
 IMPL_FUNC_0(IScheduleMeetingItem, GetUniqueMeetingID, UINT64, 0);

@@ -24,7 +24,7 @@ DEFINE_FUNC_2(UnSubscribe, SDKError, unsigned int, node_id, unsigned long long, 
 DEFINE_FUNC_0(Stop, SDKError)
 
 //virtual void onShareRawDataReceived(YUVRawDataI420* data_, IVector<unsigned long long >* recv_handle_list) = 0;
-CallBack_FUNC_2(onShareRawDataReceived, ZOOM_RAWDATA_NAMESPACE::YUVRawDataI420*, data_, IVector<unsigned long long >*, recv_handle_list)
+CallBack_FUNC_2(onShareRawDataReceived, YUVRawDataI420*, data_, IVector<unsigned long long >*, recv_handle_list)
 //virtual void onSubscribedShareUserDataOn(IVector<unsigned long long >* recv_handle_list) = 0;
 CallBack_FUNC_1(onSubscribedShareUserDataOn, IVector<unsigned long long >*, recv_handle_list)
 //virtual void onSubscribedShareUserDataOff(IVector<unsigned long long >* recv_handle_list) = 0;

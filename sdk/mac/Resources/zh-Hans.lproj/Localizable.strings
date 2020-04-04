@@ -3891,3 +3891,7 @@
 "LN_Hotkey_Increase_Chat_Display_Size_20021" = "放大聊天窗口";
 "LN_Hotkey_Decrease_Chat_Display_Size_20021" = "缩小聊天窗口";
 "LN_Join_The_Meeting_87404" = "加入会议";
+
+"LN_EchoCancellation_114898" = "回声消除";
+"LN_Chat_Display_Size_Capital_20021" = "聊天窗口大小";
+"LN_Hotkey_Read_Active_Name_69648" = "读取当前演讲者姓名";

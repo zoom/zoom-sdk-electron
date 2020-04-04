@@ -17,12 +17,22 @@ virtual SDKError SetEvent(IMeetingAnnotationSupportEvent* pEvent)
 	return SDKERR_SUCCESS;
 }
 
+private:
+	ICustomizedAnnotationControllerWrap  m_customizeAnnoCtrl;
+public:
+
 //virtual ICustomizedAnnotationController* GetCustomizedAnnotationController(ICustomizedShareRender* pShareRender = NULL) = 0;
-ICustomizedAnnotationController* IAnnotationControllerWrap::GetCustomizedAnnotationController(ICustomizedShareRender* pShareRender = NULL)
+ICustomizedAnnotationControllerWrap& IAnnotationControllerWrap::GetCustomizedAnnotationController(ICustomizedShareRender* pShareRender = NULL)
 {
 	if (m_obj)
-		return m_obj->GetCustomizedAnnotationController(pShareRender);
-	return NULL;
+	{
+		ZOOM_SDK_NAMESPACE::ICustomizedAnnotationController* pCustomizeAnnotationController = m_obj->GetCustomizedAnnotationController(pShareRender);
+		if (pCustomizeAnnotationController)
+		{
+			m_customizeAnnoCtrl.Init(pCustomizeAnnotationController);
+		}
+	}
+	return m_customizeAnnoCtrl;
 }
 
 //virtual bool IsAnnoataionDisable() = 0;

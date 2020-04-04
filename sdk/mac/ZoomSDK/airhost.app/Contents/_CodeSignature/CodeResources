@@ -100,7 +100,7 @@
 		<dict>
 			<key>cdhash</key>
 			<data>
-			AlXmnhqgd5RbtYfkh3twoXov4mE=
+			+Gzm5xNlPbtuI9qbm9onRxyja+Y=
 			</data>
 			<key>requirement</key>
 			<string>identifier "libavcodec.55" and anchor apple generic and certificate 1[field.1.2.840.113635.100.6.2.6] /* exists */ and certificate leaf[field.1.2.840.113635.100.6.1.13] /* exists */ and certificate leaf[subject.OU] = BJ4HAAB9B3</string>
@@ -109,7 +109,7 @@
 		<dict>
 			<key>cdhash</key>
 			<data>
-			RjfEttE7alN4RFac/cLDkdpbZ6o=
+			ID3s6yx1QpDHTxDYDFMsKGPKFBk=
 			</data>
 			<key>requirement</key>
 			<string>identifier "libavformat.55" and anchor apple generic and certificate 1[field.1.2.840.113635.100.6.2.6] /* exists */ and certificate leaf[field.1.2.840.113635.100.6.1.13] /* exists */ and certificate leaf[subject.OU] = BJ4HAAB9B3</string>
@@ -118,7 +118,7 @@
 		<dict>
 			<key>cdhash</key>
 			<data>
-			OvK4Oet1BIpaTCeJPIqX1+ayx+Q=
+			/xYkJ96WtBs4sOQFTIhZzcRa7r0=
 			</data>
 			<key>requirement</key>
 			<string>identifier "libavutil.52" and anchor apple generic and certificate 1[field.1.2.840.113635.100.6.2.6] /* exists */ and certificate leaf[field.1.2.840.113635.100.6.1.13] /* exists */ and certificate leaf[subject.OU] = BJ4HAAB9B3</string>
@@ -127,7 +127,7 @@
 		<dict>
 			<key>cdhash</key>
 			<data>
-			BQgWDO9n1HGjkZScbg/vNojMtSs=
+			OUDxBobSMKYXzmjvKL2D7DYOSfM=
 			</data>
 			<key>requirement</key>
 			<string>identifier "libswscale.2" and anchor apple generic and certificate 1[field.1.2.840.113635.100.6.2.6] /* exists */ and certificate leaf[field.1.2.840.113635.100.6.1.13] /* exists */ and certificate leaf[subject.OU] = BJ4HAAB9B3</string>

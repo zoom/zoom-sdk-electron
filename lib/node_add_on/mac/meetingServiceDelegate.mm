@@ -162,13 +162,23 @@ extern ZNativeSDKWrap _g_native_wrap;
     
 }
 
+-(void)onUserActiveAudioChanage:(NSArray *)useridArray
+{
+    ZNList<unsigned int> list;
+    for (NSNumber *num in useridArray) {
+        unsigned int userid = [num unsignedIntValue];
+        list.push_back(userid);
+    }
+    _g_native_wrap.GetMeetingServiceWrap().GetMeetingAudioCtrl().onUserActiveAudioChange(list);
+}
+/*
 -(void)onActiveSpeakerChanged:(unsigned int)userID
 {
     ZNList<unsigned int> list;
     list.push_back(userID);
     _g_native_wrap.GetMeetingServiceWrap().GetMeetingAudioCtrl().onUserActiveAudioChange(list);
 }
-
+*/
 -(void)onUserLeft:(NSArray *)array
 {
     if (!array || array.count == 0) {

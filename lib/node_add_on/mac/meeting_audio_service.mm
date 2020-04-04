@@ -109,6 +109,19 @@ ZNSDKError ZMeetingAudioWrap::LeaveVoip()
     return ZNSDKERR_SERVICE_FAILED;
 }
 
+ZNSDKError ZMeetingAudioWrap::EnablePlayChimeWhenEnterOrExit(bool bEnable)
+{
+    ZoomSDKSettingService *setting = [[ZoomSDK sharedSDK] getSettingService];
+    if (setting) {
+        ZoomSDKGeneralSetting *general = [setting getGeneralSetting];
+        if (general) {
+            ZoomSDKError ret = [general enableMeetingSetting:bEnable SettingCmd:MeetingSettingCmd_EnablePlayChimeWhenEnterOrExit];
+            nativeErrorTypeHelp  Help_type;
+            return Help_type.ZoomSDKErrorType(ret);
+        }
+    }
+    return ZNSDKERR_SERVICE_FAILED;
+}
 
 //callback
 void ZMeetingAudioWrap::onUserAudioStatusChange(ZNList<ZNUserAudioStatus> lstAudioStatusChange, ZoomSTRING strAudioStatusList)

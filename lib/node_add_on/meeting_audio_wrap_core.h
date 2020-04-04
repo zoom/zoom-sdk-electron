@@ -15,6 +15,7 @@ public:
 	ZNSDKError UnMuteAudio(unsigned int userid);
 	ZNSDKError JoinVoip();
 	ZNSDKError LeaveVoip();
+	ZNSDKError EnablePlayChimeWhenEnterOrExit(bool bEnable);
 
 	//callback
 	void onUserAudioStatusChange(ZNList<ZNUserAudioStatus> lstAudioStatusChange, ZoomSTRING strAudioStatusList);

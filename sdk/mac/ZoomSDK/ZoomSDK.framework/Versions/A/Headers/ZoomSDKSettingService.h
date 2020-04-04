@@ -811,8 +811,8 @@ typedef enum{
  *@brief  set the value of fps limit
  *@param value is a number of user to set
  */
-- (ZoomSDKError)setLimitFPSValue:(int)value;
-
+- (ZoomSDKError)setLimitFPSValue:(int)value  NS_DEPRECATED_MAC(4.4, 4.4);
+- (ZoomSDKError)setLimitedFPSValue:(ZoomSDKFPSValue)value;
 /**
  *@brief  Enable  to set limited fps
  *@return Return YES is enable otherwise is not

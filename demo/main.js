@@ -105,9 +105,11 @@ function sdkauthCB(status) {
 }
 
 function loginretCB(status) {
+  hasLogin = false;
   switch(status)
   {
     case ZoomLoginStatus.LOGIN_SUCCESS:
+      hasLogin = true;
       showStartJoinWindow();
     break;
     case ZoomLoginStatus.LOGIN_PROCESSING:
@@ -125,10 +127,10 @@ function meetinguserjoincb(useritem) {
   console.log('meetinguserjoincb', useritem)
 }
 
-function meetinguserleftcb(userid) {
+function meetinguserleftcb(userList) {
 }
 
-function meetinghostchangecb(userid) {
+function meetinghostchangecb(userList) {
 }
 
 function onUserAudioStatusChange(result) {
@@ -261,7 +263,8 @@ function clearSetCallBack() {
   zoomsharerawdata.SetRawDataShareUserLeftCB(null);
   zoomsharerawdata.SetRawDataCB(null);
   zoommeeting.GetMeetingShare().SetOnSharingStatusCB(null);
-  zoomaudiorawdata.SetRawDataCB(null, null);
+  zoomaudiorawdata.SetMixedAudioRawDataCB(null);
+  zoomaudiorawdata.SetOneWayAudioRawDataCB(null);
 }
 
 function showYUVWindow() {
@@ -407,7 +410,6 @@ function showAuthwindow(){
 }
 
 function showLoginWindow(){
-  hasLogin = false;
   if (!loginWindow)
   {
     loginWindow = new BrowserWindow({ width: 700, height: 500,
@@ -651,7 +653,6 @@ let functionObj = {
       showWaitingWindow();
     }
     zoomauth.Login(username, psw, false);
-    hasLogin = true;
   },
   loginWithSSOToken: function(ssotoken) {
     let ret = zoomauth.LoginWithSSOToken(ssotoken);
@@ -1014,6 +1015,13 @@ let functionObj = {
   leaveVoip: function() {
     let ret = zoomaudio.MeetingAudio_LeaveVoip();
     console.log('LeaveVoip', ret);
+  },
+  enablePlayChimeWhenEnterOrExit: function(bEnable) {
+    let opts = {
+      bEnable: bEnable
+    }
+    let ret = zoomaudio.MeetingAudio_EnablePlayChimeWhenEnterOrExit(opts);
+    console.log('EnablePlayChimeWhenEnterOrExit', ret);
   },
   muteVideo: function(userid) {
     let opts = {
@@ -1992,8 +2000,10 @@ let functionObj = {
     console.log('StopShare', ret);
   },
   setAudioRawDataCB: function() {
-    let ret = zoomaudiorawdata.SetRawDataCB(onMixedAudioRawDataReceived, onOneWayAudioRawDataReceived);
-    console.log('SetAudioRawDataCB', ret);
+    let SetMixedAudioRawDataCB = zoomaudiorawdata.SetMixedAudioRawDataCB(onMixedAudioRawDataReceived);
+    console.log('SetMixedAudioRawDataCB', SetMixedAudioRawDataCB);
+    let SetOneWayAudioRawDataCB = zoomaudiorawdata.SetOneWayAudioRawDataCB(onOneWayAudioRawDataReceived);
+    console.log('SetOneWayAudioRawDataCB', SetOneWayAudioRawDataCB);
   },
   startAudioRawData: function(audioRawDataMemoryMode) {
     let opts = {

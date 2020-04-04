@@ -20,9 +20,10 @@ DEFINE_FUNC_0(Stop, SDKError)
 
 
 //virtual void onMixedAudioRawDataReceived(AudioRawData* data_) = 0;
-CallBack_FUNC_1(onMixedAudioRawDataReceived, ZOOM_RAWDATA_NAMESPACE::AudioRawData*, data_)
+CallBack_FUNC_1(onMixedAudioRawDataReceived, AudioRawData*, data_)
 //virtual void onOneWayAudioRawDataReceived(AudioRawData* data_, unsigned int node_id) = 0;
-CallBack_FUNC_2(onOneWayAudioRawDataReceived, ZOOM_RAWDATA_NAMESPACE::AudioRawData*, data_, unsigned int, node_id)
+CallBack_FUNC_2(onOneWayAudioRawDataReceived, AudioRawData*, data_, unsigned int, node_id)
+
 
 END_CLASS_DEFINE(ZOOM_RAWDATA_NAMESPACE::IAudioRawDataChannel)
 END_ZOOM_SDK_NAMESPACE

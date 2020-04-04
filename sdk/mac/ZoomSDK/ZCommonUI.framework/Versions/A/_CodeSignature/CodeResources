@@ -6,7 +6,7 @@
 	<dict>
 		<key>Resources/Info.plist</key>
 		<data>
-		FLAsIPZLonMjyxwR+DmkumKGe0w=
+		5dQG8Y13Cq0x31ET5vrLvytAYtc=
 		</data>
 		<key>Resources/ZMDialogue.nib</key>
 		<data>
@@ -52,6 +52,17 @@
 			<key>hash2</key>
 			<data>
 			D3l8oJgiDnEwRBk7PaGre1zqSYbwk1uA8Q74aMtI8LU=
+			</data>
+		</dict>
+		<key>Headers/NSWorkspace+ZoomKit.h</key>
+		<dict>
+			<key>hash</key>
+			<data>
+			9rqwI3R1YWwKu1HMF+bGkMkJwUY=
+			</data>
+			<key>hash2</key>
+			<data>
+			fYQo9ebpsjw+XpSVFTUR1yvfCnxoBx5fHj4miJVjR/M=
 			</data>
 		</dict>
 		<key>Headers/ZCommonUI.h</key>
@@ -366,11 +377,11 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			89USd4IXDH6HX4LpbHmBH3RCV90=
+			MlLc8DsUmjK5Zr2z0RyoqPJTtPA=
 			</data>
 			<key>hash2</key>
 			<data>
-			P0pdsOGHRVlUx/LbpFT9GjHjTseA4Qi4vCMsS7JAyCI=
+			aQfs5ivjJ8dkKbOFrjCBy8XB1gE8Mn2XjwZnotiLsF8=
 			</data>
 		</dict>
 		<key>PrivateHeaders/NSView+Create.h</key>
@@ -399,11 +410,11 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			FLAsIPZLonMjyxwR+DmkumKGe0w=
+			5dQG8Y13Cq0x31ET5vrLvytAYtc=
 			</data>
 			<key>hash2</key>
 			<data>
-			qWhNvcaqplbLC6f8XeH/K9nUhjdk1HaCE1umnTyoaJo=
+			VlxbJLh2WHrM1UlBdKF2guV/ylH+9Hl4BdVP9IudpJ8=
 			</data>
 		</dict>
 		<key>Resources/ZMDialogue.nib</key>

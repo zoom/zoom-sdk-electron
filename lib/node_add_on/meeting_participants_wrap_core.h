@@ -1,13 +1,14 @@
 #pragma once
 #include "zoom_native_sdk_wrap_core_def.h"
 #include "zoom_sinks_wrap_class.h"
-
 #if (defined _WIN32)
+#include "win/wrap/meeting_service_components_wrap/meeting_participants_ctrl_wrap.h"
+
 class ZUserInfoWrap
 {
 public:
-	ZUserInfoWrap() {}
-	virtual ~ZUserInfoWrap() {}
+	ZUserInfoWrap();
+	virtual ~ZUserInfoWrap();
 	
 
 	ZoomSTRING GetUserNamme(unsigned int userid);
@@ -25,6 +26,9 @@ public:
 	ZoomSTRING GetAudioVoiceLevel(unsigned int userid);
 	bool IsClosedCaptionSender(unsigned int userid);
 	bool GetWebinarAttendeeStauts(unsigned int userid);
+	bool IsValidUserID(unsigned int userid);
+private:
+	ZOOM_SDK_NAMESPACE::IUserInfo* m_pUserInfo;
 };
 #endif
 

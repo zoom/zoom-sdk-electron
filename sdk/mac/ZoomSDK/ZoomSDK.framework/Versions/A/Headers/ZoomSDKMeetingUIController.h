@@ -38,16 +38,21 @@
 -(void)onCustomLiveButtonClicked;
 
 /**
- @brief Notification when audio menu button is clicked.
+ *@brief Notification when audio menu button is clicked.
  */
 -(void)onAudioSettingMenuButtonClicked;
 
 /**
- @brief Notification when audio button is clicked.
- @param userid The userid of user unique identifier .
- @param type The enum of audio action info.
+ *@brief Notification when audio button is clicked.
+ *@param userid The userid of user unique identifier .
+ *@param type The enum of audio action info.
  */
 -(void)onAudioButtonClicked:(unsigned int)userid audioSession:(ZoomSDKAudioActionInfo)info;
+
+/**
+ *@brief Notification when breakout Rooms button is clicked.
+ */
+-(void)onBreakoutRoomsButtonClick;
 
 @end
 

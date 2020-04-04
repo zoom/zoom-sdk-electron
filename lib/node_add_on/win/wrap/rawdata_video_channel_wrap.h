@@ -34,13 +34,16 @@ CallBack_FUNC_1(onDeviceRunning, void*, device);
 //virtual void onDeviceStop(void* device) = 0;
 CallBack_FUNC_1(onDeviceStop, void*, device);
 //virtual void onVideoRawDataReceived(YUVRawDataI420* data_, IVector<unsigned long long >* recv_handle_list) = 0;
-CallBack_FUNC_2(onVideoRawDataReceived, ZOOM_RAWDATA_NAMESPACE::YUVRawDataI420*, data_, IVector<unsigned long long >*, recv_handle_list)
+CallBack_FUNC_2(onVideoRawDataReceived, YUVRawDataI420*, data_, IVector<unsigned long long >*, recv_handle_list)
 //virtual void onSubscribedVideoUserDataOn(IVector<unsigned long long >* recv_handle_list) = 0;
 CallBack_FUNC_1(onSubscribedVideoUserDataOn, IVector<unsigned long long >*, recv_handle_list)
 //virtual void onSubscribedVideoUserDataOff(IVector<unsigned long long >* recv_handle_list) = 0;
 CallBack_FUNC_1(onSubscribedVideoUserDataOff, IVector<unsigned long long >*, recv_handle_list)
 //virtual void onSubscribedVideoUserLeft(IVector<unsigned long long >* recv_handle_list) = 0;
 CallBack_FUNC_1(onSubscribedVideoUserLeft, IVector<unsigned long long >*, recv_handle_list)
+
+// virtual void onPreProcessRawData(YUVProcessDataI420* data_, IVector<unsigned long long >* recv_handle_list) = 0;
+CallBack_FUNC_2(onPreProcessRawData, ZOOM_RAWDATA_NAMESPACE::YUVProcessDataI420*, data_, IVector<unsigned long long >*, recv_handle_list)
 
 END_CLASS_DEFINE(ZOOM_RAWDATA_NAMESPACE::IVideoRawDataChannel)
 END_ZOOM_SDK_NAMESPACE

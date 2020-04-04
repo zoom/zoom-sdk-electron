@@ -22,7 +22,7 @@
 		</data>
 		<key>Resources/Info.plist</key>
 		<data>
-		B8eCcpdVJuqgb8ndntCkQ47jYWk=
+		Ozn8FDzXxswx8aUIEdDQSor4w74=
 		</data>
 		<key>Resources/InviteCollectionViewItem.nib</key>
 		<data>
@@ -70,7 +70,7 @@
 		</data>
 		<key>Resources/ZMChatsAtListWindowCtrl.nib</key>
 		<data>
-		W5kDeBGiAth21iqzFIL1jt2mPVQ=
+		Zv5/oy7H3hksBsi3lPn7C0r/uqs=
 		</data>
 		<key>Resources/ZMChatsCollectionImageViewItem.nib</key>
 		<data>
@@ -86,7 +86,7 @@
 		</data>
 		<key>Resources/ZMChatsMainListViewController.nib</key>
 		<data>
-		XETr4zIcOOdatbesZWvD7gROqEw=
+		78WLUtVCMgazusVzhM2NzOw6nNA=
 		</data>
 		<key>Resources/ZMChatsSearchField.nib</key>
 		<data>
@@ -94,7 +94,7 @@
 		</data>
 		<key>Resources/ZMChatsSessionInfoViewCtrl.nib</key>
 		<data>
-		Ks4GX5Sg1bR5X+O4/4+GUyc2bFY=
+		bUBgtmWL6f/QciY9nLk3FJorhYo=
 		</data>
 		<key>Resources/ZMChatsSessionViewCtrl.nib</key>
 		<data>
@@ -122,11 +122,11 @@
 		</data>
 		<key>Resources/ZMGroupSettingWindow.nib</key>
 		<data>
-		7+XtEUMtawVTJNhMSsr/YwPRLgc=
+		eoAC1/j+oxQu+bzAcpCYS423Rbs=
 		</data>
 		<key>Resources/ZMHomeUpcomingViewController.nib</key>
 		<data>
-		KkMhSs7b6n8C5kvkVolLTc5EQXY=
+		XFrBl7Mlgdxi7wN9XvSPUMdDt5I=
 		</data>
 		<key>Resources/ZMHomeView.nib</key>
 		<data>
@@ -146,7 +146,7 @@
 		</data>
 		<key>Resources/ZMJoinChannelViewController.nib</key>
 		<data>
-		/vOBAMPcIgOi5ONrMnD4cBiO+wo=
+		1ZhccMBerS12mJGATXGBfDlA4SA=
 		</data>
 		<key>Resources/ZMLoginView.nib</key>
 		<data>
@@ -166,7 +166,7 @@
 		</data>
 		<key>Resources/ZMMeetingListBriefViewController.nib</key>
 		<data>
-		14G4du4PY6XLccIlbJD98Jh/9pA=
+		km4KoP+F2la5LROSZ9g6XZOn1Ng=
 		</data>
 		<key>Resources/ZMMeetingListMgr.nib</key>
 		<data>
@@ -194,7 +194,7 @@
 		</data>
 		<key>Resources/ZMPTSearchMessageViewCtrl.nib</key>
 		<data>
-		TeNEh3R1cYHejPARSWWyfz8wtHI=
+		Xu7cFHPELNX5teodxVXad84NWW0=
 		</data>
 		<key>Resources/ZMSSLVerifyWindowController.nib</key>
 		<data>
@@ -230,7 +230,7 @@
 		</data>
 		<key>Resources/ZMSettingMgr.nib</key>
 		<data>
-		isasdiM4grIX+tcfApfeZZMULS8=
+		NcLrIkMWPPaNVEbhLEsnZMnOibM=
 		</data>
 		<key>Resources/ZMSettingRecordingViewController.nib</key>
 		<data>
@@ -238,7 +238,7 @@
 		</data>
 		<key>Resources/ZMSettingShortcutsViewController.nib</key>
 		<data>
-		ROzhVGPgElqpGmrGJTTjMWHd8hQ=
+		OPLk6ftVTWmyyndPQT09D+mrbSU=
 		</data>
 		<key>Resources/ZMSettingVBViewController.nib</key>
 		<data>
@@ -266,11 +266,11 @@
 		</data>
 		<key>Resources/ZPStartMeetingConfirmWindowController.nib</key>
 		<data>
-		4sxzGu8bnMYymGi7C/Q0p4JlYtk=
+		9N14gDceRVYQno5JAioKxaxkshA=
 		</data>
 		<key>Resources/ZoomSDKChatUI.def</key>
 		<data>
-		5cauMJP3VDP8R9vXP2ci0EoCQxs=
+		vLbOqdKRHAB4hUIyHK/5NBXpEHw=
 		</data>
 		<key>Resources/en.lproj/InfoPlist.strings</key>
 		<dict>
@@ -377,11 +377,11 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			B8eCcpdVJuqgb8ndntCkQ47jYWk=
+			Ozn8FDzXxswx8aUIEdDQSor4w74=
 			</data>
 			<key>hash2</key>
 			<data>
-			ZRFAGk5wyWkRxhrIDkPB70hq1fl+8LxYKJOVBhPajTA=
+			UP04HKm32pyT+kpN+R0S4kNXzx2XU1aWJ334IrYR/Zs=
 			</data>
 		</dict>
 		<key>Resources/InviteCollectionViewItem.nib</key>
@@ -509,11 +509,11 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			W5kDeBGiAth21iqzFIL1jt2mPVQ=
+			Zv5/oy7H3hksBsi3lPn7C0r/uqs=
 			</data>
 			<key>hash2</key>
 			<data>
-			nTutUobFLvH3pNTWfmPFop0YEWBX+XWEOcvm4vx7HFc=
+			fz/aC132p1J9yD8+BRMNdfx2dMrfjOpLQXxQLy2TXg8=
 			</data>
 		</dict>
 		<key>Resources/ZMChatsCollectionImageViewItem.nib</key>
@@ -553,11 +553,11 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			XETr4zIcOOdatbesZWvD7gROqEw=
+			78WLUtVCMgazusVzhM2NzOw6nNA=
 			</data>
 			<key>hash2</key>
 			<data>
-			EODt2FWeYrRvKbeI2ak1PctG8P+0F7wVTcQanBsPSQE=
+			7zc7a9LfZUp/ADGAMz6pH94x65WU32g0Fb57Mt4u/2M=
 			</data>
 		</dict>
 		<key>Resources/ZMChatsSearchField.nib</key>
@@ -575,11 +575,11 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			Ks4GX5Sg1bR5X+O4/4+GUyc2bFY=
+			bUBgtmWL6f/QciY9nLk3FJorhYo=
 			</data>
 			<key>hash2</key>
 			<data>
-			8l+oGm2CFhgd5r9a8a0EUeF4LGwCvsQ5t0rEZHvJB1o=
+			x4yYH0OVtSbOEWO3gLJsbsfs9iuBhRggOYoum7b8P+U=
 			</data>
 		</dict>
 		<key>Resources/ZMChatsSessionViewCtrl.nib</key>
@@ -652,22 +652,22 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			7+XtEUMtawVTJNhMSsr/YwPRLgc=
+			eoAC1/j+oxQu+bzAcpCYS423Rbs=
 			</data>
 			<key>hash2</key>
 			<data>
-			sL2h8bxAZsCdLqSC3gpVqTGvMfqNX+2z4xW/OFeebbU=
+			3J6w7HkbbyI2+HEnlo21QkhmPHJk7LBXVL1tTYhqXJo=
 			</data>
 		</dict>
 		<key>Resources/ZMHomeUpcomingViewController.nib</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			KkMhSs7b6n8C5kvkVolLTc5EQXY=
+			XFrBl7Mlgdxi7wN9XvSPUMdDt5I=
 			</data>
 			<key>hash2</key>
 			<data>
-			61x6GIz//ZEWL8W53jPgGncpvyT/SK5wUkdLYCFv4+E=
+			Ld+ba11fQd2QDol9k8COTlfbO9AgMWW51BwQZE1tM3c=
 			</data>
 		</dict>
 		<key>Resources/ZMHomeView.nib</key>
@@ -718,11 +718,11 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			/vOBAMPcIgOi5ONrMnD4cBiO+wo=
+			1ZhccMBerS12mJGATXGBfDlA4SA=
 			</data>
 			<key>hash2</key>
 			<data>
-			aivvOAp9aGccIiFnr57Z34TPjrXZzn8EaHAlQFtizAM=
+			kITkupHBKSu2HBgDSHVvWyUoDTnG/jifG8dOyYXMiiQ=
 			</data>
 		</dict>
 		<key>Resources/ZMLoginView.nib</key>
@@ -773,11 +773,11 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			14G4du4PY6XLccIlbJD98Jh/9pA=
+			km4KoP+F2la5LROSZ9g6XZOn1Ng=
 			</data>
 			<key>hash2</key>
 			<data>
-			5gglXOswYX5rDKykQrqOHtQlTSaWHd3k6wIfPK5tsE4=
+			ZB8yqGcWzagfRMiP40xr2AYqOYnuf/tNamQOQNi51Dk=
 			</data>
 		</dict>
 		<key>Resources/ZMMeetingListMgr.nib</key>
@@ -850,11 +850,11 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			TeNEh3R1cYHejPARSWWyfz8wtHI=
+			Xu7cFHPELNX5teodxVXad84NWW0=
 			</data>
 			<key>hash2</key>
 			<data>
-			Htjxrlb8JCVzSk2K87mzyM+R1NrBRwd07NvNeELNGIQ=
+			NzASY0yqAmtDl8FxGURrN/Xppi14c08SI9+cuGBkJBo=
 			</data>
 		</dict>
 		<key>Resources/ZMSSLVerifyWindowController.nib</key>
@@ -949,11 +949,11 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			isasdiM4grIX+tcfApfeZZMULS8=
+			NcLrIkMWPPaNVEbhLEsnZMnOibM=
 			</data>
 			<key>hash2</key>
 			<data>
-			Ps1cQHeVykQsNCvsBrBjWYUzX4pjOh+F3TYe28FDdBw=
+			N2izgscoUcevHzPj1xCiba14xJ1EfLBXn6zuywNoNZE=
 			</data>
 		</dict>
 		<key>Resources/ZMSettingRecordingViewController.nib</key>
@@ -971,11 +971,11 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			ROzhVGPgElqpGmrGJTTjMWHd8hQ=
+			OPLk6ftVTWmyyndPQT09D+mrbSU=
 			</data>
 			<key>hash2</key>
 			<data>
-			6CRtNA140hWXYloEbN+seoBy1MRvwO1aNi9TnfQfrAk=
+			DteLCoNYfpAEI4u87b1cFCwhWrBpWN0WI8bt6zKdD1s=
 			</data>
 		</dict>
 		<key>Resources/ZMSettingVBViewController.nib</key>
@@ -1048,22 +1048,22 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			4sxzGu8bnMYymGi7C/Q0p4JlYtk=
+			9N14gDceRVYQno5JAioKxaxkshA=
 			</data>
 			<key>hash2</key>
 			<data>
-			Nj0jgllyAeViRup01fZLQ6UovUxIOw/pBOZiiigQOBM=
+			jLF3/UfPoK3pDL6j8YHwgQHWQBGghhfBRF9HcVu1NBA=
 			</data>
 		</dict>
 		<key>Resources/ZoomSDKChatUI.def</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			5cauMJP3VDP8R9vXP2ci0EoCQxs=
+			vLbOqdKRHAB4hUIyHK/5NBXpEHw=
 			</data>
 			<key>hash2</key>
 			<data>
-			8Th4Okk7Yb0ZJNi5GKgLkgo6zcH06H1iM49NNjIJt+o=
+			KmVAGTAD0Et7fQ4a0Wg3ER7ivEhYioeZNnCd5oxB6Bk=
 			</data>
 		</dict>
 		<key>Resources/en.lproj/InfoPlist.strings</key>

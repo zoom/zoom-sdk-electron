@@ -61,7 +61,10 @@ IMPL_FUNC_NORET_1(IMeetingConfiguration, HideRemoteControlOnMeetingUI, void, boo
 IMPL_FUNC_NORET_1(IMeetingConfiguration, HideQAOnMeetingUI, void, bool, bHide)
 IMPL_FUNC_NORET_1(IMeetingConfiguration, HidePollOnMeetingUI, void, bool, bHide)
 
-
+//virtual void HideReactionsOnMeetingUI(bool bHide) = 0;
+IMPL_FUNC_NORET_1(IMeetingConfiguration, HideReactionsOnMeetingUI, void, bool, bHide)
+//virtual void HideMeetingInfoOnMeetingUI(bool bHide) = 0;
+IMPL_FUNC_NORET_1(IMeetingConfiguration, HideMeetingInfoOnMeetingUI, void, bool, bHide)
 //virtual void ConfigDSCP(int dscpAudio, int dscpVideo, bool bReset) = 0;
 IMPL_FUNC_NORET_3(IMeetingConfiguration,ConfigDSCP, void, int, dscpAudio, int, dscpVideo, bool, bReset)
 //virtual void RedirectClickParticipantListBTNEvent(bool bRedirect) = 0;

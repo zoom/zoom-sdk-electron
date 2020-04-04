@@ -62,6 +62,13 @@ ZNSDKError ZMeetingServiceWrap::Start(ZNStartParam startParam)
     if (!service) {
         return ZNSDKERR_SERVICE_FAILED;
     }
+    
+    if (num.intValue == 0) {
+        if (vanID && vanID.length > 0) {
+            num = nil;
+        }
+    }
+    
     ZoomSDKError ret = [service startMeeting:type userID:user_id userToken:token displayName:displayName meetingNumber:num isDirectShare:isDirecShare sharedApp:displayID isVideoOff:startParam.isVideoOff isAuidoOff:startParam.isAudioOff vanityID:vanID];
     return Help_type.ZoomSDKErrorType(ret);
 }
@@ -84,6 +91,13 @@ ZNSDKError ZMeetingServiceWrap::Start_WithoutLogin(ZNStartParam startParam)
     if (!service) {
         return ZNSDKERR_SERVICE_FAILED;
     }
+    
+    if (num.intValue == 0) {
+        if (vanID && vanID.length > 0) {
+            num = nil;
+        }
+    }
+    
     ZoomSDKError ret = [service startMeetingWithZAK:zak userType:type userID:userid userToken:userToken displayName:disName meetingNumber:num isDirectShare:isDirecShare sharedApp:displayID isVideoOff:startParam.isVideoOff isAuidoOff:startParam.isAudioOff vanityID:vanID];
     return Help_type.ZoomSDKErrorType(ret);
 }
@@ -104,7 +118,9 @@ ZNSDKError ZMeetingServiceWrap::Join(ZNJoinParam joinParam)
     CGDirectDisplayID  displayID = [display  intValue];
     NSString *vanID = [NSString stringWithCString:joinParam.vanityID.c_str() encoding:NSUTF8StringEncoding];
     if (num.intValue == 0) {
-        return ZNSDKERR_INVALID_PARAMETER;
+        if (vanID && vanID.length > 0) {
+            num = nil;
+        }
     }
     ZoomSDKMeetingService *service = [[ZoomSDK sharedSDK] getMeetingService];
     if (!service) {
@@ -131,7 +147,9 @@ ZNSDKError ZMeetingServiceWrap::Join_WithoutLogin(ZNJoinParam joinParam)
     NSString *vanID = [NSString stringWithCString:joinParam.vanityID.c_str() encoding:NSUTF8StringEncoding];
     
     if (num.intValue == 0) {
-        return ZNSDKERR_INVALID_PARAMETER;
+        if (vanID && vanID.length > 0) {
+            num = nil;
+        }
     }
     
     ZoomSDKMeetingService *service = [[ZoomSDK sharedSDK] getMeetingService];

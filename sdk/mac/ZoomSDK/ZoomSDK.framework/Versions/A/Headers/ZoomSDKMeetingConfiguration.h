@@ -110,6 +110,10 @@
     BOOL                _disableAudioSettingMenuButtonClickOriginAction;
     //Hide loading window when start meeting without login.
     BOOL                _hideLoadingWindow;
+    //Disable ZOOM original actions of clicking button Breakout Rooms.
+    BOOL                _disableBreakoutRoomsButtonClickOriginAction;
+    //Hide meeting info button on video UI.
+    BOOL                _hideMeetingInfoButtonOnVideo;
                  
 }
 @property(nonatomic, assign)CGDirectDisplayID displayAppID;
@@ -161,6 +165,8 @@
 @property(nonatomic, assign)BOOL disableAudioButtonClickOriginAction;
 @property(nonatomic, assign)BOOL disableAudioSettingMenuButtonClickOriginAction;
 @property(nonatomic, assign)BOOL hideLoadingWindow;
+@property(nonatomic, assign)BOOL disableBreakoutRoomsButtonClickOriginAction;
+@property(nonatomic, assign)BOOL hideMeetingInfoButtonOnVideo;
 
 - (ZoomSDKError)prefillWebinarUserName:(NSString*)userName Email:(NSString*)email;
 - (ZoomSDKError)hideSDKButtons:(BOOL)hide ButtonType:(SDKButton)button;

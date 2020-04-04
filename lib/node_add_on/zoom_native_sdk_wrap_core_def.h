@@ -553,6 +553,11 @@ enum ZNUserRole
 	ZN_USERROLE_BREAKOUTROOM_MODERATOR,///<Host role in breakout room.
 	ZN_USERROLE_ATTENDEE,///<Role of attendee.
 };
+enum ZNSDKUserInfoType
+{
+	ZN_REAL_USERINFO,
+	ZN_FAKE_USERINFO,
+};
 typedef struct _ZNUserInfomation
 {
 	ZoomSTRING userName;///<Current user name.
@@ -565,6 +570,7 @@ typedef struct _ZNUserInfomation
 	ZNUserRole userRole;///<The type of role of the user specified by the current information. For more infomation, see \link ZNUserRole \endlink enum.
 	bool isPurePhoneUser;///<Whether the user corresponding to the current information joins the meeting by telephone or not.
 	bool webinarAttendeeStatus;///<The webinar status of the user specified by the current information. TRUE indicates that it is able to talk.
+	ZNSDKUserInfoType userInfoType;
 #if (defined BUILD_WIN)
 	ZNAudioType audioJoinType;///<the audio type of the user specified by the current information when joins the meeting. For more infomation, see \link ZNAudioType \endlink enum.
 	bool isInWaitingRoom;///<Whether the user specified by the current information is in the waiting room or not.
@@ -572,6 +578,10 @@ typedef struct _ZNUserInfomation
 	ZoomSTRING AudioVoiceLevel;///<The Mic level of the user corresponding to the current information.
 	bool isClosedCaptionSender;///<Whether the user corresponding to the current information is the sender of Closed Caption or not.
 #endif
+	_ZNUserInfomation()
+	{
+		userInfoType = ZN_FAKE_USERINFO;
+	}
 }ZNUserInfomation;
 
 /*! \enum SDKMinimizeUIMode

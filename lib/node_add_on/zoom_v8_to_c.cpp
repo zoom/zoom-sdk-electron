@@ -47,7 +47,7 @@ void zoom_v8toc(v8::Local<v8::Boolean> v8boolean, bool& c_bool) {
 #if (defined _WIN32)
     c_bool = v8boolean->BooleanValue() ? true : false;
 #else
-    c_bool = v8boolean->BooleanValue(isolate) ? 1 : 0;
+    c_bool = v8boolean->BooleanValue() ? 1 : 0;
 #endif
 #endif
 

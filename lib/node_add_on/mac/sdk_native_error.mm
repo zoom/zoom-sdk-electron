@@ -293,7 +293,7 @@ ZoomSDKMeetingStatus nativeErrorTypeHelp::ZoomSDKMeetingStatusC(ZNMeetingStatus 
     }
     return ret;
 }
-#pragma lanaguage
+#pragma mark lanaguage
 NSString *nativeErrorTypeHelp::ZNSDKLanaguageChanage(ZNSDK_LANGUAGE_ID &lanaguageid)
 {
     NSString *ret = @"en";

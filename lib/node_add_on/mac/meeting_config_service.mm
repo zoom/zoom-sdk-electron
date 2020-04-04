@@ -44,11 +44,11 @@ ZNSDKError ZMeetingConfigWrap::EnableInviteButtonOnMeetingUI(bool bEnable)
         return ZNSDKERR_SERVICE_FAILED;
     }
     ZoomSDKMeetingConfiguration *config = [service getMeetingConfiguration];
-    bool enable = bEnable;
     if (service && config) {
-        config.disableToolbarInviteButtonClickOriginAction = (enable == YES) ? NO : YES;
         if (bEnable == NO) {
             [config hideSDKButtons:YES ButtonType:ToolBarInviteButton];
+        }else{
+            [config hideSDKButtons:NO ButtonType:ToolBarInviteButton];
         }
     }
     return ZNSDKERR_SUCCESS;
@@ -791,6 +791,17 @@ void ZMeetingConfigWrap::CancelRegisterWebinarByEmail()
     ZoomSDKWebinarRegisterHelper *helper = [[meetingServiceDelegate share] getWebinarRegisterHelper];
     if (helper) {
         [helper cancel];
+    }
+}
+
+void ZMeetingConfigWrap::DisableToolbarInviteButtonClickOriginAction(bool bDisable)
+{
+    ZoomSDKMeetingService *service = [[ZoomSDK sharedSDK]  getMeetingService];
+    if (service) {
+        ZoomSDKMeetingConfiguration *config = [service getMeetingConfiguration];
+        if (config) {
+            config.disableToolbarInviteButtonClickOriginAction = bDisable;
+        }
     }
 }
 

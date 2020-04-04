@@ -80,6 +80,7 @@
     <ClCompile Include="calender_service_wrap.cpp" />
     <ClCompile Include="camera_controller_wrap.cpp" />
     <ClCompile Include="customized_resource_helper_wrap.cpp" />
+    <ClCompile Include="customized_ui_components_wrap\customized_annotation_obj_wrap.cpp" />
     <ClCompile Include="customized_ui_components_wrap\customized_annotation_wrap.cpp" />
     <ClCompile Include="customized_ui_components_wrap\customized_share_render_wrap.cpp" />
     <ClCompile Include="customized_ui_components_wrap\customized_ui_mgr_wrap.cpp" />
@@ -124,6 +125,7 @@
     <ClInclude Include="calender_service_wrap.h" />
     <ClInclude Include="camera_controller_wrap.h" />
     <ClInclude Include="customized_resource_helper_wrap.h" />
+    <ClInclude Include="customized_ui_components_wrap\customized_annotation_obj_wrap.h" />
     <ClInclude Include="customized_ui_components_wrap\customized_annotation_wrap.h" />
     <ClInclude Include="customized_ui_components_wrap\customized_share_render_wrap.h" />
     <ClInclude Include="customized_ui_components_wrap\customized_ui_mgr_wrap.h" />

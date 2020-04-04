@@ -25,6 +25,8 @@
 #import "ZoomSDKRawDataController.h"
 #import "ZoomSDKRealNameAuthenticationController.h"
 #import "ZoomSDKQAController.h"
+#import "ZoomSDKNewBreakoutRoomController.h"
+
 @interface ZoomSDKSecuritySessionKey : NSObject
 {
     SecuritySessionComponet _component;
@@ -125,7 +127,7 @@
     ZoomSDKRawDataController*        _rawDataController;
     ZoomSDKRealNameAuthenticationController*       _realNameController;
     ZoomSDKQAController*             _QAController;
-    
+    ZoomSDKNewBreakoutRoomController*  _newBOController;
 }
 /**
  * Callback of receiving meeting events.
@@ -226,6 +228,12 @@
  * @return If the function succeeds, it will return a ZoomSDKQAController object.
  */
 -(ZoomSDKQAController *)getQAController;
+
+/**
+ *@brief Get object of ZoomSDKNewBreakoutRoomController.
+ *@return If the function succeeds, it will return a ZoomSDKNewBreakoutRoomController object.
+ */
+-(ZoomSDKNewBreakoutRoomController *)getNewBreakoutRoomController;
 /**
  * @brief Start a ZOOM meeting with meeting number.
  * @note userId\userToken\username is for API user.

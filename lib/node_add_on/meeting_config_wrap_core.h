@@ -91,6 +91,7 @@ public:
 	void DisableAutoShowSelectJoinAudioDlgWhenJoinMeeting(bool bDisable);
 	void DisableShowJoinMeetingWnd(bool bDisable);
 	void DisableRemoteCtrlCopyPasteFeature(bool bDisable);
+	void DisableToolbarInviteButtonClickOriginAction(bool bDisable);
 
 	void SetShowVideoOptimizeChkbox(bool bShow);
 	ZNRequiredInfoType GetRequiredInfoType();

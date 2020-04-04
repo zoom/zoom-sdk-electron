@@ -51,6 +51,10 @@ ZNSDKError ZMeetingAudioWrap::LeaveVoip()
 {
 	return Map2WrapDefine(ZOOM_SDK_NAMESPACE::CSDKWrap::GetInst().GetMeetingServiceWrap().T_GetMeetingAudioController().LeaveVoip());
 }
+ZNSDKError ZMeetingAudioWrap::EnablePlayChimeWhenEnterOrExit(bool bEnable)
+{
+	return Map2WrapDefine(ZOOM_SDK_NAMESPACE::CSDKWrap::GetInst().GetMeetingServiceWrap().T_GetMeetingAudioController().EnablePlayChimeWhenEnterOrExit(bEnable));
+}
 void ZMeetingAudioWrap::onUserAudioStatusChange(ZNList<ZNUserAudioStatus> lstAudioStatusChange, ZoomSTRING strAudioStatusList)
 {
 	if (m_pSink)

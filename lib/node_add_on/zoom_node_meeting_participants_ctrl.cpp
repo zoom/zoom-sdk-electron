@@ -129,6 +129,7 @@ void ZoomNodeMeetingParticipantsCtrlWrap::GetUserInfoByUserID(const v8::Function
 	node->Set(context, v8::String::NewFromUtf8(isolate, "userRole", v8::NewStringType::kInternalized).ToLocalChecked(), v8::Integer::New(isolate, (int32_t)zn_userInfomation.userRole));
 	node->Set(context, v8::String::NewFromUtf8(isolate, "isPurePhoneUser", v8::NewStringType::kInternalized).ToLocalChecked(), v8::Boolean::New(isolate, zn_userInfomation.isPurePhoneUser));
 	node->Set(context, v8::String::NewFromUtf8(isolate, "WebinarAtendeeStatus", v8::NewStringType::kInternalized).ToLocalChecked(), v8::Boolean::New(isolate, zn_userInfomation.webinarAttendeeStatus));
+	node->Set(context, v8::String::NewFromUtf8(isolate, "userInfoType", v8::NewStringType::kInternalized).ToLocalChecked(), v8::Integer::New(isolate, (int32_t)zn_userInfomation.userInfoType));
 #if (defined _WIN32)
 	node->Set(context, v8::String::NewFromUtf8(isolate, "audioJoinType", v8::NewStringType::kInternalized).ToLocalChecked(), v8::Integer::New(isolate, (int32_t)zn_userInfomation.audioJoinType));
 	node->Set(context, v8::String::NewFromUtf8(isolate, "isInWaitingRoom", v8::NewStringType::kInternalized).ToLocalChecked(), v8::Boolean::New(isolate, zn_userInfomation.isInWaitingRoom));

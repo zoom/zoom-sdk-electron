@@ -46,6 +46,17 @@ DEFINE_FUNC_1(EnableHostInChina, SDKError, bool, bEnable)
 DEFINE_FUNC_1(EnableAutoRecord, SDKError, bool, bEnable)
 //virtual SDKError SelectAutoRecordType(SCHEDULERECTYPE type_) = 0;
 DEFINE_FUNC_1(SelectAutoRecordType, SDKError, SCHEDULERECTYPE, type_)
+//virtual SDKError EnableWaitingRoom(bool bEnable) = 0;
+DEFINE_FUNC_1(EnableWaitingRoom, SDKError, bool, bEnable)
+//virtual SDKError EnableMeetingToPublic(bool bEnable) = 0;
+DEFINE_FUNC_1(EnableMeetingToPublic, SDKError, bool, bEnable)
+//virtual SDKError EnableLanguageInterpretation(bool bEnable) = 0;
+DEFINE_FUNC_1(EnableLanguageInterpretation, SDKError, bool, bEnable)
+//virtual SDKError SetInterpreterInfoList(IList<IInterpreterInfo* >* lst_interpreters) = 0;
+DEFINE_FUNC_1(SetInterpreterInfoList, SDKError, IList<IInterpreterInfo* >*, lst_interpreters)
+//virtual SDKError SetAlternativeHostList(IList<IAlternativeHostInfo* >* lst_althosts) = 0;
+DEFINE_FUNC_1(SetAlternativeHostList, SDKError, IList<IAlternativeHostInfo* >*, lst_althosts)
+
 //virtual ISelectMeetingItemScheduleForHelper* GetScheduleForHelper() = 0;
 DEFINE_FUNC_0(GetScheduleForHelper, ISelectMeetingItemScheduleForHelper*)
 //virtual time_t GetCurrentStartTime() = 0;
@@ -84,6 +95,18 @@ DEFINE_FUNC_1(IsHostInChinaEnabled, bool, bool&, can_change)
 DEFINE_FUNC_2(IsAutoRecordEnabled, bool, bool&, can_change, int&, support_rec_type)
 //virtual SCHEDULERECTYPE GetSelectedAutoRecordType() = 0;
 DEFINE_FUNC_0(GetSelectedAutoRecordType, SCHEDULERECTYPE)
+//virtual bool IsWaitingRoomEnabled(bool& can_change) = 0;
+DEFINE_FUNC_1(IsWaitingRoomEnabled, bool, bool&, can_change)
+//virtual bool IsMeetingToPublicEnabled(bool& can_change) = 0;
+DEFINE_FUNC_1(IsMeetingToPublicEnabled, bool, bool&, can_change)
+//virtual const wchar_t* GetPublicEventListUrl() = 0;
+DEFINE_FUNC_0(GetPublicEventListUrl, const wchar_t*)
+//virtual bool IsLanguageInterpretationEnabled(bool& can_change) = 0;
+DEFINE_FUNC_1(IsLanguageInterpretationEnabled, bool, bool&, can_change)
+//virtual IList<IInterpreterInfo* >* GetInterpreterInfoList() = 0;
+DEFINE_FUNC_0(GetInterpreterInfoList, IList<IInterpreterInfo* >*)
+//virtual IList<IAlternativeHostInfo* >* GetAlternativeHostInfoList() = 0;
+DEFINE_FUNC_0(GetAlternativeHostInfoList, IList<IAlternativeHostInfo* >*)
 //virtual IQueryMeetingItemScheduleForHelper* GetQueryScheduleForHelper() = 0;
 DEFINE_FUNC_0(GetQueryScheduleForHelper, IQueryMeetingItemScheduleForHelper*)
 //virtual UINT64 GetUniqueMeetingID() = 0;
@@ -123,6 +146,11 @@ CallBack_FUNC_2(onAutoRecordEnabledStatusNotification, bool, enable, SCHEDULEREC
 CallBack_FUNC_1(onSupportScheduleForNotification, bool, can_use)
 // virtual void onScheduleMeetingItemDestroyed() = 0;
 CallBack_FUNC_0(onScheduleMeetingItemDestroyed)
-
+//virtual void onWaitingRoomEnabledStatusNotification(bool enable) = 0;
+CallBack_FUNC_1(onWaitingRoomEnabledStatusNotification, bool, enable);
+//virtual void onMeetingToPublicEnabledStatusNotification(bool enable) = 0;
+CallBack_FUNC_1(onMeetingToPublicEnabledStatusNotification, bool, enable);
+//virtual void onLanguageInterpretationEnabledStatusNotification(bool enable) = 0;
+CallBack_FUNC_1(onLanguageInterpretationEnabledStatusNotification, bool, enable);
 END_CLASS_DEFINE(IScheduleMeetingItem)
 END_ZOOM_SDK_NAMESPACE

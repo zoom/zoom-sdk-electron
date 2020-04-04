@@ -25,6 +25,7 @@ public:
 
 	virtual void onDeviceRunning(void* device) {}
 	virtual void onDeviceStop(void* device) {}
+	virtual void onPreProcessRawData(YUVProcessDataI420* data_, IVector<unsigned long long >* recv_handle_list) {}
 
 	virtual void onConnect() {}
 	virtual void onDisconnect() {}

@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="utf-8">
-    <title>JSDoc: Source: zoom_customized_resource.js</title>
+    <title>JSDoc: Module: zoom_setting_accessibility_ctrl</title>
 
     <script src="scripts/prettify/prettify.js"> </script>
     <script src="scripts/prettify/lang-css.js"> </script>
@@ -17,96 +17,268 @@
 
 <div id="main">
 
-    <h1 class="page-title">Source: zoom_customized_resource.js</h1>
+    <h1 class="page-title">Module: zoom_setting_accessibility_ctrl</h1>
 
     
 
 
 
+
+<section>
+
+<header>
     
-    <section>
-        <article>
-            <pre class="prettyprint source linenums"><code>const { ZoomSDKError } = require('./settings.js');
+        
+    
+</header>
 
-/**
-*@module
-*/
-var ZoomCustomizedResource = (function () {
-  var instance;
-  /**
-   * mode: Zoom SDK ZoomCustomizedResource Service Init
-   * @param {Object} addon: zoom sdk module
-   * @return {ZoomCustomizedResource}
-   */
-  function init(opts) { 
-    var clientOpts = opts || {};
+<article>
+    <div class="container-overview">
+    
+        
 
-    // Private methods and variables
-    var _addon = clientOpts.addon.GetCustomizedResourceObj() || null;
+        
+    
+    </div>
 
-    return {
-      /**
-      * mode: Add Customized Picture Resource
-      * @param {String} strPNGID
-      * @param {String} strPNGPath
-      * @return {ZoomCustomizedResource}
-      */
-      Resource_AddCustomizedPictureResource: function (opts) {
-        if (_addon) {
-          let clientOpts = opts || {};
-          let strPNGID = clientOpts.strPNGID;
-          let strPNGPath = clientOpts.strPNGPath;
-          return _addon.AddCustomizedPictureResource(strPNGID, strPNGPath);
-        }
-        return ZoomSDKError.SDKERR_UNINITIALIZE;
-      },
-      /**
-      * mode: Add Customized String Resource
-      * @param {String} CustomizedStringType
-      * @param {String} strCustomizedString
-      * @return {ZoomCustomizedResource}
-      */
-      Resource_AddCustomizedStringResource: function (opts) {
-        if (_addon) {
-          let clientOpts = opts || {};
-          let CustomizedStringType = clientOpts.CustomizedStringType;
-          let strCustomizedString = clientOpts.strCustomizedString;
-          return _addon.AddCustomizedStringResource(CustomizedStringType, strCustomizedString);
-        }
-        return ZoomSDKError.SDKERR_UNINITIALIZE;
-      },
-      /**
-      * mode: Add Customized URL Resource
-      * @param {String} CustomizedURLType
-      * @param {String} strCustomizeURL
-      * @return {ZoomCustomizedResource}
-      */
-      Resource_AddCustomizedURLResource: function (opts) {
-        if (_addon) {
-          let clientOpts = opts || {};
-          let CustomizedURLType = clientOpts.CustomizedURLType;
-          let strCustomizeURL = clientOpts.strCustomizeURL;
-          return _addon.AddCustomizedURLResource(CustomizedURLType, strCustomizeURL);
-        }
-        return ZoomSDKError.SDKERR_UNINITIALIZE;
-      }
-    };
-  };
-  return {
-    getInstance: function (opts) {
-      if (!instance) {
-        instance = init(opts);
-      }
-      return instance;
-    }
-  };
-})();
+    
 
-module.exports = {
-  ZoomCustomizedResource: ZoomCustomizedResource
-}</code></pre>
-        </article>
-    </section>
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+        <h3 class="subsection-title">Methods</h3>
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="~Setting_EnableAlwaysShowMeetingControls"><span class="type-signature">(inner) </span>Setting_EnableAlwaysShowMeetingControls<span class="signature">()</span><span class="type-signature"> &rarr; {ZoomSDKError}</span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    mode: Enable Always Show Meeting Controls
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="zoom_setting_accessibility_ctrl.js.html">zoom_setting_accessibility_ctrl.js</a>, <a href="zoom_setting_accessibility_ctrl.js.html#line23">line 23</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">ZoomSDKError</span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="~Setting_IsAlwaysShowMeetingControlsEnable"><span class="type-signature">(inner) </span>Setting_IsAlwaysShowMeetingControlsEnable<span class="signature">()</span><span class="type-signature"> &rarr; {ZoomSDKError}</span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    mode: Is Always Show Meeting Controls Enable
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="zoom_setting_accessibility_ctrl.js.html">zoom_setting_accessibility_ctrl.js</a>, <a href="zoom_setting_accessibility_ctrl.js.html#line35">line 35</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">ZoomSDKError</span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+
+
+
+        
+    
+
+    
+
+    
+</article>
+
+</section>
 
 
 

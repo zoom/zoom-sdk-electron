@@ -118,7 +118,12 @@ For the versions available, see the [tags on this repository](https://github.com
 Please refer to our [CHANGELOG](https://github.com/zoom/zoom-sdk-electron/blob/master/CHANGELOG.md) for all changes.
 
 ## Frequently Asked Questions (FAQ)
-
+* :one: `How to sign Electron SDK app on MacOS? Why my Electron SDK app crashes on MacOS after signing?`:
+  * You may use the following command line to sign Electron SDK app on MacOS:
+ ```
+ codesign --force --verify --verbose --entitlements runtime.entitlements --options runtime --sign "Developer ID Application: Name (ID)" (App path)
+ ```
+  **Please note that: You MUST use runtime entitlement to sign your Electron SDK on MacOS, and the entitlement MUST include the permission to use "Audio Input" and "Camera", otherwise, the app will crash due to Apple's privacy violation.**
 * Not finding what you want? We are here to help! Please visit our [Zoom Developer Community Forum](https://devforum.zoom.us/) for further assistance.
 
 ## Support

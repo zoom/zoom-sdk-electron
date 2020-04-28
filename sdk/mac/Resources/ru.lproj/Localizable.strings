@@ -3691,3 +3691,9 @@
 "LN_Hotkey_Increase_Chat_Display_Size_20021" = "Увеличить размер окна чата";
 "LN_Hotkey_Decrease_Chat_Display_Size_20021" = "Уменьшить размер окна чата";
 "LN_Join_The_Meeting_87404" = "Подключиться к конференции";
+
+
+"LN_Security_Encryption_MeetingTip_IN_GCM_155111" = "Вы используете улучшенное шифрование";
+"LN_Security_Encryption_SettingDiagnostic_Title_155111" = "Шифрование";
+"LN_Security_Version_SettingDiagnostic_Title_155111" = "Версия";
+"LN_Screen_Sharing_FitStatusView_Tip_153476" = "Вы запустили демонстрацию экрана";

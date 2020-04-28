@@ -3898,3 +3898,9 @@
 "LN_Reactions_ToolBar_Title_122370" = "Reaktionen";
 "LN_Hotkey_Increase_Chat_Display_Size_20021" = "Chatanzeige vergrößern";
 "LN_Hotkey_Decrease_Chat_Display_Size_20021" = "Chatanzeige verkleinern";
+
+
+"LN_Security_Encryption_MeetingTip_IN_GCM_155111" = "Sie verwenden die erweiterte Verschlüsselung";
+"LN_Security_Encryption_SettingDiagnostic_Title_155111" = "Verschlüsselung";
+"LN_Security_Version_SettingDiagnostic_Title_155111" = "Version";
+"LN_Screen_Sharing_FitStatusView_Tip_153476" = "Sie befinden sich in der gemeinsamen Bildschirmnutzung";

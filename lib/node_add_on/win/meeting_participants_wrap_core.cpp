@@ -84,7 +84,7 @@ ZNUserInfomation ZMeetingParticipantsWrap::GetUserInfomationByUserID(unsigned in
 	else
 	{
 		zn_UserInfomation.userName = m_user_info.GetUserNamme(userid);
-		zn_UserInfomation.email = m_user_info.GetEmail(userid);
+		//zn_UserInfomation.email = m_user_info.GetEmail(userid);
 		zn_UserInfomation.isHost = m_user_info.IsHost(userid);
 		zn_UserInfomation.userID = m_user_info.GetUserID(userid);
 		zn_UserInfomation.isVideoOn = m_user_info.IsVideoOn(userid);
@@ -133,16 +133,16 @@ ZoomSTRING ZUserInfoWrap::GetUserNamme(unsigned int userid)
 	}
 	return zn_user_name;
 }
-ZoomSTRING ZUserInfoWrap::GetEmail(unsigned int userid)
-{
-	
-	ZoomSTRING zn_user_email;
-	if (m_pUserInfo)
-	{
-		zn_user_email = m_pUserInfo->GetEmail();
-	}
-	return zn_user_email;
-}
+//ZoomSTRING ZUserInfoWrap::GetEmail(unsigned int userid)
+//{
+//	
+//	ZoomSTRING zn_user_email;
+//	if (m_pUserInfo)
+//	{
+//		zn_user_email = m_pUserInfo->GetEmail();
+//	}
+//	return zn_user_email;
+//}
 bool ZUserInfoWrap::IsHost(unsigned int userid)
 {
 	

@@ -3901,3 +3901,8 @@
 "LN_Hotkey_Increase_Chat_Display_Size_20021" = "放大聊天視窗";
 "LN_Hotkey_Decrease_Chat_Display_Size_20021" = "縮小聊天視窗";
 "LN_Join_The_Meeting_87404" = "加入會議";
+
+"LN_Security_Encryption_MeetingTip_IN_GCM_155111" = "您目前使用增強加密";
+"LN_Security_Encryption_SettingDiagnostic_Title_155111" = "加密";
+"LN_Security_Version_SettingDiagnostic_Title_155111" = "版本";
+"LN_Screen_Sharing_FitStatusView_Tip_153476" = "您正在分享畫面";

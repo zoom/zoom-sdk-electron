@@ -12,7 +12,7 @@ public:
 	
 
 	ZoomSTRING GetUserNamme(unsigned int userid);
-	ZoomSTRING GetEmail(unsigned int userid);
+	//ZoomSTRING GetEmail(unsigned int userid);
 	bool IsHost(unsigned int userid);
 	unsigned int GetUserID(unsigned int userid);
 	bool IsVideoOn(unsigned int userid);

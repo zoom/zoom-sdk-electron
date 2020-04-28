@@ -3854,3 +3854,7 @@
 "LN_Hotkey_Decrease_Chat_Display_Size_20021" = "Réduire la taille d'affichage de la discussion";
 "LN_Join_The_Meeting_87404" = "Rejoindre la réunion"; 
 
+"LN_Security_Encryption_MeetingTip_IN_GCM_155111" = "Vous utilisez le cryptage amélioré";
+"LN_Security_Encryption_SettingDiagnostic_Title_155111" = "Cryptage";
+"LN_Security_Version_SettingDiagnostic_Title_155111" = "Version";
+"LN_Screen_Sharing_FitStatusView_Tip_153476" = "Vous êtes en train de partager votre écran";

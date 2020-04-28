@@ -4450,3 +4450,14 @@
 
 "LN_Hotkey_Increase_Chat_Display_Size_20021" = "Increase chat display size";
 "LN_Hotkey_Decrease_Chat_Display_Size_20021" = "Decrease chat display size";
+
+
+"LN_Screen_Sharing_FitStatusView_Tip_153476" = "You are screen sharing";
+
+"LN_Security_Encryption_MeetingTip_IN_ECM_155111" = "You are using standard encryption";
+"LN_Security_Encryption_MeetingTip_IN_GCM_155111" = "You are using enhanced encryption";
+"LN_Security_Encryption_SettingDiagnostic_Title_155111" = "Encryption";
+"LN_Security_Version_SettingDiagnostic_Title_155111" = "Version";
+"LN_Security_Encryption_SettingDiagnostic_ECB_155111" = "AES-256-ECB";
+"LN_Security_Encryption_SettingDiagnostic_GCM_155111" = "AES-256-GCM";
+

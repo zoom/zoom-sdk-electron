@@ -55,11 +55,14 @@ ZNUserInfomation ZMeetingParticipantsWrap::GetUserInfomationByUserID(unsigned in
         usName = @"";
     }
     user.userName = usName.UTF8String;
+    /*
     NSString *usEmail = [userInfo getEmail];
     if (!usEmail) {
         usEmail = @"";
     }
     user.email = usEmail.UTF8String;
+    */
+    
     bool ishost = [userInfo isHost];
     user.isHost = ishost;
     unsigned int usID = [userInfo getUserID];

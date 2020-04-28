@@ -3902,7 +3902,9 @@
 "LN_Join_The_Meeting_87404" = "Unirse a la reunión";
 
 
-
-
+"LN_Security_Encryption_MeetingTip_IN_GCM_155111" = "Está utilizando el cifrado mejorado";
+"LN_Security_Encryption_SettingDiagnostic_Title_155111" = "Cifrado";
+"LN_Security_Version_SettingDiagnostic_Title_155111" = "Versión";
+"LN_Screen_Sharing_FitStatusView_Tip_153476" = "Está compartiendo la pantalla";
 
 

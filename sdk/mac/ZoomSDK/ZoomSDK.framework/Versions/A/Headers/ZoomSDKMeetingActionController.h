@@ -114,11 +114,7 @@
  * @return The username.
  */
 - (NSString*)getUserName;
-/**
- * @brief Get the email matched with the current user information.
- * @return The email.
- */
-- (NSString*)getEmail;
+
 /**
  * @brief Get the user ID matched with the current user information.
  * @return The user ID. 

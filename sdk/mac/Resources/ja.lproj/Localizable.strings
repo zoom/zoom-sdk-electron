@@ -3858,3 +3858,8 @@
 "LN_Hotkey_Increase_Chat_Display_Size_20021" = "チャットディスプレイサイズを大きくします";
 "LN_Hotkey_Decrease_Chat_Display_Size_20021" = "チャットディスプレイサイズを小さくします";
 "LN_Join_The_Meeting_87404" = "ミーティングに参加";
+
+"LN_Security_Encryption_MeetingTip_IN_GCM_155111" = "強化暗号化を使用しています";
+"LN_Security_Encryption_SettingDiagnostic_Title_155111" = "暗号化";
+"LN_Security_Version_SettingDiagnostic_Title_155111" = "バージョン";
+"LN_Screen_Sharing_FitStatusView_Tip_153476" = "画面を共有しています";

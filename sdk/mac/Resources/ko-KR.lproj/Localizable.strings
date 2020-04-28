@@ -4313,3 +4313,8 @@
 "LN_Reactions_ToolBar_Title_122370" = "반응";
 "LN_Hotkey_Increase_Chat_Display_Size_20021" = "채팅 디스플레이 크기 늘리기";
 "LN_Hotkey_Decrease_Chat_Display_Size_20021" = "채팅 디스플레이 크기 줄이기";
+
+"LN_Security_Encryption_MeetingTip_IN_GCM_155111" = "고급 암호화를 사용하고 있습니다";
+"LN_Security_Encryption_SettingDiagnostic_Title_155111" = "암호화";
+"LN_Security_Version_SettingDiagnostic_Title_155111" = "버전";
+"LN_Screen_Sharing_FitStatusView_Tip_153476" = "화면 공유 중입니다";

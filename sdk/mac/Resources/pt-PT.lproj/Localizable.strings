@@ -3850,3 +3850,8 @@
 "LN_Hotkey_Increase_Chat_Display_Size_20021" = "Aumentar tamanho de tela do chat";
 "LN_Hotkey_Decrease_Chat_Display_Size_20021" = "Diminuir tamanho de tela do chat";
 "LN_Join_The_Meeting_87404" = "Ingressar na reunião";
+
+"LN_Security_Encryption_MeetingTip_IN_GCM_155111" = "Você está usando criptografia aprimorada";
+"LN_Security_Encryption_SettingDiagnostic_Title_155111" = "Criptografia";
+"LN_Security_Version_SettingDiagnostic_Title_155111" = "Versão";
+"LN_Screen_Sharing_FitStatusView_Tip_153476" = "Você está compartilhando a tela";

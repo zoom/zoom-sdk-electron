@@ -561,7 +561,7 @@ enum ZNSDKUserInfoType
 typedef struct _ZNUserInfomation
 {
 	ZoomSTRING userName;///<Current user name.
-	ZoomSTRING email;///<Current user email.
+	//ZoomSTRING email;///<Current user email.
 	bool isHost; ///<Whether the member corresponding with the current information is the host or not.
 	unsigned int userID;///<Current user's ID.
 	bool isVideoOn;///<The video status of the user specified by the current information.

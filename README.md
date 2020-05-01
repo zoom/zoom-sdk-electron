@@ -3,13 +3,37 @@
 <img src="https://s3.amazonaws.com/user-content.stoplight.io/8987/1541013063688" width="400px" max-height="400px" style="margin:auto;"/>
 </div>
 
+## Table of Contents
+- [:rotating_light: Announcement :rotating_light:](#rotating_light-announcement-rotating_light)   
+- [Latest SDK Notifications](#latest-sdk-notifications)   
+- [Community Support](#community-support)   
+- [Disclaimer](#disclaimer)   
+- [Getting Started](#getting-started)   
+  - [Prerequisites](#prerequisites)   
+- [Installing](#installing)   
+  - [Structure of Zoom Electron SDK](#structure-of-zoom-electron-sdk)   
+  - [Rebuilding zoom node file and running Zoom Electron SDK demo](#rebuilding-zoom-node-file-and-running-zoom-electron-sdk-demo)   
+     - [For Win Platform](#for-win-platform)   
+     - [For MAC Platform](#for-mac-platform)   
+  - [Development environment configuration for Windows](#development-environment-configuration-for-windows)   
+  - [Development environment configuration for Mac](#development-environment-configuration-for-mac)   
+- [SDK Reference](#sdk-reference)   
+- [Versioning](#versioning)   
+- [Change log](#change-log)   
+- [Frequently Asked Questions (FAQ)](#frequently-asked-questions-faq)   
+- [Support](#support)   
+- [License](#license)   
+- [Acknowledgments](#acknowledgments)   
+
+
 ## :rotating_light: Announcement :rotating_light:
-The Client SDK hereby introduced the **AES 256-bit GCM encryption** as addressed in our [90-Day Security Plan](https://blog.zoom.us/wordpress/2020/04/22/zoom-hits-milestone-on-90-day-security-plan-releases-zoom-5-0/) to **our SDK version 4.6.21666.0428**. Please note that: This AES 256-bit GCM encryption is **backward INCOMPATIBLE, which means the older version of SDK will NOT be able to join a meeting with GCM encryption enabled,** and as mentioned in the [90-Day Security Plan](https://blog.zoom.us/wordpress/2020/04/22/zoom-hits-milestone-on-90-day-security-plan-releases-zoom-5-0/), **the system-wide account enablement of AES 256-bit GCM encryption will take place on May 30, 2020**. Please plan to upgrade your SDK accordingly, and we will soon take away the older version of SDK that are not compatible with GCM encryption. Thank you!
+To align with Zoom’s [recent announcement](https://blog.zoom.us/wordpress/2020/04/22/zoom-hits-milestone-on-90-day-security-plan-releases-zoom-5-0/) pertaining to our security initiative, Zoom Client SDKs have added **AES 256-bit GCM encryption** support, which provides more protection for meeting data and greater resistance to tampering. **The system-wide account enablement of AES 256-bit GCM encryption will take place on May 30, 2020.** You are **strongly recommended** to start the required upgrade to this latest version 4.6.21666.0428 at your earliest convenience. Please note that any Client SDK versions below 4.6.21666.0428 will **no longer be operational** from May 30.
 
 > If you would like to test the latest SDK with AES 256-bit GCM encryption meeting before 05/30, you may:
-1. Download the latest version of Zoom client: https://zoom.us/download
-2. Visit https://zoom.us/testgcm and launch a GCM enabled meeting with your Zoom client, you will see a Green Shield icon that indicates the GCM encryption is enabled
-3. Use SDK to join this meeting
+> 1. Download the latest version of Zoom client: https://zoom.us/download
+> 2. Visit https://zoom.us/testgcm and launch a GCM enabled meeting with your Zoom client, you will see a Green Shield icon that indicates the GCM encryption is enabled
+> 3. Use SDK to join this meeting
+
 
 ## Latest SDK Notifications
 1. We have merged and unified the `windows-electron-sdk` and the `mac-electron-sdk` into one single SDK.
@@ -56,7 +80,7 @@ Before you try out our SDK, you would need the following to get started:
 ├── [sdk]
 	├── [mac] <-- Node file built by Zoom for mac
 	├── [win32] <-- Node file built by Zoom for win
-├── binding.gyp 
+├── binding.gyp
 ├── build_nodeaddon_mac.sh <-- use to rebuild node file for mac
 ├── build_nodeaddon_win_ia32.bat <-- use to rebuild node file for win
 ├── readme.txt / readme.md
@@ -64,7 +88,7 @@ Before you try out our SDK, you would need the following to get started:
 ├── run_demo_win.bat <-- use to run demo for win
 ├── [demo] <-- demo app is inside
 └── [lib] <-- js files and source code of Zoom Electron SDK
-build_nodeaddon_mac.sh / build_nodeaddon_win_ia32.bat 
+build_nodeaddon_mac.sh / build_nodeaddon_win_ia32.bat
 ```
 
 ### Rebuilding zoom node file and running Zoom Electron SDK demo
@@ -86,11 +110,11 @@ Please make sure that you have configured your development environment successfu
 2. Run `sh run_demo_mac.sh` to run the zoom demo.
 
 ### Development environment configuration for Windows
-	Note that Windows electron add-on is 32bit. 
+	Note that Windows electron add-on is 32bit.
 1. Install electron and node.js
 	* how to install node.js 12.0.0 version，download url: https://nodejs.org/download/release/v12.0.0/
-	* install electron 5.0.2 version,use command run `npm install --arch=ia32 --save-dev electron@5.0.2 -g` 
-	
+	* install electron 5.0.2 version,use command run `npm install --arch=ia32 --save-dev electron@5.0.2 -g`
+
 2. run `npm install node-gyp -g` to install node-gyp
 
 3. run `npm install bindings -g` to install bindings
@@ -102,11 +126,11 @@ Please make sure that you have configured your development environment successfu
    `npm config set npm_config_arch ia32`
    `npm config set npm_config_target_arch ia32`
 
-### Development environment configuration for Mac 
+### Development environment configuration for Mac
 1. Install node.js 12.0.0 version，download url: https://nodejs.org/download/release/v12.0.0/.
    also can run `ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)" ` and `sudo brew install node` to install node.js
 
-2. Install electron 5.0.2 version，use command run `npm install  --save-dev electron@5.0.2 -g` 
+2. Install electron 5.0.2 version，use command run `npm install  --save-dev electron@5.0.2 -g`
 
 3. run `npm install node-gyp -g` to install node-gyp
 

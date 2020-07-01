@@ -1,5 +1,5 @@
 const { app, BrowserWindow, ipcMain, nativeTheme } = require('electron');
-const { ZOOM_TYPE_OS_TYPE, ZoomSDK_LANGUAGE_ID, ZoomSDKError, ZoomAuthResult, ZoomLoginStatus, ZoomMeetingStatus, 
+const { ZOOM_TYPE_OS_TYPE, ZoomSDK_LANGUAGE_ID, ZoomSDKError, ZoomAuthResult, ZoomLoginStatus, ZoomMeetingStatus,
   ZoomMeetingUIFloatVideoType, SDKCustomizedStringType, SDKCustomizedURLType, ZoomAPPLocale } = require('../lib/settings.js');
 const ZOOMSDKMOD = require('../lib/zoom_sdk.js');
 const os = require('os');
@@ -50,7 +50,7 @@ let autoCloseYUV = false;
 let hasLogin = false;
 
 function sdkauthCB(status) {
-  if (ZoomAuthResult.AUTHRET_SUCCESS == status){
+  if (ZoomAuthResult.AUTHRET_SUCCESS == status) {
     hasRDLicense = hasRawDataLicense();
     global.hasRDLicense = hasRDLicense;
     let opts = {
@@ -58,7 +58,7 @@ function sdkauthCB(status) {
       meetinguserjoincb: meetinguserjoincb,
       meetinguserleftcb: meetinguserleftcb,
       meetinghostchangecb: meetinghostchangecb,
-    }    
+    }
     zoommeeting = zoomsdk.GetMeeting(opts);
     app.zoommeeting = zoommeeting;
     zoomparticipantsctrl = zoommeeting.GetMeetingParticipantsCtrl(opts);
@@ -106,20 +106,19 @@ function sdkauthCB(status) {
 
 function loginretCB(status) {
   hasLogin = false;
-  switch(status)
-  {
+  switch (status) {
     case ZoomLoginStatus.LOGIN_SUCCESS:
       hasLogin = true;
       showStartJoinWindow();
-    break;
+      break;
     case ZoomLoginStatus.LOGIN_PROCESSING:
       showWaitingWindow();
-    break;
+      break;
     case ZoomLoginStatus.LOGIN_FAILED:
       showLoginWindow();
-    break;
+      break;
     default:
-    break;
+      break;
   }
 }
 
@@ -143,19 +142,18 @@ function onUserVideoStatusChange(result) {
 
 function meetingstatuscb(status, result) {
   console.log('meetingstatus', status, result);
-  switch (status)
-  {
+  switch (status) {
     case ZoomMeetingStatus.MEETING_STATUS_CONNECTING:
-      YUVWindow ? YUVWindow.webContents.send('main-process-meetingstatus', 'connecting'): null;
+      YUVWindow ? YUVWindow.webContents.send('main-process-meetingstatus', 'connecting') : null;
       break;
     case ZoomMeetingStatus.MEETING_STATUS_DISCONNECTING:
     case ZoomMeetingStatus.MEETING_STATUS_RECONNECTING:
       showWaitingWindow();
-    break;
+      break;
     case ZoomMeetingStatus.MEETING_STATUS_INMEETING:
       showInMeetingWindow();
-      YUVWindow ? YUVWindow.webContents.send('main-process-meetingstatus', 'inmeeting'): null;
-    break
+      YUVWindow ? YUVWindow.webContents.send('main-process-meetingstatus', 'inmeeting') : null;
+      break
     case ZoomMeetingStatus.MEETING_STATUS_FAILED:
     case ZoomMeetingStatus.MEETING_STATUS_ENDED:
       if (hasLogin) {
@@ -165,33 +163,33 @@ function meetingstatuscb(status, result) {
       }
       break;
     default:
-    break;
+      break;
   }
 }
 
 function showWaitingWindow() {
-  if (!waitingWindow)
-  {
-    waitingWindow = new BrowserWindow({ width: 700, height: 400,
+  if (!waitingWindow) {
+    waitingWindow = new BrowserWindow({
+      width: 700, height: 400,
       webPreferences: {
         nodeIntegration: true
       }
     });
     waitingWindow.loadURL('file://' + __dirname + '/pages/waiting.html');
   }
-  if (mainWindow){
+  if (mainWindow) {
     mainWindow.close();
     mainWindow = null;
   }
-  if (loginWindow){
+  if (loginWindow) {
     loginWindow.close();
     loginWindow = null;
   }
-  if (startjoinWindow){
+  if (startjoinWindow) {
     startjoinWindow.close();
     startjoinWindow = null;
   }
-  if (inmeetingWindow){
+  if (inmeetingWindow) {
     inmeetingWindow.close();
     inmeetingWindow = null;
   }
@@ -203,7 +201,7 @@ function showWaitingWindow() {
     domainWindow.close();
     domainWindow = null;
   }
-  if (YUVWindow){
+  if (YUVWindow) {
     autoCloseYUV = true;
     YUVWindow.close();
     YUVWindow = null;
@@ -211,31 +209,31 @@ function showWaitingWindow() {
 }
 
 function showInMeetingWindow() {
-  if (!inmeetingWindow)
-  {
-    inmeetingWindow = new BrowserWindow({ width: 700, height: 400, x: YUVWindow ? 10 : null, y: YUVWindow ? 10: null,
+  if (!inmeetingWindow) {
+    inmeetingWindow = new BrowserWindow({
+      width: 700, height: 400, x: YUVWindow ? 10 : null, y: YUVWindow ? 10 : null,
       webPreferences: {
         nodeIntegration: true
-      } 
+      }
     });
     inmeetingWindow.on('close', () => {
       inmeetingWindow = null;
     });
     inmeetingWindow.loadURL('file://' + __dirname + '/pages/inmeeting.html');
   }
-  if (mainWindow){
+  if (mainWindow) {
     mainWindow.close();
     mainWindow = null;
   }
-  if (loginWindow){
+  if (loginWindow) {
     loginWindow.close();
     loginWindow = null;
   }
-  if (startjoinWindow){
+  if (startjoinWindow) {
     startjoinWindow.close();
     startjoinWindow = null;
   }
-  if (waitingWindow){
+  if (waitingWindow) {
     waitingWindow.close();
     waitingWindow = null;
   }
@@ -269,10 +267,11 @@ function clearSetCallBack() {
 
 function showYUVWindow() {
   if (!YUVWindow) {
-    YUVWindow = new BrowserWindow({ width: 1920, height: 1080,
+    YUVWindow = new BrowserWindow({
+      width: 1920, height: 1080,
       webPreferences: {
         nodeIntegration: true
-      } 
+      }
     });
     YUVWindow.on('close', (flag) => {
       YUVWindow.webContents.send('main-process-meetingstatus', 'ended');
@@ -297,19 +296,19 @@ function showYUVWindow() {
     YUVWindow.loadURL('file://' + __dirname + '/pages/yuv.html');
     autoCloseYUV = false
   }
-  if (mainWindow){
+  if (mainWindow) {
     mainWindow.close();
     mainWindow = null;
   }
-  if (loginWindow){
+  if (loginWindow) {
     loginWindow.close();
     loginWindow = null;
   }
-  if (startjoinWindow){
+  if (startjoinWindow) {
     startjoinWindow.close();
     startjoinWindow = null;
   }
-  if (waitingWindow){
+  if (waitingWindow) {
     waitingWindow.close();
     waitingWindow = null;
   }
@@ -323,15 +322,14 @@ function showYUVWindow() {
   }
 }
 
-function showDomainwindow(){
-  if (!domainWindow)
-  {
-    domainWindow = new BrowserWindow({ 
+function showDomainwindow() {
+  if (!domainWindow) {
+    domainWindow = new BrowserWindow({
       width: 700,
       height: 400,
       webPreferences: {
         nodeIntegration: true
-      } 
+      }
     });
     domainWindow.loadURL('file://' + __dirname + '/pages/domain.html');
   }
@@ -359,38 +357,37 @@ function showDomainwindow(){
     startjoinUnLoginWindow.close();
     startjoinUnLoginWindow = null;
   }
-  if (YUVWindow){
+  if (YUVWindow) {
     autoCloseYUV = true;
     YUVWindow.close();
     YUVWindow = null;
   }
 }
 
-function showAuthwindow(){
-  if (!mainWindow)
-  {
-    mainWindow = new BrowserWindow({ 
+function showAuthwindow() {
+  if (!mainWindow) {
+    mainWindow = new BrowserWindow({
       width: 700,
       height: 400,
       webPreferences: {
         nodeIntegration: true
-      } 
+      }
     });
     mainWindow.loadURL('file://' + __dirname + '/pages/index.html');
   }
-  if (loginWindow){
+  if (loginWindow) {
     loginWindow.close();
     loginWindow = null;
   }
-  if (startjoinWindow){
+  if (startjoinWindow) {
     startjoinWindow.close();
     startjoinWindow = null;
   }
-  if (waitingWindow){
+  if (waitingWindow) {
     waitingWindow.close();
     waitingWindow = null;
   }
-  if (inmeetingWindow){
+  if (inmeetingWindow) {
     inmeetingWindow.close();
     inmeetingWindow = null;
   }
@@ -402,36 +399,36 @@ function showAuthwindow(){
     domainWindow.close();
     domainWindow = null;
   }
-  if (YUVWindow){
+  if (YUVWindow) {
     autoCloseYUV = true;
     YUVWindow.close();
     YUVWindow = null;
   }
 }
 
-function showLoginWindow(){
-  if (!loginWindow)
-  {
-    loginWindow = new BrowserWindow({ width: 700, height: 500,
+function showLoginWindow() {
+  if (!loginWindow) {
+    loginWindow = new BrowserWindow({
+      width: 700, height: 500,
       webPreferences: {
         nodeIntegration: true
-      }  
+      }
     });
     loginWindow.loadURL('file://' + __dirname + '/pages/login.html');
   }
-  if (mainWindow){
+  if (mainWindow) {
     mainWindow.close();
     mainWindow = null;
   }
-  if (startjoinWindow){
+  if (startjoinWindow) {
     startjoinWindow.close();
     startjoinWindow = null;
   }
-  if (waitingWindow){
+  if (waitingWindow) {
     waitingWindow.close();
     waitingWindow = null;
   }
-  if (inmeetingWindow){
+  if (inmeetingWindow) {
     inmeetingWindow.close();
     inmeetingWindow = null;
   }
@@ -443,36 +440,36 @@ function showLoginWindow(){
     domainWindow.close();
     domainWindow = null;
   }
-  if (YUVWindow){
+  if (YUVWindow) {
     autoCloseYUV = true;
     YUVWindow.close();
     YUVWindow = null;
   }
 }
 
-function showStartJoinWindow(){
-  if (!startjoinWindow)
-  {
-    startjoinWindow = new BrowserWindow({ width: 700, height: 400,
+function showStartJoinWindow() {
+  if (!startjoinWindow) {
+    startjoinWindow = new BrowserWindow({
+      width: 700, height: 400,
       webPreferences: {
         nodeIntegration: true
-      } 
+      }
     });
-    startjoinWindow.loadURL('file://' + __dirname + '/pages/start_join.html'); 
+    startjoinWindow.loadURL('file://' + __dirname + '/pages/start_join.html');
   }
-  if (mainWindow){
+  if (mainWindow) {
     mainWindow.close();
     mainWindow = null;
   }
-  if (loginWindow){
+  if (loginWindow) {
     loginWindow.close();
     loginWindow = null;
   }
-  if (waitingWindow){
+  if (waitingWindow) {
     waitingWindow.close();
     waitingWindow = null;
   }
-  if (inmeetingWindow){
+  if (inmeetingWindow) {
     inmeetingWindow.close();
     inmeetingWindow = null;
   }
@@ -484,16 +481,16 @@ function showStartJoinWindow(){
     domainWindow.close();
     domainWindow = null;
   }
-  if (YUVWindow){
+  if (YUVWindow) {
     autoCloseYUV = true;
     YUVWindow.close();
     YUVWindow = null;
   }
 }
 
-function ProcSDKReady(){
+function ProcSDKReady() {
   showAuthwindow()
-  var options={
+  var options = {
     authcb: sdkauthCB,
     logincb: loginretCB,
     logoutcb: null
@@ -502,7 +499,7 @@ function ProcSDKReady(){
 }
 
 function apicallresultcb(apiname, ret) {
-  if ('InitSDK' == apiname && ZoomSDKError.SDKERR_SUCCESS == ret){
+  if ('InitSDK' == apiname && ZoomSDKError.SDKERR_SUCCESS == ret) {
     ProcSDKReady()
   } else if ('CleanUPSDK' == apiname) {
     app.quit();
@@ -511,11 +508,11 @@ function apicallresultcb(apiname, ret) {
 
 function OnDirectShareStatusUpdate(status) {
   console.log('OnDirectShareStatusUpdate', status);
-  startjoinWindow ? startjoinWindow.webContents.send('main-process-onDirectShareStatusUpdate', status): null;
+  startjoinWindow ? startjoinWindow.webContents.send('main-process-onDirectShareStatusUpdate', status) : null;
 }
 
 function onLibUVRawDataReceived(databuf) {
-	console.log('onLibUVRawDataReceived -- pipe works! -- data:', databuf);
+  console.log('onLibUVRawDataReceived -- pipe works! -- data:', databuf);
 }
 
 function onVideoRawDataReceived(databuf, format, receivers) {
@@ -524,7 +521,7 @@ function onVideoRawDataReceived(databuf, format, receivers) {
     format: format,
     receivers: receivers
   }
-  YUVWindow ? YUVWindow.webContents.send('main-process-videomessages', videoObj): null;
+  YUVWindow ? YUVWindow.webContents.send('main-process-videomessages', videoObj) : null;
 }
 
 function onShareRawDataReceived(databuf, format, receivers) {
@@ -533,7 +530,7 @@ function onShareRawDataReceived(databuf, format, receivers) {
     format: format,
     receivers: receivers
   }
-  YUVWindow ? YUVWindow.webContents.send('main-process-sharemessages', shareObj): null;
+  YUVWindow ? YUVWindow.webContents.send('main-process-sharemessages', shareObj) : null;
 }
 
 function onMixedAudioRawDataReceived(databuf, data_format) {
@@ -542,7 +539,7 @@ function onMixedAudioRawDataReceived(databuf, data_format) {
       databuf: databuf,
       data_format: data_format
     }
-    YUVWindow? YUVWindow.webContents.send('main-process-mixaudiomessages', mixAudioObj): null;
+    YUVWindow ? YUVWindow.webContents.send('main-process-mixaudiomessages', mixAudioObj) : null;
   }
 }
 
@@ -553,7 +550,7 @@ function onOneWayAudioRawDataReceived(databuf, data_format, nodeid) {
       data_format: data_format,
       nodeid: nodeid
     }
-    YUVWindow? YUVWindow.webContents.send('main-process-onewayaudiomessages', oneWayAudioObj): null;
+    YUVWindow ? YUVWindow.webContents.send('main-process-onewayaudiomessages', oneWayAudioObj) : null;
   }
 }
 
@@ -565,20 +562,20 @@ function hasRawDataLicense() {
 
 function customizedresource() {
   zoomcustomizedresource = zoomsdk.GetCustomizedResource();
-	const optCustomizedResouce = {
+  const optCustomizedResouce = {
     CustomizedStringType: SDKCustomizedStringType.SDK_Customized_Title_App,
     strCustomizedString: 'zoom demo'
-  }		
+  }
   const optCustomizedURLResouce = {
     CustomizedURLType: SDKCustomizedURLType.ZN_SDKCustomizedURL_SUPPORTURL,
     strCustomizeURL: 'https://www.baidu.com/'
-  }		
+  }
   const optCustomizedPictureResouce = {
     strPNGID: 'ZOOMAPPICON.PNG',
     strPNGPath: 'D:\\emoticons.png'
-  }		
-	if(zoomcustomizedresource) {
-		let retCustomize = zoomcustomizedresource.Resource_AddCustomizedStringResource(optCustomizedResouce);
+  }
+  if (zoomcustomizedresource) {
+    let retCustomize = zoomcustomizedresource.Resource_AddCustomizedStringResource(optCustomizedResouce);
     console.log('retCustomize', retCustomize);
     let retURLCustomize = zoomcustomizedresource.Resource_AddCustomizedURLResource(optCustomizedURLResouce);
     console.log('retURLCustomize', retURLCustomize);
@@ -588,33 +585,33 @@ function customizedresource() {
 }
 
 let functionObj = {
-  showSatrtJoinUnLoginWindow: function() {
+  showSatrtJoinUnLoginWindow: function () {
     if (!startjoinUnLoginWindow) {
-      startjoinUnLoginWindow = new BrowserWindow({ width: 700, height: 400,
+      startjoinUnLoginWindow = new BrowserWindow({
+        width: 700, height: 400,
         webPreferences: {
           nodeIntegration: true
-        } 
+        }
       });
-      startjoinUnLoginWindow.loadURL('file://' + __dirname + '/pages/start_join_without_login.html'); 
+      startjoinUnLoginWindow.loadURL('file://' + __dirname + '/pages/start_join_without_login.html');
     }
-    if (startjoinWindow)
-    {
+    if (startjoinWindow) {
       startjoinWindow.close();
-      startjoinWindow = null; 
+      startjoinWindow = null;
     }
-    if (mainWindow){
+    if (mainWindow) {
       mainWindow.close();
       mainWindow = null;
     }
-    if (loginWindow){
+    if (loginWindow) {
       loginWindow.close();
       loginWindow = null;
     }
-    if (waitingWindow){
+    if (waitingWindow) {
       waitingWindow.close();
       waitingWindow = null;
     }
-    if (inmeetingWindow){
+    if (inmeetingWindow) {
       inmeetingWindow.close();
       inmeetingWindow = null;
     }
@@ -623,7 +620,7 @@ let functionObj = {
       domainWindow = null;
     }
   },
-  setDomain: function(domain, enable_log) {
+  setDomain: function (domain, enable_log) {
     const opts = {
       path: '', // win require absolute path, mac require ''
       domain: domain,
@@ -636,45 +633,44 @@ let functionObj = {
       customizedresource(); // CustomizedResource only support windows, should call before initSDK
     }
     var ret = zoomsdk.InitSDK(opts);
-    if (ZoomSDKError.SDKERR_SUCCESS == ret){
+    if (ZoomSDKError.SDKERR_SUCCESS == ret) {
       ProcSDKReady();
     }
   },
-  sdkauth: function(appkey, appsecret){
-    zoomauth.SDKAuth(appkey, appsecret);
-    showWaitingWindow();
-  },
-  getZoomSDKVersion: function() {
+  getZoomSDKVersion: function () {
     let ret = zoomsdk.GetZoomSDKVersion()
     console.log('GetZoomSDKVersion', ret);
   },
-  login: function(username, psw) {
+  login: function (username, psw) {
     if (username && psw) {
       showWaitingWindow();
     }
     zoomauth.Login(username, psw, false);
   },
-  loginWithSSOToken: function(ssotoken) {
+  loginWithSSOToken: function (ssotoken) {
     let ret = zoomauth.LoginWithSSOToken(ssotoken);
     console.log('LoginWithSSOToken', ret);
   },
-  logout: function() {
+  logout: function () {
     zoomauth.Logout();
     showLoginWindow();
   },
-  authWithJwtToken: function(sdk_context) {
+  authWithJwtToken: function (sdk_context) {
     let ret = zoomauth.AuthWithJwtToken(sdk_context);
     console.log('AuthWithJwtToken', ret);
+    if (ret == 0) {
+      showWaitingWindow();
+    }
   },
-  start: function(meetingnum, startCBOption){
+  start: function (meetingnum, startCBOption) {
     var opt = {
       meetingnum: meetingnum,
       startCBOption: startCBOption
     }
     let ret = zoommeeting.StartMeeting(opt);
     console.log('StartMeeting', ret);
-  }, 
-  join: function(meetingnum, username, startCBOption) {
+  },
+  join: function (meetingnum, username, startCBOption) {
     var opt = {
       meetingnum: meetingnum,
       username: username,
@@ -682,17 +678,16 @@ let functionObj = {
     }
     zoommeeting.JoinMeeting(opt);
   },
-  startunlogin: function(userid, zoomaccesstoken, username, usertoken){
+  startunlogin: function (meetingnum, zoomaccesstoken, username) {
     var opt = {
-      userid: userid,
+      meetingnum: meetingnum,
       zoomaccesstoken: zoomaccesstoken,
-      username: username,
-      usertoken: usertoken
+      username: username
     }
     let ret = zoommeeting.StartMeetingWithOutLogin(opt);
     console.log('StartMeetingWithOutLogin', ret);
   },
-  joinunlogin: function(meetingnum, vanityid, username) {
+  joinunlogin: function (meetingnum, vanityid, username) {
     var opt = {
       meetingnum: meetingnum,
       vanityid: vanityid,
@@ -700,59 +695,59 @@ let functionObj = {
     }
     zoommeeting.JoinMeetingWithoutLogin(opt);
   },
-  leave: function(endMeeting) {
+  leave: function (endMeeting) {
     var opt = {
       endMeeting: endMeeting
     }
     let ret = zoommeeting.LeaveMeeting(opt);
     console.log('leave', ret);
   },
-  end: function(endMeeting) {
+  end: function (endMeeting) {
     var opt = {
       endMeeting: endMeeting
     }
     let ret = zoommeeting.LeaveMeeting(opt);
     console.log('end', ret);
   },
-  lock: function() {
+  lock: function () {
     let ret = zoommeeting.Lock_Meeting();
     console.log('Lock_Meeting', ret);
   },
-  unlock: function() {
+  unlock: function () {
     let ret = zoommeeting.Un_lock_Meeting();
     console.log('Un_lock_Meeting', ret);
   },
-  getSharingConnQuality: function() {
+  getSharingConnQuality: function () {
     let ret = zoommeeting.GetSharingConnQuality();
     console.log('GetSharingConnQuality', ret);
     return ret;
   },
-  getVideoConnQuality: function() {
+  getVideoConnQuality: function () {
     let ret = zoommeeting.GetVideoConnQuality();
     console.log('GetVideoConnQuality', ret);
     return ret;
   },
-  getAudioConnQuality: function() {
+  getAudioConnQuality: function () {
     let ret = zoommeeting.GetAudioConnQuality();
     console.log('GetAudioConnQuality', ret);
     return ret;
   },
-  getParticipantsList: function() {
+  getParticipantsList: function () {
     let ret = zoomparticipantsctrl.GetParticipantsList();
     console.log('GetParticipantsList', ret);
     return ret;
   },
-  getUserInfoByUserID: function(userid) {
+  getUserInfoByUserID: function (userid) {
     let ret = zoomparticipantsctrl.GetUserInfoByUserID(userid);
     console.log('GetUserInfoByUserID', ret);
     return ret;
   },
-  handleZoomWebUriProtocolAction: function(protocol_action) {
+  handleZoomWebUriProtocolAction: function (protocol_action) {
     let ret = zoommeeting.HandleZoomWebUriProtocolAction(protocol_action);
     console.log('HandleZoomWebUriProtocolAction', ret);
     return ret;
   },
-  getMeetingTopic: function() {
+  getMeetingTopic: function () {
     let ret = zoominfomod.GetMeetingTopic();
     console.log('GetMeetingTopic', ret);
     return ret;
@@ -767,69 +762,69 @@ let functionObj = {
     console.log('GetMeetingNumber', ret);
     return ret;
   },
-  getMeetingID: function() {
+  getMeetingID: function () {
     let ret = zoominfomod.GetMeetingID();
     console.log('GetMeetingID', ret);
     return ret;
   },
-  getInviteEmailTeamplate: function() {
+  getInviteEmailTeamplate: function () {
     let ret = zoominfomod.GetInviteEmailTeamplate();
     console.log('GetInviteEmailTeamplate', ret);
     return ret;
   },
-  getInviteEmailTitle: function() {
+  getInviteEmailTitle: function () {
     let ret = zoominfomod.GetInviteEmailTitle();
     console.log('GetInviteEmailTitle', ret);
     return ret;
   },
-  getJoinMeetingUrl: function() {
+  getJoinMeetingUrl: function () {
     let ret = zoominfomod.GetJoinMeetingUrl();
     console.log('GetJoinMeetingUrl', ret);
     return ret;
   },
-  getMeetingHostTag: function() {
+  getMeetingHostTag: function () {
     let ret = zoominfomod.GetMeetingHostTag();
     console.log('GetMeetingHostTag', ret);
     return ret;
   },
-  checkingIsInternalMeeting: function() {
+  checkingIsInternalMeeting: function () {
     let ret = zoominfomod.CheckingIsInternalMeeting();
     console.log('CheckingIsInternalMeeting', ret);
     return ret;
   },
-  showChat: function() {
+  showChat: function () {
     let opts = {
       left: '200',
       top: '200'
     }
     zoomuicontroller.MeetingUI_ShowChatDlg(opts);
   },
-  hideChat: function() {
+  hideChat: function () {
     zoomuicontroller.MeetingUI_HideChatDlg();
   },
-  enterFullscreen: function() {
+  enterFullscreen: function () {
     var opts = {
       bFirstView: '1',
       bSecView: '0'
     }
     zoomuicontroller.MeetingUI_EnterFullScreen(opts);
   },
-  exitFullScreen: function() {
+  exitFullScreen: function () {
     var opts = {
       bFirstView: '1',
       bSecView: '0'
     }
     zoomuicontroller.MeetingUI_ExitFullScreen(opts);
   },
-  switchToVideoWall: function() {
+  switchToVideoWall: function () {
     let ret = zoomuicontroller.MeetingUI_SwitchToVideoWall();
     console.log('SwitchToVideoWall', ret);
   },
-  swtichToAcitveSpeaker: function() {
+  swtichToAcitveSpeaker: function () {
     let ret = zoomuicontroller.MeetingUI_SwtichToAcitveSpeaker();
     console.log('SwtichToAcitveSpeaker', ret);
   },
-  moveFloatVideoWnd: function() {
+  moveFloatVideoWnd: function () {
     let opts = {
       left: '200',
       top: '200'
@@ -837,7 +832,7 @@ let functionObj = {
     let ret = zoomuicontroller.MeetingUI_MoveFloatVideoWnd(opts);
     console.log('MoveFloatVideoWnd', ret);
   },
-  showSharingToolbar: function(show) {
+  showSharingToolbar: function (show) {
     console.log('show', show);
     let opts = {
       show: show
@@ -845,11 +840,11 @@ let functionObj = {
     let ret = zoomuicontroller.MeetingUI_ShowSharingToolbar(opts);
     console.log('ShowSharingToolbar', ret);
   },
-  switchFloatVideoToActiveSpkMod: function() {
+  switchFloatVideoToActiveSpkMod: function () {
     let ret = zoomuicontroller.MeetingUI_SwitchFloatVideoToActiveSpkMod();
     console.log('SwitchFloatVideoToActiveSpkMod', ret);
   },
-  changeFloatoActiveSpkVideoSize: function() {
+  changeFloatoActiveSpkVideoSize: function () {
     console.log('ZoomMeetingUIFloatVideoType', ZoomMeetingUIFloatVideoType.FLOATVIDEO_Large);
     let obj = {
       floatvideotype: ZoomMeetingUIFloatVideoType.FLOATVIDEO_Large
@@ -857,11 +852,11 @@ let functionObj = {
     let ret = zoomuicontroller.MeetingUI_ChangeFloatoActiveSpkVideoSize(obj);
     console.log('ChangeFloatoActiveSpkVideoSize', ret);
   },
-  switchFloatVideoToGalleryMod: function() {
+  switchFloatVideoToGalleryMod: function () {
     let ret = zoomuicontroller.MeetingUI_SwitchFloatVideoToGalleryMod();
     console.log('switchFloatVideoToGalleryMod', ret);
   },
-  showParticipantsListWnd: function(show) {
+  showParticipantsListWnd: function (show) {
     console.log('show', show);
     let opts = {
       show: show
@@ -877,15 +872,15 @@ let functionObj = {
     let ret = zoomuicontroller.MeetingUI_ShowBottomFloatToolbarWnd(opts);
     console.log('ShowBottomFloatToolbarWnd', ret);
   },
-  showJoinAudioDlg: function() {
+  showJoinAudioDlg: function () {
     let ret = zoomuicontroller.MeetingUI_ShowJoinAudioDlg();
     console.log('ShowJoinAudioDlg', ret);
   },
-  hideJoinAudioDlg: function() {
+  hideJoinAudioDlg: function () {
     let ret = zoomuicontroller.MeetingUI_HideJoinAudioDlg();
     console.log('HideJoinAudioDlg', ret);
   },
-  getWallViewPageInfo: function(arg2, arg3) {
+  getWallViewPageInfo: function (arg2, arg3) {
     let opts = {
       currentPage: arg2,
       totalPages: arg3
@@ -893,7 +888,7 @@ let functionObj = {
     let ret = zoomuicontroller.MeetingUI_GetWallViewPageInfo(opts);
     console.log('GetWallViewPageInfo', ret);
   },
-  showPreOrNextPageVideo: function(show) {
+  showPreOrNextPageVideo: function (show) {
     console.log('show', show);
     let opts = {
       show: show
@@ -902,7 +897,7 @@ let functionObj = {
     console.log('ShowPreOrNextPageVideo', ret);
     return ret;
   },
-  showSharingFrameWindows: function(show) {
+  showSharingFrameWindows: function (show) {
     console.log('show', show);
     let opts = {
       show: show
@@ -920,7 +915,7 @@ let functionObj = {
     console.log('SwitchSplitScreenMode', ret);
     return ret;
   },
-  getCurrentSplitScreenModeInfo: function(arg2, arg3) {
+  getCurrentSplitScreenModeInfo: function (arg2, arg3) {
     let opts = {
       bZNSupportSplitScreen: arg2,
       bZNInSplitScreenMode: arg3
@@ -929,12 +924,12 @@ let functionObj = {
     console.log('GetCurrentSplitScreenModeInfo', ret);
     return ret;
   },
-  isAnnotaionDisable: function() {
+  isAnnotaionDisable: function () {
     let ret = zoomannotation.Annotaion_IsAnnotaionDisable();
     console.log('IsAnnotaionDisable', ret);
     return ret;
   },
-  startAnnotation: function(viewtype, left, top) {
+  startAnnotation: function (viewtype, left, top) {
     let opts = {
       viewtype: viewtype,
       left: '300',
@@ -943,11 +938,11 @@ let functionObj = {
     let ret = zoomannotation.Annotaion_StartAnnotation(opts);
     console.log('StartAnnotation', ret);
   },
-  stopAnnotation: function(viewtype) {
+  stopAnnotation: function (viewtype) {
     let ret = zoomannotation.Annotaion_StopAnnotation(viewtype);
     console.log('StopAnnotation', ret);
   },
-  setTool: function(viewtype, tooltype) {
+  setTool: function (viewtype, tooltype) {
     let opts = {
       viewtype: viewtype,
       tooltype: tooltype
@@ -955,7 +950,7 @@ let functionObj = {
     let ret = zoomannotation.Annotaion_SetTool(opts);
     console.log('SetTool', ret);
   },
-  setClear: function(viewtype, cleartype) {
+  setClear: function (viewtype, cleartype) {
     let opts = {
       viewtype: viewtype,
       cleartype: cleartype
@@ -963,7 +958,7 @@ let functionObj = {
     let ret = zoomannotation.Annotaion_Clear(opts);
     console.log('Clear', ret);
   },
-  setColor: function(viewtype, color) {
+  setColor: function (viewtype, color) {
     let opts = {
       viewtype: viewtype,
       color: color
@@ -971,7 +966,7 @@ let functionObj = {
     let ret = zoomannotation.Annotaion_SetColor(opts);
     console.log('SetColor', ret);
   },
-  SetLineWidth: function(viewtype, lineWidth) {
+  SetLineWidth: function (viewtype, lineWidth) {
     let opts = {
       viewtype: viewtype,
       lineWidth: lineWidth
@@ -979,21 +974,21 @@ let functionObj = {
     let ret = zoomannotation.Annotaion_SetLineWidth(opts);
     console.log('SetLineWidth', ret);
   },
-  undo: function(viewtype) {
+  undo: function (viewtype) {
     let opts = {
       viewtype: viewtype
     }
     let ret = zoomannotation.Annotaion_Undo(opts)
     console.log('Undo', ret);
   },
-  redo: function(viewtype) {
+  redo: function (viewtype) {
     let opts = {
       viewtype: viewtype
     }
     let ret = zoomannotation.Annotaion_Redo(opts)
     console.log('Redo', ret);
   },
-  muteAudio: function(userid, allowunmutebyself) {
+  muteAudio: function (userid, allowunmutebyself) {
     let opts = {
       userid: userid,
       allowunmutebyself: allowunmutebyself
@@ -1001,29 +996,29 @@ let functionObj = {
     let ret = zoomaudio.MeetingAudio_MuteAudio(opts);
     console.log('MuteAudio', ret);
   },
-  unMuteAudio: function(userid) {
+  unMuteAudio: function (userid) {
     let opts = {
       userid: userid
     }
     let ret = zoomaudio.MeetingAudio_UnMuteAudio(opts);
     console.log('UnMuteAudio', ret);
   },
-  joinVoip: function() {
+  joinVoip: function () {
     let ret = zoomaudio.MeetingAudio_JoinVoip();
     console.log('JoinVoip', ret);
   },
-  leaveVoip: function() {
+  leaveVoip: function () {
     let ret = zoomaudio.MeetingAudio_LeaveVoip();
     console.log('LeaveVoip', ret);
   },
-  enablePlayChimeWhenEnterOrExit: function(bEnable) {
+  enablePlayChimeWhenEnterOrExit: function (bEnable) {
     let opts = {
       bEnable: bEnable
     }
     let ret = zoomaudio.MeetingAudio_EnablePlayChimeWhenEnterOrExit(opts);
     console.log('EnablePlayChimeWhenEnterOrExit', ret);
   },
-  muteVideo: function(userid) {
+  muteVideo: function (userid) {
     let opts = {
       userid: userid
     }
@@ -1037,7 +1032,7 @@ let functionObj = {
     let ret = zoomvideo.MeetingVideo_UnMuteVideo(opts);
     console.log('UnMuteVideo', ret);
   },
-  pinVideo: function(userid) {
+  pinVideo: function (userid) {
     let opts = {
       bPin: true,
       bFirstView: true,
@@ -1046,7 +1041,7 @@ let functionObj = {
     let ret = zoomvideo.MeetingVideo_PinVideo(opts);
     console.log('PinVideo', ret);
   },
-  spotlightVideo: function(userid) {
+  spotlightVideo: function (userid) {
     let opts = {
       bSpotlight: true,
       userid: userid
@@ -1054,7 +1049,7 @@ let functionObj = {
     let ret = zoomvideo.MeetingVideo_SpotlightVideo(opts);
     console.log('SpotlightVideo', ret);
   },
-  hideOrShowNoVideoUserOnVideoWall: function(bHide) {
+  hideOrShowNoVideoUserOnVideoWall: function (bHide) {
     let opts = {
       bHide: bHide
     }
@@ -1068,261 +1063,271 @@ let functionObj = {
     let ret = zoomsetvideo.Setting_SelectVideoCamera(opts);
     console.log('SelectCamera', ret);
   },
-  getCameraList: function() {
+  getCameraList: function () {
     let ret = zoomsetvideo.Setting_GetCameraList();
     console.log('GetCameraList', ret);
   },
-  enableVideoMirrorEffect: function(zn_bEnable) {
+  enableVideoMirrorEffect: function (zn_bEnable) {
     let opts = {
       zn_bEnable: zn_bEnable
     }
     let ret = zoomsetvideo.Setting_EnableVideoMirrorEffect(opts);
     console.log('EnableVideoMirrorEffect', ret);
   },
-  enableFaceBeautyEffect: function(zn_bEnable) {
+  enableFaceBeautyEffect: function (zn_bEnable) {
     let opts = {
       zn_bEnable: zn_bEnable
     }
     let ret = zoomsetvideo.Setting_EnableFaceBeautyEffect(opts);
     console.log('EnableFaceBeautyEffect', ret);
   },
-  isMirrorEffectEnabled: function() {
+  isMirrorEffectEnabled: function () {
     let ret = zoomsetvideo.Checking_IsMirrorEffectEnabled();
     console.log('IsMirrorEffectEnabled', ret);
   },
-  isFaceBeautyEffectEnabled: function() {
+  isFaceBeautyEffectEnabled: function () {
     let ret = zoomsetvideo.Checking_IsFaceBeautyEffectEnabled();
     console.log('IsFaceBeautyEffectEnabled', ret);
   },
-  enableStereoAudio: function(bEnable) {
+  enableStereoAudio: function (bEnable) {
     let opts = {
       bEnable: bEnable
     }
     let ret = zoomsetaudio.Setting_EnableStereoAudio(opts);
     console.log('EnableStereoAudio', ret);
   },
-  isStereoAudioEnable: function(bEnable) {
+  isStereoAudioEnable: function (bEnable) {
     let opts = {
       bEnable: bEnable
     }
     let ret = zoomsetaudio.Setting_IsStereoAudioEnable(opts);
     console.log('IsStereoAudioEnable', ret);
   },
-  enableMicOriginalInput: function(bEnable) {
+  enableMicOriginalInput: function (bEnable) {
     let opts = {
       bEnable: bEnable
     }
     let ret = zoomsetaudio.Setting_EnableMicOriginalInput(opts);
     console.log('EnableMicOriginalInput', ret);
   },
-  enableHoldSpaceKeyToSpeak: function(bEnable) {
+  enableHoldSpaceKeyToSpeak: function (bEnable) {
     let opts = {
       bEnable: bEnable
     }
     let ret = zoomsetaudio.Setting_EnableHoldSpaceKeyToSpeak(opts);
     console.log('EnableHoldSpaceKeyToSpeak', ret);
   },
-  isHoldSpaceKeyToSpeakEnabled: function(bEnable) {
+  isHoldSpaceKeyToSpeakEnabled: function (bEnable) {
     let opts = {
       bEnable: bEnable
     }
     let ret = zoomsetaudio.Setting_IsHoldSpaceKeyToSpeakEnabled(opts);
     console.log('IsHoldSpaceKeyToSpeakEnabled', ret);
   },
-  enableAlwaysMuteMicWhenJoinVoip: function(bEnable) {
+  enableAlwaysMuteMicWhenJoinVoip: function (bEnable) {
     let opts = {
       bEnable: bEnable
     }
     let ret = zoomsetaudio.Setting_EnableAlwaysMuteMicWhenJoinVoip(opts);
     console.log('EnableAlwaysMuteMicWhenJoinVoip', ret);
   },
-  isAlwaysMuteMicWhenJoinVoipEnabled: function(bEnable) {
+  isAlwaysMuteMicWhenJoinVoipEnabled: function (bEnable) {
     let opts = {
       bEnable: bEnable
     }
     let ret = zoomsetaudio.Setting_IsAlwaysMuteMicWhenJoinVoipEnabled(opts);
     console.log('IsAlwaysMuteMicWhenJoinVoipEnabled', ret);
   },
-  enableSuppressAudioNotify: function(bEnable) {
+  enableSuppressAudioNotify: function (bEnable) {
     let opts = {
       bEnable: bEnable
     }
     let ret = zoomsetaudio.Setting_EnableSuppressAudioNotify(opts);
     console.log('EnableSuppressAudioNotify', ret);
   },
-  isSuppressAudioNotifyEnabled: function(bEnable) {
+  isSuppressAudioNotifyEnabled: function (bEnable) {
     let opts = {
       bEnable: bEnable
     }
     let ret = zoomsetaudio.Setting_IsSuppressAudioNotifyEnabled(opts);
     console.log('IsSuppressAudioNotifyEnabled', ret);
   },
-  enableEchoCancellation: function(bEnable) {
+  enableEchoCancellation: function (bEnable) {
     let opts = {
       bEnable: bEnable
     }
     let ret = zoomsetaudio.Setting_EnableEchoCancellation(opts);
     console.log('EnableEchoCancellation', ret);
   },
-  isEchoCancellationEnabled: function(bEnable) {
+  isEchoCancellationEnabled: function (bEnable) {
     let opts = {
       bEnable: bEnable
     }
     let ret = zoomsetaudio.Setting_IsEchoCancellationEnabled(opts);
     console.log('IsEchoCancellationEnabled', ret);
   },
-  setMicVol: function(value) {
+  setMicVol: function (value) {
     let opts = {
       value: value
     }
     let ret = zoomsetaudio.Setting_SetMicVol(opts);
     console.log('SetMicVol', ret);
   },
-  getMicVol: function(value) {
+  getMicVol: function (value) {
     let opts = {
       value: value
     }
     let ret = zoomsetaudio.Setting_GetMicVol(opts);
     console.log('GetMicVol', ret);
   },
-  setSpeakerVol: function(value) {
+  setSpeakerVol: function (value) {
     let opts = {
       value: value
     }
     let ret = zoomsetaudio.Setting_SetSpeakerVol(opts);
     console.log('SetSpeakerVol', ret);
   },
-  getSpeakerVol: function(value) {
+  getSpeakerVol: function (value) {
     let opts = {
       value: value
     }
     let ret = zoomsetaudio.Setting_GetSpeakerVol(opts);
     console.log('GetSpeakerVol', ret);
   },
-  isMicOriginalInputEnable: function(bEnable) {
+  isMicOriginalInputEnable: function (bEnable) {
     let opts = {
       bEnable: bEnable
     }
     let ret = zoomsetaudio.Setting_IsMicOriginalInputEnable(opts);
     console.log('isMicOriginalInputEnable', ret);
   },
-  enableHDVideo: function(bEnable) {
+  enableHDVideo: function (bEnable) {
     let opts = {
       bEnable: bEnable
     }
     let ret = zoomsetvideo.Setting_EnableHDVideo(opts);
     console.log('EnableHDVideo', ret);
   },
-  isHDVideoEnabled: function(bEnable) {
+  isHDVideoEnabled: function (bEnable) {
     let opts = {
       bEnable: bEnable
     }
     let ret = zoomsetvideo.Setting_IsHDVideoEnabled(opts);
     console.log('IsHDVideoEnabled', ret);
   },
-  enableAlwaysShowNameOnVideo: function(bEnable) {
+  enableAlwaysShowNameOnVideo: function (bEnable) {
     let opts = {
       bEnable: bEnable
     }
     let ret = zoomsetvideo.Setting_EnableAlwaysShowNameOnVideo(opts);
     console.log('EnableAlwaysShowNameOnVideo', ret);
   },
-  isAlwaysShowNameOnVideoEnabled: function(bEnable) {
+  isAlwaysShowNameOnVideoEnabled: function (bEnable) {
     let opts = {
       bEnable: bEnable
     }
     let ret = zoomsetvideo.Setting_IsAlwaysShowNameOnVideoEnabled(opts);
     console.log('IsAlwaysShowNameOnVideoEnabled', ret);
   },
-  enableAutoTurnOffVideoWhenJoinMeeting: function(bEnable) {
+  enableAutoTurnOffVideoWhenJoinMeeting: function (bEnable) {
     let opts = {
       bEnable: bEnable
     }
     let ret = zoomsetvideo.Setting_EnableAutoTurnOffVideoWhenJoinMeeting(opts);
     console.log('EnableAutoTurnOffVideoWhenJoinMeeting', ret);
   },
-  isAutoTurnOffVideoWhenJoinMeetingEnabled: function(bEnable) {
+  isAutoTurnOffVideoWhenJoinMeetingEnabled: function (bEnable) {
     let opts = {
       bEnable: bEnable
     }
     let ret = zoomsetvideo.Setting_IsAutoTurnOffVideoWhenJoinMeetingEnabled(opts);
     console.log('IsAutoTurnOffVideoWhenJoinMeetingEnabled', ret);
   },
-  enableAlwaysUse16v9: function(bEnable) {
+  enableAlwaysUse16v9: function (bEnable) {
     let opts = {
       bEnable: bEnable
     }
     let ret = zoomsetvideo.Setting_EnableAlwaysUse16v9(opts);
     console.log('EnableAlwaysUse16v9', ret);
   },
-  isAlwaysUse16v9: function(bEnable) {
+  isAlwaysUse16v9: function (bEnable) {
     let opts = {
       bEnable: bEnable
     }
     let ret = zoomsetvideo.Setting_IsAlwaysUse16v9(opts);
     console.log('IsAlwaysUse16v9', ret);
   },
-  enableSpotlightSelf: function(bEnable) {
+  enableSpotlightSelf: function (bEnable) {
     let opts = {
       bEnable: bEnable
     }
     let ret = zoomsetvideo.Setting_EnableSpotlightSelf(opts);
     console.log('EnableSpotlightSelf', ret);
   },
-  isSpotlightSelfEnabled: function(bEnable) {
+  isSpotlightSelfEnabled: function (bEnable) {
     let opts = {
       bEnable: bEnable
     }
     let ret = zoomsetvideo.Setting_IsSpotlightSelfEnabled(opts);
     console.log('IsSpotlightSelfEnabled', ret);
   },
-  enableHardwareEncode: function(bEnable) {
+  enableHardwareEncode: function (bEnable) {
     let opts = {
       bEnable: bEnable
     }
     let ret = zoomsetvideo.Setting_EnableHardwareEncode(opts);
     console.log('EnableHardwareEncode', ret);
   },
-  isHardwareEncodeEnabled: function(bEnable) {
+  isHardwareEncodeEnabled: function (bEnable) {
     let opts = {
       bEnable: bEnable
     }
     let ret = zoomsetvideo.Setting_IsHardwareEncodeEnabled(opts);
     console.log('IsHardwareEncodeEnabled', ret);
   },
-  enable49VideoesInGallaryView: function(bEnable) {
+  enable49VideoesInGallaryView: function (bEnable) {
     let opts = {
       bEnable: bEnable
     }
     let ret = zoomsetvideo.Setting_Enable49VideoesInGallaryView(opts);
     console.log('Enable49VideoesInGallaryView', ret);
   },
-  is49VideoesInGallaryViewEnabled: function(bEnable) {
+  is49VideoesInGallaryViewEnabled: function (bEnable) {
     let opts = {
       bEnable: bEnable
     }
     let ret = zoomsetvideo.Setting_Is49VideoesInGallaryViewEnabled(opts);
     console.log('Is49VideoesInGallaryViewEnabled', ret);
   },
-  enableHideNoVideoUsersOnWallView: function(bEnable) {
+  enableHideNoVideoUsersOnWallView: function (bEnable) {
     let opts = {
       bEnable: bEnable
     }
     let ret = zoomsetvideo.Setting_EnableHideNoVideoUsersOnWallView(opts);
     console.log('EnableHideNoVideoUsersOnWallView', ret);
   },
-  isHideNoVideoUsersOnWallViewEnabled: function(bEnable) {
+  isHideNoVideoUsersOnWallViewEnabled: function (bEnable) {
     let opts = {
       bEnable: bEnable
     }
     let ret = zoomsetvideo.Setting_IsHideNoVideoUsersOnWallViewEnabled(opts);
     console.log('IsHideNoVideoUsersOnWallViewEnabled', ret);
   },
-  getMicList: function() {
-    zoomsetaudio.Setting_GetMicList();
-    // console.log('GetMicList', ret);
+  enableVideoPreviewDialog: function (bEnable) {
+    let opts = {
+      bEnable: bEnable
+    }
+    let ret = zoomsetvideo.Setting_EnableVideoPreviewDialog(opts);
+    console.log('enableVideoPreviewDialog', ret);
   },
-  selectMic: function(zn_deviceId, zn_deviceName) {
+  isVideoPreviewDialogEnabled: function () {
+    let ret = zoomsetvideo.Setting_IsVideoPreviewDialogEnabled();
+    console.log('isVideoPreviewDialogEnabled', ret);
+  },
+  getMicList: function () {
+    zoomsetaudio.Setting_GetMicList();
+  },
+  selectMic: function (zn_deviceId, zn_deviceName) {
     let opts = {
       zn_deviceId: zn_deviceId,
       zn_deviceName: zn_deviceName
@@ -1330,7 +1335,7 @@ let functionObj = {
     let ret = zoomsetaudio.Setting_SelectMic(opts);
     console.log('SelectMic', ret);
   },
-  selectSpeaker: function(zn_deviceId, zn_deviceName) {
+  selectSpeaker: function (zn_deviceId, zn_deviceName) {
     let opts = {
       zn_deviceId: zn_deviceId,
       zn_deviceName: zn_deviceName
@@ -1338,308 +1343,308 @@ let functionObj = {
     let ret = zoomsetaudio.Setting_SelectSpeaker(opts);
     console.log('SelectSpeaker', ret);
   },
-  getSpeakerList: function() {
+  getSpeakerList: function () {
     let ret = zoomsetaudio.Setting_GetSpeakerList();
     // console.log('GetSpeakerList', ret);
   },
-  isAutoJoinAudioEnabled: function() {
+  isAutoJoinAudioEnabled: function () {
     let ret = zoomsetaudio.Checking_IsAutoJoinAudioEnabled();
     console.log('IsAutoJoinAudioEnabled', ret);
   },
-  isAutoAdjustMicEnabled: function() {
+  isAutoAdjustMicEnabled: function () {
     let ret = zoomsetaudio.Checking_IsAutoAdjustMicEnabled();
     console.log('IsAutoAdjustMicEnabled', ret);
   },
-  enableAutoJoinAudio: function(zn_bEnable) {
+  enableAutoJoinAudio: function (zn_bEnable) {
     let opts = {
       zn_bEnable: zn_bEnable
     }
     let ret = zoomsetaudio.Setting_EnableAutoJoinAudio(opts);
     console.log('EnableAutoJoinAudio', ret);
   },
-  enableAutoAdjustMic: function(zn_bEnable) {
+  enableAutoAdjustMic: function (zn_bEnable) {
     let opts = {
       zn_bEnable: zn_bEnable
     }
     let ret = zoomsetaudio.Setting_EnableAutoAdjustMic(opts);
     console.log('EnableAutoAdjustMic', ret);
   },
-  showSettingDlg: function() {
+  showSettingDlg: function () {
     let ret = zoomsetting.SettingUI_ShowTheSettingDlg();
     console.log('ShowSettingDlg', ret);
   },
-  hideSettingDlg: function() {
+  hideSettingDlg: function () {
     let ret = zoomsetting.SettingUI_HideSettingDlg();
     console.log('HideSettingDlg', ret);
   },
-  enableDualScreenMode: function(zn_bEnable) {
+  enableDualScreenMode: function (zn_bEnable) {
     let opts = {
       zn_bEnable: zn_bEnable
     }
     let ret = zoomsetgeneral.Setting_EnableDualScreenMode(opts);
     console.log('EnableDualScreenMode', ret);
   },
-  turnOffAeroModeInSharing: function(zn_bEnable) {
+  turnOffAeroModeInSharing: function (zn_bEnable) {
     let opts = {
       zn_bEnable: zn_bEnable
     }
     let ret = zoomsetgeneral.Setting_TurnOffAeroModeInSharing(opts);
     console.log('TurnOffAeroModeInSharing', ret);
   },
-  enableAutoFitToWindowWhenViewSharing: function(zn_bEnable) {
+  enableAutoFitToWindowWhenViewSharing: function (zn_bEnable) {
     let opts = {
       zn_bEnable: zn_bEnable
     }
     let ret = zoomsetgeneral.Setting_EnableAutoFitToWindowWhenViewSharing(opts);
     console.log('EnableAutoFitToWindowWhenViewSharing', ret);
   },
-  enableAutoFullScreenVideoWhenJoinMeeting: function(zn_bEnable) {
+  enableAutoFullScreenVideoWhenJoinMeeting: function (zn_bEnable) {
     let opts = {
       zn_bEnable: zn_bEnable
     }
     let ret = zoomsetgeneral.Setting_EnableAutoFullScreenVideoWhenJoinMeeting(opts);
     console.log('EnableAutoFullScreenVideoWhenJoinMeeting', ret);
   },
-  enableSplitScreenMode: function(zn_bEnable) {
+  enableSplitScreenMode: function (zn_bEnable) {
     let opts = {
       zn_bEnable: zn_bEnable
     }
     let ret = zoomsetgeneral.Setting_EnableSplitScreenMode(opts);
     console.log('EnableSplitScreenMode', ret);
   },
-  isDualScreenModeEnabled: function() {
+  isDualScreenModeEnabled: function () {
     let ret = zoomsetgeneral.Checking_IsDualScreenModeEnabled();
     console.log('IsDualScreenModeEnabled', ret);
   },
-  isAeroModeInSharingTurnOff: function() {
+  isAeroModeInSharingTurnOff: function () {
     let ret = zoomsetgeneral.Checking_IsAeroModeInSharingTurnOff();
     console.log('IsAeroModeInSharingTurnOff', ret);
   },
-  isAutoFitToWindowWhenViewSharingEnabled: function() {
+  isAutoFitToWindowWhenViewSharingEnabled: function () {
     let ret = zoomsetgeneral.Checking_IsAutoFitToWindowWhenViewSharingEnabled();
     console.log('IsAutoFitToWindowWhenViewSharingEnabled', ret);
   },
-  isAutoFullScreenVideoWhenJoinMeetingEnabled: function() {
+  isAutoFullScreenVideoWhenJoinMeetingEnabled: function () {
     let ret = zoomsetgeneral.Checking_IsAutoFullScreenVideoWhenJoinMeetingEnabled();
     console.log('isAutoFullScreenVideoWhenJoinMeetingEnabled', ret);
-  },  
-  isSplitScreenModeEnabled: function() {
+  },
+  isSplitScreenModeEnabled: function () {
     let ret = zoomsetgeneral.Checking_IsSplitScreenModeEnabled();
     console.log('IsSplitScreenModeEnabled', ret);
   },
-  enableAutoFullScreenVideoWhenViewShare: function(bEnable) {
+  enableAutoFullScreenVideoWhenViewShare: function (bEnable) {
     let opts = {
       bEnable: bEnable
     }
     let ret = zoomsetgeneral.Setting_EnableAutoFullScreenVideoWhenViewShare(opts);
     console.log('EnableAutoFullScreenVideoWhenViewShare', ret);
   },
-  isAutoFullScreenVideoWhenViewShareEnabled: function(bEnable) {
+  isAutoFullScreenVideoWhenViewShareEnabled: function (bEnable) {
     let opts = {
       bEnable: bEnable
     }
     let ret = zoomsetgeneral.Setting_IsAutoFullScreenVideoWhenViewShareEnabled(opts);
     console.log('IsAutoFullScreenVideoWhenViewShareEnabled', ret);
   },
-  enableDisplayReminderWindowWhenExit: function(bEnable) {
+  enableDisplayReminderWindowWhenExit: function (bEnable) {
     let opts = {
       bEnable: bEnable
     }
     let ret = zoomsetgeneral.Setting_EnableDisplayReminderWindowWhenExit(opts);
     console.log('EnableDisplayReminderWindowWhenExit', ret);
   },
-  isDisplayReminderWindowWhenExitEnabled: function(bEnable) {
+  isDisplayReminderWindowWhenExitEnabled: function (bEnable) {
     let opts = {
       bEnable: bEnable
     }
     let ret = zoomsetgeneral.Setting_IsDisplayReminderWindowWhenExitEnabled(opts);
     console.log('IsDisplayReminderWindowWhenExitEnabled', ret);
   },
-  enableShowMyMeetingElapseTime: function(bEnable) {
+  enableShowMyMeetingElapseTime: function (bEnable) {
     let opts = {
       bEnable: bEnable
     }
     let ret = zoomsetgeneral.Setting_EnableShowMyMeetingElapseTime(opts);
     console.log('EnableShowMyMeetingElapseTime', ret);
   },
-  isShowMyMeetingElapseTimeEnabled: function(bEnable) {
+  isShowMyMeetingElapseTimeEnabled: function (bEnable) {
     let opts = {
       bEnable: bEnable
     }
     let ret = zoomsetgeneral.Setting_IsShowMyMeetingElapseTimeEnabled(opts);
     console.log('IsShowMyMeetingElapseTimeEnabled', ret);
   },
-  isCurrentOSSupportAccelerateGPUWhenShare: function(bEnable) {
+  isCurrentOSSupportAccelerateGPUWhenShare: function (bEnable) {
     let opts = {
       bEnable: bEnable
     }
     let ret = zoomsetgeneral.Setting_IsCurrentOSSupportAccelerateGPUWhenShare(opts);
     console.log('IsCurrentOSSupportAccelerateGPUWhenShare', ret);
   },
-  enableAccelerateGPUWhenShare: function(bEnable) {
+  enableAccelerateGPUWhenShare: function (bEnable) {
     let opts = {
       bEnable: bEnable
     }
     let ret = zoomsetgeneral.Setting_EnableAccelerateGPUWhenShare(opts);
     console.log('EnableAccelerateGPUWhenShare', ret);
   },
-  isAccelerateGPUWhenShareEnabled: function(bEnable) {
+  isAccelerateGPUWhenShareEnabled: function (bEnable) {
     let opts = {
       bEnable: bEnable
     }
     let ret = zoomsetgeneral.Setting_IsAccelerateGPUWhenShareEnabled(opts);
     console.log('IsAccelerateGPUWhenShareEnabled', ret);
   },
-  enableRemoteControlAllApplications: function(bEnable) {
+  enableRemoteControlAllApplications: function (bEnable) {
     let opts = {
       bEnable: bEnable
     }
     let ret = zoomsetgeneral.Setting_EnableRemoteControlAllApplications(opts);
     console.log('EnableRemoteControlAllApplications', ret);
   },
-  isRemoteControlAllApplicationsEnabled: function(bEnable) {
+  isRemoteControlAllApplicationsEnabled: function (bEnable) {
     let opts = {
       bEnable: bEnable
     }
     let ret = zoomsetgeneral.Setting_IsRemoteControlAllApplicationsEnabled(opts);
     console.log('IsRemoteControlAllApplicationsEnabled', ret);
   },
-  setRecordingPath: function(zn_szPath) {
+  setRecordingPath: function (zn_szPath) {
     let opts = {
       zn_szPath: zn_szPath
     }
     let ret = zoomsetrecord.Setting_SetRecordingPath(opts);
     console.log('SetRecordingPath', ret);
   },
-  getRecordingPath: function() {
+  getRecordingPath: function () {
     let ret = zoomsetrecord.Getting_GetRecordingPath();
     console.log('GetRecordingPath', ret);
   },
-  canGetCloudRecordingStorageInfo: function(bCan) {
+  canGetCloudRecordingStorageInfo: function (bCan) {
     let opts = {
       bCan: bCan
     }
     let ret = zoomsetrecord.Setting_CanGetCloudRecordingStorageInfo(opts);
     console.log('CanGetCloudRecordingStorageInfo', ret);
   },
-  getCloudRecordingStorageInfo: function() {
+  getCloudRecordingStorageInfo: function () {
     let ret = zoomsetrecord.Getting_GetCloudRecordingStorageInfo();
     console.log('GetCloudRecordingStorageInfo', ret);
   },
-  getRecordingManagementURL: function() {
+  getRecordingManagementURL: function () {
     let ret = zoomsetrecord.Getting_GetRecordingManagementURL();
     console.log('GetRecordingManagementURL', ret);
   },
-  canGetRecordingManagementURL: function(bCan) {
+  canGetRecordingManagementURL: function (bCan) {
     let opts = {
       bCan: bCan
     }
     let ret = zoomsetrecord.Setting_CanGetRecordingManagementURL(opts);
     console.log('CanGetRecordingManagementURL', ret);
   },
-  enableSelectRecordFileLocationAfterMeeting: function(bEnable) {
+  enableSelectRecordFileLocationAfterMeeting: function (bEnable) {
     let opts = {
       bEnable: bEnable
     }
     let ret = zoomsetrecord.Setting_EnableSelectRecordFileLocationAfterMeeting(opts);
     console.log('EnableSelectRecordFileLocationAfterMeeting', ret);
   },
-  isSelectRecordFileLocationAfterMeetingEnabled: function(bEnable) {
+  isSelectRecordFileLocationAfterMeetingEnabled: function (bEnable) {
     let opts = {
       bEnable: bEnable
     }
     let ret = zoomsetrecord.Setting_IsSelectRecordFileLocationAfterMeetingEnabled(opts);
     console.log('IsSelectRecordFileLocationAfterMeetingEnabled', ret);
   },
-  enableMultiAudioStreamRecord: function(bEnable) {
+  enableMultiAudioStreamRecord: function (bEnable) {
     let opts = {
       bEnable: bEnable
     }
     let ret = zoomsetrecord.Setting_EnableMultiAudioStreamRecord(opts);
     console.log('EnableMultiAudioStreamRecord', ret);
   },
-  isMultiAudioStreamRecordEnabled: function(bEnable) {
+  isMultiAudioStreamRecordEnabled: function (bEnable) {
     let opts = {
       bEnable: bEnable
     }
     let ret = zoomsetrecord.Setting_IsMultiAudioStreamRecordEnabled(opts);
     console.log('IsMultiAudioStreamRecordEnabled', ret);
   },
-  enableAddTimestampWatermark: function(bEnable) {
+  enableAddTimestampWatermark: function (bEnable) {
     let opts = {
       bEnable: bEnable
     }
     let ret = zoomsetrecord.Setting_EnableAddTimestampWatermark(opts);
     console.log('EnableAddTimestampWatermark', ret);
   },
-  isAddTimestampWatermarkEnabled: function(bEnable) {
+  isAddTimestampWatermarkEnabled: function (bEnable) {
     let opts = {
       bEnable: bEnable
     }
     let ret = zoomsetrecord.Setting_IsAddTimestampWatermarkEnabled(opts);
     console.log('IsAddTimestampWatermarkEnabled', ret);
   },
-  enableOptimizeFor3rdPartyVideoEditor: function(bEnable) {
+  enableOptimizeFor3rdPartyVideoEditor: function (bEnable) {
     let opts = {
       bEnable: bEnable
     }
     let ret = zoomsetrecord.Setting_EnableOptimizeFor3rdPartyVideoEditor(opts);
     console.log('EnableOptimizeFor3rdPartyVideoEditor', ret);
   },
-  isOptimizeFor3rdPartyVideoEditorEnabled: function(bEnable) {
+  isOptimizeFor3rdPartyVideoEditorEnabled: function (bEnable) {
     let opts = {
       bEnable: bEnable
     }
     let ret = zoomsetrecord.Setting_IsOptimizeFor3rdPartyVideoEditorEnabled(opts);
     console.log('IsOptimizeFor3rdPartyVideoEditorEnabled', ret);
   },
-  enableShowVideoThumbnailWhenShare: function(bEnable) {
+  enableShowVideoThumbnailWhenShare: function (bEnable) {
     let opts = {
       bEnable: bEnable
     }
     let ret = zoomsetrecord.Setting_EnableShowVideoThumbnailWhenShare(opts);
     console.log('EnableShowVideoThumbnailWhenShare', ret);
   },
-  isShowVideoThumbnailWhenShareEnabled: function(bEnable) {
+  isShowVideoThumbnailWhenShareEnabled: function (bEnable) {
     let opts = {
       bEnable: bEnable
     }
     let ret = zoomsetrecord.Setting_IsShowVideoThumbnailWhenShareEnabled(opts);
     console.log('IsShowVideoThumbnailWhenShareEnabled', ret);
   },
-  enablePlaceVideoNextToShareInRecord: function(bEnable) {
+  enablePlaceVideoNextToShareInRecord: function (bEnable) {
     let opts = {
       bEnable: bEnable
     }
     let ret = zoomsetrecord.Setting_EnablePlaceVideoNextToShareInRecord(opts);
     console.log('EnablePlaceVideoNextToShareInRecord', ret);
   },
-  isPlaceVideoNextToShareInRecordEnabled: function(bEnable) {
+  isPlaceVideoNextToShareInRecordEnabled: function (bEnable) {
     let opts = {
       bEnable: bEnable
     }
     let ret = zoomsetrecord.Setting_IsPlaceVideoNextToShareInRecordEnabled(opts);
     console.log('IsPlaceVideoNextToShareInRecordEnabled', ret);
   },
-  startAppShare: function(zn_hShare_app) {
+  startAppShare: function (zn_hShare_app) {
     let opts = {
       zn_hShare_app: zn_hShare_app
     }
     let ret = zoomshare.MeetingShare_StartAppShare(opts);
     console.log('StartAppShare', ret);
   },
-  startMonitorShare: function(zn_monitorID) {
+  startMonitorShare: function (zn_monitorID) {
     let opts = {
       zn_monitorID: zn_monitorID
     }
     let ret = zoomshare.MeetingShare_StartMonitorShare(opts);
     console.log('StartMonitorShare', ret);
   },
-  stopShare: function() {
+  stopShare: function () {
     let ret = zoomshare.MeetingShare_StopShare();
     console.log('StopShare', ret);
   },
-  callOutH323: function() {
+  callOutH323: function () {
     let opts = {
       'deviceName': 'xxx',
       'deviceIP': '1234',
@@ -1649,30 +1654,30 @@ let functionObj = {
     let ret = zoomh323.H323_CallOutH323(opts);
     console.log('CallOutH323', ret);
   },
-  cancelCallOutH323: function() {
+  cancelCallOutH323: function () {
     let ret = zoomh323.H323_CancelCallOutH323();
     console.log('CancelCallOutH323', ret);
   },
-  getH323Address: function() {
+  getH323Address: function () {
     let ret = zoomh323.H323_GetH323Address();
     console.log('GetH323Address', ret);
   },
-  getH323Password: function() {
+  getH323Password: function () {
     let ret = zoomh323.H323_GetH323Password();
     console.log('GetH323Password', ret);
   },
-  getCalloutH323DeviceList: function() {
+  getCalloutH323DeviceList: function () {
     let ret = zoomh323.H323_GetCalloutH323DeviceList();
     console.log('GetCalloutH323DeviceList', ret);
   },
-  enableInviteButtonOnMeetingUI: function(bEnable) {
+  enableInviteButtonOnMeetingUI: function (bEnable) {
     let opts = {
       bEnable: bEnable
     }
     let ret = zoomconfiguration.MeetingConfig_EnableInviteButtonOnMeetingUI(opts);
     console.log('EnableInviteButtonOnMeetingUI', ret);
   },
-  setFloatVideoPos: function() {
+  setFloatVideoPos: function () {
     let opts = {
       left: '10',
       top: '10'
@@ -1680,28 +1685,28 @@ let functionObj = {
     let ret = zoomconfiguration.MeetingConfig_SetFloatVideoPos(opts);
     console.log('SetFloatVideoPos', ret);
   },
-  setBottomFloatToolbarWndVisibility: function(bShow) {
+  setBottomFloatToolbarWndVisibility: function (bShow) {
     let opts = {
       bShow: bShow
     }
     let ret = zoomconfiguration.MeetingConfig_SetBottomFloatToolbarWndVisibility(opts);
     console.log('SetBottomFloatToolbarWndVisibility', ret);
   },
-  setSharingToolbarVisibility: function(bShow) {
+  setSharingToolbarVisibility: function (bShow) {
     let opts = {
       bShow: bShow
     }
     let ret = zoomconfiguration.MeetingConfig_SetSharingToolbarVisibility(opts);
     console.log('SetSharingToolbarVisibility', ret);
   },
-  setDirectShareMonitorID: function(monitorID) {
+  setDirectShareMonitorID: function (monitorID) {
     let opts = {
       monitorID: monitorID
     }
     let ret = zoomconfiguration.MeetingConfig_SetDirectShareMonitorID(opts);
     console.log('SetDirectShareMonitorID', ret);
   },
-  setMeetingUIPos: function() {
+  setMeetingUIPos: function () {
     let opts = {
       left: '10',
       top: '10'
@@ -1709,56 +1714,42 @@ let functionObj = {
     let ret = zoomconfiguration.MeetingConfig_SetMeetingUIPos(opts);
     console.log('SetMeetingUIPos', ret);
   },
-  disableWaitingForHostDialog: function(bDisable) {
+  disableWaitingForHostDialog: function (bDisable) {
     let opts = {
       bDisable: bDisable
     }
     let ret = zoomconfiguration.MeetingConfig_DisableWaitingForHostDialog(opts);
     console.log('DisableWaitingForHostDialog', ret);
   },
-  hideMeetingInfoFromMeetingUITitle: function(bHide) {
-    let opts = {
-      bHide: bHide
-    }
-    let ret = zoomconfiguration.MeetingConfig_HideMeetingInfoFromMeetingUITitle(opts);
-    console.log('HideMeetingInfoFromMeetingUITitle', ret);
-  },
-  setMeetingIDForMeetingUITitle: function(meetingNumber) {
-    let opts = {
-      meetingNumber: meetingNumber
-    }
-    let ret = zoomconfiguration.MeetingConfig_SetMeetingIDForMeetingUITitle(opts);
-    console.log('SetMeetingIDForMeetingUITitle', ret);
-  },
-  disablePopupMeetingWrongPSWDlg: function(bDisable) {
+  disablePopupMeetingWrongPSWDlg: function (bDisable) {
     let opts = {
       bDisable: bDisable
     }
     let ret = zoomconfiguration.MeetingConfig_DisablePopupMeetingWrongPSWDlg(opts);
     console.log('DisablePopupMeetingWrongPSWDlg', ret);
   },
-  enableAutoEndOtherMeetingWhenStartMeeting: function(bEnable) {
+  enableAutoEndOtherMeetingWhenStartMeeting: function (bEnable) {
     let opts = {
       bEnable: bEnable
     }
     let ret = zoomconfiguration.MeetingConfig_EnableAutoEndOtherMeetingWhenStartMeeting(opts);
     console.log('EnableAutoEndOtherMeetingWhenStartMeeting', ret);
   },
-  enableLButtonDBClick4SwitchFullScreenMode: function(bEnable) {
+  enableLButtonDBClick4SwitchFullScreenMode: function (bEnable) {
     let opts = {
       bEnable: bEnable
     }
     let ret = zoomconfiguration.MeetingConfig_EnableLButtonDBClick4SwitchFullScreenMode(opts);
     console.log('EnableLButtonDBClick4SwitchFullScreenMode', ret);
   },
-  setFloatVideoWndVisibility: function(bShow) {
+  setFloatVideoWndVisibility: function (bShow) {
     let opts = {
       bShow: bShow
     }
     let ret = zoomconfiguration.MeetingConfig_SetFloatVideoWndVisibility(opts);
     console.log('SetFloatVideoWndVisibility', ret);
   },
-  prePopulateWebinarRegistrationInfo: function(email, userName) {
+  prePopulateWebinarRegistrationInfo: function (email, userName) {
     let opts = {
       email: email,
       userName: userName
@@ -1766,71 +1757,71 @@ let functionObj = {
     let ret = zoomconfiguration.MeetingConfig_PrePopulateWebinarRegistrationInfo(opts);
     console.log('PrePopulateWebinarRegistrationInfo', ret);
   },
-  redirectClickAudioBTNEvent: function(bRedirect) {
+  redirectClickAudioBTNEvent: function (bRedirect) {
     let opts = {
       bRedirect: bRedirect
     }
     let ret = zoomconfiguration.MeetingConfig_RedirectClickAudioBTNEvent(opts);
     console.log('RedirectClickAudioBTNEvent', ret);
   },
-  redirectClickAudioMenuBTNEvent: function(bRedirect) {
+  redirectClickAudioMenuBTNEvent: function (bRedirect) {
     let opts = {
       bRedirect: bRedirect
     }
     let ret = zoomconfiguration.MeetingConfig_RedirectClickAudioMenuBTNEvent(opts);
     console.log('RedirectClickAudioMenuBTNEvent', ret);
   },
-  enableAudioButtonOnMeetingUI: function(bEnable) {
+  enableAudioButtonOnMeetingUI: function (bEnable) {
     let opts = {
       bEnable: bEnable
     }
     let ret = zoomconfiguration.MeetingConfig_EnableAudioButtonOnMeetingUI(opts);
     console.log('EnableAudioButtonOnMeetingUI', ret);
   },
-  disableShowJoinMeetingWnd: function(bDisable) {
+  disableShowJoinMeetingWnd: function (bDisable) {
     let opts = {
       bDisable: bDisable
     }
     let ret = zoomconfiguration.MeetingConfig_DisableShowJoinMeetingWnd(opts);
     console.log('DisableShowJoinMeetingWnd', ret);
   },
-  getReminderType: function() {
+  getReminderType: function () {
     let ret = zoomupdateaccount.MeetingConfig_GetReminderType();
     console.log('GetReminderType', ret);
   },
-  upgradeMeeting: function() {
+  upgradeMeeting: function () {
     let ret = zoomupdateaccount.MeetingConfig_UpgradeMeeting();
     console.log('UpgradeMeeting', ret);
   },
-  upgradeAccount: function() {
+  upgradeAccount: function () {
     let ret = zoomupdateaccount.MeetingConfig_UpgradeAccount();
     console.log('UpgradeAccount', ret);
   },
-  cancelUpdate: function() {
+  cancelUpdate: function () {
     let ret = zoomupdateaccount.MeetingConfig_CancelUpdate();
     console.log('CancelUpdate', ret);
   },
-  setFreeMeetingNeedToUpgradeCB: function() {
+  setFreeMeetingNeedToUpgradeCB: function () {
     let ret = zoomupdateaccount.MeetingConfig_SetFreeMeetingNeedToUpgradeCB();
     console.log('SetFreeMeetingNeedToUpgradeCB', ret);
   },
-  setFreeMeetingUpgradeToGiftFreeTrialStartCB: function() {
+  setFreeMeetingUpgradeToGiftFreeTrialStartCB: function () {
     let ret = zoomupdateaccount.MeetingConfig_SetFreeMeetingUpgradeToGiftFreeTrialStartCB();
     console.log('SetFreeMeetingUpgradeToGiftFreeTrialStartCB', ret);
   },
-  setFreeMeetingUpgradeToGiftFreeTrialStopCB: function() {
+  setFreeMeetingUpgradeToGiftFreeTrialStopCB: function () {
     let ret = zoomupdateaccount.MeetingConfig_SetFreeMeetingUpgradeToGiftFreeTrialStopCB();
     console.log('SetFreeMeetingUpgradeToGiftFreeTrialStopCB', ret);
   },
-  setFreeMeetingUpgradeToProMeetingCB: function() {
+  setFreeMeetingUpgradeToProMeetingCB: function () {
     let ret = zoomupdateaccount.MeetingConfig_SetFreeMeetingUpgradeToProMeetingCB();
     console.log('SetFreeMeetingUpgradeToProMeetingCB', ret);
   },
-  setFreeMeetingUpgradeToProMeetingCB: function() {
+  setFreeMeetingUpgradeToProMeetingCB: function () {
     let ret = zoomupdateaccount.MeetingConfig_SetFreeMeetingUpgradeToProMeetingCB();
     console.log('SetFreeMeetingUpgradeToProMeetingCB', ret);
   },
-  addCustomizedPictureResource: function(strPNGID, strPNGPath) {
+  addCustomizedPictureResource: function (strPNGID, strPNGPath) {
     let opts = {
       strPNGID: strPNGID,
       strPNGPath: strPNGPath
@@ -1838,7 +1829,7 @@ let functionObj = {
     let ret = zoomcustomizedresource.Resource_AddCustomizedPictureResource(opts);
     console.log('AddCustomizedPictureResource', ret);
   },
-  addCustomizedStringResource: function(CustomizedStringType, strCustomizedString) {
+  addCustomizedStringResource: function (CustomizedStringType, strCustomizedString) {
     let opts = {
       CustomizedStringType: CustomizedStringType,
       strCustomizedString: strCustomizedString
@@ -1846,7 +1837,7 @@ let functionObj = {
     let ret = zoomcustomizedresource.Resource_AddCustomizedStringResource(opts);
     console.log('AddCustomizedStringResource', ret);
   },
-  addCustomizedURLResource: function(CustomizedURLType, strCustomizeURL) {
+  addCustomizedURLResource: function (CustomizedURLType, strCustomizeURL) {
     let opts = {
       CustomizedURLType: CustomizedURLType,
       strCustomizeURL: strCustomizeURL
@@ -1854,37 +1845,37 @@ let functionObj = {
     let ret = zoomcustomizedresource.Resource_AddCustomizedURLResource(opts);
     console.log('AddCustomizedURLResource', ret);
   },
-  setFreeMeetingUpgradeToProMeetingCB: function() {
+  setFreeMeetingUpgradeToProMeetingCB: function () {
     let ret = zoomupdateaccount.MeetingConfig_SetFreeMeetingUpgradeToProMeetingCB();
     console.log('SetFreeMeetingUpgradeToProMeetingCB', ret);
   },
-  scheduleMeetingWithWndParams: function() {
+  scheduleMeetingWithWndParams: function () {
     let ret = zoompremeeting.ScheduleMeetingWithWndParams();
     console.log('scheduleMeetingWithWndParams', ret);
   },
-  scheduleMeeting: function() {
+  scheduleMeeting: function () {
     let ret = zoompremeeting.ScheduleMeeting();
     console.log('scheduleMeeting', ret);
   },
-  editMeeting: function(meetingUniqueID) {
+  editMeeting: function (meetingUniqueID) {
     let opts = {
       meetingUniqueID: meetingUniqueID
     }
     let ret = zoompremeeting.EditMeeting(opts);
     console.log('editMeeting', ret);
   },
-  listMeeting: function() {
+  listMeeting: function () {
     let ret = zoompremeeting.ListMeeting();
     console.log('listMeeting', ret);
   },
-  deleteMeeting: function(meetingUniqueID) {
+  deleteMeeting: function (meetingUniqueID) {
     let opts = {
       meetingUniqueID: meetingUniqueID
     }
     let ret = zoompremeeting.DeleteMeeting(opts);
     console.log('deleteMeeting', ret);
   },
-  editMeetingWithWndParams: function(meetingUniqueID) {
+  editMeetingWithWndParams: function (meetingUniqueID) {
     let opts = {
       left: '10',
       top: '10',
@@ -1893,60 +1884,60 @@ let functionObj = {
     let ret = zoompremeeting.EditMeetingWithWndParams(opts);
     console.log('editMeetingWithWndParams', ret);
   },
-  canStartDirectShare: function() {
+  canStartDirectShare: function () {
     let ret = zoomdirectshare.CanStartDirectShare();
     console.log('canStartDirectShare', ret);
   },
-  isDirectShareInProgress: function() {
+  isDirectShareInProgress: function () {
     let ret = zoomdirectshare.IsDirectShareInProgress();
     console.log('isDirectShareInProgress', ret);
   },
-  startDirectShare: function() {
+  startDirectShare: function () {
     let ret = zoomdirectshare.StartDirectShare(OnDirectShareStatusUpdate);
     console.log('startDirectShare', ret);
   },
-  stopDirectShare: function() {
+  stopDirectShare: function () {
     let ret = zoomdirectshare.StopDirectShare(OnDirectShareStatusUpdate);
     console.log('stopDirectShare', ret);
   },
-  setDirectShareStatusUpdateCB: function() {
+  setDirectShareStatusUpdateCB: function () {
     let ret = zoomdirectshare.SetDirectShareStatusUpdateCB(OnDirectShareStatusUpdate);
     console.log('setDirectShareStatusUpdateCB', ret);
   },
-  tryWithMeetingNumber: function(meetingNumber) {
+  tryWithMeetingNumber: function (meetingNumber) {
     let opts = {
       meetingNumber: meetingNumber
     }
     let ret = zoomdirectshare.TryWithMeetingNumber(opts);
     console.log('tryWithMeetingNumber', ret);
   },
-  tryWithPairingCode: function(pairingCode) {
+  tryWithPairingCode: function (pairingCode) {
     let opts = {
       pairingCode: pairingCode
     }
     let ret = zoomdirectshare.TryWithPairingCode(opts);
     console.log('tryWithPairingCode', ret);
   },
-  cancel: function() {
+  cancel: function () {
     let ret = zoomdirectshare.Cancel();
     console.log('Cancel', ret);
   },
-  handleYUV: function(startCBOption) {
+  handleYUV: function (startCBOption) {
     global.startCBOption = startCBOption;
     showYUVWindow(startCBOption);
   },
-  setVideoRawDataCB: function() {
+  setVideoRawDataCB: function () {
     let ret = zoomvideorawdata.SetRawDataCB(onVideoRawDataReceived);
     console.log('SetVideoRawDataCB', ret);
   },
-  startVideoRawData: function(videoRawDataMemoryMode) {
+  startVideoRawData: function (videoRawDataMemoryMode) {
     let opts = {
       RawDataMemoryMode: videoRawDataMemoryMode
     }
     let ret = zoomvideorawdata.Start(opts);
     console.log('StartVideoRawData', ret);
   },
-  subscribeVideo: function(nodeID, RawDataResolution, recever_handle) {
+  subscribeVideo: function (nodeID, RawDataResolution, recever_handle) {
     let opts = {
       nodeID: nodeID,
       RawDataResolution: RawDataResolution,
@@ -1955,7 +1946,7 @@ let functionObj = {
     let ret = zoomvideorawdata.Subscribe(opts);
     console.log('SubscribeVideo', nodeID, RawDataResolution, recever_handle, ret);
   },
-  unsubscribeVideo: function(nodeID, recever_handle) {
+  unsubscribeVideo: function (nodeID, recever_handle) {
     let opts = {
       nodeID: nodeID,
       recever_handle: recever_handle
@@ -1963,22 +1954,22 @@ let functionObj = {
     let ret = zoomvideorawdata.UnSubscribe(opts);
     console.log('UnsubscribeVideo', nodeID, recever_handle, ret);
   },
-  stopVideo: function() {
+  stopVideo: function () {
     let ret = zoomvideorawdata.Stop();
     console.log('StopVideo', ret);
   },
-  setShareRawDataCB: function() {
+  setShareRawDataCB: function () {
     let ret = zoomsharerawdata.SetRawDataCB(onShareRawDataReceived);
     console.log('SetShareRawDataCB', ret);
   },
-  startShareRawData: function() {
+  startShareRawData: function () {
     let opts = {
       RawDataMemoryMode: 1
     }
     let ret = zoomsharerawdata.Start(opts);
     console.log('StartShareRawData', ret);
   },
-  subscribeShare: function(nodeID, RawDataResolution, recever_handle) {
+  subscribeShare: function (nodeID, RawDataResolution, recever_handle) {
     let opts = {
       nodeID: nodeID,
       RawDataResolution: RawDataResolution,
@@ -1987,7 +1978,7 @@ let functionObj = {
     let ret = zoomsharerawdata.Subscribe(opts);
     console.log('SubscribeShare', ret, nodeID, RawDataResolution, recever_handle);
   },
-  unsubscribeShare: function(nodeID, recever_handle) {
+  unsubscribeShare: function (nodeID, recever_handle) {
     let opts = {
       nodeID: nodeID,
       recever_handle: recever_handle
@@ -1995,80 +1986,80 @@ let functionObj = {
     let ret = zoomsharerawdata.UnSubscribe(opts);
     console.log('UnsubscribeShare', ret, nodeID, recever_handle);
   },
-  stopShareRawdata: function() {
+  stopShareRawdata: function () {
     let ret = zoomsharerawdata.Stop();
     console.log('StopShare', ret);
   },
-  setAudioRawDataCB: function() {
+  setAudioRawDataCB: function () {
     let SetMixedAudioRawDataCB = zoomaudiorawdata.SetMixedAudioRawDataCB(onMixedAudioRawDataReceived);
     console.log('SetMixedAudioRawDataCB', SetMixedAudioRawDataCB);
     let SetOneWayAudioRawDataCB = zoomaudiorawdata.SetOneWayAudioRawDataCB(onOneWayAudioRawDataReceived);
     console.log('SetOneWayAudioRawDataCB', SetOneWayAudioRawDataCB);
   },
-  startAudioRawData: function(audioRawDataMemoryMode) {
+  startAudioRawData: function (audioRawDataMemoryMode) {
     let opts = {
       RawDataMemoryMode: audioRawDataMemoryMode
     }
     let ret = zoomaudiorawdata.Start(opts);
     console.log('StartAudioRawData', ret);
   },
-  stopAudio: function() {
+  stopAudio: function () {
     let ret = zoomaudiorawdata.Stop();
     console.log('StopAudio', ret);
   },
-  backToMeeting: function() {
+  backToMeeting: function () {
     let ret = zoomuicontroller.MeetingUI_BackToMeeting();
     console.log('BackToMeeting', ret);
   },
-  getMeetingUIWnd: function() {
+  getMeetingUIWnd: function () {
     let ret = zoomuicontroller.MeetingUI_GetMeetingUIWnd();
     console.log('GetMeetingUIWnd', ret);
   },
-  switchMinimizeUIMode4FristScreenMeetingUIWnd: function(mode) {
+  switchMinimizeUIMode4FristScreenMeetingUIWnd: function (mode) {
     let opts = {
       mode: mode
     }
     let ret = zoomuicontroller.MeetingUI_SwitchMinimizeUIMode4FristScreenMeetingUIWnd(opts);
     console.log('SwitchMinimizeUIMode4FristScreenMeetingUIWnd', ret);
   },
-  isMinimizeModeOfFristScreenMeetingUIWnd: function() {
+  isMinimizeModeOfFristScreenMeetingUIWnd: function () {
     let ret = zoomuicontroller.MeetingUI_IsMinimizeModeOfFristScreenMeetingUIWnd();
     console.log('IsMinimizeModeOfFristScreenMeetingUIWnd', ret);
   },
-  swapToShowShareViewOrVideo: function(bToDisplayShare) {
+  swapToShowShareViewOrVideo: function (bToDisplayShare) {
     let opts = {
       bToDisplayShare: bToDisplayShare
     }
     let ret = zoomuicontroller.MeetingUI_SwapToShowShareViewOrVideo(opts);
     console.log('SwapToShowShareViewOrVideo', ret);
   },
-  isDisplayingShareViewOrVideo: function() {
+  isDisplayingShareViewOrVideo: function () {
     let ret = zoomuicontroller.MeetingUI_IsDisplayingShareViewOrVideo();
     console.log('IsDisplayingShareViewOrVideo', ret);
   },
-  canSwapToShowShareViewOrVideo: function() {
+  canSwapToShowShareViewOrVideo: function () {
     let ret = zoomuicontroller.MeetingUI_CanSwapToShowShareViewOrVideo();
     console.log('CanSwapToShowShareViewOrVideo', ret);
   },
-  reset: function() {
+  reset: function () {
     let ret = zoomconfiguration.MeetingConfig_Reset();
     console.log('Reset', ret);
   },
-  enableAutoAdjustSpeakerVolumeWhenJoinAudio: function(bEnable) {
+  enableAutoAdjustSpeakerVolumeWhenJoinAudio: function (bEnable) {
     let opts = {
       bEnable: bEnable
     }
     let ret = zoomconfiguration.MeetingConfig_EnableAutoAdjustSpeakerVolumeWhenJoinAudio(opts);
     console.log('EnableAutoAdjustSpeakerVolumeWhenJoinAudio', ret);
   },
-  enableAutoAdjustMicVolumeWhenJoinAudio: function(bEnable) {
+  enableAutoAdjustMicVolumeWhenJoinAudio: function (bEnable) {
     let opts = {
       bEnable: bEnable
     }
     let ret = zoomconfiguration.MeetingConfig_EnableAutoAdjustMicVolumeWhenJoinAudio(opts);
     console.log('EnableAutoAdjustMicVolumeWhenJoinAudio', ret);
   },
-  configDSCP: function(dscpAudio, dscpVideo, bReset) {
+  configDSCP: function (dscpAudio, dscpVideo, bReset) {
     let opts = {
       dscpAudio: dscpAudio,
       dscpVideo: dscpVideo,
@@ -2077,133 +2068,133 @@ let functionObj = {
     let ret = zoomconfiguration.MeetingConfig_ConfigDSCP(opts);
     console.log('ConfigDSCP', ret);
   },
-  enableHideFullPhoneNumber4PureCallinUser: function(bHide) {
+  enableHideFullPhoneNumber4PureCallinUser: function (bHide) {
     let opts = {
       bHide: bHide
     }
     let ret = zoomconfiguration.MeetingConfig_EnableHideFullPhoneNumber4PureCallinUser(opts);
     console.log('EnableHideFullPhoneNumber4PureCallinUser', ret);
   },
-  enableLengthLimitationOfMeetingNumber: function(bEnable) {
+  enableLengthLimitationOfMeetingNumber: function (bEnable) {
     let opts = {
       bEnable: bEnable
     }
     let ret = zoomconfiguration.MeetingConfig_EnableLengthLimitationOfMeetingNumber(opts);
     console.log('EnableLengthLimitationOfMeetingNumber', ret);
   },
-  enableShareIOSDevice: function(bEnable) {
+  enableShareIOSDevice: function (bEnable) {
     let opts = {
       bEnable: bEnable
     }
     let ret = zoomconfiguration.MeetingConfig_EnableShareIOSDevice(opts);
     console.log('EnableShareIOSDevice', ret);
   },
-  enableShareWhiteBoard: function(bEnable) {
+  enableShareWhiteBoard: function (bEnable) {
     let opts = {
       bEnable: bEnable
     }
     let ret = zoomconfiguration.MeetingConfig_EnableShareWhiteBoard(opts);
     console.log('EnableShareWhiteBoard', ret);
   },
-  forceDisableMultiShare: function(bDisable) {
+  forceDisableMultiShare: function (bDisable) {
     let opts = {
       bDisable: bDisable
     }
     let ret = zoomconfiguration.MeetingConfig_ForceDisableMultiShare(opts);
     console.log('ForceDisableMultiShare', ret);
   },
-  setMaxDurationForOnlyHostInMeeting: function(nDuration) {
+  setMaxDurationForOnlyHostInMeeting: function (nDuration) {
     let opts = {
       nDuration: nDuration
     }
     let ret = zoomconfiguration.MeetingConfig_SetMaxDurationForOnlyHostInMeeting(opts);
     console.log('SetMaxDurationForOnlyHostInMeeting', ret);
   },
-  enableLocalRecordingConvertProgressBarDialog: function(bShow) {
+  enableLocalRecordingConvertProgressBarDialog: function (bShow) {
     let opts = {
       bShow: bShow
     }
     let ret = zoomconfiguration.MeetingConfig_EnableLocalRecordingConvertProgressBarDialog(opts);
     console.log('EnableLocalRecordingConvertProgressBarDialog', ret);
   },
-  enableApproveRemoteControlDlg: function(bEnable) {
+  enableApproveRemoteControlDlg: function (bEnable) {
     let opts = {
       bEnable: bEnable
     }
     let ret = zoomconfiguration.MeetingConfig_EnableApproveRemoteControlDlg(opts);
     console.log('EnableApproveRemoteControlDlg', ret);
   },
-  enableDeclineRemoteControlResponseDlg: function(bEnable) {
+  enableDeclineRemoteControlResponseDlg: function (bEnable) {
     let opts = {
       bEnable: bEnable
     }
     let ret = zoomconfiguration.MeetingConfig_EnableDeclineRemoteControlResponseDlg(opts);
     console.log('EnableDeclineRemoteControlResponseDlg', ret);
   },
-  enableLeaveMeetingOptionForHost: function(bEnable) {
+  enableLeaveMeetingOptionForHost: function (bEnable) {
     let opts = {
       bEnable: bEnable
     }
     let ret = zoomconfiguration.MeetingConfig_EnableLeaveMeetingOptionForHost(opts);
     console.log('EnableLeaveMeetingOptionForHost', ret);
   },
-  enableVideoButtonOnMeetingUI: function(bEnable) {
+  enableVideoButtonOnMeetingUI: function (bEnable) {
     let opts = {
       bEnable: bEnable
     }
     let ret = zoomconfiguration.MeetingConfig_EnableVideoButtonOnMeetingUI(opts);
     console.log('EnableVideoButtonOnMeetingUI', ret);
   },
-  enableEnterAndExitFullScreenButtonOnMeetingUI: function(bEnable) {
+  enableEnterAndExitFullScreenButtonOnMeetingUI: function (bEnable) {
     let opts = {
       bEnable: bEnable
     }
     let ret = zoomconfiguration.MeetingConfig_EnableEnterAndExitFullScreenButtonOnMeetingUI(opts);
     console.log('EnableEnterAndExitFullScreenButtonOnMeetingUI', ret);
   },
-  redirectClickShareBTNEvent: function(bEnable) {
+  redirectClickShareBTNEvent: function (bEnable) {
     let opts = {
       bEnable: bEnable
     }
     let ret = zoomconfiguration.MeetingConfig_RedirectClickShareBTNEvent(opts);
     console.log('RedirectClickShareBTNEvent', ret);
   },
-  redirectClickEndMeetingBTNEvent: function(bEnable) {
+  redirectClickEndMeetingBTNEvent: function (bEnable) {
     let opts = {
       bEnable: bEnable
     }
     let ret = zoomconfiguration.MeetingConfig_RedirectClickEndMeetingBTNEvent(opts);
     console.log('RedirectClickEndMeetingBTNEvent', ret);
   },
-  redirectFreeMeetingEndingReminderDlg: function(bEnable) {
+  redirectFreeMeetingEndingReminderDlg: function (bEnable) {
     let opts = {
       bEnable: bEnable
     }
     let ret = zoomconfiguration.MeetingConfig_RedirectFreeMeetingEndingReminderDlg(opts);
     console.log('RedirectFreeMeetingEndingReminderDlg', ret);
   },
-  redirectClickCustomLiveStreamMenuEvent: function(bEnable) {
+  redirectClickCustomLiveStreamMenuEvent: function (bEnable) {
     let opts = {
       bEnable: bEnable
     }
     let ret = zoomconfiguration.MeetingConfig_RedirectClickCustomLiveStreamMenuEvent(opts);
     console.log('RedirectClickCustomLiveStreamMenuEvent', ret);
   },
-  redirectClickParticipantListBTNEvent: function(bEnable) {
+  redirectClickParticipantListBTNEvent: function (bEnable) {
     let opts = {
       bEnable: bEnable
     }
     let ret = zoomconfiguration.MeetingConfig_RedirectClickParticipantListBTNEvent(opts);
     console.log('RedirectClickParticipantListBTNEvent', ret);
   },
-  redirectClickCCBTNEvent: function(bEnable) {
+  redirectClickCCBTNEvent: function (bEnable) {
     let opts = {
       bEnable: bEnable
     }
     let ret = zoomconfiguration.MeetingConfig_RedirectClickCCBTNEvent(opts);
     console.log('RedirectClickCCBTNEvent', ret);
   },
-  redirectMeetingWarningMsg: function(bRedirectBadNetwork, bRedirectWarnHighCPU) {
+  redirectMeetingWarningMsg: function (bRedirectBadNetwork, bRedirectWarnHighCPU) {
     let opts = {
       bRedirectBadNetwork: bRedirectBadNetwork,
       bRedirectWarnHighCPU: bRedirectWarnHighCPU
@@ -2211,133 +2202,126 @@ let functionObj = {
     let ret = zoomconfiguration.MeetingConfig_RedirectMeetingWarningMsg(opts);
     console.log('RedirectMeetingWarningMsg', ret);
   },
-  enableToolTipsShow: function(bEnable) {
+  enableToolTipsShow: function (bEnable) {
     let opts = {
       bEnable: bEnable
     }
     let ret = zoomconfiguration.MeetingConfig_EnableToolTipsShow(opts);
     console.log('EnableToolTipsShow', ret);
   },
-  enableAirplayInstructionWindow: function(bEnable) {
+  enableAirplayInstructionWindow: function (bEnable) {
     let opts = {
       bEnable: bEnable
     }
     let ret = zoomconfiguration.MeetingConfig_EnableAirplayInstructionWindow(opts);
     console.log('EnableAirplayInstructionWindow', ret);
   },
-  enableClaimHostFeature: function(bEnable) {
+  enableClaimHostFeature: function (bEnable) {
     let opts = {
       bEnable: bEnable
     }
     let ret = zoomconfiguration.MeetingConfig_EnableClaimHostFeature(opts);
     console.log('EnableClaimHostFeature', ret);
   },
-  enableAutoHideJoinAudioDialog: function(bEnable) {
+  enableAutoHideJoinAudioDialog: function (bEnable) {
     let opts = {
       bEnable: bEnable
     }
     let ret = zoomconfiguration.MeetingConfig_EnableAutoHideJoinAudioDialog(opts);
     console.log('EnableAutoHideJoinAudioDialog', ret);
   },
-  alwaysShowIconOnTaskBar: function(bEnable) {
+  alwaysShowIconOnTaskBar: function (bEnable) {
     let opts = {
       bEnable: bEnable
     }
     let ret = zoomconfiguration.MeetingConfig_AlwaysShowIconOnTaskBar(opts);
     console.log('AlwaysShowIconOnTaskBar', ret);
   },
-  disableSplitScreenModeUIElements: function(bEnable) {
+  disableSplitScreenModeUIElements: function (bEnable) {
     let opts = {
       bEnable: bEnable
     }
     let ret = zoomconfiguration.MeetingConfig_DisableSplitScreenModeUIElements(opts);
     console.log('DisableSplitScreenModeUIElements', ret);
   },
-  setShowAudioUseComputerSoundChkbox: function(bEnable) {
+  setShowAudioUseComputerSoundChkbox: function (bEnable) {
     let opts = {
       bEnable: bEnable
     }
     let ret = zoomconfiguration.MeetingConfig_SetShowAudioUseComputerSoundChkbox(opts);
     console.log('SetShowAudioUseComputerSoundChkbox', ret);
   },
-  setShowCallInTab: function(bEnable) {
+  setShowCallInTab: function (bEnable) {
     let opts = {
       bEnable: bEnable
     }
     let ret = zoomconfiguration.MeetingConfig_SetShowCallInTab(opts);
     console.log('SetShowCallInTab', ret);
   },
-  setShowCallMeTab: function(bEnable) {
+  setShowCallMeTab: function (bEnable) {
     let opts = {
       bEnable: bEnable
     }
     let ret = zoomconfiguration.MeetingConfig_SetShowCallMeTab(opts);
     console.log('SetShowCallMeTab', ret);
   },
-  setAlwaysShowMeetingIDOnTitle: function(bEnable) {
-    let opts = {
-      bEnable: bEnable
-    }
-    let ret = zoomconfiguration.MeetingConfig_SetAlwaysShowMeetingIDOnTitle(opts);
-    console.log('SetAlwaysShowMeetingIDOnTitle', ret);
-  },
-  disableTopMostAttr4SettingDialog: function(bEnable) {
+  disableTopMostAttr4SettingDialog: function (bEnable) {
     let opts = {
       bEnable: bEnable
     }
     let ret = zoomconfiguration.MeetingConfig_DisableTopMostAttr4SettingDialog(opts);
     console.log('DisableTopMostAttr4SettingDialog', ret);
   },
-  enableGrabShareWithoutReminder: function(bEnable) {
+  enableGrabShareWithoutReminder: function (bEnable) {
     let opts = {
       bEnable: bEnable
     }
     let ret = zoomconfiguration.MeetingConfig_EnableGrabShareWithoutReminder(opts);
     console.log('EnableGrabShareWithoutReminder', ret);
   },
-  enableShowShareSwitchMultiToSingleConfirmDlg: function(bEnable) {
+  enableShowShareSwitchMultiToSingleConfirmDlg: function (bEnable) {
     let opts = {
       bEnable: bEnable
     }
     let ret = zoomconfiguration.MeetingConfig_EnableShowShareSwitchMultiToSingleConfirmDlg(opts);
     console.log('EnableShowShareSwitchMultiToSingleConfirmDlg', ret);
   },
-  disableFreeMeetingRemainTimeNotify: function(bEnable) {
+  disableFreeMeetingRemainTimeNotify: function (bEnable) {
     let opts = {
       bEnable: bEnable
     }
     let ret = zoomconfiguration.MeetingConfig_DisableFreeMeetingRemainTimeNotify(opts);
     console.log('DisableFreeMeetingRemainTimeNotify', ret);
   },
-  disableFreeMeetingRemainTimeNotify: function(bEnable) {
+  disableFreeMeetingRemainTimeNotify: function (bEnable) {
     let opts = {
       bEnable: bEnable
     }
     let ret = zoomconfiguration.MeetingConfig_DisableFreeMeetingRemainTimeNotify(opts);
     console.log('DisableFreeMeetingRemainTimeNotify', ret);
   },
-  hideChatItemOnMeetingUI: function(bEnable) {
+  hideChatItemOnMeetingUI: function (bEnable) {
     let opts = {
       bEnable: bEnable
     }
     let ret = zoomconfiguration.MeetingConfig_HideChatItemOnMeetingUI(opts);
     console.log('HideChatItemOnMeetingUI', ret);
   },
-  hideRecordItemOnMeetingUI: function(bEnable) {
+  hideRecordItemOnMeetingUI: function (bEnable) {
     let opts = {
       bEnable: bEnable
     }
     let ret = zoomconfiguration.MeetingConfig_HideRecordItemOnMeetingUI(opts);
     console.log('HideRecordItemOnMeetingUI', ret);
   },
-  hideUpgradeFreeMeetingButton: function(bEnable) {
+  hideUpgradeFreeMeetingButton: function (bEnable) {
     let opts = {
       bEnable: bEnable
     }
     let ret = zoomconfiguration.MeetingConfig_HideUpgradeFreeMeetingButton(opts);
     console.log('HideUpgradeFreeMeetingButton', ret);
   },
-  setShowInviteDlgTabPage: function(tabPage, bShow) {
+  setShowInviteDlgTabPage: function (tabPage, bShow) {
     let opts = {
       tabPage: tabPage,
       bShow: bShow
@@ -2345,7 +2329,7 @@ let functionObj = {
     let ret = zoomconfiguration.MeetingConfig_SetShowInviteDlgTabPage(opts);
     console.log('SetShowInviteDlgTabPage', ret);
   },
-  setShowH323SubTabPage: function(tabPage, bShow) {
+  setShowH323SubTabPage: function (tabPage, bShow) {
     let opts = {
       tabPage: tabPage,
       bShow: bShow
@@ -2353,130 +2337,130 @@ let functionObj = {
     let ret = zoomconfiguration.MeetingConfig_SetShowH323SubTabPage(opts);
     console.log('SetShowH323SubTabPage', ret);
   },
-  hideUpgradeWarningMsgForFreeUserWhenSchedule: function(bEnable) {
+  hideUpgradeWarningMsgForFreeUserWhenSchedule: function (bEnable) {
     let opts = {
       bEnable: bEnable
     }
     let ret = zoomconfiguration.MeetingConfig_HideUpgradeWarningMsgForFreeUserWhenSchedule(opts);
     console.log('HideUpgradeWarningMsgForFreeUserWhenSchedule', ret);
   },
-  hideSwitchCameraButton: function(bEnable) {
+  hideSwitchCameraButton: function (bEnable) {
     let opts = {
       bEnable: bEnable
     }
     let ret = zoomconfiguration.MeetingConfig_HideSwitchCameraButton(opts);
     console.log('HideSwitchCameraButton', ret);
   },
-  hideCopyUrlOnInviteWindow: function(bEnable) {
+  hideCopyUrlOnInviteWindow: function (bEnable) {
     let opts = {
       bEnable: bEnable
     }
     let ret = zoomconfiguration.MeetingConfig_HideCopyUrlOnInviteWindow(opts);
     console.log('HideCopyUrlOnInviteWindow', ret);
   },
-  hideCopyInvitationOnInviteWindow: function(bEnable) {
+  hideCopyInvitationOnInviteWindow: function (bEnable) {
     let opts = {
       bEnable: bEnable
     }
     let ret = zoomconfiguration.MeetingConfig_HideCopyInvitationOnInviteWindow(opts);
     console.log('HideCopyInvitationOnInviteWindow', ret);
   },
-  hideKeypadButtonOnMeetingWindow: function(bEnable) {
+  hideKeypadButtonOnMeetingWindow: function (bEnable) {
     let opts = {
       bEnable: bEnable
     }
     let ret = zoomconfiguration.MeetingConfig_HideKeypadButtonOnMeetingWindow(opts);
     console.log('HideKeypadButtonOnMeetingWindow', ret);
   },
-  hideRemoteControlOnMeetingUI: function(bEnable) {
+  hideRemoteControlOnMeetingUI: function (bEnable) {
     let opts = {
       bEnable: bEnable
     }
     let ret = zoomconfiguration.MeetingConfig_HideRemoteControlOnMeetingUI(opts);
     console.log('HideRemoteControlOnMeetingUI', ret);
   },
-  hideQAOnMeetingUI: function(bEnable) {
+  hideQAOnMeetingUI: function (bEnable) {
     let opts = {
       bEnable: bEnable
     }
     let ret = zoomconfiguration.MeetingConfig_HideQAOnMeetingUI(opts);
     console.log('HideQAOnMeetingUI', ret);
   },
-  hidePollOnMeetingUI: function(bEnable) {
+  hidePollOnMeetingUI: function (bEnable) {
     let opts = {
       bEnable: bEnable
     }
     let ret = zoomconfiguration.MeetingConfig_HidePollOnMeetingUI(opts);
     console.log('HidePollOnMeetingUI', ret);
   },
-  enableInputMeetingPasswordDlg: function(bEnable) {
+  enableInputMeetingPasswordDlg: function (bEnable) {
     let opts = {
       bEnable: bEnable
     }
     let ret = zoomconfiguration.MeetingConfig_EnableInputMeetingPasswordDlg(opts);
     console.log('EnableInputMeetingPasswordDlg', ret);
   },
-  enableInputMeetingScreenNameDlg: function(bEnable) {
+  enableInputMeetingScreenNameDlg: function (bEnable) {
     let opts = {
       bEnable: bEnable
     }
     let ret = zoomconfiguration.MeetingConfig_EnableInputMeetingScreenNameDlg(opts);
     console.log('EnableInputMeetingScreenNameDlg', ret);
   },
-  redirectWebinarNeedRegister: function(bEnable) {
+  redirectWebinarNeedRegister: function (bEnable) {
     let opts = {
       bEnable: bEnable
     }
     let ret = zoomconfiguration.MeetingConfig_RedirectWebinarNeedRegister(opts);
     console.log('RedirectWebinarNeedRegister', ret);
   },
-  redirectEndOtherMeeting: function(bEnable) {
+  redirectEndOtherMeeting: function (bEnable) {
     let opts = {
       bEnable: bEnable
     }
     let ret = zoomconfiguration.MeetingConfig_RedirectEndOtherMeeting(opts);
     console.log('RedirectEndOtherMeeting', ret);
   },
-  enableForceAutoStartMyVideoWhenJoinMeeting: function(bEnable) {
+  enableForceAutoStartMyVideoWhenJoinMeeting: function (bEnable) {
     let opts = {
       bEnable: bEnable
     }
     let ret = zoomconfiguration.MeetingConfig_EnableForceAutoStartMyVideoWhenJoinMeeting(opts);
     console.log('EnableForceAutoStartMyVideoWhenJoinMeeting', ret);
   },
-  enableForceAutoStopMyVideoWhenJoinMeeting: function(bEnable) {
+  enableForceAutoStopMyVideoWhenJoinMeeting: function (bEnable) {
     let opts = {
       bEnable: bEnable
     }
     let ret = zoomconfiguration.MeetingConfig_EnableForceAutoStopMyVideoWhenJoinMeeting(opts);
     console.log('EnableForceAutoStopMyVideoWhenJoinMeeting', ret);
   },
-  disableAutoShowSelectJoinAudioDlgWhenJoinMeeting: function(bEnable) {
+  disableAutoShowSelectJoinAudioDlgWhenJoinMeeting: function (bEnable) {
     let opts = {
       bEnable: bEnable
     }
     let ret = zoomconfiguration.MeetingConfig_DisableAutoShowSelectJoinAudioDlgWhenJoinMeeting(opts);
     console.log('DisableAutoShowSelectJoinAudioDlgWhenJoinMeeting', ret);
   },
-  disableRemoteCtrlCopyPasteFeature: function(bEnable) {
+  disableRemoteCtrlCopyPasteFeature: function (bEnable) {
     let opts = {
       bEnable: bEnable
     }
     let ret = zoomconfiguration.MeetingConfig_DisableRemoteCtrlCopyPasteFeature(opts);
     console.log('DisableRemoteCtrlCopyPasteFeature', ret);
   },
-  setShowVideoOptimizeChkbox: function(bShow) {
+  setShowVideoOptimizeChkbox: function (bShow) {
     let opts = {
       bShow: bShow
     }
     let ret = zoomconfiguration.MeetingConfig_SetShowVideoOptimizeChkbox(opts);
     console.log('SetShowVideoOptimizeChkbox', ret);
   },
-  getRequiredInfoType: function() {
+  getRequiredInfoType: function () {
     let ret = zoomconfiguration.MeetingConfig_GetRequiredInfoType();
     console.log('GetRequiredInfoType', ret);
   },
-  inputMeetingPasswordAndScreenName: function(meeting_Password, screenName) {
+  inputMeetingPasswordAndScreenName: function (meeting_Password, screenName) {
     let opts = {
       meeting_Password: meeting_Password,
       screenName: screenName
@@ -2484,7 +2468,7 @@ let functionObj = {
     let ret = zoomconfiguration.MeetingConfig_InputMeetingPasswordAndScreenName(opts);
     console.log('InputMeetingPasswordAndScreenName', ret);
   },
-  inputMeetingIDAndScreenName: function(meetingID, screenName) {
+  inputMeetingIDAndScreenName: function (meetingID, screenName) {
     let opts = {
       meetingID: meetingID,
       screenName: screenName
@@ -2492,30 +2476,30 @@ let functionObj = {
     let ret = zoomconfiguration.MeetingConfig_InputMeetingIDAndScreenName(opts);
     console.log('InputMeetingIDAndScreenName', ret);
   },
-  inputMeetingScreenName: function(screenName) {
+  inputMeetingScreenName: function (screenName) {
     let opts = {
       screenName: screenName
     }
     let ret = zoomconfiguration.MeetingConfig_InputMeetingScreenName(opts);
     console.log('InputMeetingScreenName', ret);
   },
-  meetingPasswordAndScreenNameHandler_Cancel: function() {
+  meetingPasswordAndScreenNameHandler_Cancel: function () {
     let ret = zoomconfiguration.MeetingConfig_MeetingPasswordAndScreenNameHandler_Cancel();
     console.log('MeetingPasswordAndScreenNameHandler_Cancel', ret);
   },
-  getWebinarNeedRegisterType: function() {
+  getWebinarNeedRegisterType: function () {
     let ret = zoomconfiguration.MeetingConfig_GetWebinarNeedRegisterType();
     console.log('GetWebinarNeedRegisterType', ret);
   },
-  getWebinarRegisterUrl: function() {
+  getWebinarRegisterUrl: function () {
     let ret = zoomconfiguration.MeetingConfig_GetWebinarRegisterUrl();
     console.log('GetWebinarRegisterUrl', ret);
   },
-  releaseRegisterWebinarByUrl: function() {
+  releaseRegisterWebinarByUrl: function () {
     let ret = zoomconfiguration.MeetingConfig_ReleaseRegisterWebinarByUrl();
     console.log('ReleaseRegisterWebinarByUrl', ret);
   },
-  inputWebinarRegisterEmailAndScreenName: function(email, screenName) {
+  inputWebinarRegisterEmailAndScreenName: function (email, screenName) {
     let opts = {
       email: email,
       screenName: screenName
@@ -2523,73 +2507,73 @@ let functionObj = {
     let ret = zoomconfiguration.MeetingConfig_InputWebinarRegisterEmailAndScreenName(opts);
     console.log('InputWebinarRegisterEmailAndScreenName', ret);
   },
-  cancelRegisterWebinarByEmail: function() {
+  cancelRegisterWebinarByEmail: function () {
     let ret = zoomconfiguration.MeetingConfig_CancelRegisterWebinarByEmail();
     console.log('CancelRegisterWebinarByEmail', ret);
   },
-  disableAdvancedFeatures4GeneralSetting: function(bDisable) {
+  disableAdvancedFeatures4GeneralSetting: function (bDisable) {
     let opts = {
       bDisable: bDisable
     }
     let ret = zoomsetui.SettingUI_DisableAdvancedFeatures4GeneralSetting(opts);
     console.log('DisableAdvancedFeatures4GeneralSetting', ret);
   },
-  disableAccountSettingTabPage: function(bDisable) {
+  disableAccountSettingTabPage: function (bDisable) {
     let opts = {
       bDisable: bDisable
     }
     let ret = zoomsetui.SettingUI_DisableAccountSettingTabPage(opts);
     console.log('DisableAccountSettingTabPage', ret);
   },
-  confSettingDialogShownTabPage: function(number) {
+  confSettingDialogShownTabPage: function (number) {
     let opts = {
       number: number
     }
     let ret = zoomsetui.SettingUI_ConfSettingDialogShownTabPage(opts);
     console.log('ConfSettingDialogShownTabPage', ret);
   },
-  queryOverallStatisticInfo: function() {
+  queryOverallStatisticInfo: function () {
     let ret = zoomsetstatistic.Setting_QueryOverallStatisticInfo();
     console.log('QueryOverallStatisticInfo', ret);
   },
-  queryAudioStatisticInfo: function() {
+  queryAudioStatisticInfo: function () {
     let ret = zoomsetstatistic.Setting_QueryAudioStatisticInfo();
     console.log('QueryAudioStatisticInfo', ret);
   },
-  queryVideoStatisticInfo: function() {
+  queryVideoStatisticInfo: function () {
     let ret = zoomsetstatistic.Setting_QueryVideoStatisticInfo();
     console.log('QueryVideoStatisticInfo', ret);
   },
-  queryShareStatisticInfo: function() {
+  queryShareStatisticInfo: function () {
     let ret = zoomsetstatistic.Setting_QueryShareStatisticInfo();
     console.log('QueryShareStatisticInfo', ret);
   },
-  enableAlwaysShowMeetingControls: function(bEnable) {
+  enableAlwaysShowMeetingControls: function (bEnable) {
     let opts = {
       bEnable: bEnable
     }
     let ret = zoomsetaccessibility.Setting_EnableAlwaysShowMeetingControls(opts);
     console.log('EnableAlwaysShowMeetingControls', ret);
   },
-  isAlwaysShowMeetingControlsEnable: function(bEnable) {
+  isAlwaysShowMeetingControlsEnable: function (bEnable) {
     let opts = {
       bEnable: bEnable
     }
     let ret = zoomsetaccessibility.Setting_IsAlwaysShowMeetingControlsEnable(opts);
     console.log('IsAlwaysShowMeetingControlsEnable', ret);
   },
-  enableZoomAuthRealNameMeetingUIShown: function(b_enable) {
+  enableZoomAuthRealNameMeetingUIShown: function (b_enable) {
     let opts = {
       b_enable: b_enable
     }
     let ret = zoomsms.EnableZoomAuthRealNameMeetingUIShown(opts);
     console.log('EnableZoomAuthRealNameMeetingUIShown', ret);
   },
-  getResendSMSVerificationCodeHandler: function() {
+  getResendSMSVerificationCodeHandler: function () {
     let ret = zoomsms.GetResendSMSVerificationCodeHandler();
     console.log('GetResendSMSVerificationCodeHandler', ret);
   },
-  retrieve: function(country_code, phone_number) {
+  retrieve: function (country_code, phone_number) {
     let opts = {
       country_code: country_code,
       phone_number: phone_number
@@ -2597,15 +2581,15 @@ let functionObj = {
     let ret = zoomsms.Retrieve(opts);
     console.log('Retrieve', ret);
   },
-  retrieve_CancelAndLeaveMeeting: function() {
+  retrieve_CancelAndLeaveMeeting: function () {
     let ret = zoomsms.Retrieve_CancelAndLeaveMeeting();
     console.log('Retrieve_CancelAndLeaveMeeting', ret);
   },
-  getReVerifySMSVerificationCodeHandler: function() {
+  getReVerifySMSVerificationCodeHandler: function () {
     let ret = zoomsms.GetReVerifySMSVerificationCodeHandler();
     console.log('GetReVerifySMSVerificationCodeHandler', ret);
   },
-  verify: function(country_code, phone_number, verification_code) {
+  verify: function (country_code, phone_number, verification_code) {
     let opts = {
       country_code: country_code,
       phone_number: phone_number,
@@ -2614,15 +2598,15 @@ let functionObj = {
     let ret = zoomsms.Verify(opts);
     console.log('Verify', ret);
   },
-  verify_CancelAndLeaveMeeting: function() {
+  verify_CancelAndLeaveMeeting: function () {
     let ret = zoomsms.Verify_CancelAndLeaveMeeting();
     console.log('Verify_CancelAndLeaveMeeting', ret);
   },
-  getSupportPhoneNumberCountryList: function() {
+  getSupportPhoneNumberCountryList: function () {
     let ret = zoomsms.GetSupportPhoneNumberCountryList();
     console.log('GetSupportPhoneNumberCountryList', ret);
   },
-  setDefaultCellPhoneInfo: function(country_code, phone_number) {
+  setDefaultCellPhoneInfo: function (country_code, phone_number) {
     let opts = {
       country_code: country_code,
       phone_number: phone_number
@@ -2643,7 +2627,7 @@ app.on('window-all-closed', function () {
   }
 });
 
-function createWindow () {
+function createWindow() {
   // Create the browser window.
   showDomainwindow();
 }

@@ -111,9 +111,6 @@ ZNSDKUserType nativeErrorTypeHelp::ZoomSDKUserTypeChange(ZoomSDKUserType &type)
 {
     ZNSDKUserType ret = ZNSDK_UT_NORMALUSER;
     switch (type) {
-        case ZoomSDKUserType_APIUser:
-            ret = ZNSDK_UT_APIUSER;
-            break;
         case ZoomSDKUserType_ZoomUser:
             ret = ZNSDK_UT_NORMALUSER;
             break;
@@ -128,16 +125,13 @@ ZNSDKUserType nativeErrorTypeHelp::ZoomSDKUserTypeChange(ZoomSDKUserType &type)
 
 ZoomSDKUserType nativeErrorTypeHelp::ZNSDKUserTypeChange(ZNSDKUserType &type)
 {
-    ZoomSDKUserType ret = ZoomSDKUserType_APIUser;
+    ZoomSDKUserType ret = ZoomSDKUserType_WithoutLogin;
     switch (type) {
         case ZNSDK_UT_WITHOUT_LOGIN:
             ret = ZoomSDKUserType_SSOUser;
             break;
         case ZNSDK_UT_NORMALUSER:
             ret = ZoomSDKUserType_ZoomUser;
-            break;
-        case ZNSDK_UT_APIUSER:
-            ret = ZoomSDKUserType_APIUser;
             break;
         default:
             break;
@@ -294,12 +288,13 @@ ZoomSDKMeetingStatus nativeErrorTypeHelp::ZoomSDKMeetingStatusC(ZNMeetingStatus 
     return ret;
 }
 #pragma mark lanaguage
+static NSString* const kZMFollowSystemIdentify = @"follow system language";
 NSString *nativeErrorTypeHelp::ZNSDKLanaguageChanage(ZNSDK_LANGUAGE_ID &lanaguageid)
 {
-    NSString *ret = @"en";
+    NSString *ret = kZMFollowSystemIdentify;
     switch (lanaguageid) {
         case ZNLANGUAGE_Unknow:
-            ret = @"en";
+            ret = kZMFollowSystemIdentify;
             break;
         case ZNLANGUAGE_English:
             ret = @"en";
@@ -327,6 +322,9 @@ NSString *nativeErrorTypeHelp::ZNSDKLanaguageChanage(ZNSDK_LANGUAGE_ID &lanaguag
             break;
         case ZNLANGUAGE_Russian:
             ret = @"ru";
+            break;
+        case ZNLANGUAGE_Korean:
+            ret = @"ko-KR";
             break;
         default:
             break;
@@ -574,6 +572,12 @@ ZNH323CalloutStatus nativeErrorTypeHelp::ZoomSDKH323Status(H323CalloutStatus &st
             break;
         case H323CalloutStatus_Failed:
             ret = ZN_H323Callout_Failed;
+            break;
+        case H323CalloutStatus_Busy:
+            ret = ZN_H323Callout_Busy;
+            break;
+        case H323CalloutStatus_Decline:
+            ret = ZN_H323Callout_Decline;
             break;
         default:
             break;
@@ -830,7 +834,7 @@ ZNMeetingFailCode  nativeErrorTypeHelp::ZNSDKMeetingFailCode(ZoomSDKMeetingError
             ret = ZNMEETING_FAIL_MEETING_USER_FULL;
             break;
         case ZoomSDKMeetingError_ClientIncompatible:
-            ret = ZNCONF_FAIL_ZC_CERTIFICATE_CHANGED;
+            ret = ZNMEETING_FAIL_CLIENT_INCOMPATIBLE;
             break;
         case ZoomSDKMeetingError_NoMMR:
             ret = ZNMEETING_FAIL_NO_MMR;
@@ -885,6 +889,18 @@ ZNMeetingFailCode  nativeErrorTypeHelp::ZNSDKMeetingFailCode(ZoomSDKMeetingError
             break;
         case ZoomSDKMeetingError_None:
             ret = ZNMEETING_SUCCESS;
+            break;
+        case ZoomSDKMeetingError_vanityNotExist:
+            ret = ZNCONF_FAIL_VANITY_NOT_EXIST;
+            break;
+        case ZoomSDKMeetingError_joinWebinarWithSameEmail:
+            ret = ZNCONF_FAIL_JOIN_WEBINAR_WITHSAMEEMAIL;
+            break;
+        case ZoomSDKMeetingError_disallowHostMeeting:
+            ret = ZNCONF_FAIL_DISALLOW_HOST_MEETING;
+            break;
+        case ZoomSDKMeetingError_forbidToJoinInternalMeeting:
+            ret = ZNMEETING_FAIL_FORBID_TO_JOIN_INTERNAL_MEETING;
             break;
         default:
             break;

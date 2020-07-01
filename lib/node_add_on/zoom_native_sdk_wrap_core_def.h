@@ -55,6 +55,7 @@ enum ZNSDK_LANGUAGE_ID
 	ZNLANGUAGE_French,///<In French.
 	ZNLANGUAGE_Portuguese,///<In Portuguese.
 	ZNLANGUAGE_Russian,///<In Russian.
+	ZNLANGUAGE_Korean,///<In Korean.
 };
 
 enum ZNAuthResult
@@ -113,12 +114,14 @@ typedef struct _ZNInitParam
 	ZoomSTRING strBrandingName;///<Branding name.
 	ZNConfigurableOptions obConfigOpts;///<The configuration options of the SDK.
 	unsigned int logFileSize; ///<Size of a log file in M(megabyte). The default size is 5M. There are 5 log files in total and the file size varies from 1M to 50M.
+	bool enableGeneratDump; ///<Enable generate dump file if the app crashed.
 	ZNSDK_APP_Locale locale;
 	_ZNInitParam(){
 		enable_log = true;
-		langid = ZNLANGUAGE_English;
+		langid = ZNLANGUAGE_Unknow;
 		locale = ZNSDK_APP_Locale_Default;
 		logFileSize = 5;
+		enableGeneratDump = false;
 	}
 }ZNInitParam;
 
@@ -232,7 +235,6 @@ enum ZNMeetingStatus
 };
 enum ZNSDKUserType
 {
-	ZNSDK_UT_APIUSER = 99,///<API user type, quits later.
 	ZNSDK_UT_NORMALUSER = 100,///<Type of ordinary user who needs to login.
 	ZNSDK_UT_WITHOUT_LOGIN,///<Start meeting without login.
 };
@@ -252,7 +254,6 @@ typedef struct _ZNStartParam
 	ZoomSTRING hDirectShareAppWnd;///<The window handle of the direct sharing application.
 	ZoomSTRING participantId;///<The ID of attendees. The SDK will set this value when the associated settings are turned on.
 	ZoomSTRING userId;///<User ID.
-	ZoomSTRING userToken;///<User token
 	ZoomSTRING username;///<Username when logged in.
 	ZoomSTRING sdkVanityID;///<Meeting vanity ID.
 	ZoomSTRING userZAK;///<ZOOM access token.
@@ -261,7 +262,7 @@ typedef struct _ZNStartParam
 	bool isAudioOff;///<Turn off the audio or not. True indicates to turn off. In addition, this flag is affected by meeting attributes.
 	bool isDirectShareDesktop;///<Share the desktop directly or not. True indicates to share.
 	_ZNStartParam() {
-		userType = ZNSDK_UT_APIUSER;
+		userType = ZNSDK_UT_WITHOUT_LOGIN;
 	}
 }ZNStartParam;
 typedef struct _ZNJoinParam
@@ -271,18 +272,17 @@ typedef struct _ZNJoinParam
 	ZoomSTRING hDirectShareAppWnd;///<The window handle of the direct sharing application.
 	ZoomSTRING participantId;///<The ID of attendees. The SDK will set this value when the associated settings are turned on.
 	ZoomSTRING userId;///<User ID.
-	ZoomSTRING userToken;///<User token
 	ZoomSTRING username;///<Username when logged in.
 	ZoomSTRING psw;///<Meeting password.
 	ZoomSTRING vanityID;///<Meeting vanity ID.
 	ZoomSTRING webinarToken;///<Webinar token.
-	ZoomSTRING token4EnforceLogin;///<Use the token if the meeting requests to login.
+	ZoomSTRING userZAK;///<ZOOM access token.
 	ZoomSTRING displayID;
 	bool isVideoOff;///<Turn off the video or not. True indicates to turn off. In addition, this flag is affected by meeting attributes.
 	bool isAudioOff;///<Turn off the audio or not. True indicates to turn off. In addition, this flag is affected by meeting attributes.
 	bool isDirectShareDesktop;///<Share the desktop directly or not. True indicates to share.
 	_ZNJoinParam() {
-		userType = ZNSDK_UT_APIUSER;
+		userType = ZNSDK_UT_WITHOUT_LOGIN;
 	}
 }ZNJoinParam;
 enum ZNLeaveMeetingCmd
@@ -477,6 +477,8 @@ enum ZNH323CalloutStatus
 	ZN_H323Callout_Ring,   ///<Bell during the call.
 	ZN_H323Callout_Timeout, ///<Call timeout.
 	ZN_H323Callout_Failed, ///<Call fails.
+	ZN_H323Callout_Busy,	///<Busy
+	ZN_H323Callout_Decline, ///<Decline
 };
 enum ZNH323DeviceType
 {

@@ -202,7 +202,8 @@ bool UVIPC::StartWithServer(char* name_, bool is_server, uv_loop_t* loop_)
 	{
 		if (NULL == name_ || NULL == loop_ || !is_server)
 			break;
-
+		uv_fs_t req;
+		uv_fs_unlink(loop_, &req, name_, NULL);
 		uv_pipe_init(loop_, (uv_pipe_t*)&uv_data, 0);
 		uv_data.owner = this;
 		int ret=uv_pipe_bind((uv_pipe_t*)&uv_data, name_);

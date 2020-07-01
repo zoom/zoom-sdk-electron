@@ -23,6 +23,8 @@ public:
 	bool IsHDVideoEnabled();
 	ZNSDKError EnableAlwaysShowNameOnVideo(bool bEnable);
 	bool IsAlwaysShowNameOnVideoEnabled();
+	ZNSDKError EnableVideoPreviewDialog(bool bEnable);
+	bool IsVideoPreviewDialogEnabled();
 	ZNSDKError EnableAutoTurnOffVideoWhenJoinMeeting(bool bEnable);
 	bool IsAutoTurnOffVideoWhenJoinMeetingEnabled();
 	ZNSDKError EnableAlwaysUse16v9(bool bEnable);

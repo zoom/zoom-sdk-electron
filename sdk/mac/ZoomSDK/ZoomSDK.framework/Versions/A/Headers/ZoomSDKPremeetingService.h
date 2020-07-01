@@ -382,8 +382,9 @@ typedef enum{
 /**
  * @brief Set if it is enabled to use PMI.
  * @param user YES means enabled, NO disabled.
+ * @return If the function succeeds, it will return ZoomSDKError_Success. Otherwise failed.
  */
--(void)setUsePMI:(BOOL)use;
+-(ZoomSDKError)setUsePMI:(BOOL)use;
 /**
  * @brief Set whether to enable host in China.
  * @param enable YES means enabled, NO disabled.
@@ -649,6 +650,11 @@ typedef enum{
  * @return If the function succeeds, it will return ZoomSDKError_Success. Otherwise failed.
  */
 - (void)hideScheduleComponent:(ScheduleComponent)component hide:(BOOL)hide;
+/**
+ * @brief Determine if the personal meeting ID is diabled or not.
+ * @return YES means personal meeting ID is disabled, otherwise not.
+ */
+- (BOOL)isDisabledPMI;
 @end
 
 

@@ -61,8 +61,7 @@ ZNUserInfomation ZMeetingParticipantsWrap::GetUserInfomationByUserID(unsigned in
         usEmail = @"";
     }
     user.email = usEmail.UTF8String;
-    */
-    
+     */
     bool ishost = [userInfo isHost];
     user.isHost = ishost;
     unsigned int usID = [userInfo getUserID];

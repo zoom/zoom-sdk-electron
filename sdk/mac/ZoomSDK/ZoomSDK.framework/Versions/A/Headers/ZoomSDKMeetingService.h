@@ -19,7 +19,6 @@
 #import "ZoomSDKLiveStreamHelper.h"
 #import "ZoomSDKVideoContainer.h"
 #import "ZoomSDKMeetingRecordController.h"
-#import "ZoomSDKUpgradeAccountHelper.h"
 #import "ZoomSDKWebinarController.h"
 #import "ZoomSDKCloseCaptionController.h"
 #import "ZoomSDKRawDataController.h"
@@ -36,6 +35,142 @@
 @property(nonatomic, assign) SecuritySessionComponet component;
 @property(nonatomic, retain) NSData* iv;
 @property(nonatomic, retain) NSData* sessionKey;
+
+@end
+
+@interface ZoomSDKStartMeetingElements : NSObject
+/**
+ * @brief User's screen name displayed in the meeting.
+ */
+@property(nonatomic, copy)NSString* displayName;
+/**
+ * @brief Set meetingNumber to 0 if you want to start a meeting with vanityID.
+ */
+@property(nonatomic, copy)NSString* vanityID;
+/**
+ * @brief It depends on the type of client account.
+ */
+@property(nonatomic, assign)ZoomSDKUserType userType;
+/**
+ * @brief The userId generates from ZOOM site of user account.
+ */
+@property(nonatomic, copy)NSString* userId;
+/**
+ * @brief It may be the number of a scheduled meeting or a Personal Meeting ID. Set it to 0 to start an instant meeting.
+ */
+@property(nonatomic, assign)long long meetingNumber;
+/**
+ * @brief Set it to YES to start sharing computer desktop directly when meeting starts.
+ */
+@property(nonatomic, assign)BOOL isDirectShare;
+/**
+ * @brief The APP to be shared.
+ */
+@property(nonatomic, assign)CGDirectDisplayID displayID;
+/**
+ * @brief Set it to YES to turn off the video when user joins meeting.
+ */
+@property(nonatomic, assign)BOOL isNoVideo;
+/**
+ * @brief Set it to YES to turn off the audio when user joins meeting.
+ */
+@property(nonatomic, assign)BOOL isNoAuido;
+
+@end
+
+@interface ZoomSDKStartMeetingUseZakElements : NSObject
+/**
+ * @brief Security session key got from web.
+ */
+@property(nonatomic, copy)NSString* zak;
+/**
+ * @brief User's screen name displayed in the meeting.
+ */
+@property(nonatomic, copy)NSString* displayName;
+/**
+ * @brief Set meetingNumber to 0 if you want to start a meeting with vanityID.
+ */
+@property(nonatomic, copy)NSString* vanityID;
+/**
+ * @brief User type.
+ */
+@property(nonatomic, assign)SDKUserType userType;
+/**
+ * @brief The ID of user got from ZOOM website.
+ */
+@property(nonatomic, copy)NSString* userId;
+/**
+ * @brief It may be the number of a scheduled meeting or a Personal Meeting ID. Set it to 0 to start an instant meeting.
+ */
+@property(nonatomic, assign)long long meetingNumber;
+/**
+ * @brief Set it to YES to start sharing computer desktop directly when meeting starts.
+ */
+@property(nonatomic, assign)BOOL isDirectShare;
+/**
+ * @brief The APP to be shared.
+ */
+@property(nonatomic, assign)CGDirectDisplayID displayID;
+/**
+ * @brief Set it to YES to turn off the video when user joins meeting.
+ */
+@property(nonatomic, assign)BOOL isNoVideo;
+/**
+ * @brief Set it to YES to turn off the audio when user joins meeting.
+ */
+@property(nonatomic, assign)BOOL isNoAuido;
+
+@end
+
+@interface ZoomSDKJoinMeetingElements : NSObject
+/**
+ * @brief Security session key got from web.
+ */
+@property(nonatomic, copy)NSString* zak;
+/**
+ * @brief It is indispensable for a panelist when user joins a webinar.
+ */
+@property(nonatomic, copy)NSString* webinarToken;
+/**
+ * @brief User's screen name displayed in the meeting.
+ */
+@property(nonatomic, copy)NSString* displayName;
+/**
+ * @brief Personal meeting URL, set meetingNumber to 0 if you want to start meeting with vanityID.
+ */
+@property(nonatomic, copy)NSString* vanityID;
+/**
+ * @brief It depends on the type of client account.
+ */
+@property(nonatomic, assign)ZoomSDKUserType userType;
+/**
+ * @brief Participant ID displayed in web report.
+ */
+@property(nonatomic, copy)NSString* participantId;
+/**
+ * @brief The number of meeting that you want to join.
+ */
+@property(nonatomic, assign)long long meetingNumber;
+/**
+ * @brief Set it to YES to start sharing computer desktop directly when meeting starts.
+ */
+@property(nonatomic, assign)BOOL isDirectShare;
+/**
+ * @brief The APP to be shared.
+ */
+@property(nonatomic, assign)CGDirectDisplayID displayID;
+/**
+ * @brief Set it to YES to turn off the video when user joins meeting.
+ */
+@property(nonatomic, assign)BOOL isNoVideo;
+/**
+ * @brief Set it to YES to turn off the audio when user joins meeting.
+ */
+@property(nonatomic, assign)BOOL isNoAuido;
+/**
+ * @brief Meeting password. Set it to nil or @"" to remove the password.
+ */
+@property(nonatomic, copy)NSString *password;
 
 @end
 
@@ -62,12 +197,6 @@
  * @param type The statistic type.
  */
 - (void)onMeetingStatisticWarning:(StatisticWarningType)type;
-
-/**
- * @brief Inform user to upgrade the account. 
- * @param upgradeHelper The object of ZoomSDKUpgradeAccountHelper.
- */
-- (void)onPaymentReminder:(ZoomSDKUpgradeAccountHelper*)upgradeHelper NS_DEPRECATED_MAC(4.0, 4.3);
 
 /**
  * @brief Designated for notify the free meeting need upgrade.
@@ -236,56 +365,24 @@
 -(ZoomSDKNewBreakoutRoomController *)getNewBreakoutRoomController;
 /**
  * @brief Start a ZOOM meeting with meeting number.
- * @note userId\userToken\username is for API user.
- * @param userType It depends on the type of client account.
- * @param userId The userId generates from ZOOM site of user account. 
- * @param userToken The userToken generates from ZOOM site of user account. 
- * @param username User's screen name displayed in the meeting.
- * @param meetingNumber It may be the number of a scheduled meeting or a Personal Meeting ID. Set it to nil to start an instant meeting.  
- * @param directShare Set it to YES to start sharing computer desktop directly when meeting starts.
- * @param displayID The APP to be shared.
- * @param noVideo Set it to YES to turn off the video when user joins meeting. 
- * @param noAuido Set it to YES to turn off the audio when user joins meeting. 
- * @param sdkVanityID Set meetingNumber to nil if you want to start a meeting with vanityID. 
+ * @param context It is a ZoomSDKStartMeetingElements class,contain all params to start meeting.
  * @return If the function succeeds, it will return ZoomSDKError_Success. Otherwise failed.
  */
-- (ZoomSDKError)startMeeting:(ZoomSDKUserType)userType userID:(NSString*)userId userToken:(NSString*)userToken displayName:(NSString*)username meetingNumber:(NSString*)meetingNumber isDirectShare:(BOOL)directShare sharedApp:(CGDirectDisplayID)displayID isVideoOff:(BOOL)noVideo isAuidoOff:(BOOL)noAuido vanityID:(NSString*)sdkVanityID;
-
+-(ZoomSDKError)startMeeting:(ZoomSDKStartMeetingElements *)context;
 /**
  * @brief Start a ZOOM meeting with ZAK.
  * @note It is just for non-logged-in user. 
- * @param ZAK Security session key got from web.
- * @param type User type.
- * @param userId The ID of user got from ZOOM website.
- * @param username User's screen name displayed in the meeting.
- * @param meetingNumber It may be the number of a scheduled meeting or a Personal Meeting ID. Set it to nil to start an instant meeting.  
- * @param directShare Set it to YES to start sharing computer desktop directly when meeting starts.
- * @param displayID The APP to be shared.
- * @param noVideo Set it to YES to turn off the video when user joins meeting. 
- * @param noAuido Set it to YES to turn off the audio when user joins meeting. 
- * @param sdkVanityID Set meetingNumber to nil if you want to start a meeting with vanityID. 
+ * @param context It is a ZoomSDKStartMeetingUseZakElements class,contain all params to start meeting with zak.
  * @return If the function succeeds, it will return ZoomSDKError_Success. Otherwise failed. 
  */
-- (ZoomSDKError)startMeetingWithZAK:(NSString*)zak userType:(SDKUserType)type userID:(NSString*)userId userToken:(NSString*)userToken displayName:(NSString*)username meetingNumber:(NSString*)meetingNumber isDirectShare:(BOOL)directShare sharedApp:(CGDirectDisplayID)displayID isVideoOff:(BOOL)noVideo isAuidoOff:(BOOL)noAuido vanityID:(NSString*)sdkVanityID;
+-(ZoomSDKError)startMeetingWithZAK:(ZoomSDKStartMeetingUseZakElements *)context;
 /**
  * @brief Join a Zoom meeting.
  * @note toke4enfrocelogin/participantId is for API user.
- * @param userType It depends on the type of client account.
- * @param toke4enfrocelogin Set the parameter if user joins a meeting that requires to login.
- * @param webinarToken It is indispensable for a panelist when user joins a webinar.
- * @param participantId Participant ID displayed in web report.
- * @param meetingNumber The number of meeting that you want to join.
- * @param username User's screen name displayed in the meeting.
- * @param pwd Meeting password. Set it to nil or @"" to remove the password.
- * @param directShare Set it to YES to start sharing computer desktop directly when meeting starts.
- * @param displayID The APP to be shared.
- * @param noVideo Set it to YES to turn off the video when user joins meeting. 
- * @param noAuido Set it to YES to turn off the audio when user joins meeting. 
- * @param sdkVanityID Personal meeting URL, set meetingNumber to nil if you want to start meeting with vanityID.
+ * @param context It is a ZoomSDKJoinMeetingElements class,contain all params to join meeting.
  * @return If the function succeeds, it will return ZoomSDKError_Success. 
  */
-- (ZoomSDKError)joinMeeting:(ZoomSDKUserType)userType toke4enfrocelogin:(NSString*)toke4enfrocelogin webinarToken:(NSString*)webinarToken participantId:(NSString*)participantId meetingNumber:(NSString*)meetingNumber displayName:(NSString*)username password:(NSString*)pwd isDirectShare:(BOOL)directShare sharedApp:(CGDirectDisplayID)displayID isVideoOff:(BOOL)noVideo isAuidoOff:(BOOL)noAuido  vanityID:(NSString*)sdkVanityID;
-
+-(ZoomSDKError)joinMeeting:(ZoomSDKJoinMeetingElements *)context;
 /**
  * @brief End/Leave the current meeting.
  * @param cmd The command for leaving the current meeting. Only host can end the meeting.

@@ -331,14 +331,6 @@ typedef enum{
 - (ZoomSDKError)enableStero:(BOOL)enable;
 
 /**
- * @brief Set to output original sound of mic in meeting.
- * @param enable YES means using original sound, No disabling.
- * @return If the function succeeds, it will return ZoomSDKError_success, otherwise failed.
- */
-- (ZoomSDKError)enableUseOriginalSound:(BOOL)enable NS_DEPRECATED_MAC(4.1, 4.3);
-
-
-/**
  * @brief Enable to join meeting with the audio of computer.
  * @param enable YES means enabled, NO disabled.
  * @return If the function succeeds, it will return ZoomSDKError_success, otherwise not.  
@@ -409,16 +401,6 @@ typedef enum{
  * @return YES means enabled, otherwise not. 
  */
 - (BOOL)isEnableStereoOn;
-/**
- * @brief Determine if the meeting supports user's original sound. 
- * @return YES means supported, otherwise not.  
- */
-- (BOOL)isSupportUseOriginalSound NS_DEPRECATED_MAC(4.1, 4.3);
-/**
- * @brief Determine if user's original sound is enabled.  
- * @return YES means enabled, otherwise not.
- */
-- (BOOL)isUseOriginalSoundOn NS_DEPRECATED_MAC(4.1, 4.3);
 /**
  * @brief Set whether to enable the feature that attendee can speak by pressing the Spacebar when he is muted.
  * @return YES means enabled, otherwise not.

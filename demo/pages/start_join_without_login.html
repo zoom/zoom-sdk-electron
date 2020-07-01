@@ -2,35 +2,34 @@
 <head>
   <link rel="stylesheet" type="text/css" href="./css/style.css" />
   <script>
-    const {ipcRenderer} = require('electron')
+    const { ipcRenderer } = require('electron')
 
-    function sendstart(userid, zoomaccesstoken, username, usertoken){
-      ipcRenderer.send('asynchronous-message', 'startunlogin', userid, zoomaccesstoken, username, usertoken);
+    function sendstart(meetingnum, zoomaccesstoken, username) {
+      ipcRenderer.send('asynchronous-message', 'startunlogin', meetingnum, zoomaccesstoken, username);
     }
 
-    function sendjoin(meetingnum, vanityid, username){
+    function sendjoin(meetingnum, vanityid, username) {
       ipcRenderer.send('asynchronous-message', 'joinunlogin', Number(meetingnum), vanityid, username);
     }
 
     function dostart() {
-      let userid=document.getElementById("userid").value; 
-      let zoomaccesstoken=document.getElementById("zoomaccesstoken").value; 
-      let username=document.getElementById("username").value; 
-      let usertoken=document.getElementById("usertoken").value; 
-      sendstart(userid, zoomaccesstoken, username, usertoken);
+      let meetingnum = document.getElementById("startmeetingnum").value;
+      let zoomaccesstoken = document.getElementById("zoomaccesstoken").value;
+      let username = document.getElementById("username").value;
+      sendstart(meetingnum, zoomaccesstoken, username);
     }
 
-    function dojoin(){
-      let meetingnum=document.getElementById("meetingnum").value; 
-      let vanityid=document.getElementById("vanityid").value; 
+    function dojoin() {
+      let meetingnum = document.getElementById("meetingnum").value;
+      let vanityid = document.getElementById("vanityid").value;
       let reg = /\S/;
-      let username=document.getElementById("username1").value;  
+      let username = document.getElementById("username1").value;
       let retUser = reg.test(username);
       if (retUser == true) {
-        document.getElementById("tip").style.cssText="display: none;";
+        document.getElementById("tip").style.cssText = "display: none;";
         sendjoin(meetingnum, vanityid, username);
       } else {
-        document.getElementById("tip").style.cssText="display: block;";
+        document.getElementById("tip").style.cssText = "display: block;";
       }
     }
 
@@ -43,40 +42,41 @@
 </head>
 
 <title>Zoom Electron Demo</title>
+
 <body>
-	<div class="center">
-    <img class="logo" src="./images/fte_Logo.png" />
-  </div> 
-	<br/><br />
-  <div class="center"><input type="text" name="userId" placeholder="input user id" id="userid"/></div>
-  <br/>
-  <div class="center"><input type="text" name="zoomaccesstoken" placeholder="input zoom access token" id="zoomaccesstoken"/></div>
-  <br/>
-	<div class="center"><input type="text" name="userName" placeholder="input user name" id="username"/></div>
-  <br/>
-  <div class="center"><input type="text" name="userToken" placeholder="input user token" id="usertoken"/></div>
-  <br/>
   <div class="center">
-		<button type="button" onclick="dostart()">Start</button>   
+    <img class="logo" src="./images/fte_Logo.png" />
   </div>
-  <br/>
-	<div class="center"><input type="text" name="meetingnum" placeholder="input meeting number" id="meetingnum"/></div>
-  <br/>
-  <div class="center"><input type="text" name="vanityid" placeholder="input meeting vanity id" id="vanityid"/></div>
-  <br/>
-  <div class="center"><input type="text" name="userName1" placeholder="input user name" id="username1"/></div>
+  <br /><br />
+  <div class="center"><input type="text" name="startmeetingnum" placeholder="input meeting number" id="startmeetingnum" /></div>
+  <br />
+  <div class="center"><input type="text" name="zoomaccesstoken" placeholder="input zoom access token"
+      id="zoomaccesstoken" /></div>
+  <br />
+  <div class="center"><input type="text" name="userName" placeholder="input user name" id="username" /></div>
+  <br />
+  <div class="center">
+    <button type="button" onclick="dostart()">Start</button>
+  </div>
+  <br />
+  <div class="center"><input type="text" name="meetingnum" placeholder="input meeting number" id="meetingnum" /></div>
+  <br />
+  <div class="center"><input type="text" name="vanityid" placeholder="input meeting vanity id" id="vanityid" /></div>
+  <br />
+  <div class="center"><input type="text" name="userName1" placeholder="input user name" id="username1" /></div>
   <div class="tip" id="tip">
     your input user name is empty
   </div>
-  <br/>
-	<div class="center">
-    <button type="button" onclick="dojoin()">Join</button> 
+  <br />
+  <div class="center">
+    <button type="button" onclick="dojoin()">Join</button>
   </div>
-  <br/>
-  <div class="center"><input type="text" name="protocol_action" placeholder="input meeting url" id="protocol_action"/></div>
-	<br/>
-	<div class="center">
+  <br />
+  <div class="center"><input type="text" name="protocol_action" placeholder="input meeting url" id="protocol_action" />
+  </div>
+  <br />
+  <div class="center">
     <button type="button" onclick="handleZoomWebUriProtocolAction()">Join Meeting With URL</button>
-	</div>
+  </div>
 </body>
 </html>

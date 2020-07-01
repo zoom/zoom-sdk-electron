@@ -30,8 +30,6 @@ IMPL_FUNC_NORET_1(IMeetingConfiguration,SetBottomFloatToolbarWndVisibility, void
 IMPL_FUNC_NORET_1(IMeetingConfiguration,SetDirectShareMonitorID, void, const wchar_t*, monitorID)
 IMPL_FUNC_NORET_1(IMeetingConfiguration,SetMeetingUIPos, void, WndPosition, pos)
 IMPL_FUNC_NORET_1(IMeetingConfiguration,DisableWaitingForHostDialog, void, bool, bDisable)
-IMPL_FUNC_NORET_1(IMeetingConfiguration,HideMeetingInfoFromMeetingUITitle, void, bool, bHide)
-IMPL_FUNC_NORET_1(IMeetingConfiguration,SetMeetingIDForMeetingUITitle, void, UINT64, meetingNumber)
 IMPL_FUNC_NORET_1(IMeetingConfiguration,DisablePopupMeetingWrongPSWDlg, void, bool, bDisable)
 IMPL_FUNC_NORET_1(IMeetingConfiguration,EnableAutoEndOtherMeetingWhenStartMeeting, void, bool, bEnable)
 IMPL_FUNC_NORET_1(IMeetingConfiguration,EnableAutoAdjustSpeakerVolumeWhenJoinAudio, void, bool, bEnable)
@@ -65,6 +63,13 @@ IMPL_FUNC_NORET_1(IMeetingConfiguration, HidePollOnMeetingUI, void, bool, bHide)
 IMPL_FUNC_NORET_1(IMeetingConfiguration, HideReactionsOnMeetingUI, void, bool, bHide)
 //virtual void HideMeetingInfoOnMeetingUI(bool bHide) = 0;
 IMPL_FUNC_NORET_1(IMeetingConfiguration, HideMeetingInfoOnMeetingUI, void, bool, bHide)
+//virtual void HideShareButtonOnMeetingUI(bool bHide) = 0;
+IMPL_FUNC_NORET_1(IMeetingConfiguration, HideShareButtonOnMeetingUI, void, bool, bHide)
+//virtual void DisablePanelistMenuItem(PanelistMenuItemOption menuOption) = 0;
+IMPL_FUNC_NORET_1(IMeetingConfiguration, DisablePanelistMenuItem, void, PanelistMenuItemOption, menuOption)
+//virtual void DisableAttendeeMenuItem(AttendeeMenuItemOption menuOption) = 0;
+IMPL_FUNC_NORET_1(IMeetingConfiguration, DisableAttendeeMenuItem, void, AttendeeMenuItemOption, menuOption)
+
 //virtual void ConfigDSCP(int dscpAudio, int dscpVideo, bool bReset) = 0;
 IMPL_FUNC_NORET_3(IMeetingConfiguration,ConfigDSCP, void, int, dscpAudio, int, dscpVideo, bool, bReset)
 //virtual void RedirectClickParticipantListBTNEvent(bool bRedirect) = 0;
@@ -99,8 +104,6 @@ IMPL_FUNC_NORET_1(IMeetingConfiguration, SetShowCallInTab, void, bool, bShow)
 IMPL_FUNC_NORET_1(IMeetingConfiguration, SetShowCallMeTab, void, bool, bShow)
 //virtual void ForceDisableMultiShare(bool bDisable) = 0;
 IMPL_FUNC_NORET_1(IMeetingConfiguration, ForceDisableMultiShare, void, bool, bDisable)
-//virtual void SetAlwaysShowMeetingIDOnTitle(bool bAlwaysShow) = 0;
-IMPL_FUNC_NORET_1(IMeetingConfiguration, SetAlwaysShowMeetingIDOnTitle, void, bool, bAlwaysShow)
 //virtual void RedirectClickCustomLiveStreamMenuEvent(bool bRedirect) = 0;
 IMPL_FUNC_NORET_1(IMeetingConfiguration, RedirectClickCustomLiveStreamMenuEvent, void, bool, bRedirect)
 //virtual void RedirectClickAudioBTNEvent(bool bRedirect) = 0;

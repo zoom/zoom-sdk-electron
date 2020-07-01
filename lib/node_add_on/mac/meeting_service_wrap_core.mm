@@ -47,118 +47,115 @@ void ZMeetingServiceWrap::SetSink(ZNativeSDKMeetingWrapSink *pSink)
 ZNSDKError ZMeetingServiceWrap::Start(ZNStartParam startParam)
 {
     nativeErrorTypeHelp  Help_type;
-    ZoomSDKUserType  type = Help_type.ZNSDKUserTypeChange(startParam.userType);
-    NSString *user_id = [NSString stringWithCString:startParam.userId.c_str() encoding:NSUTF8StringEncoding];
-    NSString *token = [NSString stringWithCString:startParam.userToken.c_str() encoding:NSUTF8StringEncoding];
-    NSString *displayName = [NSString stringWithCString:startParam.username.c_str() encoding:NSUTF8StringEncoding];
+    ZoomSDKStartMeetingElements *elements = [[[ZoomSDKStartMeetingElements alloc] init] autorelease];
+    elements.userType = Help_type.ZNSDKUserTypeChange(startParam.userType);
+    elements.userId = [NSString stringWithCString:startParam.userId.c_str() encoding:NSUTF8StringEncoding];
+    elements.displayName = [NSString stringWithCString:startParam.username.c_str() encoding:NSUTF8StringEncoding];
     NSNumber *number = [NSNumber numberWithUnsignedLong:startParam.meetingNumber];
-    NSString *num = [number stringValue];
-    BOOL isDirecShare = startParam.isDirectShareDesktop;
+    elements.meetingNumber = [number longLongValue];
+    elements.isDirectShare = startParam.isDirectShareDesktop;
     NSString *display = [NSString stringWithCString:startParam.hDirectShareAppWnd.c_str() encoding:NSUTF8StringEncoding];
     
-    CGDirectDisplayID  displayID = [display  intValue];
-    NSString *vanID = [NSString stringWithCString:startParam.sdkVanityID.c_str() encoding:NSUTF8StringEncoding];
+    elements.displayID = [display  intValue];
+    elements.vanityID = [NSString stringWithCString:startParam.sdkVanityID.c_str() encoding:NSUTF8StringEncoding];
     ZoomSDKMeetingService *service = [[ZoomSDK sharedSDK] getMeetingService];
     if (!service) {
         return ZNSDKERR_SERVICE_FAILED;
     }
     
-    if (num.intValue == 0) {
-        if (vanID && vanID.length > 0) {
-            num = nil;
-        }
+    if (elements.meetingNumber == 0 && elements.vanityID.length == 0) {
+        elements.vanityID = nil;
     }
-    
-    ZoomSDKError ret = [service startMeeting:type userID:user_id userToken:token displayName:displayName meetingNumber:num isDirectShare:isDirecShare sharedApp:displayID isVideoOff:startParam.isVideoOff isAuidoOff:startParam.isAudioOff vanityID:vanID];
+    ZoomSDKError ret = [service startMeeting:elements];
     return Help_type.ZoomSDKErrorType(ret);
 }
 
 ZNSDKError ZMeetingServiceWrap::Start_WithoutLogin(ZNStartParam startParam)
 {
     nativeErrorTypeHelp  Help_type;
-    NSString *zak = [NSString stringWithCString:startParam.userZAK.c_str() encoding:NSUTF8StringEncoding];
-    SDKUserType  type = Help_type.SDKUserTypeChange(startParam.zoomUserType);
-    NSString *userid = [NSString stringWithCString:startParam.userId.c_str() encoding:NSUTF8StringEncoding];
-    NSString *userToken = [NSString stringWithCString:startParam.userToken.c_str() encoding:NSUTF8StringEncoding];
-    NSString *disName = [NSString stringWithCString:startParam.username.c_str() encoding:NSUTF8StringEncoding];
+    ZoomSDKStartMeetingUseZakElements *elements = [[[ZoomSDKStartMeetingUseZakElements alloc] init] autorelease];
+    elements.zak = [NSString stringWithCString:startParam.userZAK.c_str() encoding:NSUTF8StringEncoding];
+    elements.userType = Help_type.SDKUserTypeChange(startParam.zoomUserType);
+    elements.userId = [NSString stringWithCString:startParam.userId.c_str() encoding:NSUTF8StringEncoding];
+    elements.displayName = [NSString stringWithCString:startParam.username.c_str() encoding:NSUTF8StringEncoding];
     NSNumber *number = [NSNumber numberWithUnsignedLong:startParam.meetingNumber];
-    NSString *num = [number stringValue];
-    BOOL isDirecShare = startParam.isDirectShareDesktop;
+    elements.meetingNumber = [number longLongValue];
+    elements.isDirectShare = startParam.isDirectShareDesktop;
     NSString *display = [NSString stringWithCString:startParam.hDirectShareAppWnd.c_str() encoding:NSUTF8StringEncoding];
-    CGDirectDisplayID  displayID = [display  intValue];
-    NSString *vanID = [NSString stringWithCString:startParam.sdkVanityID.c_str() encoding:NSUTF8StringEncoding];
+    elements.displayID = [display  intValue];
+    elements.vanityID = [NSString stringWithCString:startParam.sdkVanityID.c_str() encoding:NSUTF8StringEncoding];
     ZoomSDKMeetingService *service = [[ZoomSDK sharedSDK] getMeetingService];
     if (!service) {
         return ZNSDKERR_SERVICE_FAILED;
     }
     
-    if (num.intValue == 0) {
-        if (vanID && vanID.length > 0) {
-            num = nil;
-        }
+    if (elements.meetingNumber == 0 && elements.vanityID.length == 0) {
+        elements.vanityID = nil;
     }
     
-    ZoomSDKError ret = [service startMeetingWithZAK:zak userType:type userID:userid userToken:userToken displayName:disName meetingNumber:num isDirectShare:isDirecShare sharedApp:displayID isVideoOff:startParam.isVideoOff isAuidoOff:startParam.isAudioOff vanityID:vanID];
+    ZoomSDKError ret = [service startMeetingWithZAK:elements];
     return Help_type.ZoomSDKErrorType(ret);
 }
 
 ZNSDKError ZMeetingServiceWrap::Join(ZNJoinParam joinParam)
 {
     nativeErrorTypeHelp  Help_type;
-    ZoomSDKUserType type = Help_type.ZNSDKUserTypeChange(joinParam.userType);
-    NSString *tokenLogin = [NSString stringWithCString:joinParam.token4EnforceLogin.c_str() encoding:NSUTF8StringEncoding];
-    NSString *webToken = [NSString stringWithCString:joinParam.webinarToken.c_str() encoding:NSUTF8StringEncoding];
-    NSString *particpanid = [NSString stringWithCString:joinParam.participantId.c_str() encoding:NSUTF8StringEncoding];
+    ZoomSDKJoinMeetingElements *elements = [[[ZoomSDKJoinMeetingElements alloc] init] autorelease];
+    elements.userType = Help_type.ZNSDKUserTypeChange(joinParam.userType);
+    elements.zak = [NSString stringWithCString:joinParam.userZAK.c_str() encoding:NSUTF8StringEncoding];
+    elements.webinarToken = [NSString stringWithCString:joinParam.webinarToken.c_str() encoding:NSUTF8StringEncoding];
+    elements.participantId = [NSString stringWithCString:joinParam.participantId.c_str() encoding:NSUTF8StringEncoding];
     NSNumber *number = [NSNumber numberWithUnsignedLong:joinParam.meetingNumber];
-    NSString *num = [number stringValue];
-    NSString *name = [NSString stringWithCString:joinParam.username.c_str() encoding:NSUTF8StringEncoding];
-    NSString *pwd = [NSString stringWithCString:joinParam.psw.c_str() encoding:NSUTF8StringEncoding];
-    BOOL isDirecShare = joinParam.isDirectShareDesktop;
+    elements.meetingNumber = [number longLongValue];
+    elements.displayName = [NSString stringWithCString:joinParam.username.c_str() encoding:NSUTF8StringEncoding];
+    elements.password = [NSString stringWithCString:joinParam.psw.c_str() encoding:NSUTF8StringEncoding];
+    elements.isDirectShare = joinParam.isDirectShareDesktop;
     NSString *display = [NSString stringWithCString:joinParam.hDirectShareAppWnd.c_str() encoding:NSUTF8StringEncoding];
-    CGDirectDisplayID  displayID = [display  intValue];
-    NSString *vanID = [NSString stringWithCString:joinParam.vanityID.c_str() encoding:NSUTF8StringEncoding];
-    if (num.intValue == 0) {
-        if (vanID && vanID.length > 0) {
-            num = nil;
-        }
+    elements.displayID = [display  intValue];
+    elements.vanityID = [NSString stringWithCString:joinParam.vanityID.c_str() encoding:NSUTF8StringEncoding];
+    
+    if (elements.meetingNumber == 0 && elements.vanityID.length == 0) {
+        elements.vanityID = nil;
     }
+    
     ZoomSDKMeetingService *service = [[ZoomSDK sharedSDK] getMeetingService];
     if (!service) {
         return ZNSDKERR_SERVICE_FAILED;
     }
-    ZoomSDKError ret = [service joinMeeting:type toke4enfrocelogin:tokenLogin webinarToken:webToken participantId:particpanid meetingNumber:num displayName:name password:pwd isDirectShare:isDirecShare sharedApp:displayID isVideoOff:joinParam.isVideoOff isAuidoOff:joinParam.isAudioOff vanityID:vanID];
+    ZoomSDKError ret = [service joinMeeting:elements];
      return Help_type.ZoomSDKErrorType(ret);
 }
 
 ZNSDKError ZMeetingServiceWrap::Join_WithoutLogin(ZNJoinParam joinParam)
 {
     nativeErrorTypeHelp  Help_type;
-    ZoomSDKUserType type = Help_type.ZNSDKUserTypeChange(joinParam.userType);
-    NSString *tokenLogin = [NSString stringWithCString:joinParam.token4EnforceLogin.c_str() encoding:NSUTF8StringEncoding];
-    NSString *webToken = [NSString stringWithCString:joinParam.webinarToken.c_str() encoding:NSUTF8StringEncoding];
-    NSString *particpanid = [NSString stringWithCString:joinParam.participantId.c_str() encoding:NSUTF8StringEncoding];
+    ZoomSDKJoinMeetingElements *elements = [[[ZoomSDKJoinMeetingElements alloc] init] autorelease];
+    elements.userType = Help_type.ZNSDKUserTypeChange(joinParam.userType);
+    elements.zak = [NSString stringWithCString:joinParam.userZAK.c_str() encoding:NSUTF8StringEncoding];
+    elements.webinarToken = [NSString stringWithCString:joinParam.webinarToken.c_str() encoding:NSUTF8StringEncoding];
+    elements.participantId = [NSString stringWithCString:joinParam.participantId.c_str() encoding:NSUTF8StringEncoding];
     NSNumber *number = [NSNumber numberWithUnsignedLong:joinParam.meetingNumber];
-    NSString *num = [number stringValue];
-    NSString *name = [NSString stringWithCString:joinParam.username.c_str() encoding:NSUTF8StringEncoding];
-    NSString *pwd = [NSString stringWithCString:joinParam.psw.c_str() encoding:NSUTF8StringEncoding];
-    BOOL isDirecShare = joinParam.isDirectShareDesktop;
+    elements.meetingNumber = [number longLongValue];
+    elements.displayName = [NSString stringWithCString:joinParam.username.c_str() encoding:NSUTF8StringEncoding];
+    elements.password = [NSString stringWithCString:joinParam.psw.c_str() encoding:NSUTF8StringEncoding];
+    elements.isDirectShare = joinParam.isDirectShareDesktop;
     NSString *display = [NSString stringWithCString:joinParam.hDirectShareAppWnd.c_str() encoding:NSUTF8StringEncoding];
-    CGDirectDisplayID  displayID = [display  intValue];
-    NSString *vanID = [NSString stringWithCString:joinParam.vanityID.c_str() encoding:NSUTF8StringEncoding];
+    elements.displayID = [display  intValue];
+    elements.vanityID = [NSString stringWithCString:joinParam.vanityID.c_str() encoding:NSUTF8StringEncoding];
     
-    if (num.intValue == 0) {
-        if (vanID && vanID.length > 0) {
-            num = nil;
-        }
+    if (elements.meetingNumber == 0 && elements.vanityID.length == 0) {
+        elements.vanityID = nil;
     }
     
     ZoomSDKMeetingService *service = [[ZoomSDK sharedSDK] getMeetingService];
     if (!service) {
         return ZNSDKERR_SERVICE_FAILED;
     }
-    ZoomSDKError ret = [service joinMeeting:type toke4enfrocelogin:tokenLogin webinarToken:webToken participantId:particpanid meetingNumber:num displayName:name password:pwd isDirectShare:isDirecShare sharedApp:displayID isVideoOff:joinParam.isVideoOff isAuidoOff:joinParam.isAudioOff vanityID:vanID];
+    
+    ZoomSDKError ret = [service joinMeeting:elements];
     return Help_type.ZoomSDKErrorType(ret);
 }
+
 ZNSDKError ZMeetingServiceWrap::Leave(ZNLeaveMeetingCmd cmd)
 {
     nativeErrorTypeHelp  Help_type;

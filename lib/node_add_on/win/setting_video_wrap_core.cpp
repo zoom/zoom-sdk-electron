@@ -99,6 +99,14 @@ bool ZSettingVideoWrap::IsAlwaysShowNameOnVideoEnabled()
 {
 	return ZOOM_SDK_NAMESPACE::CSDKWrap::GetInst().GetSettingServiceWrap().T_GetVideoSettings().IsAlwaysShowNameOnVideoEnabled();
 }
+ZNSDKError ZSettingVideoWrap::EnableVideoPreviewDialog(bool bEnable)
+{
+	return Map2WrapDefine(ZOOM_SDK_NAMESPACE::CSDKWrap::GetInst().GetSettingServiceWrap().T_GetVideoSettings().EnableVideoPreviewDialog(bEnable));
+}
+bool ZSettingVideoWrap::IsVideoPreviewDialogEnabled()
+{
+	return ZOOM_SDK_NAMESPACE::CSDKWrap::GetInst().GetSettingServiceWrap().T_GetVideoSettings().IsVideoPreviewDialogEnabled();
+}
 ZNSDKError ZSettingVideoWrap::EnableAutoTurnOffVideoWhenJoinMeeting(bool bEnable)
 {
 	return Map2WrapDefine(ZOOM_SDK_NAMESPACE::CSDKWrap::GetInst().GetSettingServiceWrap().T_GetVideoSettings().EnableAutoTurnOffVideoWhenJoinMeeting(bEnable));

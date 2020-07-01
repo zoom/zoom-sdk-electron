@@ -19,7 +19,7 @@
 	<key>CFBundlePackageType</key>
 	<string>BNDL</string>
 	<key>CFBundleShortVersionString</key>
-	<string>ZoomBundleDisplayVersion</string>
+	<string>5.0.24433.0616</string>
 	<key>CFBundleSignature</key>
 	<string>????</string>
 	<key>CFBundleSupportedPlatforms</key>
@@ -45,6 +45,6 @@
 	<key>LSApplicationCategoryType</key>
 	<string></string>
 	<key>NSHumanReadableCopyright</key>
-	<string>Copyright ©2012-2020 Zoom Video Communications, Inc. All rights reserved</string>
+	<string>ZoomCopyRight</string>
 </dict>
 </plist>

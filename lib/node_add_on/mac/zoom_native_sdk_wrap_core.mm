@@ -3,6 +3,7 @@
 #include "../auth_service_wrap_core.h"
 #include "Header_include.h"
 #include "sdk_native_error.h"
+
 ZNSDKError ZNativeSDKWrap::InitSDK(ZNInitParam &initParam)
 {
     //set language
@@ -13,6 +14,7 @@ ZNSDKError ZNativeSDKWrap::InitSDK(ZNInitParam &initParam)
     {
         [[ZoomSDK sharedSDK] setPreferLanguage:lanStr];
     }
+    
     [[ZoomSDK sharedSDK] enableDefaultLog:initParam.enable_log fileSize:initParam.logFileSize];
     ZoomSDKLocale local = help.ZNSDKAPPLocalType(initParam.locale);
     [[ZoomSDK sharedSDK] setAppLocale:local];

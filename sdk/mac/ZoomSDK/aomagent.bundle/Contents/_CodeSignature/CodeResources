@@ -3,26 +3,9 @@
 <plist version="1.0">
 <dict>
 	<key>files</key>
-	<dict>
-		<key>Resources/Info.plist</key>
-		<data>
-		F1Slgqcolqdo+IhMCfFT/Hbvklc=
-		</data>
-	</dict>
+	<dict/>
 	<key>files2</key>
-	<dict>
-		<key>Resources/Info.plist</key>
-		<dict>
-			<key>hash</key>
-			<data>
-			F1Slgqcolqdo+IhMCfFT/Hbvklc=
-			</data>
-			<key>hash2</key>
-			<data>
-			WtvvZYxM10inlD9BWi10FPyJRZMMM6b3fCCQDzRmfEs=
-			</data>
-		</dict>
-	</dict>
+	<dict/>
 	<key>rules</key>
 	<dict>
 		<key>^Resources/</key>

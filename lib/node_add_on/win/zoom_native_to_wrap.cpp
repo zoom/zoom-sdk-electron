@@ -355,6 +355,12 @@ ZNH323CalloutStatus Map2WrapDefine(ZOOM_SDK_NAMESPACE::H323CalloutStatus status)
 	case ZOOMSDK::H323Callout_Failed:
 		zn_h323_callout_status = ZN_H323Callout_Failed;
 		break;
+	case ZOOMSDK::H323Callout_Busy:
+		zn_h323_callout_status = ZN_H323Callout_Busy;
+		break;
+	case ZOOMSDK::H323Callout_Decline:
+		zn_h323_callout_status = ZN_H323Callout_Decline;
+		break;
 	default:
 		break;
 	}
@@ -731,6 +737,7 @@ ZOOM_SDK_NAMESPACE::SDK_LANGUAGE_ID Map2SDKDefine(ZNSDK_LANGUAGE_ID id)
 	switch (id)
 	{
 	case ZNLANGUAGE_Unknow:
+		sdk_id = ZOOM_SDK_NAMESPACE::LANGUAGE_Unknow;
 		break;
 	case ZNLANGUAGE_English:
 		sdk_id = ZOOM_SDK_NAMESPACE::LANGUAGE_English;
@@ -759,6 +766,9 @@ ZOOM_SDK_NAMESPACE::SDK_LANGUAGE_ID Map2SDKDefine(ZNSDK_LANGUAGE_ID id)
 	case ZNLANGUAGE_Russian:
 		sdk_id = ZOOM_SDK_NAMESPACE::LANGUAGE_Russian;
 		break;
+	case ZNLANGUAGE_Korean:
+		sdk_id = ZOOM_SDK_NAMESPACE::LANGUAGE_Korean;
+		break;
 	default:
 		break;
 	}
@@ -767,12 +777,9 @@ ZOOM_SDK_NAMESPACE::SDK_LANGUAGE_ID Map2SDKDefine(ZNSDK_LANGUAGE_ID id)
 }
 ZOOM_SDK_NAMESPACE::SDKUserType Map2SDKDefine(ZNSDKUserType type)
 {
-	ZOOM_SDK_NAMESPACE::SDKUserType sdk_user_type= ZOOM_SDK_NAMESPACE::SDK_UT_APIUSER;
+	ZOOM_SDK_NAMESPACE::SDKUserType sdk_user_type= ZOOM_SDK_NAMESPACE::SDK_UT_WITHOUT_LOGIN;
 	switch (type)
 	{
-	case ZNSDK_UT_APIUSER:
-		sdk_user_type = ZOOM_SDK_NAMESPACE::SDK_UT_APIUSER;
-		break;
 	case ZNSDK_UT_NORMALUSER:
 		sdk_user_type = ZOOM_SDK_NAMESPACE::SDK_UT_NORMALUSER;
 		break;

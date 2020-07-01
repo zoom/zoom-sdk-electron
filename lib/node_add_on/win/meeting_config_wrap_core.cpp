@@ -74,14 +74,6 @@ void ZMeetingConfigWrap::DisableWaitingForHostDialog(bool bDisable)
 {
 	ZOOM_SDK_NAMESPACE::CSDKWrap::GetInst().GetMeetingServiceWrap().T_GetMeetingConfiguration().DisableWaitingForHostDialog(bDisable);
 }
-void ZMeetingConfigWrap::HideMeetingInfoFromMeetingUITitle(bool bHide)
-{
-	ZOOM_SDK_NAMESPACE::CSDKWrap::GetInst().GetMeetingServiceWrap().T_GetMeetingConfiguration().HideMeetingInfoFromMeetingUITitle(bHide);
-}
-void ZMeetingConfigWrap::SetMeetingIDForMeetingUITitle(unsigned long long meetingNumber)
-{
-	ZOOM_SDK_NAMESPACE::CSDKWrap::GetInst().GetMeetingServiceWrap().T_GetMeetingConfiguration().SetMeetingIDForMeetingUITitle(meetingNumber);
-}
 void ZMeetingConfigWrap::DisablePopupMeetingWrongPSWDlg(bool bDisable)
 {
 	ZOOM_SDK_NAMESPACE::CSDKWrap::GetInst().GetMeetingServiceWrap().T_GetMeetingConfiguration().DisablePopupMeetingWrongPSWDlg(bDisable);
@@ -251,10 +243,6 @@ void ZMeetingConfigWrap:: SetShowCallInTab(bool bShow)
 void ZMeetingConfigWrap:: SetShowCallMeTab(bool bShow)
 {
 	ZOOM_SDK_NAMESPACE::CSDKWrap::GetInst().GetMeetingServiceWrap().T_GetMeetingConfiguration().SetShowCallMeTab(bShow);
-}
-void ZMeetingConfigWrap:: SetAlwaysShowMeetingIDOnTitle(bool bAlwaysShow)
-{
-	ZOOM_SDK_NAMESPACE::CSDKWrap::GetInst().GetMeetingServiceWrap().T_GetMeetingConfiguration().SetAlwaysShowMeetingIDOnTitle(bAlwaysShow);
 }
 void ZMeetingConfigWrap:: DisableTopMostAttr4SettingDialog(bool bDisable)
 {

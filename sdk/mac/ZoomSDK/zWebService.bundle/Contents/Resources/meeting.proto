@@ -226,7 +226,30 @@ message MeetingProto {
   repeated KeyValOption keyValOption = 130;	//This is for key value options features, please ensure every key is unique
   repeated KeyValOption sdkCommonOptions = 132; //ZOOM-119841 sdk common options
   optional int32 jbhPriorMeetingStart = 133; //unit:minutes //ZOOM-41183 JBH - Only 15 minutes prior to meeting starting; 
+  optional AuthProto authProto        = 134; //ZOOM-86909
+  optional ThirdPartAttendeeInfo thirdPartAttendeeInfo = 136;
+  optional RecordingReminderProto recordingReminderForRecorder = 137;
+  optional DisclaimerPrivacyProto joinMeetingDisclaimer     = 140;
+  optional DisclaimerPrivacyProto remoteControlDisclaimer   = 141;
+  optional string meetingFileToken = 144;
+  repeated string additionalDCRegions = 145;
+  repeated KeyValOption geoRegionMapping = 146; //ZOOM-154342 conf/j return geoRegion mapping
 }
+
+
+message ThirdPartAttendeeInfo {
+    optional string email = 1;
+    optional string username = 2;
+    optional string plainEmail = 3;
+}
+
+message AuthProto {
+	optional string authId     = 1;
+	optional string authName   = 2;
+	required int32 authType    = 3;
+	optional string authDomain = 4;
+}
+
 
 message RecordingReminderProto {
     optional string language    = 1;
@@ -309,6 +332,12 @@ message BandwidthLimitation {
 
 message BandwidthLimitationList {
 	repeated BandwidthLimitation bandwidthLimitList = 1;
+}
+
+message UserPhoneInfo {
+  optional string phoneNumber = 1; // phone number with out country code, like 15888888888
+  optional string countryId = 2;  //Like US,CN
+  optional string countryCode = 3; // Like 1,86(no +)
 }
 
 message UserProfile {
@@ -410,6 +439,33 @@ message UserProfile {
   optional E2EKMSInfo e2eKmsInfo                         = 97;
   optional int32 calendarType                            = 98; // None = 0; Google = 1; Exchange_Online = 2; Exchange_On_Premise = 3;
   optional int32 calendarRefreshInterval                 = 99; // ZOOM-113578: in seconds, valid range [60, 15*60], only used for Exchange_On_Premise
+  repeated LoginMeetingAuthProto meetingAuths          = 101;
+  optional string trashcanLink                         = 102; //ZOOM-119932
+  repeated VirtualBackground videoVirtualBackground    = 103; //video Virtual background list
+  repeated UserPhoneInfo userPhoneInfos                = 104; // ZOOM-127932 user's own phone numbers, may be one user can have multiple phone numbers in future
+  repeated KeyValOption meetingPasswordRule            = 105; //ZOOM-136702 meeting password rule
+  optional int32 exchangeApiType                       = 106; //ZOOM-108606 exchange api type, EWS or Graph
+  optional DisclaimerPrivacyProto loginDisclaimer      = 108;
+  optional string officeGraphAccessToken               = 109; // office graph access token, different from ews token
+  optional int32 officeGraphAccessTokenRefreshInterval = 110; // office graph access token interval, different from ews token interval
+  optional string plainEmail                           = 113; // user original email (plaintext, not encrypt and not hash)
+  repeated string uncheckedCustomDC                    = 114; //ZOOM-151395 Customization of Data Center List
+}
+
+message DisclaimerPrivacyProto {
+	optional string language = 1;
+	optional string title = 2;
+	optional string description = 3;
+	optional string link_url    = 4;
+	optional string link_text   = 5;
+}
+
+message LoginMeetingAuthProto {
+required  string authId =1;
+required  string authName=2;
+required  int32  authType=3;
+required  bool   defaultAuth=4;
+optional  string authDomain=5;
 }
 
 message ZREncryptionInfo {
@@ -447,6 +503,12 @@ message KeyValOption{
 	optional string val                                 = 2;
 	optional int32 amendmentFlag                        = 3; // null or 0: update; 1: remove
 }
+
+message ChannelLimitation {
+  optional int32 public_limit = 1; 
+  optional int32 private_limit = 2;
+}
+
 message MessengerOptions{
   optional int32 e2e_cert_expire_time = 1;		//im_certificate_expire_time, in minutes		
   optional int32 e2e_key_expire_time = 2;		//im_ciphered_key_expire_time, in minutes	
@@ -457,6 +519,7 @@ message MessengerOptions{
   optional int64 im_options = 7;				//IM options, enable/disable flag, use bit
   optional string announcementInfo = 8;		//AnnouncementInfo 
   optional int32 e2e_kms_key_expire_time = 9;		//im_ciphered_key_expire_time, in minutes
+  optional ChannelLimitation channel_limit= 10; //For channel limitation
 }
 
 message OperationTime {
@@ -514,6 +577,7 @@ message SipPhoneIntegration {
   optional string activeRegisterServer =      20;
   optional string activeProxyServer =         21;
   optional int32 activeProtocol =             22;
+  optional bool dscp =                        23; // 0:false  1:true
 }
 
 message TrackingField {
@@ -851,6 +915,8 @@ message VirtualBackground {
 	optional string zoomUrl = 2; //virtual background img url(zoom)
 	optional string name = 3; //virtual background img name
 	optional int32 type = 4;  //virtual background img type 0:default,1:custom
+	optional string thumbnailImgUrl = 5;  //virtual video background thumbnail image url(cdn)
+	optional string thumbnailImgZoomUrl = 6;  //virtual video background thumbnail image url(zoom)
 }
 
 message ZRVirtualBackground {
@@ -1013,6 +1079,7 @@ message ContactProto {
   optional string phoneNumber = 12; // phone number to bind
   optional string countryCode = 13;
   optional int32 contactType = 14;   //contact Type
+  optional int64 ibOptions = 15;
 }
 
 message ContactListProto {
@@ -1141,6 +1208,10 @@ message AlternativeHost {
   optional string picUrl = 5;
   optional int64 pmi = 6; // PMI meeting number
   optional AvailableDialinCountry availableDialinCountry= 7;
+  optional bool disablePmi = 8;
+  repeated string uncheckedDC = 9;
+  optional bool supportAdditionalDc = 10;
+  optional bool enableAdditionalDc = 11;
 }
 
 message ColocationRegion {
@@ -1448,6 +1519,9 @@ message LaunchConfParameter
 	optional string meetingNonce = 69;					// ZOOM-75897 used for getting ext parameters for monitor log case, when request conf/j
 	
 	optional int64  meetingItemUpdateTime = 70;         // ZOOM-100934
+	optional int64 userOptions3 = 	71;
+	optional UserProfile profile = 72;					// ZOOM-134295
+	optional string userHashEmail = 73;
 }                                                       
 //                                                      
 /////////////////////////////                           

@@ -106,6 +106,13 @@
  * @return The SDK identity.
  */
 - (NSString*)getSDKIdentity;
+
+/**
+ * @brief Determine if email login mode is enabled.
+ * @return If the function succeeds, otherwise not.
+ * @note You should call this APIs after you have receive callback of auth success event.
+ */
+- (ZoomSDKError)isEmailLoginEnabled:(BOOL*)isEnabled;
 @end
 
 

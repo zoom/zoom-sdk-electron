@@ -110,7 +110,17 @@
  * @param bMin YES means to minimize float video window, NO to show large scale float video.
  * @return If the function succeeds, it will return ZoomSDKError_success, otherwise failed.
  */
-- (ZoomSDKError)minimizeShareFloatVideoWindow:(BOOL)bMin;
+- (ZoomSDKError)minimizeShareFloatVideoWindow:(BOOL)bMin NS_DEPRECATED_MAC(4.0, 4.6);
+/**
+ * @brief Switch float video display mode to minimize mode.
+ * @return If the function succeeds, it will return ZoomSDKError_success, otherwise failed.
+ */
+- (ZoomSDKError)switchFloatVideoToMinimizeMode;
+/**
+ * @brief Switch float video display mode to wall mode.
+ * @return If the function succeeds, it will return ZoomSDKError_success, otherwise failed.
+ */
+- (ZoomSDKError)switchFloatVideoToWallMode;
 /**
  * @brief Switch float video display mode to active speaker.
  * @return If the function succeeds, it will return ZoomSDKError_success, otherwise failed. 
@@ -149,4 +159,16 @@
  */
 - (ZoomSDKError)backToMeeting;
 
+/**
+ * @brief Determine when join meeting the video preview is display.
+ * @return YES means that it is display video preview, otherwise not.
+ */
+- (BOOL)showVideoPreviewWhenJoinMeeting;
+
+/**
+ * @brief Display video preview when join meeting.
+ * @param isShow Set it to YES to display video preview,otherwise not display.
+ * @return If the function succeeds, it will return the ZoomSDKError_Success, otherwise failed.
+ */
+- (ZoomSDKError)isShowVideoPreviewWhenJoinMeeting:(BOOL)isShow;
 @end

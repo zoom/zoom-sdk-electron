@@ -56,6 +56,8 @@ typedef BOOL(^ZMHMenuItemBackgroundDrawer)(NSRect bounds, NSRect dirtyRect, BOOL
 
 @property (nonatomic) BOOL checked;
 
+@property (copy) NSString *tooltip;
+
 @property (nonatomic, assign) CGFloat minWidth;
 
 + (instancetype)itemWithTitle:(nullable NSString *)title informative:(nullable NSString *)informative image:(nullable NSImage *)image;

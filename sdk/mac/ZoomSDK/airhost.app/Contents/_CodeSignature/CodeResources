@@ -4,17 +4,13 @@
 <dict>
 	<key>files</key>
 	<dict>
-		<key>Resources/Dark_Instruction for iPhoneiPad.png</key>
+		<key>Resources/Dark Tap Screen Mirroring.png</key>
 		<data>
-		X+PMrMfCP/dkyZyUE8jW4ARBZSc=
+		9gxnve3Q+OPlYDebiQitVCFuzSg=
 		</data>
 		<key>Resources/Error.jpg</key>
 		<data>
 		XZ93EC5H6QXIEkmUrakscQaM/Yw=
-		</data>
-		<key>Resources/Instruction for iPhoneiPad.png</key>
-		<data>
-		tt6blDJXEvADUGuU4MPG6btR1/4=
 		</data>
 		<key>Resources/MainMenu.nib</key>
 		<data>
@@ -28,9 +24,9 @@
 		<data>
 		EE8sIyWynmeTrgi93/fTRIFpSxM=
 		</data>
-		<key>Resources/ZP share iOS.png</key>
+		<key>Resources/Tap Screen Mirroring.png</key>
 		<data>
-		NzeZEIaRQPn5x4JvSXZczkYLKns=
+		tbctp91Jrv5DXRPIdIycv9+jN/c=
 		</data>
 		<key>Resources/ZPLogo.icns</key>
 		<data>
@@ -58,7 +54,7 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			Ou+OVDtF+X42Q0TFhIZWZNTKMII=
+			jug/9QOgZLYGKHZjCMxlmcjh3rQ=
 			</data>
 			<key>optional</key>
 			<true/>
@@ -79,7 +75,7 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			67jQ2Vw7LLJgql4L5BR4E+Pv7So=
+			XZycqrQmezWWaU+ygmBYljLyur0=
 			</data>
 			<key>optional</key>
 			<true/>
@@ -88,7 +84,7 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			H8QyUfX5L3zTEJG7VhU97m2UkaY=
+			Ye3Go5j4fli2n3CgAhYqb92IWXM=
 			</data>
 			<key>optional</key>
 			<true/>
@@ -132,15 +128,15 @@
 			<key>requirement</key>
 			<string>identifier "libswscale.2" and anchor apple generic and certificate 1[field.1.2.840.113635.100.6.2.6] /* exists */ and certificate leaf[field.1.2.840.113635.100.6.1.13] /* exists */ and certificate leaf[subject.OU] = BJ4HAAB9B3</string>
 		</dict>
-		<key>Resources/Dark_Instruction for iPhoneiPad.png</key>
+		<key>Resources/Dark Tap Screen Mirroring.png</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			X+PMrMfCP/dkyZyUE8jW4ARBZSc=
+			9gxnve3Q+OPlYDebiQitVCFuzSg=
 			</data>
 			<key>hash2</key>
 			<data>
-			ahkPprz3ijDGUy5r+EZV7n13tjhrJIbFF6dwtBAIn1s=
+			ZUIJQR4enfdbcEJh6AjFLCpUXoFNtHNFqhWnPSK23gw=
 			</data>
 		</dict>
 		<key>Resources/Error.jpg</key>
@@ -152,17 +148,6 @@
 			<key>hash2</key>
 			<data>
 			Ic4GVmAmn7ROhR9taqv4ZLXBovfqIaRaym9LBt34hkU=
-			</data>
-		</dict>
-		<key>Resources/Instruction for iPhoneiPad.png</key>
-		<dict>
-			<key>hash</key>
-			<data>
-			tt6blDJXEvADUGuU4MPG6btR1/4=
-			</data>
-			<key>hash2</key>
-			<data>
-			UYSWIDTdH6gmIRz8fjdUE4viNHh1WE+OPvPpjzZKyQc=
 			</data>
 		</dict>
 		<key>Resources/MainMenu.nib</key>
@@ -198,15 +183,15 @@
 			jTdyqCKHuv4IpaHvVitMQVUMGaBj6ie5tGhoj7oxxuc=
 			</data>
 		</dict>
-		<key>Resources/ZP share iOS.png</key>
+		<key>Resources/Tap Screen Mirroring.png</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			NzeZEIaRQPn5x4JvSXZczkYLKns=
+			tbctp91Jrv5DXRPIdIycv9+jN/c=
 			</data>
 			<key>hash2</key>
 			<data>
-			h9454CKgPur7rV6wkzX9G9o3quqG6JBxZjO+ap/PS10=
+			bWaBtoiviUjoKrOm9kl2H35mgrLSsBVqKE8OSEzkHsQ=
 			</data>
 		</dict>
 		<key>Resources/ZPLogo.icns</key>
@@ -250,11 +235,11 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			Ou+OVDtF+X42Q0TFhIZWZNTKMII=
+			jug/9QOgZLYGKHZjCMxlmcjh3rQ=
 			</data>
 			<key>hash2</key>
 			<data>
-			GSojzfyN2hmJDaA1HEpQwbFjRfk7Sl23rkAtnQx0P9o=
+			OOVDN0/5wu11YG9tLSsD0CSyJ7HeTBL1XYahT888tls=
 			</data>
 			<key>optional</key>
 			<true/>
@@ -296,11 +281,11 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			67jQ2Vw7LLJgql4L5BR4E+Pv7So=
+			XZycqrQmezWWaU+ygmBYljLyur0=
 			</data>
 			<key>hash2</key>
 			<data>
-			OBtE0PLZCFOkproI5/rxuZwYVkrIBTyzDkx3IRWooCo=
+			Dm+fZidPuJihARfEmnDVa0V4UZia1q7niRjPWKpLSLw=
 			</data>
 			<key>optional</key>
 			<true/>
@@ -309,11 +294,11 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			H8QyUfX5L3zTEJG7VhU97m2UkaY=
+			Ye3Go5j4fli2n3CgAhYqb92IWXM=
 			</data>
 			<key>hash2</key>
 			<data>
-			dzwu7aDbA8mJYDIgu0J1Tk0gtu1NvUOhwWe8ZhwvglA=
+			URuWWTXHz5sEZ5kS0Xxx2SHaBjD6Zxldlosg+twUeSA=
 			</data>
 			<key>optional</key>
 			<true/>

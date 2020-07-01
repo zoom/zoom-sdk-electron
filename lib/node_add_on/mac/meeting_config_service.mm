@@ -97,17 +97,6 @@ void ZMeetingConfigWrap::SetMeetingUIPos(ZNWndPosition position)
     }
 }
 
-void ZMeetingConfigWrap::SetMeetingIDForMeetingUITitle(unsigned long long meetingNumber)
-{
-    ZoomSDKMeetingService *service = [[ZoomSDK sharedSDK] getMeetingService];
-    if (!service) {
-        return;
-    }
-    ZoomSDKMeetingConfiguration *config = [service getMeetingConfiguration];
-    if (service && config && meetingNumber) {
-        config.newMeetingID = (unsigned int)meetingNumber;
-    }
-}
 
 void ZMeetingConfigWrap::SetDirectShareMonitorID(ZoomSTRING monitorID)
 {
@@ -126,16 +115,6 @@ void ZMeetingConfigWrap::DisableWaitingForHostDialog(bool bDisable)
     bool enbale = bDisable;
     if (service && config) {
         config.jbhWindowVisible = (enbale == YES) ? NO : YES;
-    }
-}
-
-void ZMeetingConfigWrap::HideMeetingInfoFromMeetingUITitle(bool bHide)
-{
-    ZoomSDKMeetingService *service = [[ZoomSDK sharedSDK] getMeetingService];
-    ZoomSDKMeetingConfiguration *config = [service getMeetingConfiguration];
-    bool enbale = bHide;
-    if (service && config) {
-        config.hideMainWindowMeetingInfo = (enbale == YES) ? YES : NO;
     }
 }
 
@@ -199,18 +178,12 @@ ZNFreeMeetingEndingReminderType ZMeetingConfigWrap::GetReminderType()
 
 ZNSDKError ZMeetingConfigWrap::UpgradeMeeting()
 {
-    ZoomSDKUpgradeAccountHelper *pre = [[[ZoomSDKUpgradeAccountHelper alloc] init] autorelease];
-    ZoomSDKError ret = [pre  upgradeAccount];
-    nativeErrorTypeHelp  Help_type;
-    return Help_type.ZoomSDKErrorType(ret);
+   return ZNSDKERR_NO_IMPL;
 }
 
 ZNSDKError ZMeetingConfigWrap::UpgradeAccount()
 {
-    ZoomSDKUpgradeAccountHelper *pre = [[[ZoomSDKUpgradeAccountHelper alloc] init] autorelease];
-    ZoomSDKError ret = [pre  upgradeAccountFreeTrial];
-    nativeErrorTypeHelp  Help_type;
-    return Help_type.ZoomSDKErrorType(ret);
+    return ZNSDKERR_NO_IMPL;
 }
 
 ZNSDKError ZMeetingConfigWrap::CancelUpdate()
@@ -442,8 +415,7 @@ void ZMeetingConfigWrap::SetShowCallMeTab(bool bShow)
         }
     }
 }
-void ZMeetingConfigWrap::SetAlwaysShowMeetingIDOnTitle(bool bAlwaysShow)
-{}
+
 void ZMeetingConfigWrap::DisableTopMostAttr4SettingDialog(bool bDisable)
 {}
 void ZMeetingConfigWrap::EnableGrabShareWithoutReminder(bool bEnable)

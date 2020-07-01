@@ -224,6 +224,37 @@ void ZoomNodeSettingVideoCtrlWrap::IsAlwaysShowNameOnVideoEnabled(const v8::Func
 	v8::Local<v8::Boolean> bret = v8::Boolean::New(isolate, isEnabled);
 	args.GetReturnValue().Set(bret);
 }
+void ZoomNodeSettingVideoCtrlWrap::EnableVideoPreviewDialog(const v8::FunctionCallbackInfo<v8::Value>& args)
+{
+	v8::Isolate* isolate = args.GetIsolate();
+	if (args.Length() < 1) {
+		isolate->ThrowException(v8::Exception::TypeError(
+			v8::String::NewFromUtf8(isolate, "Wrong number of arguments", v8::NewStringType::kInternalized).ToLocalChecked()));
+		return;
+	}
+
+	if (!args[0]->IsBoolean()
+		)
+	{
+		isolate->ThrowException(v8::Exception::TypeError(
+			v8::String::NewFromUtf8(isolate, "Wrong arguments", v8::NewStringType::kInternalized).ToLocalChecked()));
+		return;
+	}
+	bool zn_bEnable;
+	zoom_v8toc(args[0].As<v8::Boolean>(), zn_bEnable);
+
+
+	ZNSDKError err = _g_native_wrap.GetSettingServiceWrap().GetSettingVideoCtrl().EnableVideoPreviewDialog(zn_bEnable);
+	v8::Local<v8::Integer> bret = v8::Integer::New(isolate, (int32_t)err);
+	args.GetReturnValue().Set(bret);
+}
+void ZoomNodeSettingVideoCtrlWrap::IsVideoPreviewDialogEnabled(const v8::FunctionCallbackInfo<v8::Value>& args)
+{
+	v8::Isolate* isolate = args.GetIsolate();
+	bool isEnabled = _g_native_wrap.GetSettingServiceWrap().GetSettingVideoCtrl().IsVideoPreviewDialogEnabled();
+	v8::Local<v8::Boolean> bret = v8::Boolean::New(isolate, isEnabled);
+	args.GetReturnValue().Set(bret);
+}
 void ZoomNodeSettingVideoCtrlWrap::EnableAutoTurnOffVideoWhenJoinMeeting(const v8::FunctionCallbackInfo<v8::Value>& args)
 {
 	v8::Isolate* isolate = args.GetIsolate();

@@ -636,7 +636,11 @@ public:
 	virtual void onFreeMeetingNeedToUpgrade(ZOOM_SDK_NAMESPACE::IMeetingConfigurationFreeMeetingEvent::FreeMeetingNeedUpgradeType type_, const wchar_t* gift_url)
 	{
 		if (owner_) {
-			ZoomSTRING zn_gift_url = gift_url;
+			ZoomSTRING zn_gift_url = L"";
+			if (gift_url)
+			{
+				zn_gift_url = gift_url;
+			}
 			owner_->onFreeMeetingNeedToUpgrade(Map2WrapDefine(type_), zn_gift_url);
 		}
 	}
@@ -668,7 +672,11 @@ public:
 	virtual void onAirPlayInstructionWndNotification(bool bShow, const wchar_t* airhostName)
 	{
 		if (owner_) {
-			ZoomSTRING zn_airHostName = airhostName;
+			ZoomSTRING zn_airHostName = L"";
+			if (airhostName)
+			{
+				zn_airHostName = airhostName;
+			}
 			owner_->onAirPlayInstructionWndNotification(bShow, zn_airHostName);
 		}
 	}

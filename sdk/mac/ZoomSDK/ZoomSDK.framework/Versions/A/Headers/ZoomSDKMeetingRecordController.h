@@ -188,4 +188,25 @@ typedef enum
  * @return If the specified user is enabled to start local recording, the return value is ZoomSDKError_Success. Otherwise failed.
  */
 - (ZoomSDKError)requestCustomizedLocalRecordingNotification:(BOOL)request;
+
+/**
+ * @brief Pause cloud recording.
+ * @return If the function succeeds, the return value is ZoomSDKError_Success. Otherwise failed.
+ */
+-(ZoomSDKError)pauseCloudRecording;
+/**
+ * @brief Resume cloud recording.
+ * @return If the function succeeds, the return value is ZoomSDKError_Success. Otherwise failed.
+ */
+-(ZoomSDKError)resumeCloudRecording;
+/**
+ * @brief Pause local recording
+ * @return If the function succeeds, the return value is ZoomSDKError_Success. Otherwise failed.
+ */
+-(ZoomSDKError)pauseLocalRecording;
+/**
+ * @brief Resume local recording.
+ * @return If the function succeeds, the return value is ZoomSDKError_Success. Otherwise failed.
+ */
+-(ZoomSDKError)resumeLocalRecording;
 @end

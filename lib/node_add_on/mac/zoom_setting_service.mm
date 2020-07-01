@@ -135,15 +135,15 @@ void ZSettingUIStrategyWrap::ConfSettingDialogShownTabPage(unsigned long showOpt
         ZoomSDKGeneralSetting *general = [setting getGeneralSetting];
         if (general)
         {
-            [general hideSettingComponent:SettingComponent_VirtualBackgroundFeatureTab hide:(showOption & SETTING_DLG_SHOW_VIRTUAL_BACK_GROUND_TABPAGE)];
-            [general hideSettingComponent:SettingComponent_VideoFeatureTab hide:(showOption & SETTING_DLG_SHOW_VIDEO_TABPAGE)];
-            [general hideSettingComponent:SettingComponent_StatisticsFeatureTab hide:(showOption & SETTING_DLG_SHOW_STATISTICS_TABPAGE)];
-            [general hideSettingComponent:SettingComponent_RecordingFeatureTab hide:(showOption & SETTING_DLG_SHOW_RECORDING_TABPAGE)];
-            [general hideSettingComponent:SettingComponent_GeneralFeatureTab hide:(showOption & SETTING_DLG_SHOW_GENERAL_TABPAGE)];
-            [general hideSettingComponent:SettingComponent_FeedbackFeatureTab hide:(showOption & SETTING_DLG_SHOW_FEEDBACK_TABPAGE)];
-            [general hideSettingComponent:SettingComponent_AudioFeatureTab hide:(showOption & SETTING_DLG_SHOW_AUDIO_TABPAGE)];
-            [general hideSettingComponent:SettingComponent_AdvancedFeatureTab hide:(showOption & SETTING_DLG_SHOW_ADVANCED_FEATURE_TABPAGE)];
-            [general hideSettingComponent:SettingComponent_AccessibilityFeatureTab hide:(showOption & SETTING_DLG_SHOW_ACCESSIBILITY_TABPAGE)];
+            [general hideSettingComponent:SettingComponent_VirtualBackgroundFeatureTab hide:!(showOption & SETTING_DLG_SHOW_VIRTUAL_BACK_GROUND_TABPAGE)];
+            [general hideSettingComponent:SettingComponent_VideoFeatureTab hide:!(showOption & SETTING_DLG_SHOW_VIDEO_TABPAGE)];
+            [general hideSettingComponent:SettingComponent_StatisticsFeatureTab hide:!(showOption & SETTING_DLG_SHOW_STATISTICS_TABPAGE)];
+            [general hideSettingComponent:SettingComponent_RecordingFeatureTab hide:!(showOption & SETTING_DLG_SHOW_RECORDING_TABPAGE)];
+            [general hideSettingComponent:SettingComponent_GeneralFeatureTab hide:!(showOption & SETTING_DLG_SHOW_GENERAL_TABPAGE)];
+            [general hideSettingComponent:SettingComponent_FeedbackFeatureTab hide:!(showOption & SETTING_DLG_SHOW_FEEDBACK_TABPAGE)];
+            [general hideSettingComponent:SettingComponent_AudioFeatureTab hide:!(showOption & SETTING_DLG_SHOW_AUDIO_TABPAGE)];
+            [general hideSettingComponent:SettingComponent_AdvancedFeatureTab hide:!(showOption & SETTING_DLG_SHOW_ADVANCED_FEATURE_TABPAGE)];
+            [general hideSettingComponent:SettingComponent_AccessibilityFeatureTab hide:!(showOption & SETTING_DLG_SHOW_ACCESSIBILITY_TABPAGE)];
         }
     }
 }

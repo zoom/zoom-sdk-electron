@@ -49,6 +49,9 @@ public:
 	static void EnableAlwaysShowNameOnVideo(const v8::FunctionCallbackInfo<v8::Value>& args);
 	static void IsAlwaysShowNameOnVideoEnabled(const v8::FunctionCallbackInfo<v8::Value>& args);
 
+	static void EnableVideoPreviewDialog(const v8::FunctionCallbackInfo<v8::Value>& args);
+	static void IsVideoPreviewDialogEnabled(const v8::FunctionCallbackInfo<v8::Value>& args);
+
 	static void EnableAutoTurnOffVideoWhenJoinMeeting(const v8::FunctionCallbackInfo<v8::Value>& args);
 	static void IsAutoTurnOffVideoWhenJoinMeetingEnabled(const v8::FunctionCallbackInfo<v8::Value>& args);
 
@@ -93,6 +96,9 @@ static void InitClassAttribute<ZoomNodeSettingVideoCtrlWrap >(const v8::Local<v8
 
 	NODE_SET_PROTOTYPE_METHOD(tpl, "EnableAlwaysShowNameOnVideo", ZoomNodeSettingVideoCtrlWrap::EnableAlwaysShowNameOnVideo);
 	NODE_SET_PROTOTYPE_METHOD(tpl, "IsAlwaysShowNameOnVideoEnabled", ZoomNodeSettingVideoCtrlWrap::IsAlwaysShowNameOnVideoEnabled);
+
+	NODE_SET_PROTOTYPE_METHOD(tpl, "EnableVideoPreviewDialog", ZoomNodeSettingVideoCtrlWrap::EnableVideoPreviewDialog);
+	NODE_SET_PROTOTYPE_METHOD(tpl, "IsVideoPreviewDialogEnabled", ZoomNodeSettingVideoCtrlWrap::IsVideoPreviewDialogEnabled);
 
 	NODE_SET_PROTOTYPE_METHOD(tpl, "EnableAutoTurnOffVideoWhenJoinMeeting", ZoomNodeSettingVideoCtrlWrap::EnableAutoTurnOffVideoWhenJoinMeeting);
 	NODE_SET_PROTOTYPE_METHOD(tpl, "IsAutoTurnOffVideoWhenJoinMeetingEnabled", ZoomNodeSettingVideoCtrlWrap::IsAutoTurnOffVideoWhenJoinMeetingEnabled);

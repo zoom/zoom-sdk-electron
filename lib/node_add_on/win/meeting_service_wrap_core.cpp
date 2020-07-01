@@ -50,7 +50,6 @@ ZNSDKError ZMeetingServiceWrap::Start_WithoutLogin(ZNStartParam startParam)
 	ZOOM_SDK_NAMESPACE::StartParam param;
 	param.userType = Map2SDKDefine(startParam.userType);
 	param.param.withoutloginStart.userID = startParam.userId.c_str();
-	param.param.withoutloginStart.userToken = startParam.userToken.c_str();
 	param.param.withoutloginStart.userZAK = startParam.userZAK.c_str();
 	param.param.withoutloginStart.userName = startParam.username.c_str();
 	param.param.withoutloginStart.zoomuserType = Map2SDKDefine(startParam.zoomUserType);
@@ -100,7 +99,7 @@ ZNSDKError ZMeetingServiceWrap::Join_WithoutLogin(ZNJoinParam joinParam)
 	param.param.withoutloginuserJoin.userName = joinParam.username.c_str();
 	param.param.withoutloginuserJoin.psw = joinParam.psw.c_str();
 	swscanf_s(joinParam.hDirectShareAppWnd.c_str(), L"%x", (unsigned int*)&param.param.withoutloginuserJoin.hDirectShareAppWnd);
-	param.param.withoutloginuserJoin.toke4enfrocelogin = joinParam.token4EnforceLogin.c_str();
+	param.param.withoutloginuserJoin.userZAK = joinParam.userZAK.c_str();
 	param.param.withoutloginuserJoin.participantId = joinParam.participantId.c_str();
 	param.param.withoutloginuserJoin.webinarToken = joinParam.webinarToken.c_str();
 	param.param.withoutloginuserJoin.isVideoOff = joinParam.isVideoOff;

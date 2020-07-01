@@ -65,6 +65,10 @@
                                         x = nil;                  \
                                     }}
 
+
+extern NSString* kPhoneNumber;
+extern NSString* kMeetingNumber;
+
 typedef enum
 {
     ID_Unknow_Language = 0,
@@ -78,7 +82,7 @@ typedef enum
     ID_Japanese_Language,
     ID_Portuguese_Language,
     ID_Russian_Language,
-    ID_Korean_Language
+    ID_Korean_Languate,
 } ID_CLIENT_LANGUAGE;
 
 @interface ZMUtil : NSObject

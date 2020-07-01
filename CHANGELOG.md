@@ -39,6 +39,27 @@ HMACSHA256(
 ```
 You do not need to secret base64 encoded your signature. Once the JWT token is generated, please do not reveal it or publish it. **It is highly recommended to handle your SDK key and secret and generate JWT in a backend server to be consumed by your application. Do not generate JWT in a production application.**
 
+## 2020-06-30 @ v5.0.24433.0616
+
+## Added
+
+* Upgraded Zoom default UI to match Zoom client 5.0.
+* Optimized the status of H.323 call out by adding the following status:
+  * `H323Callout_Busy`
+  * `H323Callout_Decline`
+* [MacOS only] Added a new interface `HideRecordingsNotification` to hide recording notification.
+* Added a new parameter `userZAK` in `JoinMeetingWithoutLogin`
+* Added a new parameter to generate dump for troubleshooting in the `initsdk` interface
+  * `enableGenerateDump`
+* Added a new interface to enable or to check the video preview dialog
+  * `EnableVideoPreviewDialog`
+  * `IsVideoPreviewDialogEnabled`
+
+## Changed & Fixed
+* Redefine the parameters in the interface `StartMeetingWithOutLogin` and remove `usertoken`.
+* Predefine the value of the `langid` parameter in the `initsdk` to be `unknown`, which means the SDK will use the language configuration of the OS.
+* Temporary remove the "Unmute all" interfaces.
+
 ## 2020-04-28 @ v4.6.21666.0428
 
 ## Added:

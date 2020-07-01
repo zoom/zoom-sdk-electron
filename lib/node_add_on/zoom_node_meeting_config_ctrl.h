@@ -44,12 +44,6 @@ public:
 	/// \brief Set the visibility of the dialog box of waiting for the host after joining the meeting. Only invalidate when the host is not in the meeting.
 	/// \param 1. bDisable(bool) TRUE indicates to hide the dialog box. FALSE not.
 	static void DisableWaitingForHostDialog(const v8::FunctionCallbackInfo<v8::Value>& args);
-	/// \brief Set the visibility of the meeting ID in the title-bar.
-	/// \param 1. bHide(bool) FALSE means to display the content. Otherwise not.
-	static void HideMeetingInfoFromMeetingUITitle(const v8::FunctionCallbackInfo<v8::Value>& args);
-	/// \brief Set the meeting ID in the title-bar of the meeting window. 
-	/// \param 1. meetingNumber(number) Specify the meeting ID in the title-bar of the meeting window.
-	static void SetMeetingIDForMeetingUITitle(const v8::FunctionCallbackInfo<v8::Value>& args);
 	/// \brief Set the visibility of the dialog box if the password is wrong when join the meeting.
 	/// \param 1. bDisable(bool) TRUE indicates to hide the dialog box of wrong password.
 	/// \remarks If it is disabled to display the dialog box of wrong password, the system will directly exit the state of trying to join the meeting.
@@ -170,7 +164,6 @@ public:
 	static void SetShowAudioUseComputerSoundChkbox(const v8::FunctionCallbackInfo<v8::Value>& args);
 	static void SetShowCallInTab(const v8::FunctionCallbackInfo<v8::Value>& args);
 	static void SetShowCallMeTab(const v8::FunctionCallbackInfo<v8::Value>& args);
-	static void SetAlwaysShowMeetingIDOnTitle(const v8::FunctionCallbackInfo<v8::Value>& args);
 	static void DisableTopMostAttr4SettingDialog(const v8::FunctionCallbackInfo<v8::Value>& args);
 	static void EnableGrabShareWithoutReminder(const v8::FunctionCallbackInfo<v8::Value>& args);
 	static void EnableShowShareSwitchMultiToSingleConfirmDlg(const v8::FunctionCallbackInfo<v8::Value>& args);
@@ -234,8 +227,6 @@ static void InitClassAttribute<ZoomNodeMeetingConfigCtrlWrap >(const v8::Local<v
 	NODE_SET_PROTOTYPE_METHOD(tpl, "SetDirectShareMonitorID", ZoomNodeMeetingConfigCtrlWrap::SetDirectShareMonitorID);
 	NODE_SET_PROTOTYPE_METHOD(tpl, "SetMeetingUIPos", ZoomNodeMeetingConfigCtrlWrap::SetMeetingUIPos);
 	NODE_SET_PROTOTYPE_METHOD(tpl, "DisableWaitingForHostDialog", ZoomNodeMeetingConfigCtrlWrap::DisableWaitingForHostDialog);
-	NODE_SET_PROTOTYPE_METHOD(tpl, "HideMeetingInfoFromMeetingUITitle", ZoomNodeMeetingConfigCtrlWrap::HideMeetingInfoFromMeetingUITitle);
-	NODE_SET_PROTOTYPE_METHOD(tpl, "SetMeetingIDForMeetingUITitle", ZoomNodeMeetingConfigCtrlWrap::SetMeetingIDForMeetingUITitle);
 	NODE_SET_PROTOTYPE_METHOD(tpl, "DisablePopupMeetingWrongPSWDlg", ZoomNodeMeetingConfigCtrlWrap::DisablePopupMeetingWrongPSWDlg);
 	NODE_SET_PROTOTYPE_METHOD(tpl, "EnableAutoEndOtherMeetingWhenStartMeeting", ZoomNodeMeetingConfigCtrlWrap::EnableAutoEndOtherMeetingWhenStartMeeting);
 	NODE_SET_PROTOTYPE_METHOD(tpl, "EnableLButtonDBClick4SwitchFullScreenMode", ZoomNodeMeetingConfigCtrlWrap::EnableLButtonDBClick4SwitchFullScreenMode);
@@ -265,7 +256,6 @@ static void InitClassAttribute<ZoomNodeMeetingConfigCtrlWrap >(const v8::Local<v
 	NODE_SET_PROTOTYPE_METHOD(tpl, "SetShowAudioUseComputerSoundChkbox", ZoomNodeMeetingConfigCtrlWrap::SetShowAudioUseComputerSoundChkbox);
 	NODE_SET_PROTOTYPE_METHOD(tpl, "SetShowCallInTab", ZoomNodeMeetingConfigCtrlWrap::SetShowCallInTab);
 	NODE_SET_PROTOTYPE_METHOD(tpl, "SetShowCallMeTab", ZoomNodeMeetingConfigCtrlWrap::SetShowCallMeTab);
-	NODE_SET_PROTOTYPE_METHOD(tpl, "SetAlwaysShowMeetingIDOnTitle", ZoomNodeMeetingConfigCtrlWrap::SetAlwaysShowMeetingIDOnTitle);
 	NODE_SET_PROTOTYPE_METHOD(tpl, "DisableTopMostAttr4SettingDialog", ZoomNodeMeetingConfigCtrlWrap::DisableTopMostAttr4SettingDialog);
 	NODE_SET_PROTOTYPE_METHOD(tpl, "EnableGrabShareWithoutReminder", ZoomNodeMeetingConfigCtrlWrap::EnableGrabShareWithoutReminder);
 	NODE_SET_PROTOTYPE_METHOD(tpl, "EnableShowShareSwitchMultiToSingleConfirmDlg", ZoomNodeMeetingConfigCtrlWrap::EnableShowShareSwitchMultiToSingleConfirmDlg);

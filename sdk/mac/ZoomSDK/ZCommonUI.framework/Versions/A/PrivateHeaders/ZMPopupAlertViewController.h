@@ -38,8 +38,15 @@ typedef enum : NSUInteger {
 
 //default NO(NSLineBreakByTruncatingTail)
 @property (nonatomic,assign) BOOL isTitleBreakByWord;
+
+@property (nonatomic, copy) NSString *cancelTitle;
+
 - (void)dismiss;
 
 - (__kindof NSButton *)buttonAtIndex:(ZMPopupAlertIndex)index;
+
+- (NSTextField *)infoTextField;
+
+- (NSSize)calculateContentSize;
 
 @end

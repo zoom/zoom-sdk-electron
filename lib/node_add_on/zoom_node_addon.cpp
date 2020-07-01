@@ -103,18 +103,17 @@ void ZoomNodeWrap::InitSDK(const v8::FunctionCallbackInfo<v8::Value>& args){
 	Init_MainThread_RunLoop(0);
 #endif
 	v8::Isolate* isolate = args.GetIsolate();
-	if (args.Length() < 6) {
+	if (args.Length() < 5) {
 		isolate->ThrowException(v8::Exception::TypeError(
 			v8::String::NewFromUtf8(isolate, "ZoomNodeWrap::InitSDK-Wrong number of arguments", v8::NewStringType::kInternalized).ToLocalChecked()));
 		return;
 	}
 
 	if (!args[0]->IsString() ||
-		!args[1]->IsString() ||
-		!args[2]->IsNumber() || 
+		!args[1]->IsString() || 
+		!args[2]->IsString() ||
 		!args[3]->IsString() ||
-		!args[4]->IsString() ||
-		!args[5]->IsString() 
+		!args[4]->IsString() 
 		)
 	{
 		isolate->ThrowException(v8::Exception::TypeError(
@@ -124,25 +123,63 @@ void ZoomNodeWrap::InitSDK(const v8::FunctionCallbackInfo<v8::Value>& args){
 	ZNInitParam param;
 	zoom_v8toc(args[0].As<v8::String>(), param.path);
 	zoom_v8toc(args[1].As<v8::String>(), param.domain);
-	int langid = (int)args[2].As<v8::Integer >()->Value();
-	param.langid = (ZNSDK_LANGUAGE_ID)langid;
-	zoom_v8toc(args[3].As<v8::String>(), param.obConfigOpts.customizedLang.langName);
-	zoom_v8toc(args[4].As<v8::String>(), param.obConfigOpts.customizedLang.langInfo);
-	zoom_v8toc(args[5].As<v8::String>(), param.strSupportUrl);
+	zoom_v8toc(args[2].As<v8::String>(), param.obConfigOpts.customizedLang.langName);
+	zoom_v8toc(args[3].As<v8::String>(), param.obConfigOpts.customizedLang.langInfo);
+	zoom_v8toc(args[4].As<v8::String>(), param.strSupportUrl);
+
+	if (args.Length() > 5)
+	{
+		if (!args[5]->IsNumber())
+		{
+			isolate->ThrowException(v8::Exception::TypeError(
+				v8::String::NewFromUtf8(isolate, "Wrong arguments", v8::NewStringType::kInternalized).ToLocalChecked()));
+			return;
+		}
+		int langid = (int)args[5].As<v8::Integer >()->Value();
+		param.langid = (ZNSDK_LANGUAGE_ID)langid;
+	}
 	
 	if (args.Length() > 6)
 	{
+		if (!args[6]->IsBoolean())
+		{
+			isolate->ThrowException(v8::Exception::TypeError(
+				v8::String::NewFromUtf8(isolate, "Wrong arguments", v8::NewStringType::kInternalized).ToLocalChecked()));
+			return;
+		}
 		zoom_v8toc(args[6].As<v8::Boolean>(), param.enable_log);
 	}
 	if (args.Length() > 7)
 	{
+		if (!args[7]->IsNumber())
+		{
+			isolate->ThrowException(v8::Exception::TypeError(
+				v8::String::NewFromUtf8(isolate, "Wrong arguments", v8::NewStringType::kInternalized).ToLocalChecked()));
+			return;
+		}
 		int zn_locale = (int)args[7].As<v8::Integer >()->Value();
 		param.locale = (ZNSDK_APP_Locale)zn_locale;
 	}
 	if (args.Length() > 8)
 	{
+		if (!args[8]->IsNumber())
+		{
+			isolate->ThrowException(v8::Exception::TypeError(
+				v8::String::NewFromUtf8(isolate, "Wrong arguments", v8::NewStringType::kInternalized).ToLocalChecked()));
+			return;
+		}
 		unsigned int zn_logfilesize = (unsigned int)args[8].As<v8::Integer >()->Value();
 		param.logFileSize = zn_logfilesize;
+	}
+	if (args.Length() > 9)
+	{
+		if (!args[9]->IsBoolean())
+		{
+			isolate->ThrowException(v8::Exception::TypeError(
+				v8::String::NewFromUtf8(isolate, "Wrong arguments", v8::NewStringType::kInternalized).ToLocalChecked()));
+			return;
+		}
+		zoom_v8toc(args[9].As<v8::Boolean>(), param.enableGeneratDump);
 	}
 	ZNSDKError err = _g_native_wrap.InitSDK(param);
 	v8::Local<v8::Integer> bret = v8::Integer::New(isolate, (int32_t)err);
@@ -505,7 +542,7 @@ void ZoomNodeMeetingWrap::Start(const v8::FunctionCallbackInfo<v8::Value>& args)
 void ZoomNodeMeetingWrap::Start_WithoutLogin(const v8::FunctionCallbackInfo<v8::Value>& args)
 {
 	v8::Isolate* isolate = args.GetIsolate();
-	if (args.Length() < 12)
+	if (args.Length() < 11)
 	{
 		isolate->ThrowException(v8::Exception::TypeError(
 			v8::String::NewFromUtf8(isolate, "Wrong number of arguments", v8::NewStringType::kInternalized).ToLocalChecked()));
@@ -515,15 +552,14 @@ void ZoomNodeMeetingWrap::Start_WithoutLogin(const v8::FunctionCallbackInfo<v8::
 	if (!args[0]->IsString() ||
 		!args[1]->IsString() ||
 		!args[2]->IsString() ||
-		!args[3]->IsString() ||
+		!args[3]->IsNumber() ||
 		!args[4]->IsNumber() ||
-		!args[5]->IsNumber() ||
+		!args[5]->IsString() ||
 		!args[6]->IsString() ||
 		!args[7]->IsString() ||
-		!args[8]->IsString() ||
+		!args[8]->IsBoolean() ||
 		!args[9]->IsBoolean() ||
-		!args[10]->IsBoolean() ||
-		!args[11]->IsBoolean())
+		!args[10]->IsBoolean())
 	{
 		isolate->ThrowException(v8::Exception::TypeError(
 			v8::String::NewFromUtf8(isolate, "Wrong arguments", v8::NewStringType::kInternalized).ToLocalChecked()));
@@ -532,10 +568,9 @@ void ZoomNodeMeetingWrap::Start_WithoutLogin(const v8::FunctionCallbackInfo<v8::
 	ZNStartParam param;
 	param.userType = ZNSDK_UT_WITHOUT_LOGIN;
 	zoom_v8toc(args[0].As<v8::String>(), param.userId);
-	zoom_v8toc(args[1].As<v8::String>(), param.userToken);
-	zoom_v8toc(args[2].As<v8::String>(), param.userZAK);
-	zoom_v8toc(args[3].As<v8::String>(), param.username);
-	unsigned int nodeuserType = (unsigned int)args[4].As<v8::Integer >()->Value();
+	zoom_v8toc(args[1].As<v8::String>(), param.userZAK);
+	zoom_v8toc(args[2].As<v8::String>(), param.username);
+	unsigned int nodeuserType = (unsigned int)args[3].As<v8::Integer >()->Value();
 	switch (nodeuserType)
 	{
 	case 0:
@@ -559,13 +594,13 @@ void ZoomNodeMeetingWrap::Start_WithoutLogin(const v8::FunctionCallbackInfo<v8::
 	default:
 		break;
 	}
-	param.meetingNumber = (unsigned long long)args[5]->NumberValue();
-	zoom_v8toc(args[6].As<v8::String>(), param.sdkVanityID);
-	zoom_v8toc(args[7].As<v8::String>(), param.hDirectShareAppWnd);
-	zoom_v8toc(args[8].As<v8::String>(), param.participantId);
-	zoom_v8toc(args[9].As<v8::Boolean>(), param.isDirectShareDesktop);
-	zoom_v8toc(args[10].As<v8::Boolean>(), param.isVideoOff);
-	zoom_v8toc(args[11].As<v8::Boolean>(), param.isAudioOff);
+	param.meetingNumber = (unsigned long long)args[4]->NumberValue();
+	zoom_v8toc(args[5].As<v8::String>(), param.sdkVanityID);
+	zoom_v8toc(args[6].As<v8::String>(), param.hDirectShareAppWnd);
+	zoom_v8toc(args[7].As<v8::String>(), param.participantId);
+	zoom_v8toc(args[8].As<v8::Boolean>(), param.isDirectShareDesktop);
+	zoom_v8toc(args[9].As<v8::Boolean>(), param.isVideoOff);
+	zoom_v8toc(args[10].As<v8::Boolean>(), param.isAudioOff);
 
 	ZNSDKError err = _g_native_wrap.GetMeetingServiceWrap().Start_WithoutLogin(param);
 	v8::Local<v8::Integer> bret = v8::Integer::New(isolate, (int32_t)err);
@@ -641,13 +676,13 @@ void ZoomNodeMeetingWrap::Join_WithoutLogin(const v8::FunctionCallbackInfo<v8::V
 		return;
 	}
 	ZNJoinParam param;
-	param.userType = ZNSDK_UT_APIUSER;
+	param.userType = ZNSDK_UT_WITHOUT_LOGIN;
 	param.meetingNumber = (unsigned long long)args[0]->NumberValue();
 	zoom_v8toc(args[1].As<v8::String>(), param.vanityID);
 	zoom_v8toc(args[2].As<v8::String>(), param.username);
 	zoom_v8toc(args[3].As<v8::String>(), param.psw);
 	zoom_v8toc(args[4].As<v8::String>(), param.hDirectShareAppWnd);
-	zoom_v8toc(args[5].As<v8::String>(), param.token4EnforceLogin);
+	zoom_v8toc(args[5].As<v8::String>(), param.userZAK);
 	zoom_v8toc(args[6].As<v8::String>(), param.participantId);
 	zoom_v8toc(args[7].As<v8::String>(), param.webinarToken);
 	zoom_v8toc(args[8].As<v8::Boolean>(), param.isDirectShareDesktop);

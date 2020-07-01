@@ -19,8 +19,6 @@ public:
 	void SetDirectShareMonitorID(ZoomSTRING monitorID);
 	void SetMeetingUIPos(ZNWndPosition position);
 	void DisableWaitingForHostDialog(bool bDisable);
-	void HideMeetingInfoFromMeetingUITitle(bool bHide);
-	void SetMeetingIDForMeetingUITitle(unsigned long long meetingNumber);
 	void DisablePopupMeetingWrongPSWDlg(bool bDisable);
 	void EnableAutoEndOtherMeetingWhenStartMeeting(bool bEnable);
 	void EnableLButtonDBClick4SwitchFullScreenMode(bool bEnable);
@@ -64,7 +62,6 @@ public:
 	void SetShowAudioUseComputerSoundChkbox(bool bShow);
 	void SetShowCallInTab(bool bShow);
 	void SetShowCallMeTab(bool bShow);
-	void SetAlwaysShowMeetingIDOnTitle(bool bAlwaysShow);
 	void DisableTopMostAttr4SettingDialog(bool bDisable);
 	void EnableGrabShareWithoutReminder(bool bEnable);
 	void EnableShowShareSwitchMultiToSingleConfirmDlg(bool bEnable);

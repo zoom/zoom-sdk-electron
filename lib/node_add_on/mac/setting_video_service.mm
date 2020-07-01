@@ -403,6 +403,26 @@ bool ZSettingVideoWrap::IsHideNoVideoUsersOnWallViewEnabled()
     return false;
 }
 
+ZNSDKError ZSettingVideoWrap::EnableVideoPreviewDialog(bool bEnable)
+{
+    ZoomSDKMeetingUIController *controller = [[[ZoomSDK sharedSDK] getMeetingService] getMeetingUIController];
+    if(controller){
+        ZoomSDKError ret = [controller isShowVideoPreviewWhenJoinMeeting:bEnable];
+        nativeErrorTypeHelp help;
+        return help.ZoomSDKErrorType(ret);
+    }
+    return ZNSDKERR_SERVICE_FAILED;
+}
+
+bool ZSettingVideoWrap::IsVideoPreviewDialogEnabled()
+{
+    ZoomSDKMeetingUIController *controller = [[[ZoomSDK sharedSDK] getMeetingService] getMeetingUIController];
+    if(controller){
+        return [controller showVideoPreviewWhenJoinMeeting];
+    }
+    return NO;
+}
+
 void ZSettingVideoWrap::onComputerCamDeviceChanged(ZNList<ZNCameraInfo> newCameraList)
 {
     if (m_pSink) {

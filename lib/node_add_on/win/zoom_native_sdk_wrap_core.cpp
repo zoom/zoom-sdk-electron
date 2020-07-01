@@ -67,6 +67,7 @@ ZNSDKError ZNativeSDKWrap::InitSDK(ZNInitParam& initParam)
 	param.emLanguageID = Map2SDKDefine(initParam.langid);
 	param.strWebDomain = initParam.domain.c_str();
 	param.enableLogByDefault = initParam.enable_log;
+	param.enableGenerateDump = initParam.enableGeneratDump;
 	param.strSupportUrl = initParam.strSupportUrl.c_str();
 	param.obConfigOpts.customizedLang.langName = wsTOs(initParam.obConfigOpts.customizedLang.langName).c_str();
 	param.obConfigOpts.customizedLang.langInfo = wsTOs(initParam.obConfigOpts.customizedLang.langInfo).c_str();

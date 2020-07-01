@@ -15,17 +15,19 @@
 #define kSDKAuthAccountNotSupport       3024
 //Account did not enable SDK feature
 #define kSDKAuthAccountNotEnableSDK     3025
+//Account does not support this SDK version
+#define kSDKAuthAccountDonotSupportTheSDKVersion    3112
 
 /** 
  @brief An enumeration of user types. 
  */
 typedef enum {
-    //API user.
-    ZoomSDKUserType_APIUser     = 99,
     //User logs in with working email.
     ZoomSDKUserType_ZoomUser    = 100,
     //Single-sign-on user.
     ZoomSDKUserType_SSOUser     = 101,
+    //Users who are not logged in
+    ZoomSDKUserType_WithoutLogin = 102,
 }ZoomSDKUserType;
 
 typedef enum {
@@ -70,8 +72,6 @@ typedef enum{
     ActionMeetingCmd_DisableUnmuteBySelf,
     //Mute all participants in the meeting, available only for the host/co-host. 
     ActionMeetingCmd_MuteAll,
-	//Unmute all participants in the meeting, available only for the host/co-host. 
-    ActionMeetingCmd_UnmuteAll,
     //Lock the meeting, available only for the host/co-host. Once locked, the new participants can no longer join the meeting/co-host.
     ActionMeetingCmd_LockMeeting,
 	//Unlock the meeting, available only for the host/co-host. 
@@ -253,6 +253,8 @@ typedef enum{
     ZoomSDKError_TooFrequentCall,
     //unsupported feature
     ZoomSDKError_UnSupportedFeature,
+    //unsupport email login
+    ZoomSDKError_EmailLoginIsDisabled,
 	//Unknown error.
     ZoomSDKError_UnKnow,
 }ZoomSDKError;
@@ -264,17 +266,19 @@ typedef enum {
     //Authentication is successful
     ZoomSDKAuthError_Success = 0,
     //Key or secret is wrong
-    ZoomSDKAuthError_KeyOrSecretWrong = 1,
+    ZoomSDKAuthError_KeyOrSecretWrong,
     //Client account does not support
-    ZoomSDKAuthError_AccountNotSupport = 2,
+    ZoomSDKAuthError_AccountNotSupport,
     //Client account does not enable SDK
-    ZoomSDKAuthError_AccountNotEnableSDK = 3,
+    ZoomSDKAuthError_AccountNotEnableSDK,
     //Auth timeout
-    ZoomSDKAuthError_Timeout = 4,
+    ZoomSDKAuthError_Timeout,
     //Network issue
-    ZoomSDKAuthError_NetworkIssue = 5,
+    ZoomSDKAuthError_NetworkIssue,
+    //Client incompatible
+    ZoomSDKAuthError_Client_Incompatible,
     //Unknown error
-    ZoomSDKAuthError_Unknown = 6,
+    ZoomSDKAuthError_Unknown,
 }ZoomSDKAuthError;
 
 /**
@@ -346,8 +350,16 @@ typedef enum {
     ZoomSDKMeetingError_RegisterWebinarEnforceLogin     = 23,
     //The certificate of ZC has been changed.
     ZoomSDKMeetingError_ZCCertificateChanged            = 24,
+    //Vanity conference ID does not exist.
+    ZoomSDKMeetingError_vanityNotExist                  = 27,
+    //Join webinar with the same email.
+    ZoomSDKMeetingError_joinWebinarWithSameEmail        = 28,
+    //Meeting settings is not allowed to start a meeting.
+    ZoomSDKMeetingError_disallowHostMeeting             = 29,
     //Failed to write configure file.
     ZoomSDKMeetingError_ConfigFileWriteFailed           = 50,
+    //Forbidden to join the internal meeting.
+    ZoomSDKMeetingError_forbidToJoinInternalMeeting     = 60,
 	// User is removed from meeting by host.
     ZoomSDKMeetingError_RemovedByHost                   = 61,
     //Unknown error.
@@ -550,6 +562,10 @@ typedef enum
     H323CalloutStatus_Failed,
     //Unknown status.
     H323CalloutStatus_Unknown,
+    //Busy
+    H323CalloutStatus_Busy,
+    //Decline
+    H323CalloutStatus_Decline,
 }H323CalloutStatus;
 
 /**
@@ -754,7 +770,7 @@ typedef enum
  */
 typedef enum
 {
-	//Invitation button: invite others.
+	//Invitation button: invite others.not support since 4.6 version.
     ToolBarInviteButton,
 	//Audio button: manage in-meeting audio of the current user.
     FitBarAudioButton,
@@ -795,7 +811,9 @@ typedef enum
     //Poll button: questionnaire.
     ToolBarPollingButton,
     //Reaction Button on tool bar.
-    ToolBarReactionsButton
+    ToolBarReactionsButton,
+    //Share button on tool bar.
+    ToolBarShareButton,
 }SDKButton;
 
 /**

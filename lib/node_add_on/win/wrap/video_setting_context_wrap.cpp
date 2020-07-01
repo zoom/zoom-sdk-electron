@@ -45,6 +45,10 @@ IMPL_FUNC_0(IVideoSettingContext, IsHDVideoEnabled, bool, false)
 IMPL_FUNC_1(IVideoSettingContext, EnableAlwaysShowNameOnVideo, SDKError, bool, bEnable, SDKERR_UNINITIALIZE)
 //virtual bool IsAlwaysShowNameOnVideoEnabled() = 0;
 IMPL_FUNC_0(IVideoSettingContext, IsAlwaysShowNameOnVideoEnabled, bool, false)
+//virtual SDKError EnableVideoPreviewDialog(bool bEnable) = 0;
+IMPL_FUNC_1(IVideoSettingContext, EnableVideoPreviewDialog, SDKError, bool, bEnable, SDKERR_UNINITIALIZE)
+//virtual bool IsVideoPreviewDialogEnabled() = 0;
+IMPL_FUNC_0(IVideoSettingContext, IsVideoPreviewDialogEnabled, bool, false)
 //virtual SDKError EnableAutoTurnOffVideoWhenJoinMeeting(bool bEnable) = 0;
 IMPL_FUNC_1(IVideoSettingContext, EnableAutoTurnOffVideoWhenJoinMeeting, SDKError, bool, bEnable, SDKERR_UNINITIALIZE)
 //virtual bool IsAutoTurnOffVideoWhenJoinMeetingEnabled() = 0;

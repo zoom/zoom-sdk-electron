@@ -41,8 +41,6 @@
       <!-- <button type="button" class="button-small" onclick="setDirectShareMonitorID()">Set DirectShareMonitorID</button> -->
       <button type="button" class="button-small" onclick="setMeetingUIPos()">Set MeetingUIPos</button>
       <button type="button" class="button-small" onclick="disableWaitingForHostDialog()">Disable WaitingForHostDialog</button>
-      <button type="button" class="button-small" onclick="hideMeetingInfoFromMeetingUITitle()">Hide MeetingInfoFromMeetingUITitle</button>
-      <button type="button" class="button-small" onclick="setMeetingIDForMeetingUITitle()">Set MeetingIDForMeetingUITitle</button>
       <button type="button" class="button-small" onclick="disablePopupMeetingWrongPSWDlg()">Disable PopupMeetingWrongPSWDlg</button>
       <button type="button" class="button-small" onclick="enableAutoEndOtherMeetingWhenStartMeeting()">Enable AutoEndOtherMeeting</button>
       <button type="button" class="button-small" onclick="enableLButtonDBClick4SwitchFullScreenMode()">Enable LButtonDBClick4SwitchFullScreenMode</button>
@@ -192,14 +190,6 @@
     function disableWaitingForHostDialog() {
       let meetingNum = document.getElementById("meetingNum").value;
 			ipcRenderer.send('asynchronous-message', 'disableWaitingForHostDialog', Boolean(meetingNum));
-    }
-    function hideMeetingInfoFromMeetingUITitle() {
-      let meetingNum = document.getElementById("meetingNum").value;
-			ipcRenderer.send('asynchronous-message', 'hideMeetingInfoFromMeetingUITitle', Boolean(meetingNum));
-    }
-    function setMeetingIDForMeetingUITitle() {
-      let meetingNum = document.getElementById("meetingNum").value;
-			ipcRenderer.send('asynchronous-message', 'setMeetingIDForMeetingUITitle', meetingNum);
     }
     function disablePopupMeetingWrongPSWDlg() {
       let meetingNum = document.getElementById("meetingNum").value;

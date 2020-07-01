@@ -32,6 +32,10 @@ DEFINE_FUNC_0(IsHDVideoEnabled, bool)
 DEFINE_FUNC_1(EnableAlwaysShowNameOnVideo, SDKError, bool, bEnable)
 //virtual bool IsAlwaysShowNameOnVideoEnabled() = 0;
 DEFINE_FUNC_0(IsAlwaysShowNameOnVideoEnabled, bool)
+//virtual SDKError EnableVideoPreviewDialog(bool bEnable) = 0;
+DEFINE_FUNC_1(EnableVideoPreviewDialog, SDKError, bool, bEnable)
+//virtual bool IsVideoPreviewDialogEnabled() = 0;
+DEFINE_FUNC_0(IsVideoPreviewDialogEnabled, bool)
 //virtual SDKError EnableAutoTurnOffVideoWhenJoinMeeting(bool bEnable) = 0;
 DEFINE_FUNC_1(EnableAutoTurnOffVideoWhenJoinMeeting, SDKError, bool, bEnable)
 //virtual bool IsAutoTurnOffVideoWhenJoinMeetingEnabled() = 0;

@@ -34,11 +34,12 @@ typedef NS_ENUM(NSUInteger, ZMRunAppleScriptResult)
 - (void)deauthenticate;
 
 - (int)getPID:(NSString *)forProcess;
+- (int)processRunningTime:(NSString *)forProcess;
 
 - (OSStatus)executeCommand:(NSString *)pathToCommand withArgs:(NSArray *)arguments;
 - (OSStatus)executeCommandSynced:(NSString *)pathToCommand withArgs:(NSArray *)arguments;
-- (BOOL)killProcess:(NSString *)commandFromPS withSignal:(int)signal;
 
+- (BOOL)killProcess:(NSString *)commandFromPS withSignal:(int)signal;
 - (BOOL)authRemovePath:(NSString*)rmPath;
 - (BOOL)authCopyPath:(NSString*)srcPath toPath:(NSString*)destPath;
 

@@ -116,7 +116,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="zoom_sdk.js.html">zoom_sdk.js</a>, <a href="zoom_sdk.js.html#line80">line 80</a>
+        <a href="zoom_sdk.js.html">zoom_sdk.js</a>, <a href="zoom_sdk.js.html#line84">line 84</a>
     </li></ul></dd>
     
 
@@ -153,6 +153,112 @@
     <dd>
         
 <span class="param-type">ZoomSDKError</span>
+
+
+    </dd>
+</dl>
+
+    
+
+
+
+
+
+        
+            
+
+    
+
+    
+    <h4 class="name" id="~getInstance"><span class="type-signature">(inner) </span>getInstance<span class="signature">()</span><span class="type-signature"> &rarr; {ZoomSDK}</span></h4>
+    
+
+    
+
+
+
+<div class="description">
+    Get Zoom SDK Module
+</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+<dl class="details">
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+
+    
+    <dt class="tag-source">Source:</dt>
+    <dd class="tag-source"><ul class="dummy"><li>
+        <a href="zoom_sdk.js.html">zoom_sdk.js</a>, <a href="zoom_sdk.js.html#line169">line 169</a>
+    </li></ul></dd>
+    
+
+    
+
+    
+
+    
+</dl>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+<h5>Returns:</h5>
+
+        
+
+
+<dl>
+    <dt>
+        Type
+    </dt>
+    <dd>
+        
+<span class="param-type">ZoomSDK</span>
 
 
     </dd>
@@ -222,7 +328,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="zoom_sdk.js.html">zoom_sdk.js</a>, <a href="zoom_sdk.js.html#line73">line 73</a>
+        <a href="zoom_sdk.js.html">zoom_sdk.js</a>, <a href="zoom_sdk.js.html#line77">line 77</a>
     </li></ul></dd>
     
 
@@ -280,7 +386,7 @@
     
 
     
-    <h4 class="name" id="~InitSDK"><span class="type-signature">(inner) </span>InitSDK<span class="signature">(path, domain, langid, langname, langinfo, strSupportUrl, enable_log, locale, logfilesize)</span><span class="type-signature"> &rarr; {ZoomSDKError}</span></h4>
+    <h4 class="name" id="~InitSDK"><span class="type-signature">(inner) </span>InitSDK<span class="signature">(path, domain, langname, langinfo, strSupportUrl, langid, enable_log, locale, logfilesize, enableGenerateDump)</span><span class="type-signature"> &rarr; {ZoomSDKError}</span></h4>
     
 
     
@@ -370,29 +476,6 @@
 
         <tr>
             
-                <td class="name"><code>langid</code></td>
-            
-
-            <td class="type">
-            
-                
-<span class="param-type">String</span>
-
-
-            
-            </td>
-
-            
-
-            
-
-            <td class="description last">ZoomSDK_LANGUAGE_ID,</td>
-        </tr>
-
-    
-
-        <tr>
-            
                 <td class="name"><code>langname</code></td>
             
 
@@ -456,6 +539,29 @@
             
 
             <td class="description last"></td>
+        </tr>
+
+    
+
+        <tr>
+            
+                <td class="name"><code>langid</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">String</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last">ZoomSDK_LANGUAGE_ID,</td>
         </tr>
 
     
@@ -528,6 +634,29 @@
         </tr>
 
     
+
+        <tr>
+            
+                <td class="name"><code>enableGenerateDump</code></td>
+            
+
+            <td class="type">
+            
+                
+<span class="param-type">Boolean</span>
+
+
+            
+            </td>
+
+            
+
+            
+
+            <td class="description last"></td>
+        </tr>
+
+    
     </tbody>
 </table>
 
@@ -565,7 +694,7 @@
     
     <dt class="tag-source">Source:</dt>
     <dd class="tag-source"><ul class="dummy"><li>
-        <a href="zoom_sdk.js.html">zoom_sdk.js</a>, <a href="zoom_sdk.js.html#line50">line 50</a>
+        <a href="zoom_sdk.js.html">zoom_sdk.js</a>, <a href="zoom_sdk.js.html#line52">line 52</a>
     </li></ul></dd>
     
 
@@ -614,182 +743,6 @@
 
 
         
-            
-
-    
-
-    
-    <h4 class="name" id="~StartMonitorUIAction"><span class="type-signature">(inner) </span>StartMonitorUIAction<span class="signature">()</span><span class="type-signature"></span></h4>
-    
-
-    
-
-
-
-<div class="description">
-    mode: Start to monitor the UI action, windows os only.uiacitonCB: function, such as function uiacitoncb(ZoomSDKUIHOOKHWNDTYPE, ZoomSDKUIHOOKMSGID, HANDLE)
-</div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="zoom_sdk.js.html">zoom_sdk.js</a>, <a href="zoom_sdk.js.html#line156">line 156</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        
-            
-
-    
-
-    
-    <h4 class="name" id="~StopMonitorUIAction"><span class="type-signature">(inner) </span>StopMonitorUIAction<span class="signature">()</span><span class="type-signature"></span></h4>
-    
-
-    
-
-
-
-<div class="description">
-    mode: Stop to monitor the UI action, windows os only.
-</div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-<dl class="details">
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-
-    
-    <dt class="tag-source">Source:</dt>
-    <dd class="tag-source"><ul class="dummy"><li>
-        <a href="zoom_sdk.js.html">zoom_sdk.js</a>, <a href="zoom_sdk.js.html#line166">line 166</a>
-    </li></ul></dd>
-    
-
-    
-
-    
-
-    
-</dl>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        
     
 
     
@@ -805,13 +758,13 @@
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-zoom_annotation_ctrl.html">zoom_annotation_ctrl</a></li><li><a href="module-zoom_audio_rawdata.html">zoom_audio_rawdata</a></li><li><a href="module-zoom_auth.html">zoom_auth</a></li><li><a href="module-zoom_customized_resource.html">zoom_customized_resource</a></li><li><a href="module-zoom_direct_share_helper.html">zoom_direct_share_helper</a></li><li><a href="module-zoom_h323.html">zoom_h323</a></li><li><a href="module-zoom_meeting.html">zoom_meeting</a></li><li><a href="module-zoom_meeting_audio.html">zoom_meeting_audio</a></li><li><a href="module-zoom_meeting_configuration.html">zoom_meeting_configuration</a></li><li><a href="module-zoom_meeting_info.html">zoom_meeting_info</a></li><li><a href="module-zoom_meeting_Participants_ctrl.html">zoom_meeting_Participants_ctrl</a></li><li><a href="module-zoom_meeting_recording.html">zoom_meeting_recording</a></li><li><a href="module-zoom_meeting_share.html">zoom_meeting_share</a></li><li><a href="module-zoom_meeting_ui_ctrl.html">zoom_meeting_ui_ctrl</a></li><li><a href="module-zoom_meeting_video.html">zoom_meeting_video</a></li><li><a href="module-zoom_premeeting.html">zoom_premeeting</a></li><li><a href="module-zoom_sdk.html">zoom_sdk</a></li><li><a href="module-zoom_setting.html">zoom_setting</a></li><li><a href="module-zoom_setting_accessibility_ctrl.html">zoom_setting_accessibility_ctrl</a></li><li><a href="module-zoom_setting_audio.html">zoom_setting_audio</a></li><li><a href="module-zoom_setting_general.html">zoom_setting_general</a></li><li><a href="module-zoom_setting_recording.html">zoom_setting_recording</a></li><li><a href="module-zoom_setting_statistic_ctrl.html">zoom_setting_statistic_ctrl</a></li><li><a href="module-zoom_setting_ui_ctrl.html">zoom_setting_ui_ctrl</a></li><li><a href="module-zoom_setting_video.html">zoom_setting_video</a></li><li><a href="module-zoom_share_rawdata.html">zoom_share_rawdata</a></li><li><a href="module-zoom_sms_helper.html">zoom_sms_helper</a></li><li><a href="module-zoom_upgrade_account.html">zoom_upgrade_account</a></li><li><a href="module-zoom_video_rawdata.html">zoom_video_rawdata</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-settings.html">settings</a></li><li><a href="module-zoom_annotation_ctrl.html">zoom_annotation_ctrl</a></li><li><a href="module-zoom_audio_rawdata.html">zoom_audio_rawdata</a></li><li><a href="module-zoom_auth.html">zoom_auth</a></li><li><a href="module-zoom_customized_resource.html">zoom_customized_resource</a></li><li><a href="module-zoom_direct_share_helper.html">zoom_direct_share_helper</a></li><li><a href="module-zoom_h323.html">zoom_h323</a></li><li><a href="module-zoom_meeting.html">zoom_meeting</a></li><li><a href="module-zoom_meeting_audio.html">zoom_meeting_audio</a></li><li><a href="module-zoom_meeting_configuration.html">zoom_meeting_configuration</a></li><li><a href="module-zoom_meeting_info.html">zoom_meeting_info</a></li><li><a href="module-zoom_meeting_Participants_ctrl.html">zoom_meeting_Participants_ctrl</a></li><li><a href="module-zoom_meeting_share.html">zoom_meeting_share</a></li><li><a href="module-zoom_meeting_ui_ctrl.html">zoom_meeting_ui_ctrl</a></li><li><a href="module-zoom_meeting_video.html">zoom_meeting_video</a></li><li><a href="module-zoom_premeeting.html">zoom_premeeting</a></li><li><a href="module-zoom_sdk.html">zoom_sdk</a></li><li><a href="module-zoom_setting.html">zoom_setting</a></li><li><a href="module-zoom_setting_accessibility_ctrl.html">zoom_setting_accessibility_ctrl</a></li><li><a href="module-zoom_setting_audio.html">zoom_setting_audio</a></li><li><a href="module-zoom_setting_general.html">zoom_setting_general</a></li><li><a href="module-zoom_setting_recording.html">zoom_setting_recording</a></li><li><a href="module-zoom_setting_statistic_ctrl.html">zoom_setting_statistic_ctrl</a></li><li><a href="module-zoom_setting_ui_ctrl.html">zoom_setting_ui_ctrl</a></li><li><a href="module-zoom_setting_video.html">zoom_setting_video</a></li><li><a href="module-zoom_share_rawdata.html">zoom_share_rawdata</a></li><li><a href="module-zoom_sms_helper.html">zoom_sms_helper</a></li><li><a href="module-zoom_upgrade_account.html">zoom_upgrade_account</a></li><li><a href="module-zoom_video_rawdata.html">zoom_video_rawdata</a></li></ul>
 </nav>
 
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.3</a> on Thu Apr 02 2020 13:33:05 GMT+0800 (GMT+08:00)
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.3</a> on Wed Jun 17 2020 16:29:36 GMT+0800 (GMT+08:00)
 </footer>
 
 <script> prettyPrint(); </script>

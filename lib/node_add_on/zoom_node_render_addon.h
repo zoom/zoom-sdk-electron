@@ -137,4 +137,19 @@ template<>
 static v8::Persistent<v8::Function>* GetConstructor<ZoomNodeAudioRawDataLibuvClientWrap >() {
 	return &ZoomNodeAudioRawDataLibuvClientWrap::constructor;
 }
+
+class RenderAddonData {
+public:
+	explicit RenderAddonData(v8::Isolate* isolate)
+	{
+		node::AddEnvironmentCleanupHook(isolate, DeleteInstance, this);
+	}
+
+	v8::Local<v8::Object> zoomNodeWrapInstance;
+
+	static void DeleteInstance(void* data) {
+		delete static_cast<RenderAddonData*>(data);
+	}
+};
+
 #endif

@@ -255,6 +255,17 @@
  */
 -(void)onAllowAttendeeCommentQuestionStatus:(BOOL)bEnabled;
 
+/**
+ @brief Notify the question has been deleted.
+ @param questions The array contain deleted question id (The question id is NSString type).
+ */
+-(void)onDeleteQuestions:(NSArray *)questions;
+
+/**
+ @brief Notify the answer has been deleted.
+ @param answer The array contain deleted answer id (The answer id is NSString type).
+ */
+-(void)onDeleteAnswers:(NSArray *)answer;
 @end
 
 @interface ZoomSDKQAController : NSObject
@@ -455,4 +466,19 @@
  @return Value is the my question count.
  */
 -(int)getMyQuestionCount;
+
+/**
+ @brief Deleted question.
+ @param questionID The ID of question.
+ @return If the function succeeds, it will return ZoomSDKError_Success. Otherwise failed.
+ */
+-(ZoomSDKError)deleteQuestion:(NSString *)questionID;
+
+/**
+ @brief Deleted answer.
+ @param answerID The ID of answer.
+ @return If the function succeeds, it will return ZoomSDKError_Success. Otherwise failed.
+ */
+-(ZoomSDKError)deleteAnswer:(NSString *)answerID;
+
 @end

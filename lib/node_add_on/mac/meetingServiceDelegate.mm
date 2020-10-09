@@ -339,4 +339,38 @@ extern ZNativeSDKWrap _g_native_wrap;
     [self cleanUp];
     [super dealloc];
 }
+
+-(void)onRecord2MP4Done:(BOOL)success Path:(NSString *)recordPath
+{
+    ZoomSTRING path = "";
+    if (recordPath) 
+        path = [recordPath UTF8String];
+    
+    _g_native_wrap.GetMeetingServiceWrap().GetMeetingRecordingCtrl().onRecording2MP4Done(success, 0, path);
+}
+
+-(void)onRecord2MP4Progressing:(int)percentage
+{
+    _g_native_wrap.GetMeetingServiceWrap().GetMeetingRecordingCtrl().onRecording2MP4Processing(percentage);
+}
+
+- (void)onRecordStatus:(ZoomSDKRecordingStatus)status
+{
+    nativeErrorTypeHelp help;
+    ZNRecordingStatus znStatus = help.ZNRecordingStatusChanage(status);
+    _g_native_wrap.GetMeetingServiceWrap().GetMeetingRecordingCtrl().onRecordingStatus(znStatus);
+}
+
+-(void)onRecordPrivilegeChange:(BOOL)canRec
+{
+    _g_native_wrap.GetMeetingServiceWrap().GetMeetingRecordingCtrl().onRecordPriviligeChanged(canRec);
+}
+
+-(void)onCloudRecordingStatus:(ZoomSDKRecordingStatus)status
+{
+    nativeErrorTypeHelp help;
+    ZNRecordingStatus znStatus = help.ZNRecordingStatusChanage(status);
+    _g_native_wrap.GetMeetingServiceWrap().GetMeetingRecordingCtrl().onCloudRecordingStatus(znStatus);
+}
+
 @end

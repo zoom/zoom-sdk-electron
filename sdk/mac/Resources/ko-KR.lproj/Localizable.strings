@@ -41,7 +41,7 @@
 
 "Sign Up" = "가입";
 
-"General" = "일반 조항";
+"General" = "일반";
 "Feedback" = "피드백";
 "Record" = "기록";
 "Account" = "계정";
@@ -160,7 +160,7 @@
 "Unmute Audio" = "오디오 음소거 해제";
 "Mute Audio" = "오디오 음소거";
 "Audio" = "오디오";
-"Click to join audio" = "오디오에 참가하려면 클릭";
+"Click to join audio" = "오디오에 연결하려면 클릭";
 "Unmute Telephone" = "전화기 음소거 해제";
 "Mute Telephone" = "전화기 음소거";
 "Mute" = "음소거";
@@ -171,6 +171,13 @@
 "You are now using your phone for audio in this meeting" = "이 회의에서 오디오에 전화기를 사용하고 있습니다";
 "All participants are unmuted" = "모든 참가자가 음소거 해제됨";
 "Allow participants to unmute themselves" = "참가자가 음소거를 해제할 수 있도록 허용";
+"LN_Host_Muted_You_150994" = "호스트가 귀하를 음소거했습니다";
+"LN_Host_Unmuted_You_150994" = "호스트가 귀하를 음소거 해제했습니다";
+"LN_Host_Muted_Everyone_150994" = "호스트가 모두를 음소거했습니다";
+"LN_Host_Unmuted_Everyone_150994" = "호스트가 모두를 음소거 해제했습니다";
+"LN_Ask_To_Unmute_150994" = "음소거 해제 요청";
+"LN_Host_Would_Unmute_150994" = "호스트가 귀하가 음소거 해제하기를 원합니다";
+"LN_Unmute_Themselves_150994" = "스스로 음소거 해제";
 "You are muted by host" = "호스트가 귀하를 음소거했습니다";
 "You are unmuted by host" = "호스트가 귀하의 음소거를 해제했습니다";
 "The host has muted all participants" = "호스트가 모든 참가자를 음소거했습니다";
@@ -191,13 +198,12 @@
 "You may have problem hearing the audio from other participants.\nConsider switching to phone." = "다른 참가자의 오디오를 듣는 데 문제가 있습니다.\n전화기로 전환하는 것을 고려해 보십시오.";
 "Total %d phone call-in listener" = "총 전화 통화 수신 대기자 %d명";
 "Total %d phone call-in listeners" = "총 전화 통화 수신 대기자 %d명";
-"Zoom detects a problem with your audio. If you enter your Mac computer password, we will attempt to restart your audio service to fix it.\n\n" = "Zoom에서 오디오 문제를 감지했습니다. Mac 컴퓨터 비밀번호를 입력하면 문제를 해결하기 위해 오디오 서비스 다시 시작을 시도합니다.\n\n";
 "Follow the instructions below to join audio conference." = "오디오 회의에 참여하려면 아래 지침을 따르십시오.";
 "Computer Audio" = "컴퓨터 오디오";
 "Dial In" = "전화 접속";
 "Call Me" = "내게 전화 걸기";
 "Hang Up" = "전화 끊기";
-"Automatically join audio by computer when joining a meeting" = "회의에 참여할 때 컴퓨터로 자동 오디오 참여";
+"Automatically join audio by computer when joining a meeting" = "회의에 참여할 때 컴퓨터로 자동 오디오 연결";
 "Already joined by phone? Enter " = "이미 전화기로 참가 중입니까? 전화기에서 ";
 "on your phone." = "입력하십시오.";
 "Dial" = "전화 걸기";
@@ -214,7 +220,7 @@
 "No Audio" = "오디오 없음";
 "Do you want to continue without audio?" = "오디오 없이 계속하시겠습니까?";
 "You won't be able to hear other participants in the meeting, nor will they hear you." = "회의에서 다른 사람들의 말을 들을 수 없으며 다른 사람 역시 귀하의 말을 들을 수 없습니다.";
-"Join Audio" = "오디오 참가";
+"Join Audio" = "오디오 연결";
 "Leave Computer Audio" = "컴퓨터 오디오 나가기";
 
 "Start Video" = "비디오 시작";
@@ -314,6 +320,7 @@
 "The shared content is fit to your screen. To see the original size, click \"Original size\" in the menu." = "공유 콘텐츠가 화면에 맞춰집니다. 원본 사이즈를 보려면 메뉴에서 \"원본 사이즈\"를 클릭합니다.";
 
 "Your microphone is unmuted. Screen sharing with remote audio has stopped." = "마이크 음소거가 해제되었습니다. 원격 오디오를 사용한 화면 공유가 중지되었습니다.";
+"LN_Host_Not_Allow_Unmute_150994" = "호스트가 참가자가 스스로 음소거 해제하도록 허용하지 않습니다";
 "You cannot unmute yourself because the host muted you." = "호스트가 귀하를 음소거하여 귀하가 음소거 해제할 수 없습니다.";
 "Your speaker is muted for audio sharing. It will recover when audio sharing ends." = "오디오 공유를 위해 스피커가 음소거되었습니다. 오디오 공유가 종료되면 복구됩니다.";
 "To share your computer audio, please install the Zoom audio device.\n\n" = "컴퓨터 오디오를 공유하려면 Zoom 오디오 장치를 설치하십시오.\n\n";
@@ -388,12 +395,12 @@
 "Your recording has stopped. The disk space is insufficient." = "기록이 중지되었습니다. 디스크 공간이 충분하지 않습니다.";
 "The recorded file will be converted to mp4 when the meeting ends" = "회의가 종료되면 기록된 파일이 mp4로 변환됩니다.";
 "You will get an email notification when the cloud recording is ready." = "클라우드 기록이 준비되면 이메일 알림을 받게 됩니다.";
-"Please request record permission from the meeting host." = "회의 호스트에게 기록 권한을 요청하십시오.";
+"LN_Record_Perission_178726" = "호스트에게 기록 권한을 요청하세요";
 "Record to the Cloud" = "클라우드에 기록";
 "Record on this Computer" = "이 컴퓨터에 기록";
 "Connecting to cloud server..." = "클라우드 서버에 연결 중...";
 "Failed to connect cloud server." = "클라우드 서버 연결에 실패했습니다.";
-"Recording" = "기록";
+"Recording" = "녹화";
 
 //transcode
 "Choose a new location..." = "새 위치 선택...";
@@ -553,7 +560,6 @@
 "This will also clear your chat history in this group." = "이렇게 하면 이 그룹에서 귀하의 채팅 기록이 지워집니다.";
 "This will also clear your chat history with this user." = "이렇게 하면 이 사용자와 귀하의 채팅 기록이 지워집니다.";
 "Leave" = "나가기";
-"Invite others" = "다른 사람 초대";
 "Invite Others" = "다른 사람 초대";
 "Clear History" = "기록 지우기";
 "Delete Contact" = "연락처 삭제";
@@ -565,12 +571,10 @@
 "Your message \"%@\" send failed.   Resend" = "메시지 \"%@\" 전송이 실패했습니다.   다시 보내기";
 "Your message \"%@...\" send failed.   Resend" = "메시지 \"%@...\" 전송이 실패했습니다.   다시 보내기";
 "Resend" = "다시 보내기";
-"%d new message" = "%d 새 메시지";
-"%d new messages" = "%d 새 메시지";
 "%@ is typing..." = "%@님이 입력 중...";
 "Contacts" = "연락처";
 "No results" = "결과 없음";
-"Available" = "대화 가능";
+"Available" = "온라인";
 "(Admin)" = "(관리자)";
 "Your request has been sent successfully!" = "요청이 성공적으로 전송되었습니다!";
 "Company Contacts" = "회사 연락처";
@@ -693,7 +697,7 @@
 "Duration:" = "기간:";
 "Hr" = "시간";
 "Min" = "분";
-"Please remember to check recurrence or repeat in your calendar invitation to your attendees. " = "참석자에 대한 일정 초대에서 되풀이 또는 반복을 확인하십시오. ";
+"Please remember to check recurrence or repeat in your calendar invitation to your attendees. " = "참석자에 대한 캘린더 초대에서 되풀이 또는 반복을 확인하십시오. ";
 "Recurring meeting" = "되풀이 회의";
 "Host:" = "호스트:";
 "Participant:" = "참가자:";
@@ -707,10 +711,10 @@
 "Meeting Options" = "회의 옵션";
 "Require meeting password" = "회의 비밀번호 필요";
 "Enable join before host" = "호스트 전 참가 사용";
-"Calendar" = "Calendar";
+"Calendar" = "캘린더";
 "iCal" = "iCal";
-"Google Calendar" = "Google Calendar";
-"Other Calendars" = "기타 일정";
+"Google Calendar" = "Google 캘린더";
+"Other Calendars" = "기타 캘린더";
 "Schedule For:" = "일정:";
 "Edit Meeting" = "회의 편집";
 "Scheduling..." = "예약 중...";
@@ -830,14 +834,15 @@
 
 //broad cast
 "Broadcast" = "브로드캐스트";
-"Practice Mode Only: Attendees cannot join until you broadcast" = "연습 모드만: 참석자는 귀하가 브로드캐스트할 때까지 참가할 수 없습니다";
 "The webinar is now broadcasting to all attendees" = "웨비나가 이제 모든 참석자에게 브로드캐스팅됩니다";
 "Not broadcasting" = "브로드캐스팅하지 않음";
+"LN_Broadcast_Start_166405" = "웨비나 시작";
+"LN_Broadcast_Title_166405" = "현재 연습 세션입니다. 귀하가 웨비나를 시작할 때까지 참석자는 참가할 수 없습니다.";
+"LN_Broadcast_Live_166405" = "웨비나가 실시간으로 진행 중입니다.";
 
 //
 "Audio Options..." = "오디오 옵션...";
 "Video Settings..." = "비디오 설정...";
-"Zoom is using an end to end encrypted connection" = "Zoom에서 암호화된 엔드투엔드 연결을 사용하고 있습니다";
 "Select a Camera" = "카메라 선택";
 "New Share" = "새로 공유";
 "Stop Remote Control" = "원격 제어 중지";
@@ -914,7 +919,7 @@
 "All panelists" = "모든 토론자";
 "(host)" = "(호스트)";
 "%@ is not in this meeting" = "%@님은 이 회의에 없습니다";
-"From %@ to Everyone" = "%@에서 모두에게";
+"From %@ to Everyone" = "%@님이 모두에게";
 "From %@ to All Panelists" = "%@에서 모든 토론자에게";
 "From %@ to Me, All Panelists" = "%@에서 나, 모든 토론자에게";
 "From %@ to %@, All Panelists" = "%@에서 %@, 모든 토론자에게";
@@ -1016,7 +1021,7 @@
 "Check My Audio Devices" = "내 오디오 장치 확인";
 "Your microphone and speaker are not working properly." = "마이크와 스피커가 올바르게 동작하지 않습니다.";
 "\n\nNo audio will be recorded." = "\n\n오디오가 기록되지 않습니다.";
-"LN_Record_No_Audio_Alert_Message_28459" = "기록에 오디오를 포함하려면 \"오디오 참가\"를 클릭하십시오";
+"LN_Record_No_Audio_Alert_Message_28459" = "기록에 오디오를 포함하려면 \"오디오 연결\"을 클릭하십시오";
 "Your microphone is not working properly." = "마이크가 올바르게 동작하지 않습니다.";
 "\n\nThe voice of other participants can still be recorded, but your voice cannot." = "\n\n아직 참가자의 음성을 기록할 수 있으나 귀하의 음성은 기록할 수 없습니다.";
 "Your speaker is not working properly." = "스피커가 올바르게 동작하지 않습니다.";
@@ -1098,7 +1103,6 @@
 "%@ denied your request for application control." = "%@이(가) 귀하의 애플리케이션 제어 요청을 거부했습니다.";
 "%@ approved your request for computer restart." = "%@이(가) 귀하의 컴퓨터 다시 시작 요청을 승인했습니다.";
 "%@ denied your request for computer restart." = "%@이(가) 귀하의 컴퓨터 다시 시작 요청을 거부했습니다.";
-"No one is available to support, you are the only participant in the meeting." = "지원할 수 있는 사람이 없습니다. 귀하는 회의에서 유일한 참가자입니다.";
 "Those participants who can't accept remote control are not listed" = "원격 제어를 수락할 수 없는 참가자는 목록에 나열되지 않습니다";
 "Those participants who can't accept computer restart are not listed" = "컴퓨터 다시 시작을 수락할 수 없는 참가자는 목록에 나열되지 않습니다";
 "Support session is not available to the current participant." = "현재 참가자에게 지원 세션을 사용할 수 없습니다.";
@@ -1111,7 +1115,7 @@
 "Meeting ID or Personal Link Name" = "회의 ID 또는 개인 링크 이름";
 "Screen Name" = "화면 이름";
 "This personal link name is not valid. Please check and try again." = "이 개인 링크 이름은 유효하지 않습니다. 확인하고 다시 시도해 주십시오.";
-"Type to filter..." = "필터링할 형식...";
+"Type to filter..." = "필터링하려면 입력하세요...";
 "Find a panelist" = "토론자 찾기";
 "Find a attendee" = "참석자 찾기";
 "Mute Me" = "나만 음소거";
@@ -1170,7 +1174,7 @@
 "Failed to expel attendee. Error code:%d" = "참석자를 퇴장시키지 못했습니다. 오류 코드: %d";
 
 "Low system resources may affect your audio quality. Try closing some applications to improve performance." = "시스템 리소스가 부족하여 오디오 품질에 영향이 있을 수 있습니다. 성능을 높이려면 일부 애플리케이션을 닫아 보십시오.";
-"Recording Alert" = "기록 알림";
+"Recording Alert" = "녹음 알림";
 "Finish registration to join the meeting." = "등록을 완료하고 회의에 참가하십시오.";
 
 //ZOOM-5997 2016-10-8
@@ -1207,14 +1211,11 @@
 "is not a supported file format." = "은(는) 지원되는 파일 형식이 아닙니다.";
 "Current group chat has enabled encryption and you can't send messages without encryption. Please contact your IT admin for details." = "현재 그룹 채팅에서 암호화를 활성화했으므로 암호화 없이 메시지를 전송할 수 없습니다. IT 관리자에게 자세한 내용을 문의하십시오.";
 "Screenshot" = "스크린샷";
-"Zoom is using an end-to-end encrypted connection" = "Zoom에서 암호화된 엔드투엔드 연결을 사용하고 있습니다";
 "@everyone" = "@모두";
 "Leave Chat" = "채팅에서 나가기";
+"Open in New Window" = "새 창에서 열기";
 "Open in new window" = "새 창에서 열기";
 "Merge back to main window" = "메인 창으로 다시 병합";
-"Private (Invited members only)" = "비공개(초대된 구성원만)";
-"Public (Anyone in your organization can join)" = "공개(조직에 속한 누구나 참가 가능)";
-"Members in your organization only" = "조직애 속한 구성원만";
 "Share with" = "공유 대상";
 "Share Error" = "공유 오류";
 "%@  cannot be shared." = "%@은(는) 공유할 수 없습니다.";
@@ -1428,7 +1429,7 @@
 "In the cloud" = "클라우드에서";
 //ZOOM-12438
 
-"To hear others,\nclick the Join Audio button." = "다른 사람의 소리를 들으려면\n오디오 참가 버튼을 클릭하십시오.";
+"To hear others,\nclick the Join Audio button." = "다른 사람의 소리를 들으려면 \n오디오 연결 버튼을 클릭하십시오. ";
 //ZOOM-13934
 
 "Click if you want to switch to a different microphone or speaker" = "다른 마이크나 스피커로 전환하려면 클릭합니다";
@@ -1519,7 +1520,7 @@
 "You cannot chat with %@ during this meeting" = "이 회의 중에는 %@와 채팅할 수 없습니다";
 "How was your meeting experience?" = "회의 경험은 어떠셨나요?";
 
-"Turn off my video when joining meeting" = "회의에 참가할 때 내 비디오를 끕니다.";
+"Turn off my video when joining meeting" = "회의에 참가할 때 내 비디오 끄기";
 //ZOOM-16213
 "Meetings:" = "회의:";
 //ZOOM-16213
@@ -1535,8 +1536,6 @@
 "and all panelists" = "그리고 모든 토론자";
 //ZOOM-14788
 "Your text can be seen by panelists and other attendees" = "귀하의 텍스트를 토론자 및 다른 참석자가 볼 수 있습니다";
-//ZOOM-14788
-"Login is restricted to email addresses that have the following domains:" = "도메인이 다음과 같은 이메일 주소에 대해 로그인이 제한되었습니다.";
 //ZOOM-16131
 "You are not authorized to start the meeting using the credentials you signed in with." = "로그인에 사용한 자격 증명을 사용하여 회의를 시작할 권한이 없습니다.";
 //ZOOM-16131
@@ -1561,9 +1560,7 @@
 "Are you sure you want to block this contact?" = "이 연락처를 차단하시겠습니까?";
 "LN_Contact_Block_User" = "%@님이 귀하에게 연락할 수 없습니다. %@님을 차단하시겠습니까?";
 //Zoom-16973
-"Are you sure you want to block %@?" = "%@님을 차단하시겠습니까?";
 //Zoom-16973
-"%@ will be blocked in your contacts and will not be able to contact you." = "연락처에서 %@님이 차단되며 귀하에게 연락할 수 없습니다.";
 //Zoom-16973
 "Block" = "차단";
 //Zoom-16973
@@ -1707,6 +1704,7 @@
 "The number you dialed to join the meeting is not responding" = "회의에 참가하도록 전화를 건 번호가 응답하지 않습니다";
 //zoom-19350
 "Current and new participants will be muted" = "현재 및 새 참가자가 음소거됩니다";
+"LN_Mute_All_150994" = "현재 및 신규 참가자 모두 음소거";
 //zoom-19350
 
 "iPhone/iPad via AirPlay" = "AirPlay를 통한 iPhone/iPad";
@@ -1893,7 +1891,6 @@
 "Leave Channel" = "채널에서 나가기";
 "Delete Channel" = "채널 삭제";
 "Delete Chat" = "채팅 삭제";
-"Add to Contact List" = "연락처 목록에 추가";
 "View All %ld Members" = "모든 %ld 구성원 보기";
 "View All Files" = "모든 파일 보기";
 "View All Images" = "모든 이미지 보기";
@@ -2071,6 +2068,7 @@
 
 "LN_In_Meeting_Label_19901" = "회의 참가 중";
 "LN_In_Zoom_Meeting_Label_19901" = "Zoom 회의 참가 중";
+"LN_In_Zoom_Meeting_Presenting_19901" = "프레젠테이션 중";
 "LN_Do_Not_Disturb_19901" = "방해 금지";
 "LN_Offline_19901" = "오프라인";
 "LN_Turn_Off_19901" = "끄기";
@@ -2164,7 +2162,7 @@
 "LN_Notification_Reset_Exception_Contacts_31155" = "선택한 연락처로부터 더 이상 알림을 수신하지 않습니다. 계속하시겠습니까?";
 "LN_Notification_Search_No_Contact_31155" = "찾은 연락처가 없습니다. 다른 이름으로 검색";
 
-"LN_IM_Notification_Title_%@_In_%@_31106" = "%@의 %@";
+"LN_IM_Notification_Title_%@_In_%@_31106" = "%@님이 %@에서";
 "LN_IM_Notification_Image_31106" = "귀하에게 사진을 보냈습니다.";
 "LN_IM_Notification_Voice_31106" = "귀하에게 음성 메시지를 보냈습니다.";
 "LN_IM_Notification_File_31106" = "귀하에게 파일을 보냈습니다.";
@@ -2202,10 +2200,10 @@
 "LN_Meeting_StatusView_Can_Control_Title_21500" = "%@의 화면을 제어할 수 있습니다."; //[zoom-21500]
 
 "LN_Temporarily_Unmuted_542" = "일시적으로 음소거 해제됨";
-"LN_Enable_Push_To_Talk_542" = "SPACE 키를 길게 눌러 내 음소거를 일시적으로 해제합니다";
+"LN_Enable_Push_To_Talk_542" = "SPACE 키를 길게 눌러 내 음소거를 일시적으로 해제";
 "LN_Mute_Self_Remind_Tip_542" = "이제 귀하는 음소거되었습니다. Shift+명령+A을 눌러 마이크 음소거를 해제하거나 SPACE 키를 길게 눌러 음소거를 일시적으로 해제합니다.";
-"LN_Unmute_Audio_Button_Tip_542" = "%@을(를) 눌러 음소거를 해제하거나 스페이스 바를 길게 눌러 음소거를 일시적으로 해제합니다.";
-"LN_Unmute_Phone_Button_Tip_542" = "%@을(를) 눌러 음소거를 해제하거나 스페이스 바를 길게 눌러 음소거를 일시적으로 해제합니다.";
+"LN_Unmute_Audio_Button_Tip_542" = "%@을(를) 눌러 오디오 음소거를 해제하거나 스페이스 바를 길게 눌러 음소거를 일시적으로 해제합니다.";
+"LN_Unmute_Phone_Button_Tip_542" = "%@을(를) 눌러 전화 음소거를 해제하거나 스페이스 바를 길게 눌러 음소거를 일시적으로 해제합니다.";
 
 "LN_Join_Audio_33542" = "오디오 참가";
 "LN_Polling_Conflict_32870" = "다른 장치에서 로그인했습니다. 귀하의 설문조사 세션이 비활성화되어 있습니다.";
@@ -2254,8 +2252,9 @@
 "LN_Call_Canceled_46215" = "수신 전화 - 취소됨";
 
 "LN_Mute_On_Entry_Alert_Title_35357" = "입장 시 참가자 음소거";
+"LN_Mute_On_Entry_Alert_Content_150994" = "입장 시 참가자 음소거";
 "LN_Mute_On_Entry_Alert_Content_35357" = "모든 새 참가자가 음소거됩니다";
-"LN_Schedule_OpenICSFile_ForOtherCal_37779" = "기본 일정으로 열기(.ics)";
+"LN_Schedule_OpenICSFile_ForOtherCal_37779" = "기본 캘린더로 열기(.ics)";
 
 "LN_Join_WebURL_Title_15122" = "브라우저로 회의 참가";
 "LN_Join_WebURL_Content_15122" = "\"%@\"을(를) 클릭하면 Zoom 클라이언트에서 참가할 때 문제가 발생하여 제한된 기능으로 회의에 참가합니다.";
@@ -2299,9 +2298,6 @@
 "LN_Meeting_ID_%@_41652" = "회의 ID:%@";
 "LN_%@_Meeting_ID_%@_41652" = "%@ 회의 ID:%@";
 "LN_Remind_%@_Minutes_Before_Upcoming_41652" = "향후 회의 %@분 전에 나에게 다시 알림";
-"LN_In_%d_Mins_41652" = "%d분 후";
-"LN_In_1_Min_41652" = "1분 후";
-"LN_Now_41652" = "지금";
 "LN_Help_String_40539" = "도움말";
 "LN_Participants_Raised_Hand_39858" = "손든 참가자";
 "LN_Raised_Hand_39858" = "손듦";
@@ -2415,7 +2411,7 @@
 "LN_Tested_All_Speakers_38961" = "모든 귀하의 스피커를 테스트했습니다";
 "LN_Tested_All_Mic_38961" = "모든 귀하의 마이크를 테스트했습니다";
 "LN_Test_Again_38961" = "다시 테스트";
-"LN_Join_Audio_By_Phone_38961" = "전화기로 오디오 참여";
+"LN_Join_Audio_By_Phone_38961" = "전화기로 오디오 연결";
 "LN_Testing_38961" = "테스트 중...";
 "LN_Testing_Microphone_38961" = "마이크 테스트 중...";
 "LN_Have_%ld_Speakers_Now_Testing_%ld_38961" = "스피커가 %ld개 있습니다. 이제 스피커 %ld을(를) 테스트 중입니다...";
@@ -2486,7 +2482,7 @@
 "LN_TryAgain_in_%d_Min_46210" = "잘못된 시도를 여러 번 반복했습니다. %d분 후 다시 시도해 주십시오.";
 
 "LN_Hide_Names_of_Annotators_43616" = "주석 표시기 이름 숨기기";
-"LN_Show_Names_of_Annotators_43616" = "주석 표시기 이름 표시";
+"LN_Show_Names_of_Annotators_43616" = "주석자 이름 표시";
 "LN_Meeting_Error_Expired_Message_41530" = "로그인 세션이 만료되었습니다. 계속하려면 다시 로그인하십시오.";
 "LN_Meeting_Error_Expired_Title_41530" = "회의를 시작할 수 없습니다";
 "Type in closed caption here, press Enter key to broadcast" = "선택 자막을 여기에 입력하고 Enter 키를 눌러 브로드캐스트합니다";
@@ -2496,11 +2492,11 @@
 "LN_Finish_47788" = "완료";
 
 "LN_DiskFull_Tip_46206" = "장치에 저장소가 부족합니다. Zoom 사용 중 제약을 방지하도록 공간을 비우십시오.";
+"LN_Audiooption_CountryName_HongKong_171057" = "홍콩 특별 행정구";
 
-"LN_Audiooption_CountryName_HongKong_49437" = "중국 홍콩";
 "LN_Audiooption_CountryName_TaiWan_49437" = "중국 대만";
 "LN_Audiooption_CountryName_TaiWan_Without_China_116439" = "대만";
-"LN_Audiooption_CountryName_Macau_49437" = "중국 마카오";
+"LN_Audiooption_CountryName_Macau_171057" = "마카오 특별 행정구";
 
 "LN_A_Gift_41323" = "Zoom에서 드리는 혜택";
 "LN_Another_Gift_41323" = "Zoom에서 드리는 혜택입니다";
@@ -2671,7 +2667,6 @@
 "LN_Phone_DeleteAllViewContentString_61400" = "모든 음성 메일이 영구히 삭제됩니다. 이 작업은 실행 취소할 수 없습니다.";
 "LN_Phone_ClearAllRecording_61400" = "모든 통화 기록 지우기";
 "LN_Phone_ClearAllRecordContentStr_61400" = "모든 통화 기록이 영구히 삭제됩니다. 이 작업은 실행 취소할 수 없습니다.";
-"LN_Phone_E911_ToolTip_54264" = "E911 서비스가 제한되거나 사용할 수 없습니다.";
 "LN_Phone_VociemTranscript_ShowMore_61400" = "더 보기";
 "LN_Phone_VociemTranscript_ShowLess_61400" = "간단히 표시";
 "LN_Phone_NOAudio_tip_Label_64264" = "마이크가 감지되지 않습니다. 장치가 올바르게 연결되어 있는지 확인하십시오.";
@@ -2696,6 +2691,23 @@
 "LN_Sip_CallQueue_Calling_for_61415" = "통화 대상";
 "LN_Sip_Assistant_Transfer_from_61415" = "전달자";
 "LN_Sip_DownLoading_VociemailTranscript_61400" = "대화 내용 처리 중...";
+"LN_Phone_Recording_Transcript_Transcribe_Failed_131478" = "이 녹음의 대화 내용을 기록할 수 없음";
+"LN_Phone_Recording_Transcript_Transcribe_Failed_Three_Times_183907" = "이 녹음은 아직 대화 내용이 기록되는 중입니다. 몇 분 후 이 녹음을 다시 여세요.";
+"LN_Phone_Voicemail_Transcript_Transcribe_Failed_Three_Times_183907" = "이 메시지는 아직 대화 내용이 기록되는 중입니다. 몇 분 후 이 메시지를 다시 여세요.";
+"LN_Phone_Transcript_Download_Failed_131478" = "대화 내용 기록을 다운로드하지 못했습니다.";
+"LN_Phone_Recording_Transcript_Unknown_Speaker_131478" = "알 수 없는 발표자";
+"LN_Phone_Recording_Transcript_Table_142151" = "대화 내용 기록 테이블";
+"LN_N911_location_148045" = "비상 주소 확인:";
+"LN_N911_location_Update_148045" = "잘못되었습니다, 업데이트하세요";
+"LN_N911_location_Confirm_Acc_148045" = "비상 주소 확인";
+"LN_N911_location_Address_Update_148045" = "비상 주소가 업데이트되었습니다.";
+"LN_Sip_Search_Contact_Card_Acc_131462" = "대화 상대 카드";
+"LN_N911_location_NO_Emergency_Address_173555" = "감지된 비상 주소 없음";
+"LN_N911_location_NO_Emergency_Address_Tips_173555" = "비상 통화를 걸 때 귀하의 위치를 보고하기 위한 비상 주소를 추가하세요.";
+"LN_N911_location_NO_Emergency_Address_Add_173555" = "비상 주소 추가";
+"LN_N911_location_NO_Emergency_Address_static_address_173555" = "발신자의 고정 주소";
+"LN_N911_location_NO_Emergency_Address_detacted_address_173555" = "발신자의 감지된 주소";
+"LN_Sip_CallQueue_Incoming_End_Listen_166973" = "종료 및 모니터링";
 "LN_Sip_DownLoading_VociemailTranscript_NetWorkError_61400" = "대화 내용 다운로드 실패";
 "LN_Sip_Multi_Swap_Call_ToolTip_61376" = "통화 전환";
 "LN_Sip_Multi_End_Call_TooTip_61376" = "통화 종료";
@@ -2712,6 +2724,10 @@
 "LN_Sip_Reminder_TO_Clicked_Minutes_69661" = "분";
 "LN_Sip_Reminder_TO_Clicked_Seconds_69661" = "초";
 "LN_Sip_Hide_CallerID_64639" = "발신지 ID 숨기기";
+"LN_Sip_Hide_CallerID_Sub_155205" = "특정 국가 또는 지역에서 작동하지 않을 수 있습니다";
+"LN_Sip_Notice_155205" = "알림";
+"LN_Sip_Notice_Content_155205" = "발신자 ID 차단이 모든 국가 또는 지역에서 적용된다고 보장할 수 없습니다.";
+"LN_Sip_Notice_Check_155205" = "다시 표시 안 함";
 "LN_Sip_Copy_Number_85334" = "번호 복사";
 "LN_Sip_View_Profile_96774" = "프로필 보기";
 "LN_Sip_Hidden_85309" = "숨겨짐";
@@ -2735,7 +2751,6 @@
 "LN_Sip_softPhone_Setting_Proxy_server_74433" = "프록시 서버:";
 "LN_Sip_softPhone_Setting_Registration_expiry_74433" = "등록 만료:";
 "LN_Sip_softPhone_Setting_LastRegistration_74433" = "최근 등록:";
-"LN_Sip_softPhone_Setting_UserName_74433" = "사용자 이름(디렉터리 사용자 이름):";
 "LN_Sip_softPhone_Setting_Authorization_name_74433" = "승인 이름:";
 "LN_Sip_softPhone_Setting_Zoom_identity_74433" = "Zoon 사용자 ID:";
 "LN_Sip_softPhone_Setting_Voicemail_74433" = "음성 메일:";
@@ -2796,6 +2811,18 @@
 "LN_Sip_Search_AutoReceptionist_label_103646" = "접수 교환원";
 "LN_Sip_Search_group_label_103646" = "그룹";
 "LN_Sip_PAB_Failed_To_Add_94096" = "추가 실패";
+"LN_Sip_CallStatus_ModeP2P_127975" = "피어 투 피어 네트워크";
+"LN_Sip_CallStatus_HD_127975" = "고화질";
+"LN_Sip_CallStatus_Encrypt_127975" = "고급 암호화를 사용하고 있습니다.";
+"LN_Sip_CallStatus_QualityLow_127975" = "낮은 통화 품질";
+"LN_Sip_CallStatus_QualityAverage_127975" = "평균 통화 품질";
+"LN_Sip_CallStatus_QualityHigh_127975" = "높은 통화 품질";
+"LN_Sip_CallStatus_P2P_Acc_127975" = "P2P";
+"LN_Sip_CallStatus_HD_Acc_127975" = "HD";
+"LN_Sip_CallStatus_Encrypted_Acc_127975" = "암호화됨";
+"LN_Sip_CallStatus_Quality_Acc_127975" = "오디오 품질";
+"LN_Phone_Voicemail_Transcript_Disable_148091" = "관리자가 대화 내용 기록을 비활성화했습니다";
+"LN_Phone_Voicemail_Transcript_NetworkError_148091" = "대화 내용 기록을 다운로드하지 못했습니다";
 "LN_Sip_SMS_Delete_Conversation_128390" = "대화 삭제";
 "LN_Sip_SMS_128390" = "SMS";
 "LN_Sip_SMS_MenuItem_SendSMS_128390" = "텍스트 메시지 보내기";
@@ -2829,6 +2856,11 @@
 "LN_SMS_RateLimit_Content_117771" = "오늘의 속도 제한에 도달했습니다. 자세한 내용은 관리자에게 문의하세요.";
 "LN_SMS_CountLeft_Acc_117771" = "%@문자 남음";
 "LN_SMS_CountLimit_Acc_117771" = "%@문자 제한";
+"LN_SMS_Download_NotAllowed_Title_174474" = "다운로드할 수 없음";
+"LN_SMS_Download_NotAllowed_Content_174474" = "계정 관리자가 특정 유형의 파일 다운로드를 제한했습니다.";
+"LN_SMS_Download_NotTrusted_Title_174474" = "잠재적 보안 문제 감지됨";
+"LN_SMS_Download_NotTrusted_Content_174474" = "%@님이 귀하에게 %@을(를) 보냈습니다. 이 확장자를 갖는 파일은 컴퓨터에 유해할 수 있습니다. 이 파일을 다운로드하시겠습니까?";
+"LN_SMS_Download_NotTrusted_CheckText_174474" = "이 사람이 보낸 파일은 항상 신뢰";
 "LN_SMS_Conversation_info_135921" = "이 대화 정보";
 "LN_SMS_Conversation_info_OutLineView_135921" = "이 대화에 대한 자세한 정보";
 "LN_SMS_Spam_Message_136910" = "스팸 메시지";
@@ -2864,6 +2896,10 @@
 "LN_Sip_Join_Meeting_Calls_54743" = "통화";
 "LN_Sip_Join_End_Active_Hold_Call_Content_54743" = "회의에 참가하면 현재 활성화된 통화 및 보류 중인 %@가 종료됩니다.";
 "LN_Sip_In_Video_Meeting_Title_54743" = "비디오 회의 중";
+"LN_SMS_CreateSMS_Enable_TIPS_175411" = "직접 번호가 없어 새 대화를 시작할 수 없습니다.";
+"LN_Sip_CloudContact_NoMatch_label_169014" = "계정에서 연락처 서비스의 연결이 끊어졌습니다.";
+"LN_Sip_CloudContact_NoMatch_ActionLabel_169014" = "구성";
+"LN_Sip_SMS_NO_coversions_128390" = "대화 없음";
 
 "LN_Annotate_StampPanel_45810" = "패널 스탬프 ";
 "LN_Annotate_StampStar_45810" = "별표 스탬프";
@@ -2935,8 +2971,6 @@
 "LN_Setting_feedback_result_des_NewIM" = "모든 피드백을 검토하고 사용자에게 즐거움을 드리기 위해 노력하고 있습니다.";
 "LN_Setting_AddZoomToMenuBar_NewIM" = "Zoom을 macOS 메뉴 모음에 추가합니다";
 "LN_Setting_FullScreenStartMeeting_NewIM" = "회의를 시작하거나 참가할 때 전체 화면으로 전환합니다";
-"LN_Setting_FullScreenWhenShareStart_NewIM" = "참가자가 화면을 공유할 때 전체 화면으로 전환합니다";
-"LN_Setting_MaxWindowWhenShareStart_NewIM" = "참가자가 화면을 공유할 때 Zoom 창을 최대화합니다";
 "LN_Setting_ScaleToFit_NewIM" = "공유 콘텐츠가 Zoom 창에 맞도록 확대/축소합니다";
 "LN_Setting_ShowWindowInShare_NewIM" = "화면 공유 중에 Zoom 창 표시";
 "LN_Setting_CopyInvitationOnceMeeting_NewIM" = "회의가 시작되면 초대 URL을 클립보드에 복사합니다";
@@ -2951,7 +2985,7 @@
 "LN_Setting_HideNonVideo_NewIM" = "비디오 기능을 사용하지 않는 참가자 숨기기";
 "LN_Setting_SpotlightVideoWhenSpeaking_NewIM" = "말할 때 내 비디오 추천";
 "LN_Setting_49participants_NewIM" = "갤러리 보기에서 화면당 참가자 최대 49명 표시";
-"LN_Setting_JoinAudioWhenJoinMeeting_NewIM" = "회의에 참여할 때 컴퓨터로 오디오 참여";
+"LN_Setting_JoinAudioWhenJoinMeeting_NewIM" = "회의에 참여할 때 컴퓨터로 오디오 연결";
 "LN_Setting_MuteWhenJoinMeeting_NewIM" = "회의에 참가할 때 마이크 음소거";
 "LN_Setting_EnableStereo_NewIM" = "스테레오 사용";
 "LN_Setting_ShowEnableOriginalSound_NewIM" = "회의 중 옵션을 마이크에서 \"원음 사용\"으로 표시";
@@ -2966,7 +3000,7 @@
 "LN_Setting_SubmitFeedback_NewIM" = "피드백 제출";
 "LN_Setting_FeedBackPlaceHolder_NewIM" = "당사는 귀하의 아이디어, 의견 및 제안을 환영합니다.";
 "LN_Setting_UnreadTop_NewIM" = "모든 읽지 않은 메시지를 위에 표시";
-"LN_Setting_DoNotPrompt3rd_NewIM" = "타사 오디오를 사용하여 회의에 참가할 때 오디오 참가를 묻는 메시지 표시하지 않음";
+"LN_Setting_DoNotPrompt3rd_NewIM" = "타사 오디오를 사용하여 회의에 참가할 때 오디오 연결을 묻는 메시지 표시하지 않음";
 "LN_Schedule_UnableConnect_NewIM" = "Zoom에 연결할 수 없습니다. 네트워크 연결을 확인하고 다시 시도해 주십시오.";
 "LN_Login_UnableConnect_NewIM_56043" = "Zoom에 연결할 수 없습니다. 네트워크 연결을 확인하고 다시 시도해 주십시오.";
 "LN_Setting_ChannelNotiSeachPlaceHolder_NewIM" = "채널 검색";
@@ -2990,7 +3024,7 @@
 "LN_Home_Now_NewIM" = "지금";
 "LN_Home_In1Min_NewIM" = "1분 후";
 "LN_Home_InNMins_NewIM" = "%ld분 후";
-"LN_Home_TipAddCalendar_NewIM" = "업무 또는 개인 일정을 연결하여 모든 예정된 회의를 여기에서 보십시오";
+"LN_Home_TipAddCalendar_NewIM" = "업무 또는 개인 캘린더를 연결하여 모든 예정된 회의를 여기에서 보십시오";
 "LN_Home_NewMeeting_NewIM" = "새 회의";
 "LN_UpToDate_NewIM" = "최신입니다";
 
@@ -3051,14 +3085,11 @@
 "LN_Channel_ChannelName_NewIM" = "채널 이름";
 "LN_Channel_EditTopic_NewIM" = "주제 편집";
 "LN_Channel_TopicName_NewIM" = "주제 이름";
-"LN_Channel_ChannelType_NewIM" = "그룹 유형";
 "LN_Channel_ChatType_NewIM" = "채팅 유형";
 "LN_Channel_ChatName_NewIM" = "채팅 이름";
 "LN_Channel_Privacy_NewIM" = "개인정보 보호";
-"LN_Channel_NewMemebers_CanSee_MessageHistory_NewIM" = "새 구성원이 메시지 기록을 볼 수 있습니다";
 "LN_Channel_Search_ByName_NewIM" = "이름으로 검색";
 "LN_Channel_Create_A_Channel_NewIM" = "채널 만들기";
-"LN_Channel_Invite_Members_NewIM" = "구성원 초대";
 "LN_Channel_Create_Channel_NewIM" = "채널 만들기";
 "LN_Channel_Create_Channel_Over_Limit_NewIM_127989" = "허용된 최대 그룹 구성원 수에 도달했습니다";
 "LN_Channel_No_Channel_NewIM" = "채널 없음";
@@ -3122,7 +3153,6 @@
 "LN_Push_Notification_Lowercase_NewIM" = "푸시 알림";
 "LN_Unread_Msg_Badge_NewIM" = "읽지 않은 메시지 수";
 "LN_Show_Unread_Badge_NewIM" = "읽지 않은 메시지 수(     ) 표시";
-"LN_Invite_Others_NewIM" = "다른 사람 초대...";
 
 "LN_Typing_To_Search" = "입력하여 검색";
 "LN_No_Messages_Found_NewIM" = "일치하는 메시지를 찾을 수 없습니다.";
@@ -3140,7 +3170,6 @@
 "LN_Search_In_Messages_NewIM" = "메시지에서 다음 검색";
 "LN_Search_In_Files_NewIM" = "파일에서 검색";
 "LN_Search_In_Files_For_NewIM" = "파일에서 다음 검색";
-"LN_Search_More_%lu_Directory_NewIM" = "디렉터리에서 %lu 더 보기...";
 "LN_Search_Switch_NewIM" = "전환";
 "LN_Search_Post_In_NewIM" = "게시 위치";
 "LN_Search_@ALL_NewIM" = "@모두";
@@ -3176,7 +3205,6 @@
 "LN_Schedule_Main_TimeZone_NewIM" = "표준 시간대";
 "LN_Schedule_PMI_Upgrade_To_Pro_NewIM" = "프로로 업그레이드하여 변경";
 
-"LN_Directory_NewIM" = "디렉터리";
 
 "LN_HistoryMeetingList_Items_NewIM" = "회의 목록 기록, 항목 %ld개";
 "LN_HistoryMeetingList_NewIM" = "회의 목록 기록";
@@ -3190,7 +3218,7 @@
 "LN_MeetingList_NoMeetingTip_NewIM" = "예정된 회의가 여기에 표시됩니다";
 "LN_MeetingList_NoRecordedMeetingTitle_NewIM" = "기록된 회의 없음";
 "LN_MeetingList_NoRecordedMeetingTip_NewIM" = "기록된 회의가 여기에 표시됩니다";
-"LN_AddCalendar_NewIM" = "일정 추가";
+"LN_AddCalendar_NewIM" = "캘린더 추가";
 
 "LN_34295_In Progress (%02d:%02d:%02d)" = "처리 중(%02d:%02d:%02d)";
 "LN_34295_Close breakout room" = "소회의실 닫기";
@@ -3277,9 +3305,10 @@
 "LN_Sip_Remote_Hold_53076" = "원격 보류";
 
 //ZOOM-47189
-"LN_Schedule_Public_Event_Tip_47189" = "이 옵션을 선택하면 귀하의 회의가 공개 일정 목록에 포함되며 누구나 볼 수 있습니다. 비밀번호를 추가하여 회의를 보호하는 것이 좋습니다.";
+"LN_Schedule_Public_Event_Tip_47189" = "이 옵션을 선택하면 귀하의 회의가 공개 캘린더 목록에 포함되며 누구나 볼 수 있습니다. 비밀번호를 추가하여 회의를 보호하는 것이 좋습니다.";
 "LN_Schedule_Check_Public_Event_List_47189" = "공개 이벤트 목록 선택";
 "LN_Schedule_List_On_Public_Calendar_47189" = "공개 일정 목록";
+"LN_Schedule_Show_In_Public_Event_List_166825" = "공개 이벤트 목록에 표시";
 "LN_Schedule_List_In_The_Public_Event_List_47189" = "공개 이벤트 목록에 나열";
 "LN_Schedule_View_The_List_47189" = "목록 보기";
 
@@ -3309,20 +3338,8 @@
 "LN_Create_Channel_%@_61519" = "이 채널%@을(를) 만들었습니다 ";
 "LN_Create_MUC_%@_61519" = "이 그룹 채팅 %@을(를) 만들었습니다";
 
-"LN_%@_Invite_You_And_%@_Channel_61519" = "%@님이 귀하와 %@님을 이 채널에 초대했습니다";
-"LN_%@_Invite_You_And_%@_MUC_61519" = "%@님이 귀하와 %@님을 이 그룹 채팅에 초대했습니다";
-
-"LN_%@_Invite_You_Channel_61519" = "%@님이 귀하를 이 채널에 초대했습니다";
-"LN_%@_Invite_You_MUC_61519" = "%@님이 귀하를 이 그룹 채팅에 초대했습니다";
-
-"LN_You_Invite_%@_Channel_61519" = "%@님을 이 채널에 초대했습니다";
-"LN_You_Invite_%@_Muc_61519" = "%@님을 이 그룹 채팅에 초대했습니다";
-
 "LN_%@_Join_Channel_61519" = "%@님이 이 채널에 참가했습니다";
 "LN_%@_Join_Muc_61519" = "%@님이 이 그룹 채팅에 참가했습니다";
-
-"LN_%@_Invite_%@_Channel_61519" = "%@님이 %@님을 이 채널에 초대했습니다";
-"LN_%@_Invite_%@_Muc_61519" = "%@님이 %@님을 이 그룹 채팅에 초대했습니다";
 
 "LN_You_Remove_%@_From_Channel_61519" = "이 채널에서 %@님을 제외했습니다";
 "LN_You_Remove_%@_From_Muc_61519" = "이 그룹 채팅에서 %@님을 제외했습니다";
@@ -3426,9 +3443,6 @@
 "LN_Sip_Hold_Calls_Title_61378" = "보류 중 통화";
 "LN_Channel_been_deleted_%@_61519" = "관리자가 채널 \"%@\"을(를) 삭제했습니다.";
 "LN_You_Removed_from_Channel_Name_%@_61519" = "귀하는 채널 \"%@\"에서 제외되었습니다.";
-"LN_Messages_In_E2E_Channel_61519" = "이 채널에서 메시지는 엔드투엔드 암호화로 보호됩니다.";
-"LN_Messages_You_Enable_E2E_61519" = "이 채널에서 귀하의 메시지는 엔드투엔드 암호화로 보호됩니다.";
-"LN_Messages_In_E2E_1To1_Chat_61519" = "이 채팅의 메시지는 엔드투엔드 암호화로 보호됩니다.";
 
 //ZOOM-53042
 "LN_Schedule_Add_Audio_Water_Mark_ZOOM_53042" = "참가자를 식별하는 오디오 워터마크를 추가합니다.";
@@ -3447,7 +3461,6 @@
 "LN_One_Contact_Request_61304" = "새 읽지 않은 연락처 요청";
 "LN_Contact_Request_61304" = "읽지 않은 연락처 요청 %d개";
 "LN_Unread_Request_61304" = "읽지 않은 요청";
-"LN_Accessibility_Directory_list_61304" = "디렉터리 목록";
 "LN_Accessibility_Channels_list_61304" = "채널 목록";
 
 "LN_Accessibility_Close_InfoPanel_Btn_60776" = "이 정보 패널 닫기";
@@ -3501,7 +3514,7 @@
 
 //ZOOM-53042
 "LN_ManageBlockedUsers_60630" = "차단된 사용자 관리...";
-"LN_LeftSidebarTheme_60630" = "왼쪽 슬라이드바 테마:";
+"LN_LeftSidebarTheme_60630" = "왼쪽 사이드바 테마:";
 "LN_BounceApplication_Setting_60630" = "새 메시지가 수신되면 애플리케이션 아이콘 바운스";
 "LN_ChatSettings_60630" = "채팅 설정";
 "LN_Setting_RemindMe_60630" = "예정된 회의                  분 전에 나에게 다시 알림";
@@ -3549,7 +3562,7 @@
 "LN_Join_Channel_Title_68190" = "채널 참가";
 "LN_LaunchUrl_Failed_Title_68190" = "채널 열기 실패";
 "LN_LaunchUrl_Failed_Info_68190" = "알 수 없는 오류가 발생했습니다. 다시 시도해 주십시오.";
-"LN_In_Calendar_Event_69117" = "일정 이벤트 참가 중";
+"LN_In_Calendar_Event_69117" = "캘린더 이벤트 참가 중";
 
 "LN_SearchAllMessage_62337" = "모든 메시지 검색 중";
 
@@ -3593,8 +3606,6 @@
 "LN_MeetNow_65418" = "회의 시작";
 
 //ZOOM-43362
-"LN_My_Groups_43362" = "내 그룹";
-"LN_Company_Directory_43362" = "회사 디렉터리";
 "LN_Create_a_Contact_Group_43362" = "연락처 그룹 만들기";
 "LN_Group_Name_43362" = "그룹 이름";
 "LN_Add_Contact_43362" = "연락처 추가";
@@ -3668,7 +3679,7 @@
 "LN_Hotkey_Group_Meeting_41839" = "회의";
 "LN_Hotkey_Group_Chat_41839" = "채팅";
 "LN_Hotkey_Group_Annotation_41839" = "주석";
-"LN_Hotkey_Group_General_41839" = "일반 조항";
+"LN_Hotkey_Group_General_41839" = "일반";
 "LN_Hotkey_Join_Meeting_123974" = "회의 참가";
 "LN_Hotkey_Push_To_Talk_123974" = "말하려면 누르기";
 "LN_Hotkey_Start_Meeting_123974" = "회의 시작";
@@ -3685,6 +3696,7 @@
 "LN_Hotkey_Enter_Full_Screen_123974" = "전체 화면 모드 시작/종료";
 "LN_Hotkey_Switch_Minimal_Model_123974" = "최소 크기 창으로 전환";
 "LN_Hotkey_Mute_All_Audio_123974" = "호스트를 제외한 모두에 대해 오디오 음소거(호스트만 허용)";
+"LN_Hotkey_Unmute_All_Audio_163688" = "모두 음소거 해제 요청(호스트 전용)";
 "LN_Hotkey_Unmute_All_Audio_123974" = "호스트를 제외한 모두에 대해 오디오 음소거 해제(호스트만 허용)";
 "LN_Hotkey_Switch_Speaker_View_41839" = "스피커 보기/갤러리 보기로 전환";
 "LN_Hotkey_Previous_Gallery_Page_123974" = "갤러리 보기에서 비디오 참가자의 이전 페이지 보기";
@@ -3713,15 +3725,28 @@
 "LN_Hotkey_Invalid_Shortcut_41839" = "잘못된 바로 가기";
 "LN_Hotkey_Help_String_41839" = "새 키 입력을 입력하려면 VO-Space를 누릅니다";
 "LN_Hotkey_Shortcut_Tip_41839" = "바로 가기를 사용자 정의하려면 여기를 클릭하세요";
+"LN_Hotkey_Group_Phone_132159" = "전화";
+"LN_Hotkey_Initiate_Call_132159" = "통화 시작/디렉터리 검색";
+"LN_Hotkey_Highlighted_Call_132159" = "선택한 번호로 전화 걸기/디렉터리 검색";
+"LN_Hotkey_Accept_Call_132159" = "통화 수락";
+"LN_Hotkey_Decline_Call_132159" = "통화 거부";
+"LN_Hotkey_End_Call_132159" = "통화 종료";
+"LN_Hotkey_Mute_Call_132159" = "통화 음소거/음소거 해제";
+"LN_Hotkey_Hold_Call_132159" = "통화 보류/보류 해제";
+"LN_Hotkey_Mute_Call_Acc_132159" = "현재 통화 음소거";
+"LN_Hotkey_Unmute_Call_Acc_132159" = "현재 통화 음소거 해제";
+"LN_Hotkey_Hold_Call_Acc_132159" = "통화 보류";
+"LN_Hotkey_Unhold_Call_Acc_132159" = "통화 보류 해제";
 
 //ZOOM-45917
 "LN_Schedule_A_Meeting_45917" = "회의 예약";
 "LN_Schedule_From_ICal_45917" = "iCal에서 예약";
 "LN_Schedule_From_Outlook_45917" = "Outlook에서 예약";
-"LN_Schedule_From_Google_Calendar_45917" = "Google Calendar에서 예약";
+"LN_Schedule_From_Google_Calendar_45917" = "Google 캘린더에서 예약";
 
 //ZOOM-74350
 "LN_Schedule_Error_code_74350" = "회의를 예약할 수 없습니다. 오류 코드: %d";
+"LN_Schedule_Error_3068_Msg_166825" = "귀하의 계정에서 \"호스트보다 먼저 참가 사용\" 옵션을 선택한 PMI 회의에 대해 암호를 설정해야 합니다.";
 "LN_Schedule_Error_3068_Msg_74350" = "귀하의 계정은 \"호스트보다 먼저 참가 사용\" 옵션을 선택한 PMI 회의에 대해 비밀번호를 설정해야 합니다.";
 "LN_Save_PMI_Setting_Fail_74350" = "개인 회의 ID를 저장할 수 없었습니다. 오류 코드: %d";
 
@@ -3787,12 +3812,15 @@
 "LN_Phone_Enabled_Call_Recording_101809" = "관리자가 통화 기록을 활성화했습니다";
 "LN_Phone_In_Automatic_Recording_104209" = "관리자가 통화를 자동 기록으로 설정했습니다";
 "LN_Phone_702_Error_Content_82864" = "전화를 걸 수 없습니다. 인증서 파일에 문제가 있습니다. Zoom 지원에 문의하세요.";
+"LN_Phone_Service_Reconnect_148922" = "연결되지 않았습니다. 다시 연결 시도 중...";
+"LN_Phone_Service_TryNow_148922" = "지금 시도";
 
 //68763
 "LN_Dropbox_68763" = "Dropbox";
 "LN_MicrosoftOneDrive_68763" = "Microsoft OneDrive";
 "LN_GoogleDrive_68763" = "Google Drive";
 "LN_Box_68763" = "Box";
+"LN_MicrosoftSharePoint_131483" = "Microsoft SharePoint";
 "LN_YourComputer_68763" = "내 컴퓨터";
 "LN_lowercase_browser_83149" = "브라우저";
 "LN_Click_To_Open_In_%@_68763" = "%@에서 열려면 클릭";//browser
@@ -3834,7 +3862,7 @@
 "LN_ChatNow_81277" = "지금 채팅";
 
 "LN_Meeting_ChatAndRaiseHandChime_82083" = "채팅 메시지/손들기 시 차임벨 울리기";
-"LN_Meeting_EnterExitChime_123974" = "입장/나가기 차임벨 울리기";
+"LN_Meeting_EnterExitChime_162306" = "누군가 참가하거나 나갈 때 소리 재생";
 
 "LN_DisableChat_ToolTip_83180" = "관리자가 채팅을 비활성화했습니다";
 "LN_Contact_Request_Empty_83121" = "여기에 보류된 연락처 요청이 표시됩니다.";
@@ -3909,6 +3937,7 @@
 "LN_FullCancellation_114898" = "최대";
 "LN_Disable_114898" = "사용 안 함";
 "LN_Setting_CopyInvitationOnceMeeting_114898" = "회의가 시작되면 자동으로 초대 URL 복사";
+"LN_Setting_CopyInviteLink_114898" = "회의 시작 시 초대 링크 복사";
 "LN_Setting_ConfirmBeforeLeaving_114898" = "내가 회의에서 나갈 때 나에게 확인";
 "LN_UseDenoiseTip_114898" = "소음 제거 방법을 사용하여 비디오 품질을 개선합니다";
 "LN_HardwareVideoReceivingTip_114898" = "그래픽 카드의 하드웨어 비디오 디코더를 사용하여 비디오 수신에 대한 CPU 사용량을 절약합니다";
@@ -3916,6 +3945,7 @@
 "LN_EchoCancellationAggressiveTip_114898" = "최대 모드에서는 항상 귀하 측에서 발생한 에코를 소거합니다. 그러나 음성이 끊겨서 들릴 수 있습니다.";
 "LN_HelpCenter_114898" = "지원 센터";
 "LN_adjustMicrophoneVolume_114898" = "자동으로 마이크 볼륨을 조절합니다";
+"LN_ShowGreenBorder_43749" = "공유 콘텐츠 주위에 녹색 테두리 표시";
 "LN_ShareScreen_124237" = "화면 공유";
 "LN_Setting_FullScreenWhenShareStart_124237" = "참가자가 화면을 공유할 때 전체 화면으로 전환합니다";
 "LN_Setting_MaxWindowWhenShareStart_124237" = "참가자가 화면을 공유할 때 Zoom 창을 최대화합니다";
@@ -4015,9 +4045,10 @@
 //ZOOM-82591
 "LN_Accessibility_Send_Error_82591" = "메시지 전달 오류";
 "LN_Video_Priview_Window_Title_95786" = "비디오 미리보기";
-"LN_Video_Priview_Without_Preview_95786" = "비디오 회의에 참가할 때 항상 비디오 미리보기 대화 상자를 표시합니다";
+"LN_Video_Priview_Without_Preview_95786" = "비디오 회의에 참가할 때 항상 비디오 미리보기 대화 상자 표시";
 "LN_Video_Preview_Join_Without_Video_95786" = "비디오를 사용하지 않고 참가";
 "LN_Video_Preview_Join_With_Video_95786" = "비디오를 사용하여 참가";
+"LN_Schedule_Requiredpasscode_Tooltip_85368" = "귀하의 계정에서는 회의에 대해 암호를 설정해야 합니다.";
 "LN_Schedule_Requiredpassword_Tooltip_85368" = "귀하의 회의에 비밀번호를 설정해야 합니다.";
 
 //ZOOM-92437
@@ -4030,14 +4061,14 @@
 "LN_Interpretation_ShortcutTips_73504" = "언어를 전환하려면 클릭(%@)";
 "LN_Interpretation_Welcome_73504" = "환영합니다.";
 "LN_Interpretation_Interpreter_Tips_73504" = "통역사가 지정되었습니다.";
-"LN_Interpretation_Language_English_73504" = "English";
-"LN_Interpretation_Language_Chinese_73504" = "中文";
-"LN_Interpretation_Language_Japanese_73504" = "日本語";
-"LN_Interpretation_Language_German_73504" = "Deutsch";
-"LN_Interpretation_Language_French_73504" = "Français";
-"LN_Interpretation_Language_Russian_73504" = "Pусский";
-"LN_Interpretation_Language_Portuguese_73504" = "Português";
-"LN_Interpretation_Language_Spanish_73504" = "Español";
+"LN_Interpretation_Language_English_73504" = "영어";
+"LN_Interpretation_Language_Chinese_73504" = "중국어";
+"LN_Interpretation_Language_Japanese_73504" = "일본어";
+"LN_Interpretation_Language_German_73504" = "독일어";
+"LN_Interpretation_Language_French_73504" = "프랑스어";
+"LN_Interpretation_Language_Russian_73504" = "러시아어";
+"LN_Interpretation_Language_Portuguese_73504" = "포르투갈어";
+"LN_Interpretation_Language_Spanish_73504" = "스페인어";
 "LN_Interpretation_Language_Korean_73504" = "한국어";
 "LN_Interpretation_Interpreter_73504" = "통역사";
 "LN_Interpretation_Interpreter_LowerCase_73504" = "통역사";
@@ -4063,12 +4094,12 @@
 
 "LN_Being_Spotlighted_Tip_98422" = "호스트가 모두에게 내 비디오를 추천했습니다.";
 "LN_Being_Spotlighted_Unmuted_Tip_98422" = "마이크를 음소거하시겠습니까?";
-"LN_Being_Spotlighted_JoinAudio_Tip_98422" = "오디오에 참가하고 말하시겠습니까?";
+"LN_Being_Spotlighted_JoinAudio_Tip_98422" = "오디오에 연결하고 말하시겠습니까?";
 
 "LN_Sip_Line_Shared_Title_82842" = "공유됨";
 "LN_Sip_Line_Incoming_Call_82842" = "수신 전화";
 "LN_Sip_Line_You_82842" = "나";
-"LN_Sip_Line_User_Available_82842" = "대화 가능";
+"LN_Sip_Line_User_Available_82842" = "온라인";
 "LN_Sip_line_User_Call_On_82842" = "%@와의 통화에서";
 "LN_Sip_Minimize_82842" = "최소화";
 "LN_Sip_ShareLines_Segment_Title_82842" = "회선";
@@ -4103,6 +4134,20 @@
 "LN_Sip_Transfer_To_Meeting_Action_New_108092" = "신규";
 "LN_Sip_Transfer_To_Meeting_Start_New_Meeting_108092" = "발신자와 함께 새 회의 시작";
 "LN_Sip_Transfer_To_Meeting_Merge_Current_Meeting_108092" = "현재 회의에 발신자 병합";
+"LN_Sip_Invite_To_Meeting_Choose_Meeting_131472" = "회의 선택";
+"LN_Sip_Invite_To_Meeting_No_Upcoming_Meetings_131472" = "예정된 회의 없음";
+"LN_Sip_Invite_To_Meeting_Meeting_URL_131472" = "회의 URL";
+"LN_Sip_Invite_To_Meeting_PMI_Error_131472" = "이 발신자의 경우 개인 링크 이름이 지원되지 않음";
+"LN_Sip_Invite_To_Meeting_Invalid_URL_131472" = "잘못된 URL";
+"LN_Sip_Invite_To_Meeting_Failed_To_Send_Invite_131472" = "회의 초대를 보내지 못했습니다. 다시 시도하세요.";
+"LN_Sip_Invite_To_Meeting_Meeting_List_131472" = "회의 목록";
+"LN_Sip_Invite_To_Meeting_Success_Send_One_Invitation_131472" = "초대 %@개가 전송되었습니다.";
+"LN_Sip_Invite_To_Meeting_Success_Send_Multi-invitation_131472" = "초대 %@개가 전송되었습니다.";
+"LN_Sip_Peer_Join_Meeting_Success_131472" = "%@님이 회의에 참가했습니다.";
+"LN_Sip_Peer_Join_Meeting_Declined_131472" = "%@님이 거절했습니다.";
+"LN_Sip_Peer_Join_Meeting_Failed_131472" = "%@님을 회의에 초대하지 못했습니다.";
+"LN_Phone_Invite_To_Meeting_131319" = "회의에 초대";
+"LN_Phone_Invite_To_Meeting_Detail_131319" = "이 사용자를 아무 회의로 이동";
 "LN_Sip_ShareLine_History_Missed_106005" = "%@(으)로 인해 부재 중";
 "LN_Sip_ShareLine_History_Accept_106005" = "%2$@에 대해 %1$@에서 수락됨";
 "LN_Sip_SLG_History_106005" = "%@ 대상";
@@ -4145,7 +4190,6 @@
 "LN_MSG_Star_Message_NewIM" = "별표 표시된 메시지";
 "LN_MSG_Unstar_Message_NewIM" = "별표 표시가 해제된 메시지";
 "LN_Add_Reaction_89735" = "반응 추가";
-"LN_Reply_89735" = "회신";
 "LN_Write_A_Reply_89735" = "응답 작성...";
 "LN_Edit_Message_89735" = "메시지 편집...";
 "LN_Hide_Replies_89735" = "회신 숨기기";
@@ -4179,6 +4223,7 @@
 "LN_Light_98869" = "밝은";
 "LN_Default_98869" = "기본";
 "LN_Dark_98869" = "어두운";
+"LN_Meeting_Info_Numeric_Passcode_105984" = "숫자로 된 암호:";
 "LN_Meeting_Info_Numeric_Pass_105984" = "숫자로 된 비밀번호:";
 "LN_Meeting_Info_Numeric_Tip_105984" = "(전화/회의실 시스템)";
 "LN_Share_Screen_NoAccess_Alert_Title_105449" = "Zoom이 내 화면을 공유하도록 허용";
@@ -4194,30 +4239,25 @@
 "LN_IncludeLog_150701" = "로그 파일 포함";
 "LN_Description_114602" = "설명";
 "LN_BrieflyDescribe_150701" = "상황을 간단히 설명하세요";
+"LN_IncludeLog_159846" = "로그 파일 및 시스템 정보 포함";
+"LN_DesJMF_159846" = "회의에 참가할 수 없음";
 "LN_Medium_148704" = "중간";
-"LN_ReportAProblem_114602" = "문제 보고";
-"LN_ChooseFeatureTitle_114602" = "기능 선택";
-"LN_ChooseFeature_114602" = "기능 선택";
 "LN_SelectProblem_114602" = "문제 선택";
 "LN_FoundProblem_114602" = "문제를 발견하셨나요?";
 "LN_SendReport_114602" = "보고서 보내기";
-"LN_ReportProblem_114602" = "문제 보고...";
-"LN_IncludeLog_114602" = "로그 파일, 시스템 정보 및 Zoom 클라이언트 정보 포함";
 "LN_HaveTicketID_114602" = "티켓 ID가 있습니다";
 "LN_EnterID_114602" = "ID 입력";
-"LN_BrieflyDescribe_114602" = "상황을 간단히 설명하세요. 단계별로 설명하는 것이 효과적입니다. ";
-"LN_TellUsMore_114602" = "더 자세히 말씀해 주세요";
-"LN_WhenProblemOccurred_114602" = "문제 발생 시간";
-"LN_ProblemType_114602" = "문제 유형";
 "LN_IssueFileTransfer_114602" = "파일 전송";
 "LN_IssueMessage_114602" = "메시지";
 "LN_IssueVideoQuality_114602" = "비디오 품질";
 "LN_ModelWebinar_114602" = "웨비나";
+"LN_Schedule_Passcode_Tip_Numeric_106186" = "전화 또는 회의실 시스템에서 전화를 건 사용자가 사용할 숫자로 된 암호가 생성됩니다.";
 "LN_Schedule_Password_Tip_Numeric_106186" = "전화 또는 회의실 시스템에서 전화를 건 사용자가 사용할 숫자로 된 비밀번호가 생성됩니다";
 "LN_Schedule_Generate_Automatically_106181" = "자동으로 생성";
 "LN_Schedule_Generate_ID_106181" = "생성된 ID %@";
+"LN_Schedule_Enter_Passcode_106181" = "암호 입력";
 "LN_Schedule_Enter_Password_106181" = "비밀번호 입력";
-"LN_Schedule_Recurring_Tip_String_106181" = "일정 초대에서 되풀이 또는 반복을 확인하십시오.";
+"LN_Schedule_Recurring_Tip_String_106181" = "캘린더 초대에서 되풀이 또는 반복을 확인하십시오.";
 "LN_ShareSetting_LockedTip_105771" = "고급 공유 옵션 설정은 관리자가 잠갔으므로 수정할 수 없습니다.";
 "LN_Sending_Files_Not_Supported_91341" = "파일을 보낼 수 없었습니다.";
 "LN_CheckingUpdate_NewIM" = "업데이트 확인 중...";
@@ -4245,8 +4285,8 @@
 "LN_Mention_Notify_All" = "모두에게 알림";
 "LN_Mention_Do_You_Want_To_Notify_All_%ld" = "이 채널의 모든 %ld 구성원에게 알리시겠습니까?";
 "LN_Mention_Jump_To_Channel" = "이 채널로 이동";
-"LN_MeetingList_Calendar_Authorization_Expired_111419" = "일정 승인이 만료되었습니다. %@하세요.";
-"LN_MeetingList_Reconnect_111419" = "다시 연결";
+"LN_MeetingList_Calendar_Authorization_Expired_111419" = "캘린더 승인이 만료되었습니다. 다시%@";
+"LN_MeetingList_Reconnect_111419" = "연결하십시오";
 "LN_Vanity_URL_Select_Title_Without_Name_100649" = "참가하려는 회의:";
 "LN_Vanity_URL_Select_Title_With_Name_100649" = "참가하려는 \"%@\" 회의:";
 "LN_Vanity_URL_Select_Same_Account_100649" = "회사";
@@ -4324,9 +4364,6 @@
 "LN_Inter_Num_107261" = "(내부 번호)";
 "LN_Admin_Control_113382" = "이 회의는 관리자가 제어하고 있습니다.";
 "LN_Admin_Stop_Control_113382" = "관리자가 회의 제어를 중지했습니다.";
-"LN_ChatName_Only_Changed_Once_116723" = "채팅 이름은 한 번만 변경할 수 있습니다. 다시 변경하려면 채팅 관리자에게 편집 권한을 요청하세요.";
-"LN_ChatName_Nolonger_Changed_116723" = "채팅 이름은 더 이상 변경할 수 없습니다.";
-"LN_ChatName_Has_Been_Changed_116723" = "다른 구성원이 채팅 이름을 변경했습니다. 이제 관리자만 채팅 이름을 변경할 수 있습니다.";
 "LN_ChatName_116723" = "채팅 이름";
 "LN_SaveChanges_116723" = "변경 저장";
 "LN_Disable_Direct_Share_Alert_Title_88866" = "화면을 공유할 수 없습니다";
@@ -4347,7 +4384,6 @@
 "LN_Floating_Bar_Tip_Grid_Video_68385" = "그리드 비디오 표시";
 "LN_Floating_Bar_Tip_Share_View_68385" = "공유 보기 표시";
 "LN_Accessibility_Someone_Enter_The_Waiting_Room_43360" = "%@님이 대기실에 입장했습니다. CMD + ~를 누르면 팝업이 열립니다. 아니면 참가자 패널로 이동해 참가자를 수락하세요.";
-"LN_Accessibility_Someone_Enter_Waiting_Room_43360" = "%@님이 대기실에 입장했습니다";
 "LN_Accessibility_Press_Admit_All_Button_43360" = "모든 버튼을 눌러 허용합니다";
 "LN_Accessibility_Participants_Enter_The_Waiting_Room_43360" = "%ld명이 대기실에 입장했습니다. CMD + ~를 누르면 팝업이 열립니다. 아니면 참가자 패널로 이동해 참가자를 수락하세요.";
 "LN_Merge_Merge_Btn_115938" = "병합";
@@ -4394,6 +4430,7 @@
 "LN_Ordered_Recent_119636" = "최근";
 "LN_Test_Speaker_Mic_123974" = "스피커 및 마이크 테스트";
 "LN_Choose_VB_123974" = "가상 배경 선택...";
+"LN_Ask_All_Unmute_163688" = "모두에게 음소거 해제 요청";
 "LN_Mute_Participants_Entry_123974" = "입장 시 참가자 음소거";
 "LN_Allow_Unmute_Themselves_123974" = "참가자가 음소거를 해제할 수 있도록 허용";
 "LN_Put_Into_Waiting_Room_Entry_123974" = "입장 시 대기실에 참가자 배치";
@@ -4430,6 +4467,8 @@
 "LN_MeetingList_Delete_Meeting_120526" = "회의 삭제";
 "LN_MeetingList_Can_Recover_From_Web_120526" = "Zoom 웹의 %@ 페이지에서 7일 이내에 이 회의를 복구할 수 있습니다.";
 "LN_MeetingList_Schedule_For_Meeting_120526" = "이 회의가 %@님에 대해 예약되었습니다.";
+"LN_MeetingList_Delete_Recording_172225" = "기록 삭제";
+"LN_MeetingList_Delete_Recording_Tip_172225" = "컴퓨터에서 이 기록을 영구적으로 삭제하려고 합니다. 이 작업은 실행 취소할 수 없습니다.";
 "LN_JBH_Time_123084" = "%@에 가입할 수 있습니다";
 "LN_JBH_Login_Start_123084" = "시작 시간: %@";
 "LN_Waiting_Host_Meeting_123084" = "호스트가 이 회의를 시작하기를 기다리는 중";
@@ -4529,6 +4568,7 @@
 "LN_Domain_require_129755" = "다음 도메인과 일치하는 이메일 주소를 사용하여 로그인해야 합니다.";
 "LN_Require_Account_Join_129755" = "회의에 참가하려면 귀하의 회사 계정으로 로그인해야 합니다.";
 "LN_Core_Audio_Error_127183" = "Zoom에서 컴퓨터의 오디오 관련 문제를 감지했습니다. 컴퓨터를 다시 시작해야 합니다.    ";
+"LN_Core_Audio_Error_156877" = "Zoom에서 문제를 감지했으며 컴퓨터 오디오를 다시 시작해야 합니다.    ";
 "LN_Join_Reject_By_Info_Barrier_Message_93173" = "이 회의를 참가할 수 없습니다.";
 "LN_Join_Reject_By_Info_Barrier_Infomation_93173" = "관리자가 특정 그룹 및 사용자 간 통신을 제한했습니다.";
 "LN_Barrier_Share_Message_91373" = "화면을 공유할 수 없습니다.";
@@ -4581,8 +4621,8 @@
 "LN_Accessibility_Waiting_Room_Table_149485" = "대기실";
 "LN_Accessibility_Meeting_Password_Edit_149485" = "회의 비밀번호 편집";
 "LN_Accessibility_Waiting_Room_Title_149485" = "회의에서 나가려면 CMD + W 누르기";
-"LN_Accessibility_Open_Calendar_148329" = "일정 열기";
-"LN_Accessibility_Close_Calendar_148329" = "일정 닫기";
+"LN_Accessibility_Open_Calendar_148329" = "캘린더 열기";
+"LN_Accessibility_Close_Calendar_148329" = "캘린더 닫기";
 "LN_Accessibility_Webinar_148329" = "웨비나";
 "LN_Are_Invite_To_Meeting_137934" = "귀하를 회의에 초대하는 중입니다";
 "LN_Are_Invite_To_Group_Meeting_137934" = "귀하를 %@(%d)의 회의에 초대하는 중입니다";
@@ -4602,8 +4642,78 @@
 "LN_Unable_Sign_In_Alipay_154472" = "Alipay로 로그인할 수 없습니다. 나열된 다른 방법을 시도해 보세요.";
 "LN_Unable_Sign_In_SMS_154472" = "SMS로 로그인할 수 없습니다. 나열된 다른 방법을 시도해 보세요.";
 "LN_Original_Host_153921" = "원래 호스트";
+"LN_Link_Copied_To_Clipboard_155923" = "초대 링크가 클립보드에 복사되었습니다";
+"LN_Invitation_Copied_To_Clipboard_155923" = "초대가 클립보드에 복사되었습니다";
+"LN_Copy_Invite_Link_155923" = "초대 링크 복사";
+"LN_Copy_Invite_Link_To_Clipboard_155923" = "클립보드에 초대 링크 복사";
+"LN_Invite_Link_155923" = "초대 링크";
+"LN_Copy_Link_155923" = "링크 복사";
+"LN_Meeting_Info_URL_Copied_155923" = "클립보드에 복사됨";
+"LN_UnKnown_Scheme_Content_156643" = "최신 Zoom 버전으로 업데이트하고 다시 시도하세요";
+"LN_Meeting_Info_159420" = "회의 정보";
+"LN_Meeting_Passcode_Title_162714" = "회의 암호 입력";
+"LN_Meeting_Passcode_162714" = "회의 암호";
+"LN_Meeting_Passcode_Error_162714" = "잘못된 암호";
+"LN_Meeting_Password_Title_162714" = "회의 비밀번호 입력";
+"LN_Meeting_Password_162714" = "회의 비밀번호";
+"LN_Meeting_Password_Error_162714" = "잘못된 비밀번호";
+"LN_Meeting_Name_Title_162714" = "이름 입력";
+"LN_Meeting_Name_162714" = "이름";
+"LN_Meeting_Vanity_Url_Title_162714" = "참가할 회의 선택";
+"LN_Meeting_Verify_Phone_Number_162714" = "전화번호";
+"LN_Meeting_Verify_Enter_Digit_162714" = "6자리 코드";
+"LN_Verify_Already_Verified_162714" = "전화번호를 이미 인증했나요? 로그인";
+"LN_Verify_Agree_Privacy_Policy_162714" = "회의에 참가하면 개인정보 보호정책에 동의하게 됩니다";
+"LN_Meeting_Verify_Passcode_162714" = "암호 확인 중...";
+"LN_Meeting_Verify_Password_162714" = "비밀번호 확인 중...";
+"LN_Meeting_Error_Title_164407" = "알 수 없는 오류가 발생했습니다";
+"LN_Meeting_Error_Desc_164407" = "오류 코드:";
+"LN_QA_Deleted_By_Host_164407" = "호스트가 삭제함";
+"LN_Meeting_QA_Welcome_Title_94012" = "Q&A에 오신 것을 환영합니다";
+"LN_Meeting_QA_Welcome_Message_94012" = "호스트와 토론자에게 묻는 질문이 여기에 표시됩니다.";
+"LN_Meeting_QA_No_Questions_94012" = "질문 없음";
+"LN_Meeting_QA_No_Open_Questions_94012" = "해결되지 않은 질문 없음";
+"LN_Meeting_QA_Open_Message_With_All_94012" = "이 웨비나에 있는 모든 사람이 해결되지 않은 질문을 볼 수 있습니다";
+"LN_Meeting_QA_Open_Message_Without_All_94012" = "호스트와 토론자만 질문을 볼 수 있습니다";
+"LN_Passcode_171909" = "암호";
+"LN_Passcode_Error_171909" = "암호 오류!";
+"LN_Meeting_Passcode_171909" = "회의 암호:";
+"LN_Enter_Meeting_Passcode_171909" = "회의 암호 입력: ";
+"LN_Passcode_With_Mark_171909" = "암호:";
+"LN_Invalid_Personal_Link_160225" = "잘못된 개인 링크 이름";
+"LN_Try_Again_160225" = "확인하고 다시 시도해 주십시오.";
+"LN_Invalid_Meeting_ID_160225" = "잘못된 회의 ID";
+"LN_Login_Error_Code_173392" = "로그인하지 못했습니다. 다시 시도하세요. (오류 코드: %ld)";
+"LN_Event_Page_167535" = "이벤트 페이지";
+"LN_Revoke_Co_Host_173757" = "더 이상 공동 호스트가 아닙니다";
 "LN_Interpret_Mute_Original_Audio_140277" = "원본 오디오 음소거";
 "LN_Interpret_Unmute_Original_Audio_140277" = "원본 오디오 음소거 해제";
+"LN_MFA_Title_176629" = "2단계 인증";
+"LN_MFA_Auth_Info_176629" = "인증 앱에서 생성된 코드를 입력합니다";
+"LN_MFA_SMS_Info_176629" = "확인 코드가 %@(으)로 전송되었습니다";
+"LN_MFA_Send_SMS_Info_176629" = "%@(으)로 확인 코드를 전송할 방법 선택";
+"LN_MFA_Send_Single_SMS_Info_176629" = "Zoom이 %@(으)로 확인 코드를 전송합니다";
+"LN_MFA_Recovery_Info_176629" = "복구 코드 중 하나를 입력합니다";
+"LN_MFA_Enter_Recovery_176629" = "복구 코드를 입력합니다";
+"LN_MFA_Resend_SMS_176629" = "SMS로 코드 재전송";
+"LN_MFA_Resend_Phone_176629" = "전화 통화";
+"LN_MFA_Resend_SMS_Or_Phone_176629" = "SMS 또는 전화 통화로 코드 재전송";
+"LN_MFA_Resend_Code_176629" = "코드 재전송";
+"LN_MFA_Send_SMS_176629" = "SMS로 코드 보내기";
+"LN_MFA_Send_Phone_176629" = "전화 통화로 코드 보내기";
+"LN_MFA_Another_Type_176629" = "다른 방법으로 시도";
+"LN_MFA_Use_Auth_176629" = "인증 앱 사용";
+"LN_MFA_Use_SMS_176629" = "SMS로 코드 받기";
+"LN_MFA_Use_Recovery_176629" = "복구 코드 입력";
+"LN_MFA_Use_Recovery_Instead_176629" = "대신 복구 코드 입력";
+"LN_MFA_Verify_Code_Error_176629" = "잘못된 확인 코드";
+"LN_MFA_Recovery_Error_176629" = "잘못된 복구 코드입니다. 새 복구 코드를 입력하세요.";
+"LN_MFA_Failed_Send_Code_176629" = "코드를 보낼 수 없습니다. 다시 시도해 주세요.";
+"LN_MFA_Failed_Send_Error_Code_176629" = "코드를 보낼 수 없습니다. 오류 코드: %ld";
+"LN_MFA_Send_SMS_Code_Frequently_176629" = "%ld초 후에 새 코드를 재전송할 수 있습니다.";
+"LN_MFA_Resend_Code_Second_176629" = "%ld초 후 재전송";
+"LN_MFA_Failed_Verify_Error_Code_176629" = "코드를 확인할 수 없습니다. 오류 코드: %ld";
+"LN_MFA_Too_Many_Failed_176629" = "제한된 실패 횟수를 초과했습니다. 나중에 다시 시도해 주세요.";
 "LN_Record_Disclaimer_Cloud_133456" = "이 회의를 클라우드에 기록하시겠습니까?";
 "LN_Record_Disclaimer_Local_133456" = "이 회의를 컴퓨터에 기록하시겠습니까?";
 "LN_Disclaimer_Generated_133456" = "이 고지 사항은 귀하의 계정 관리자가 생성했습니다.";
@@ -4642,19 +4752,17 @@
 "LN_Enable_Waiting_Room_Tips_147468" = "대기실을 활성화했습니다";
 "LN_Disable_Waiting_Room_Tips_147468" = "대기실을 비활성화했습니다";
 "LN_Plist_Joining_147468" = "참가 중...";
-"LN_Security_Report_Participant_147465" = "참가자 보고";
-"LN_Security_Select_Problem_147465" = "문제 선택";
 "LN_Security_Inappropriate_Share_147465" = "부적절한 화면 공유";
 "LN_Security_Uninvited_Guest_147465" = "초대되지 않은 게스트";
 "LN_Security_Inappropriate_Video_147465" = "부적절한 비디오";
 "LN_Security_Intellectual_Property_Violation_147465" = "지적 재산권 위반";
 "LN_Security_Abusive_Conduct_147465" = "폭력적인 행동";
 "LN_Security_Snapshot_147465" = "데스크톱 스크린샷 포함";
-"LN_Security_Harmful_Language_147465" = "유해한 언어";
-"LN_Security_Snapshot_Zoom_147465" = "Zoom 창의 스크린샷 포함";
 "LN_Security_Attach_File_147465" = "파일 첨부";
 "LN_Security_Thanks_147465" = "알려주셔서 감사합니다";
 "LN_Security_Feedback_147465" = "Zoom 커뮤니티를 안전하게 유지하는 데 귀하의 피드백이 중요합니다.\n 회의를 보호할 수 있는 방법에 대해 %@.";
+"LN_Security_Thanks_Report_147465" = "문제를 보고해 주셔서 감사합니다";
+"LN_Security_Report_Feedback_147465" = "좀 더 조사한 후 조사 결과를 바탕으로 조치를 취할 예정입니다. 회의를 보호할 수 있는 방법에 대해 %@.";
 "LN_Security_Remove_147465" = "%@ 제거";
 "LN_Security_Removed_147465" = "%@ 제거됨";
 "LN_Security_Who_Report_147465" = "누구에게 보고하고 싶나요?";
@@ -4671,6 +4779,8 @@
 "LN_Security_Acc_Screenshot_Include_147465" = "데스크톱 스크린샷이 포함됨";
 "LN_Security_Acc_Search_147465" = "누구에 대해 보고하고 싶으신가요? 편집하고 입력하여 필터링하기";
 "LN_Security_Report_147465" = "보고";
+"LN_Security_Report_Who_Accessibility_153092" = "누구에 대해 보고하고 싶으신가요? 입력하여 필터링하기";
+"LN_Security_Screenshot_Accessibility_153092" = "데스크톱 스크린샷";
 "LN_Crash_Report_Title_149368" = "예기치 않게 Zoom 종료";
 "LN_Crash_Report_Content_149368" = "Zoom에서 이 문제를 해결하는 데 도움이 되도록 충돌 보고서를 생성합니다.";
 "LN_Crash_Report_Placeholder_149368" = "상황을 간단히 설명하세요";
@@ -4679,17 +4789,23 @@
 "LN_Crash_Report_Privacy_Policy_149368" = "개인정보 보호정책";
 "LN_Crash_Report_Send_Button_149368" = "Zoom에 보내기";
 "LN_Crash_Report_Do_Not_Send_Button_149368" = "전송 안 함";
+"LN_Schedule_Passcode_Error_Tip_136696" = "암호가 요구 사항을 충족하지 않습니다.";
 "LN_Schedule_Psw_Error_Tip_136696" = "비밀번호가 요구 사항을 충족하지 않습니다";
 "LN_Schedule_Psw_Rule_Has_Special_136696" = "특수 문자(!, @, #...) 1개 이상 포함";
 "LN_Schedule_Psw_Rule_Has_Number_136696" = "숫자(1, 2, 3...) 1개 이상 포함";
 "LN_Schedule_Psw_Rule_Has_Alphabet_136696" = "문자(a, b, c...) 1개 이상 포함";
 "LN_Schedule_Psw_Rule_Has_Min_%@_Length_136696" = "%d자 이상이어야 함";
+"LN_Schedule_Passcode_Rule_Only_Number_136696" = "숫자로 된 암호만 허용";
+"LN_Schedule_Passcode_Must_136696" = "암호는 다음과 같아야 합니다.";
+"LN_Schedule_Passcode_Must_Not_162659" = "암호는 다음과 같지 않아야 합니다.";
 "LN_Schedule_Psw_Rule_Only_Number_136696" = "숫자로 된 비밀번호만 허용";
 "LN_Schedule_Password_Must_136696" = "비밀번호는 다음과 같아야 합니다.";
-"LN_Encryption_Required_Title_149515" = "데이터가 암호화되지 않았습니다";
-"LN_Encryption_Required_Info_149515" = "로컬 데이터를 암호화하면 Zoom이 다시 시작됩니다.";
+"LN_Schedule_Password_Must_Not_162659" = "비밀번호는 다음 사항을 피해야 합니다.";
+"LN_Schedule_Psw_Rule_Include_Cases_162659" = "대문자 및 소문자를 모두 포함합니다";
+"LN_Schedule_Psw_Rule_Contain_%d_Consecutive_Chars_162659" = "%d개의 연속된 문자(예: “11111”, “12345”, “abcde” 또는 “qwert”) 포함";
+"LN_Schedule_Passcode_Weak_Error_Tip_162659" = "더 강력한 암호를 입력하세요.";
+"LN_Schedule_Psw_Weak_Error_Tip_162659" = "강력한 비밀번호를 입력하세요";
 "LN_Remind_Later_149515" = "나중에 다시 알림";
-"LN_Encrypt_Now_149515" = "지금 암호화";
 "LN_Messages_In_E2E_Channel_61519" = "이 채널의 메시지가 암호화됩니다.";
 "LN_Messages_You_Enable_E2E_61519" = "이 채널의 메시지가 암호화됩니다.";
 "LN_Messages_In_E2E_1To1_Chat_61519" = "이 채팅의 메시지가 암호화됩니다.";
@@ -4714,22 +4830,36 @@
 "LN_Schedule_DcName_AU_151076" = "호주";
 "LN_Schedule_DcName_IN_151076" = "인도";
 "LN_Schedule_DcName_CN_151076" = "중국";
-"LN_Schedule_DcName_HK_151076" = "중국 홍콩";
+"LN_Schedule_DcName_HK_151076" = "홍콩 특별 행정구";
 "LN_Schedule_DcName_TY_151076" = "일본";
 "LN_Schedule_DcName_LA_151076" = "라틴 아메리카";
+"LN_SettingsTipShareTCPConnnect_175480" = "공유 화면에서 콘텐츠를 볼 수 없거나 다른 사람이 공유 화면에서 콘텐츠를 볼 수 없는 경우 이 옵션을 선택합니다.";
+"LN_SettingsUseTCPConnection_175480" = "화면 공유에 TCP 연결 사용";
+"LN_DownloadVirtualBackgroundPackage_173114" = "스마트 가상 배경 패키지를 다운로드하시겠습니까?";
+"LN_DownloadFiltersPackage_173114" = "필터 패키지를 다운로드할까요?";
+"LN_SettingVBTab_173114" = "배경 및 필터";
+"LN_SettingVBTabDisable_173114" = "관리자가 가상 배경 및 필터를 껐습니다.";
+"LN_TryOutNewFilters!_173114" = "새 필터를 사용해 보세요!";
+"LN_Filters_173114" = "필터";
+"LN_VirtualBackgrounds_173114" = "가상 배경";
+"LN_VideoFilters_173114" = "비디오 필터";
+"LN_ChooseVideoFilter_173114" = "비디오 필터 선택...";
+
 "LN_Schedule_PMI_Disabled_Self_153605" = "귀하의 개인 회의 ID가 비활성화되었습니다";
-"LN_Schedule_PMI_Disabled_%@s_153605" = "%@님의 개인 회의 ID가 비활성화되었습니다.";
-"LN_Schedule_PMI_Disabled_%@_153605" = "%@님의 개인 회의 ID가 비활성화되었습니다.";
+"LN_Schedule_PMI_Disabled_%@s_153605" = "%@님의 개인 회의 ID가 비활성화되었습니다";
+"LN_Schedule_PMI_Disabled_%@_153605" = "%@님의 개인 회의 ID가 비활성화되었습니다";
 "LN_Schedule_PMI_Disabled_Self_EditTip_153605" = "귀하의 개인 회의 ID가 비활성화되었습니다. 이 회의를 저장하면 새 회의 ID가 자동으로 생성됩니다.";
-"LN_Schedule_PMI_Disabled_%@s_EditTip_153605" = "%@님의 ID가 비활성화되었습니다. 이 회의를 저장하면 새 회의 ID가 자동으로 생성됩니다.";
-"LN_Schedule_PMI_Disabled_%@_EditTip_153605" = "%@님의 ID가 비활성화되었습니다. 이 회의를 저장하면 새 회의 ID가 자동으로 생성됩니다.";
+"LN_Schedule_PMI_Disabled_%@s_EditTip_153605" = "%@님의 개인 회의 ID가 비활성화되었습니다. 이 회의를 저장하면 새 회의 ID가 자동으로 생성됩니다.";
+"LN_Schedule_PMI_Disabled_%@_EditTip_153605" = "%@님의 개인 회의 ID가 비활성화되었습니다. 이 회의를 저장하면 새 회의 ID가 자동으로 생성됩니다.";
 "LN_Schedule_PMI_Disabled_Select_%@_ErrorTip_153605" = "귀하의 개인 회의 ID가 비활성화되었습니다. 이 회의를 예약하려면 회의 ID 섹션에서 \"%@\" 옵션을 선택하세요.";
 "LN_Edit_PMI_Disabled_Error_Tip_153605" = "개인 회의 ID가 비활성화되어 저장할 수 없습니다";
+"LN_Schedule_PMI_Disabled_%@s_Select_%@_ErrorTip_153605" = "%@님의 개인 회의 ID가 비활성화되었습니다. 이 회의를 예약하려면 회의 ID 섹션에서 \"%@\" 옵션을 선택하세요.";
+"LN_Schedule_PMI_Disabled_%@_Select_%@_ErrorTip_153605" = "%@님의 개인 회의 ID가 비활성화되었습니다. 이 회의를 예약하려면 회의 ID 섹션에서 \"%@\" 옵션을 선택하세요.";
 "LN_Give_Feedback_130995" = "피드백 보내기";
 "LN_Keep_Phone_Connected_130995" = "전화 연결 유지";
 "LN_How_Was_Your_Experience_130995" = "경험은 어떠셨나요?";
 "LN_Great_130995" = "좋아요";
-"LN_Had_Issues_130995" = "문제가 있음";
+"LN_Had_Issues_130995" = "개선 필요";
 "LN_OK_Contact_Me_130995" = "피드백에 대해 문의사항이 있으신 경우 연락해주세요";
 "LN_Assign_New_Host_130995" = "새 호스트 지정";
 "LN_Assign_and_Leave_130995" = "지정 후 나가기";
@@ -4752,12 +4882,334 @@
 "LN_Security_Connect_Zoom_Data_Center_151956" = "귀하는 %@의 데이터 센터를 통해 Zoom 글로벌 네트워크에 연결되었습니다.";
 "LN_Security_Connect_On_Premise_Data_Center_151956" = "귀하는 온프레미스 데이터 센터에 연결되었습니다.";
 "LN_Security_Connect_Zoom_On_Premise_Data_Center_151956" = "귀하는 온프레미스 데이터 센터를 통해 Zoom 글로벌 네트워크에 연결되었습니다.";
+"LN_VBOffByAdmin_163539" = "관리자가 가상 배경을 껐습니다";
+"LN_VBSettingOff_163539" = "설정이 꺼져 있습니다";
+"LN_VBSettingOffToTurnOn_163539" = "이 설정을 켜려면 회의 설정으로 이동하십시오";
+"LN_VBGotoMeetingSettings_163539" = "회의 설정으로 이동";
+"LN_VBDeletItem_163539" = "\"%@\"을(를) 삭제하시겠습니까?";
+"LN_VBDisableAdd_163539" = "관리자가 설정한 제한사항 때문에 이미지나 비디오를 업로드할 수 없습니다.";
+"LN_AXIMChatReceived_19946" = "IM 채팅이 수신됨";
+"LN_AXParticipantJL_19946" = "참가자가 회의에 참가함/회의에서 나감(호스트만)";
+"LN_AXParticipantJLWaitingRoom_19946" = "참가자가 대기실에 입장함/대기실에서 나감(호스트만)";
+"LN_AXAudioMutedByHost_19946" = "호스트가 오디오를 음소거함";
+"LN_AXVideoStoppedByHost_19946" = "호스트가 비디오를 중지함";
+"LN_AXScreenSharingStartedStopped_19946" = "참가자가 화면 공유를 시작함/중지함";
+"LN_AXRecordingPermissionGrantedRevoked_19946" = "기록 권한이 부여됨/회수됨";
+"LN_AXPublicInMeetingChatReceived_19946" = "회의 중 공개 채팅을 수신함";
+"LN_AXPrivateInMeetingChatReceived_19946" = "회의 중 비공개 채팅을 수신함";
+"LN_AXInMeetingFileUpload_19946" = "회의 중 파일 업로드가 완료됨";
+"LN_AXClosedCaptioningAvailable_19946" = "선택 자막 사용 가능";
+"LN_AXClosedCaptioningPrivilegeGrantedRevoked_19946" = "선택 자막 입력 권한이 부여됨/회수됨";
+"LN_AXHostPrivilegeGrantedRevoked_19946" = "호스트 권한이 부여됨/회수됨";
+"LN_AXCohostPrivilegeGrantedRevoked_19946" = "공동 호스트 권한이 부여됨/회수됨";
+"LN_AXRemoteControlPermissionGrantedRevoked_19946" = "원격 제어 권한이 부여됨/회수됨";
+"LN_AXParticipantRaisedLoweredHand_19946" = "참가자가 손을 듦/내림(토론자만)";
+"LN_AXAlertsRestored_19946" = "모든 알림이 기본값으로 복원됩니다.";
+"LN_SettingCCDemo_19946" = "자막은 이렇게 표시됩니다";
+"LN_ScreenReaderAlerts_19946" = "화면 읽기 프로그램 알림";
+"LN_Enable_19946" = "사용";
+"LN_Manage_19946" = "관리";
+"LN_SettingsPopoverSuppressBackNoise_167323" = "소음 억제는 잡다한 소리(예: 컴퓨터 팬이 돌아가는 소리, 키보드 입력 소리)를 제거합니다.";
+"LN_SettingsLearnMore_167323" = "더 알아보기";
+"LN_SettingsLow_167323" = "낮음";
+"LN_SettingsSuppressBackgroundNoise_167323" = "배경 소음 억제";
+"LN_SettingsWhoCanUnmute_167323" = "나를 음소거 해제할 수 있는 사람";
+"LN_SettingsTipSuppression_167323" = "음악에 맞춰 최적화하려면 기본 소음 억제 수준(낮음) 선택";
+"LN_SettingsMuteWhenJoinMeeting_167323" = "회의에 참가할 때 내 마이크 음소거";
+"LN_SettingsJoinAudioWhenJoinMeeting_167323" = "회의에 참여할 때 컴퓨터 오디오로 자동 참여";
+"LN_SettingsEnablePushToTalk_167323" = "\'Space 키\'를 길게 눌러 음소거를 일시적으로 해제합니다";
+"LN_SettingsEnableStereo_167323" = "스테레오 오디오 사용";
+"LN_SettingsSuppressBackgroundDownloadTip_167323" = "배경 소음을 \'높음\' 수준으로 억제하려면, 오디오 개선 패키지를 다운로드하세요. 이 작업은 한 번만 수행하면 됩니다.\n\n이 패키지를 설치하면 CPU 사용량이 증가합니다.";
+"LN_SettingsSuppressBackgroundDownloadPrivileges_167323" = "배경 소음을 \'높음\' 수준으로 억제하려면 관리자 권한으로 설치해야 합니다.";
+"LN_AutoAdjustVideoBrightness_167945" = "비디오 밝기 자동 조정";
+"LN_AdjustLowLight_167945" = "저조도 환경에 맞게 조정";
+"LN_Security_Show_Connected_DC_Domain_158251" = "귀하는 %1$@에 %2$@의 데이터 센터를 통해 연결되었습니다";
+"LN_Security_Show_Connected_DC_Domains_158251" = "귀하는 %1$@에 %2$@ 및 %3$@의 데이터 센터를 통해 연결되었습니다";
 "LN_Enable_Watermark_154236" = "워터마크 사용";
+"LN_Webinar_Attendee_Full_Title_158179" = "이 웨비나는 최대 참석 인원에 도달했습니다";
+"LN_Webinar_Attendee_Full_Info_158179" = "웨비나의 최대 참가자 수에 도달했습니다. 브라우저에서 이 웨비나의 라이브 스트리밍을 볼 수 있습니다.";
+"LN_Watch_Live_Stream_158179" = "라이브 스트리밍 보기";
 "LN_Security_Encryption_MeetingTip_IN_GCM_155111" = "고급 암호화를 사용하고 있습니다";
 "LN_Security_Encryption_SettingDiagnostic_Title_155111" = "암호화";
 "LN_Security_Version_SettingDiagnostic_Title_155111" = "버전";
+"LN_Security_Encryption_SettingDiagnostic_ECB_155111" = "AES-256-ECB";
+"LN_Security_Encryption_SettingDiagnostic_GCM_155111" = "AES-256-GCM";
+"LN_Accessibility_Polls_List_149523" = "설문조사 목록";
 "LN_Accessibility_Contacts_list_149054" = "연락처 목록";
 "LN_All_Contacts_149054" = "모든 연락처";
 "LN_My_Contacts_149054" = "내 연락처";
 "LN_Search_More_%lu_Contacts_NewIM" = "연락처에서 %lu개 더 보기...";
 "LN_Sip_softPhone_Setting_UserName_74433" = "사용자 이름(연락처 사용자 이름):";
+
+"Participant ID" = "참가자 ID";
+"LN_Is_Unavailable_134180" = "%@님은 대화가 불가능합니다";
+"LN_Not_Now" = "나중에";
+"LN_Update_Xcode9Build_Package_Dialog_Prompt_158719" = "이 macOS 버전에서 발생하는 문제를 피하려면 장치와 호환되는 버전으로 Zoom을 업데이트하세요.";
+"LN_Update_Xcode9Build_Package_Banner_Prompt_158719" = "장치와 호환되는 버전으로 업데이트하세요.";
+"LN_Host_Lost_Connection_159716" = "기다려 주세요, 호스트가 연결이 끊겼습니다";
+"LN_Conf_Fail_Disable_Multiple_Devices_join_155682" = "다른 장치에서 이미 이 회의에 참가했습니다.";
+"LN_Meetinglist_Encrypted_160142" = "(암호화됨)";
+"LN_DeepLink_VideoCall_Switch_Account_Title_156726" = "회의를 시작할 수 없음";
+"LN_DeepLink_VideoCall_Switch_Account_%@_Company_Domain_%@_156726" = "Zoom에 %@(으)로 로그인했습니다. 회의를 시작하려면 %@ 계정으로 전환하세요.";
+"LN_DeepLink_End_Meeting_Start_New_Meeting_Title_156726" = "새 회의를 시작하시겠어요?";
+"LN_DeepLink_End_Meeting_Start_New_Meeting_Description_156726" = "새 회의를 시작하려면 이 회의에서 나가야 합니다.";
+"LN_DeepLink_End_Meeting_And_Start_Button_156726" = "나간 후 시작";
+"LN_DeepLink_End_Meeting_And_Login_%@_Start_New_Meeting_Description_156726" = "이 회의를 시작하려면 %@ 계정에 로그인해야 합니다.";
+"LN_DeepLink_End_Meeting_And_Switch_Account_Title_156726" = "새 회의를 시작할 수 없음";
+"LN_DeepLink_End_Meeting_Account_%@_And_Switch_Account_%@_Description_156726" = "Zoom에 %@(으)로 로그인했습니다. 회의를 시작하려면 현재 회의에서 나간 후 %@ 계정으로 전환하세요.";
+"LN_DeepLink_End_Meeting_And_Switch_Account_Button_156726" = "나간 후 계정 전환";
+"LN_DeepLink_Video_Call_Fail_Title_156726" = "회의를 시작하지 못했습니다";
+"LN_DeepLink_Video_Call_Fail_Description_Error_Code_%ld_156726" = "나중에 다시 시도해 주세요. 오류 코드: %ld";
+"LN_Alert_Auth_Title_Camera&Mic_159331" = "Zoom이 내 카메라 및 마이크에 액세스하도록 허용";
+"LN_Alert_Auth_Title_Camera_159331" = "Zoom이 내 카메라에 액세스하도록 허용";
+"LN_Alert_Auth_Title_Mic_159331" = "Zoom이 내 마이크에 액세스하도록 허용";
+"LN_Host_Lost_Connect_159716" = "기다려 주세요, 호스트가 연결이 끊겼습니다";
+"LN_Phone_Lines_Others_Section_148068" = "기타";
+"LN_Phone_Monitor_Call_Whisper_148068" = "비공개 대화";
+"LN_Phone_Monitor_Call_Barge_148068" = "끼어들기";
+"LN_Phone_Monitor_Call_Take_Over_148068" = "이어받기";
+"LN_Phone_Monitor_Call_Listen_148068" = "모니터링";
+"LN_Phone_Monitor_Listening_Status_148068" = "모니터링 중";
+"LN_Phone_Monitor_Whispering_Status_148068" = "비공개 대화 중";
+"LN_Phone_Supervisor_Listening_Toast_148068" = "모니터링 중입니다...";
+"LN_Phone_Supervisor_Whispering_Toast_148068" = "비공개 대화 중입니다...";
+"LN_Phone_Agent_Whispered_Toast_148068" = "%@님이 비공개 대화를 하고 있습니다.";
+"LN_Phone_Agent_Barged_In_Toast_148068" = "%@님이 통화에 끼어들었습니다";
+"LN_Phone_Agent_Barge_Left_Toast_148068" = "%@님이 통화에서 나갔습니다";
+"LN_Phone_Agent_Take_Over_Toast_148068" = "%@님이 통화를 이어받았습니다";
+"LN_Phone_Callout_In_Monitoring_Alert_Title_148068" = "새 통화를 시작하고 현재 통화를 종료합니다";
+"LN_Phone_Callout_In_Monitoring_Alert_Content_148068" = "현재 귀하가 모니터링 중인 통화가 종료됩니다.";
+"LN_Phone_Alert_End_Continue_Title_148068" = "종료 후 계속";
+"LN_Phone_Monitor_Fail_Toast_148068" = "현재 %@을(를) 수행할 수 없습니다";
+"LN_Phone_Monitor_Stop_Hold_Call_Toast_148068" = "%@ 모니터링을 중지했습니다";
+"LN_Phone_Monitor_In_Monitoring_Alert_Title_148068" = "새 통화를 모니터링하고 현재 통화를 종료합니다";
+"LN_Phone_Meeting_In_Monitoring_Alert_Title_148068" = "새 회의를 시작하고 현재 통화를 종료합니다";
+"LN_Phone_End_Monitor_Join_Meeting_Confirm_148068" = "종료 및 참가";
+"LN_Accessibility_Plist_Sub_Menu_164278" = "참가자 하위 메뉴";
+"LN_Accessibility_Raise_Hand_Count_165265" = "%ld명이 손들었음";
+"LN_Accessibility_Selected_165265" = "선택됨";
+"LN_Add_members_160936" = "구성원 추가";
+"LN_Add_Members_160936" = "구성원 추가";
+"LN_External_Users_Can_Added_160936" = "외부 사용자를 추가할 수 있습니다";
+"LN_External_Users_Cannot_Added_160936" = "외부 사용자를 추가할 수 없습니다";
+"LN_NewMembers_WillSee_Previous_MessagesAndFiles_160936" = "새 구성원에게 이전 메시지와 파일이 보입니다";
+"LN_NewMembers_WillNotSee_Previous_MessagesAndFiles_160936" = "새 구성원에게는 이전 메시지와 파일이 보이지 않습니다";
+"LN_Invited_InYour_Organization_CanJoin_160936" = "조직에서 초대된 구성원이 참가할 수 있습니다";
+"LN_Anyone_In_Your_Org_CanFindAndJoin_160936" = "조직에 속한 누구나 찾기 및 참가 가능";
+"LN_Channel_Type_160936" = "채널 유형";
+"LN_You_Added_%@_160936" = "귀하가 %@님을 추가했습니다";
+"LN_%@_Added_You_And_%@_160936" = "%@님이 귀하와 %@님을 추가했습니다";
+"LN_%@_Added_You_160936" = "%@님이 귀하를 추가했습니다";
+"LN_%@_Added_%@_160936" = "%@님이 %@님을 추가했습니다";
+"LN_MSG_Star_166406" = "별표";
+"LN_MSG_Unstar_166406" = "별표 표시 해제";
+"LN_MSG_Starred_166406" = "별표 표시됨";
+"LN_MSG_Unstarred_166406" = "별표 표시 해제됨";
+"LN_VoiceMsg_CannotPlayed_131780" = "기록이 진행 중이면 음성 메시지를 재생할 수 없습니다.";
+"LN_VoiceMsg_Draft_131780" = "[음성]";
+"LN_ShowVoiceMessage_131780" = "음성 메시지 표시 버튼";
+"LN_Send_Message_131780" = "메시지 보내기";
+"LN_Profile_Visibility_166955" = "프로필 표시 여부";
+"LN_Status_166955" = "상태";
+"LN_Profile_information_166955" = "프로필 정보";
+"LN_Visible_166955" = "표시";
+"LN_Hidden_166955" = "숨겨짐";
+"ExternalUser_Cannot_BeAdded_Channel_AsAdmin_166214" = "개인정보 보호 설정을 변경하여 이 사용자를 추가하세요";
+"ExternalUsers_Cannot_BeAdded_Channel_AsAdmin_166214" = "개인정보 보호 설정을 변경하여 이 사용자들을 추가하세요";
+"ExternalUser_Cannot_BeAdded_Channel_AsMember_166214" = "채널 관리자에게 문의하여 개인정보 보호 설정을 변경하세요";
+"ExternalUsers_Cannot_BeAdded_Channel_AsMember_166214" = "채널 관리자에게 문의하여 개인정보 보호 설정을 변경하세요.";
+"LN_%@_Is_ExternalUser_Cannot_BeAdded_Channel_AsAdmin_166214" = "%@님은 외부 사용자이므로 추가할 수 없습니다\n개인정보 보호 설정을 변경하여 이 사용자를 추가하세요";
+"LN_%@_Are_ExternalUsers_Cannot_BeAdded_Channel_AsAdmin_166214" = "%@들은 외부 사용자이므로 추가할 수 없습니다\n개인정보 보호 설정을 변경하여 이 사용자들을 추가하세요";
+"LN_%@_Is_ExternalUser_Cannot_BeAdded_Channel_AsMember_166214" = "%@님은 외부 사용자이므로 추가할 수 없습니다\n채널 관리자에게 문의하여 개인정보 보호 설정을 변경하세요";
+"LN_%@_Are_ExternalUsers_Cannot_BeAdded_Channel_AsMember_166214" = "%@들은 외부 사용자이므로 추가할 수 없습니다.\n채널 관리자에게 문의하여 개인정보 보호 설정을 변경하세요.";
+"LN_CannotAddContact_166925" = "이 사용자를 연락처에 추가할 수 없습니다.";
+"LN_Notification_Download_Completed_169484" = "다운로드 완료됨";
+"LN_Chat_Announcer" = "(발표자)";
+"LN_Chat_Add_Specific_People_128564" = "특정 사람 추가";
+"LN_Admin_Only_128564" = "관리자만";
+"LN_Admin_Plus_Specific_People_128564" = "관리자 + 특정 사람";
+"LN_Manage_Posting_Permissions_128564" = "게시 권한 관리";
+"LN_Who_Can_Post_128564" = "다음에서 게시할 수 있는 사람은 누구인가요";
+"LN_IM_Channel_NotAnAnnouncer_Tip_128564" = "관리자가 메시지를 보낼 수 있는 사람을 제한했습니다.";
+"LN_E2ECannotSend_SvcDegradation_129508" = "현재 메시지를 보낼 수 없습니다. 몇 분 후 다시 로그인해 보세요.";
+"LN_E2ECannotSend_SSOAccount_129508" = "현재 메시지를 보낼 수 없습니다. SSO를 사용해 로그인하세요.";
+"LN_UnableSendMsg_129508" = "메시지를 전송할 수 없음";
+"LN_You_Add_Members_From_Another_Channel_128564" = "다른 채널의 구성원을 추가했습니다.";
+"LN_You_Add_Members_From_other_Channels_128564" = "다른 채널의 구성원을 추가했습니다.";
+"LN_%@_Add_Members_From_Another_Channel_128564" = "%@님이 다른 채널의 구성원을 추가했습니다.";
+"LN_%@_Add_Members_From_other_Channels_128564" = "%@님이 다른 채널의 구성원을 추가했습니다.";
+"LN_You_Add_LessOrEqualThreeMembers_AlongWith_Another_Channel_128564" = "다른 채널의 구성원과 함께 %@님을 추가했습니다.";
+"LN_You_Add_LessOrEqualThreeMembers_AlongWith_other_Channels_128564" = "다른 채널의 구성원과 함께 %@님을 추가했습니다.";
+"LN_%@_Add_LessOrEqualThreeMembers_AlongWith_Another_Channel_128564" = "%@님이 다른 채널의 구성원과 함께 %@님을 추가했습니다.";
+"LN_%@_Add_LessOrEqualThreeMembers_AlongWith_other_Channels_128564" = "%@님이 다른 채널의 구성원과 함께 %@님을 추가했습니다.";
+"LN_You_Add_MoreThanThreeMembers_AlongWith_Another_Channel_128564" = "다른 채널의 구성원과 함께 %@님과 다른 사람 %ld명을 추가했습니다.";
+"LN_You_Add_MoreThanThreeMembers_AlongWith_other_Channels_128564" = "다른 채널의 구성원과 함께 %@님과 다른 사람 %ld명을 추가했습니다.";
+"LN_%@_Add_MoreThanThreeMembers_AlongWith_Another_Channel_128564" = "%@님이 다른 채널의 구성원과 함께 %@님과 다른 사람 %ld명을 추가했습니다.";
+"LN_%@_Add_MoreThanThreeMembers_AlongWith_other_Channels_128564" = "%@님이 다른 채널의 구성원과 함께 %@님과 다른 사람 %ld명을 추가했습니다.";
+"LN_%@_Add_You_MoreThanTwoOtherMembers_AlongWith_Another_Channel_128564" = "%@님이 다른 채널의 구성원과 함께 귀하 및 %@님과 다른 사람 %ld명을 추가했습니다.";
+"LN_%@_Add_You_MoreThanTwoOtherMembers_AlongWith_other_Channels_128564" = "%@님이 다른 채널의 구성원과 함께 귀하 및 %@님과 다른 사람 %ld명을 추가했습니다.";
+"LN_%@_Add_You_LessOrEqualTwoOtherMembers_AlongWith_Another_Channel_128564" = "%@님이 다른 채널의 구성원과 함께 귀하, %@님을 추가했습니다.";
+"LN_%@_Add_You_LessOrEqualTwoOtherMembers_AlongWith_other_Channels_128564" = "%@님이 다른 채널의 구성원과 함께 귀하, %@님을 추가했습니다.";
+"LN_%@_Add_You_AlongWith_Another_Channel_128564" = "%@님이 다른 채널의 구성원과 함께 귀하를 추가했습니다.";
+"LN_%@_Add_You_AlongWith_other_Channels_128564" = "%@님이 다른 채널의 구성원과 함께 귀하를 추가했습니다.";
+"LN_PZR_172891" = "개인용 Zoom Room";
+"LN_Accessibility_AvailableOnPZR_172891" = "개인용 Zoom Room에서 사용 가능";
+"LN_Add_%@_As_Contact_166955" = "%@을(를) 연락처로 추가";
+"LN_AddContact_PresenceVisibility_Tip_166955" = "이 사용자가 귀하의 요청을 수락하면 귀하의 프로필 정보(내 상태 포함)가 이 연락처에 표시됩니다.";
+"LN_AddContact_PresenceInVisibility_Tip_166955" = "이 사용자가 귀하의 요청을 수락하면 귀하의 프로필 정보(내 상태 제외)가 이 연락처에 표시됩니다.";
+"LN_Accept_Contact_Request_166955" = "연락처 요청 수락";
+"LN_Accept_Request_166955" = "요청 수락";
+"LN_AcceptRequest_PresenceVisibility_Tip_166955" = "이 요청을 수락하면 귀하의 프로필 정보(내 상태 포함)가 이 연락처에 표시됩니다.";
+"LN_AcceptRequest_PresenceInVisibility_Tip_166955" = "이 요청을 수락하면 귀하의 프로필 정보(내 상태 제외)가 이 연락처에 표시됩니다.";
+"LN_ContactCanSeeYouStatus_166955" = "이 연락처는 귀하의 상태를 볼 수 있습니다";
+"LN_ContactCannotSeeYouStatus_166955" = "이 연락처는 귀하의 상태를 볼 수 없습니다";
+"LN_Receive_Request_166955" = "연락처 요청을 받았습니다";
+"LN_Email_Address_166955" = "이메일 주소";
+"LN_Unable_Invite_167588" = "다른 사람을 초대할 권한이 없습니다.";
+"LN_Unable_Invite_Detail_167588" = "각 참가자는 고유한 초대 링크를 통해 참가해야 합니다. ";
+"LN_Do_Not_Join_167971" = "참가 안 함";
+"LN_Country_Region_171057" = "국가/지역";
+"LN_Audio_Privacy_Title_169862" = "나를 음소거 해제할 수 있는 사람";
+"LN_Audio_Privacy_Description_169862" = "다음 사람이 예약된 회의에서 귀하를 음소거 해제할 수 있습니다.";
+"LN_Allow_Unmute_%@_169862" = "%@님이 예약한 모든 회의에서 호스트가 나를 음소거 해제하도록 허용하시겠어요?";
+"LN_Withdraw_Permissions_169862" = "설정 > 오디오에서 언제든지 권한을 회수할 수 있습니다.";
+"LN_View_People_Unmute_You_169862" = "나를 음소거 해제할 수 있는 사람 보기";
+"LN_People_Who_Enter_WaitingRoom_171080" = "%@님이 대기실에 입장했습니다.";
+"LN_Peoples_Enter_WaitingRoom_171080" = "%d명이 대기실에 입장했습니다.";
+"LN_Setting_OutlookPlusEnable_168139" = "Outlook과 Zoom 통합";
+"LN_Setting_OutlookPlusEnable_HelpMessage_168139" = "Outlook에서 Zoom 연락처 상태 표시 및 Zoom을 기본 채팅, 회의 및 전화 앱으로 설정";
+"LN_Setting_OutlookPlusEnable_HelpMessage_WithoutPhone_168139" = "Outlook에서 Zoom 연락처 상태 표시 및 Zoom을 기본 채팅 및 회의 앱으로 설정";
+"LN_Chat_Disabled_%@_Title_168139" = "%@님과 채팅을 할 수 없음";
+"LN_Chat_Disabled_Message_168139" = "관리자가 귀하가 채팅할 수 없도록 설정했습니다.";
+"LN_Phone_Disabled_Title_168139" = "전화를 걸 수 없음";
+"LN_Phone_Disabled_Message_168139" = "귀하는 사용이 허가된 ZOOM Phone 사용자가 아닙니다.";
+"LN_Phone_User_Not_Set_PhoneNumber_168139" = "사용자가 전화번호를 설정하지 않았습니다.";
+"LN_Meeting_Start_Fail_With_%@_Title_168139" = "%@님과 회의할 수 없음";
+"LN_Meeting_Start_Fail_Message_168139" = "이 사용자는 귀하의 연락처가 아닙니다.";
+"LN_Meeting_Invite_%@_Title_168139" = "회의에 %@님 초대";
+"LN_Meeting_Invite_Message_168139" = "이 사용자를 현재 회의에 초대하시겠어요?";
+"LN_Fit_Status_View_Share_Doc_129405" = "%@님의 슬라이드를 보고 있습니다";
+"LN_Share_Doc_Menu_Merge_Video_90578" = "비디오와 슬라이드 병합";
+"LN_Share_Doc_Menu_Split_Video_90578" = "슬라이드에서 비디오 분할";
+"LN_Share_Doc_Menu_Resize_Video_90578" = "내 비디오 크기 조정";
+"LN_Share_Doc_Indicator_Preparing_PPT_90578" = "슬라이드 준비 중...";
+"LN_Share_Doc_Select_Item_Name_90578" = "슬라이드를 가상 배경으로";
+"LN_Share_Doc_Select_Not_Support_VB_90578" = "컴퓨터에서는 가상 배경을 지원하지 않습니다.";
+"LN_Share_Doc_Select_Not_Installed_PPT_90578" = "이 컴퓨터에 PowerPoint를 설치해야 합니다";
+"LN_Share_Doc_Green_Bg_Not_Support_90578" = "시스템에서는 녹색 스크린이 아닌 상태에서 비디오 가상 배경을 지원하지 않습니다.";
+"LN_Share_Doc_Green_Bg_Have_Button_90578" = "녹색 스크린을 사용합니다";
+"LN_Share_Doc_Operation_View_Pages_Of_Total_90578" = "%1$d / %2$d";
+"LN_Share_Doc_Operation_View_Previous_Button_Accessiblity_90578" = "이전";
+"LN_Share_Doc_Operation_View_Next_Button_Accessiblity_90578" = "다음";
+"LN_Share_Doc_Operation_View_More_Button_Accessiblity_90578" = "추가 옵션, 축소됨";
+"LN_Share_Doc_Select_View_Resize_AX_90578" = "발표자 비디오 크기 조정 도구입니다. 비디오 너비는 [%1$d]픽셀, 높이는 [%2$d]픽셀, 오른쪽 가장자리에서 [%3$d]픽셀, 아래쪽 가장자리에서 [%4$d]픽셀입니다. 비디오를 이동하려면 화살표 키를 누르세요. 비디오 크기를 변경하려면 Shift + 화살표 키를 누르세요.";
+"LN_Share_Doc_Select_View_Video_Position_AX_90578" = "오른쪽 가장자리에서 [%1$d]픽셀, 아래쪽 가장자리에서 [%2$d]픽셀";
+"LN_Share_Doc_Select_View_Video_Frame_AX_90578" = "비디오 너비는 [%1$d]픽셀, 높이는 [%2$d]픽셀, 오른쪽 가장자리에서 [%3$d]픽셀, 아래쪽 가장자리에서 [%4$d]픽셀입니다";
+"LN_Share_Doc_Select_View_AX_Label_90578" = "비디오 영역 선택";
+"LN_Share_Doc_Select_View_Preparing_AX_Label_90578" = "슬라이드 준비 중";
+"LN_Record_Message_131780" = "메시지 기록";
+"LN_Record_Audio_Messagee_131780" = "오디오 메시지 녹음";
+"LN_Integration_Failed_Title_168139" = "통합 작업이 실패했습니다";
+"LN_Plist_In_Meeting_152449" = "회의 중(%ld)";
+"LN_Plist_In_Waiting_152449" = "대기실(%ld)";
+"LN_Acc_Plist_Expanded_152449" = "확장됨";
+"LN_Acc_Plist_Collapsed_152449" = "축소됨";
+"LN_Mute_Channel_140266" = "채널 음소거";
+"LN_Muted_Channel_140266" = "채널이 음소거됨";
+"LN_Unmute_Channel_140266" = "채널 음소거 해제";
+"LN_Mute_MUC_140266" = "채팅 음소거";
+"LN_Unmute_MUC_140266" = "채팅 음소거 해제";
+"LN_Mute_%@_Tip_140266" = "음소거하면 귀하가 언급될 때에만 %@이(가) 강조표시됩니다.";
+"LN_Chat_140266" = "채팅";
+"LN_Unable_To_Import_File_90578" = "\"%@\"을(를) 가져올 수 없습니다";
+"LN_Try_Restarting_Powerpoint_90578" = "문제를 해결하려면 PowerPoint를 다시 시작하거나 PowerPoint에서 파일을 여세요.";
+"LN_Try_Restarting_Keynote_90578" = "문제를 해결하려면 Keynote를 다시 시작하거나 Keynote에서 파일을 여세요.";
+"LN_Allow_Control_PowerPoint_90578" = "Zoom에서 PowerPoint 제어 허용";
+"LN_Allow_Control_Keynote_90578" = "Zoom에서 Keynote 제어 허용";
+"LN_Grant_Control_PowerPoint_90578" = "시스템 환경설정 > 보안 및 개인 정보를 열고 \"Microsoft PowerPoint\"를 선택하여 제어를 허용합니다.";
+"LN_Grant_Control_Keynote_90578" = "시스템 환경설정 > 보안 및 개인 정보를 열고 \"Keynote\"를 선택하여 제어를 허용합니다.";
+"LN_Open_System_Preferences_90578" = "시스템 환경설정 열기";
+"LN_PowerPoint_Not_Installed_90578" = "PowerPoint가 설치되지 않아 \"%@\"을(를) 가져올 수 없습니다";
+"LN_Keynote_Not_Installed_90578" = "Keynote가 설치되지 않아 \"%@\"을(를) 가져올 수 없습니다";
+"LN_Show_members_separately_128564" = "구성원 각각 표시";
+"LN_CouldNot_Show_Members_Separately_128564" = "100명을 초과하는 구성원을 갖는 채널에서 구성원을 표시할 수 없습니다.";
+"LN_Unable_addMoreThan_500_Items_AtOneTime_128564" = "동시에 최대 500명의 구성원, 채널 또는 그룹 채팅을 갖는 채널을 만들 수 있습니다.";
+"LN_Channel_Add_Menbers_Disable_Tip_167727" = "관리자가 외부 조직에 소속되어 있으므로 이 채널에 구성원을 추가할 수 없습니다.";
+"LN_Chat_Add_Menbers_Disable_Tip_167727" = "관리자가 외부 조직에 소속되어 있으므로 이 채팅에 구성원을 추가할 수 없습니다.";
+"LN_CannotChooseVidoeFilter_184354" = "가상 배경으로 슬라이드를 공유하는 동안에는 비디오 필터를 선택할 수 없습니다";
+"LN_CannotChooseVidoeBackgrounds_184354" = "가상 배경으로 슬라이드를 공유하는 동안에는 가상 배경을 선택할 수 없습니다";
+"LN_NotSupportVideoFilters_184354" = "귀하의 장치에서는 비디오 필터를 지원하지 않습니다.";
+"LN_Sip_Duration_166163" = "기간";
+"LN_Sip_3rdparty_Call_Duration_Select_Title_166163" = "%@(으)로 전화를 자동으로 거시겠어요?";
+"LN_Sip_3rdparty_Call_Duration_Select_Information_166163" = "자동으로 전화를 걸 기간을 선택합니다. 이 옵션은 이후에 설정에서 언제든지 변경할 수 있습니다.";
+"LN_Sip_3rdparty_Default_Device_166163" = "이 장치를 기본 장치로 설정";
+"LN_Sip_Duration_Never_166163" = "안 함";
+"LN_Sip_Duration_Now_166163" = "지금";
+"LN_Sip_Duration_1_Hour_166163" = "1시간";
+"LN_Sip_Duration_more_Hour_166163" = "%d시간";
+"LN_Sip_autodial_title_169454" = "자동 전화 걸기 기본 설정:";
+"LN_Sip_autodial_manage_169454" = "관리";
+"LN_Sip_reset_default_device_169454" = "기본 장치 다시 설정";
+"LN_Sip_autodial_desc_169454" = "변경 내용은 이 장치에만 적용됩니다";
+"LN_Sip_autodial_reset_default_success_169454" = "기본 장치가 성공적으로 재설정되었습니다";
+"LN_Sip_autodial_reset_default_fail_169454" = "기본 장치를 재설정하지 못했습니다";
+"LN_Unable_Join_Channel_152358" = "지금 채널에 참가할 수 없습니다, 나중에 다시 시도해 주십시오";
+"LN_Potential_Security_Issue_Detected_Alert_Title_174388" = "잠재적인 보안 문제가 감지됨";
+"LN_Potential_Security_Issue_Detected_Alert_Content_%@_%@_174388" = "%@님이 귀하에게 %@을(를) 보냈습니다. 이 확장자를 가진 파일은 귀하의 컴퓨터에 유해할 수 있습니다. 이 파일을 다운로드하시겠어요?";
+"LN_Potential_Security_Issue_Detected_Alert_Always_Trust_174388" = "이 발신자가 보낸 파일 항상 신뢰";
+"LN_In_%d_Minutes_170660" = "%d분 후";
+"LN_Now_170660" = "지금";
+"LN_In_1_Minute_170660" = "1분 후";
+"LN_Snooze_170660" = "다시 알림";
+"LN_Schedule_Alternative_Host_Error_Description" = "대체 호스트로 추가하려는 사람 중 한 명 이상이 사용이 허가된 사용자가 아니거나 이 계정의 구성원이 아닙니다. 계속 진행하려면 다음 사용자를 제거하세요.";
+"LN_Annotation_Save_Menu_Title_WB_130453" = "다른 이름으로 화이트보드 저장";
+"LN_Annotation_Save_Menu_Title_Annotation_130453" = "다른 이름으로 주석 저장";
+"LN_Annotation_Saved_As_Png_130453" = "PNG로 저장";
+"LN_Annotation_Saved_As_Pdf_130453" = "PDF로 저장";
+"LN_Annotation_Saved_Multi_Whiteboard_As_Pngs_130453" = "%d개 화이트보드를 PNG로 저장했습니다";
+"LN_Annotation_Saved_Multi_Whiteboard_As_Pdf_130453" = "%d개 화이트보드를 PDF로 저장했습니다";
+"LN_Annotation_Saved_As_Menu_AX_130453" = "메뉴로 저장";
+"LN_Annotation_Saved_As_Menu_WB_Title_AX_130453" = "화이트보드 저장 창";
+"LN_Annotation_Saved_As_Menu_Annotation_Title_AX_130453" = "주석 저장 창";
+"LN_Schedule_Unmute_All_169920" = "참가자 음소거 해제 권한 요청";
+"LN_Schedule_Security_166825" = "보안";
+"LN_Schedule_Waiting_Room_166825" = "대기실";
+"LN_Schedule_Passcode_166825" = "암호";
+"LN_Schedule_Security_Must_Select_166825" = "다음 옵션 중 하나 또는 둘 다를 선택해야 합니다.";
+"LN_Schedule_Security_Alert_Always_Passcode_166825" = "회의를 더욱 안전하게 보호하기 위해 암호가 항상 사용으로 설정되었습니다.";
+"LN_Schedule_Security_Alert_Always_Waiting_Room_166825" = "회의를 더욱 안전하게 보호하기 위해 대기실이 항상 사용으로 설정되었습니다.";
+"LN_Schedule_Security_Alert_Waiting_Room_166825" = "회의를 더욱 안전하게 보호하기 위해 대기실이 활성화되어 있습니다.";
+"LN_Meetinglist_View_Event_167588" = "이벤트 보기";
+"LN_Join_New_Meeting_Title_173491" = "새 회의에 참가하시겠어요?";
+"LN_Join_New_Meeting_Info_173491" = "새 회의에 참가하려면 이 회의에서 나가야 합니다.";
+"LN_Leave_And_Join_173491" = "나가기 및 참가";
+"LN_Start_New_Meeting_Title_173491" = "새 회의를 시작하시겠어요?";
+"LN_Start_New_Meeting_Info_173491" = "새 회의를 시작하려면 이 회의에서 나가야 합니다.";
+"LN_Leave_And_Start_173491" = "나간 후 시작";
+"LN_Restart_Required_180306" = "재시작 필요";
+"LN_Interpretation_Custom_Languages_Too_Much_136172" = "사용자 지정 언어에 허용된 최대 수를 선택했습니다";
+"LN_Schedule_Date&Time_179246" = "날짜 및 시간";
+"LN_Schedule_3rd-party_Audio_179246" = "타사 오디오";
+"LN_Meeting_Annotation_Enable_Annotation_Others_171048" = "다른 사람에 대한 주석 활성화";
+"LN_Meeting_Annotation_Disable_Annotation_Others_171048" = "다른 사람에 대한 주석 비활성화";
+"LN_Unable_addMoreThan_500_Items_AtTheSameTime_128564" = "500을 초과하는 구성원, 채널 또는 그룹 채팅을 동시에 추가할 수 없습니다.";
+"LN_By_All_Channel_Members_181694" = "모든 채널 구성원";
+"LN_By_Members_In_Your_Org_181694" = "조직 내 구성원";
+"LN_Only_AddMembers_SameWith_AdminOrg_181694" = "채널 관리자 조직에만 사용자를 추가할 수 있습니다";
+"LN_You_Are_Sharing_Slides_184193" = "슬라이드 공유 중입니다";
+"LN_Cannot_Use_Filter_While_Sharing_Slides_184193" = "슬라이드를 공유하는 동안에는 비디오 필터를 사용할 수 없습니다";
+"LN_%@_Is_ExternalUser_Cannot_BeAdded_181694" = "%@님은 외부 사용자이며 추가할 수 없습니다";
+"LN_%@_Are_ExternalUsers_Cannot_BeAdded_181694" = "%@님은 외부 사용자이며 추가할 수 없습니다";
+"LN_%@_Is_NotIn_AdminOrg_Cannot_BeAdded_181694" = "%@님은 채널 관리자 조직에 속하지 않으며 추가할 수 없습니다";
+"LN_%@_Are_NotIn_AdminOrg_Cannot_BeAdded_181694" = "%@님은 채널 관리자 조직에 속하지 않으며 추가할 수 없습니다";
+"LN_Audio_Privacy_Help_169862" = "호스트는 이 회의에서 귀하를 음소거할 수 있습니다";
+"LN_Remove_Permission_Confirm_169862" = "변경 내용을 적용하려면 회의에서 나간 다음 다시 참가해 주세요";
+"LN_Rejoin_169862" = "다시 참가";
+"LN_Alert_Temp_Talk_Computer_131003" = "내 음소거 해제를 클릭하면 컴퓨터 오디오에 연결되며 내 음소거가 해제됩니다.";
+"LN_Alert_Temp_Talk_%@_Phone_131003" = "이미 전화로 참가하셨습니까? 전화기에서 %@을(를) 입력한 다음 내 음소거 해제를 클릭합니다.";
+"LN_Must_Restart_Zoom_180306" = "보안 업데이트를 완료하려면 Zoom을 다시 시작해야합니다.";
+"LN_Must_Restart_Zoom_In_Seconds_180306" = "보안 업데이트를 완료하려면 Zoom을 다시 시작해야 합니다.\r\nZoom이 %ld초 후 다시 시작됩니다.";
+"LN_Access_Lost_Audio_182250" = "마이크/스피커에 액세스할 수 없습니다";
+"LN_Access_Lost_Audio_Info_182250" = "‘계속’을 눌러 시스템 비밀번호를 입력하고 음성 서비스를 다시 시작하거나 ‘취소’를 눌러 컴퓨터를 수동으로 다시 시작하세요";
+"LN_Restart_Later_180306" = "나중에 다시 질문";
+"LN_Encrypt_Now_149515" = "지금 다시 시작";

@@ -3,7 +3,7 @@
 <plist version="1.0">
 <dict>
 	<key>BuildMachineOSBuild</key>
-	<string>18F132</string>
+	<string>19G73</string>
 	<key>CFBundleDevelopmentRegion</key>
 	<string>English</string>
 	<key>CFBundleExecutable</key>
@@ -17,13 +17,13 @@
 	<key>CFBundlePackageType</key>
 	<string>BNDL</string>
 	<key>CFBundleShortVersionString</key>
-	<string>5.0.24433.0616</string>
+	<string>5.2.41735.0929</string>
 	<key>CFBundleSupportedPlatforms</key>
 	<array>
 		<string>MacOSX</string>
 	</array>
 	<key>CFBundleVersion</key>
-	<string>5.0.24433.0616</string>
+	<string>5.2.41735.0929</string>
 	<key>DTCompiler</key>
 	<string>com.apple.compilers.llvm.clang.1_0</string>
 	<key>DTPlatformBuild</key>
@@ -39,7 +39,7 @@
 	<key>DTXcodeBuild</key>
 	<string>10B61</string>
 	<key>LSMinimumSystemVersion</key>
-	<string>10.9</string>
+	<string>10.7</string>
 	<key>NSHumanReadableCopyright</key>
 	<string>ZoomCopyRight</string>
 </dict>

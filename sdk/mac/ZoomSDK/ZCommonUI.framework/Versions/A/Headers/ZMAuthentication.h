@@ -1,11 +1,6 @@
-//  ======================================================================      //
-//  ZMAuthentication.h                                                                                                          //
-//                                                                                                                                              //
-//  Last Modified on Tuesday April 24 2001                                                                      //
-//  Copyright 2001 Ben Lachman                                                                                          //
-//                                                                                                                                                      //
-//      Thanks to Brian R. Hill <http://personalpages.tds.net/~brian_hill/>             //
-//  ======================================================================      //
+
+//  ZMAuthentication.h
+
 
 #import <Cocoa/Cocoa.h>
 #import <Security/Authorization.h>
@@ -23,21 +18,20 @@ typedef NS_ENUM(NSUInteger, ZMRunAppleScriptResult)
     id _delegate;
 }
 
-// returns a shared instance of the class
 + sharedInstance;
 
 - (id)delegate;
 - (void)setDelegate:(id)delegate;
 
-- (OSStatus)isAuthenticated:(NSString *)forCommand;
-- (OSStatus)authenticate:(NSString *)forCommand;
-- (void)deauthenticate;
+- (OSStatus)zm_isAuthenticated:(NSString *)forCommand;
+- (OSStatus)zm_authenticate:(NSString *)forCommand;
+- (void)zm_deauthenticate;
 
-- (int)getPID:(NSString *)forProcess;
-- (int)processRunningTime:(NSString *)forProcess;
+- (int)zm_getPID:(NSString *)forProcess;
+- (int)zm_processRunningTime:(NSString *)forProcess;
 
-- (OSStatus)executeCommand:(NSString *)pathToCommand withArgs:(NSArray *)arguments;
-- (OSStatus)executeCommandSynced:(NSString *)pathToCommand withArgs:(NSArray *)arguments;
+- (OSStatus)zm_executeCommand:(NSString *)pathToCommand withArgs:(NSArray *)arguments;
+- (OSStatus)zm_executeCommandSynced:(NSString *)pathToCommand withArgs:(NSArray *)arguments;
 
 - (BOOL)killProcess:(NSString *)commandFromPS withSignal:(int)signal;
 - (BOOL)authRemovePath:(NSString*)rmPath;
@@ -51,16 +45,13 @@ typedef NS_ENUM(NSUInteger, ZMRunAppleScriptResult)
 
 @end
 
-
-/*!
- @category NSObject(ZMAuthenticationDelegate)
- @abstract Optionally implement these delegate methods to obtain the state of the authorization object.
- */
 @interface NSObject (ZMAuthenticationDelegate)
 
-- (void)authenticationDidFinish:(int)resultCode;
+- (void)zm_authenticationDidFinish:(int)resultCode;
 
-- (void)authenticationDidDeauthorize:(ZMAuthentication *)authentication;
+- (void)zm_authenticationFail:(int)resultCode;
 
-- (NSString*)authenticationGetPromptText;
+- (void)zm_authenticationDidDeauthorize:(ZMAuthentication *)authentication;
+
+- (NSString*)zm_authenticationGetPromptText;
 @end

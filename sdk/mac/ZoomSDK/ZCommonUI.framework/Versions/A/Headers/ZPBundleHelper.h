@@ -30,6 +30,7 @@
 + (void)cleanUp;
 + (NSString*)localizedEnString:(NSString *)theKey value:(NSString*)value;
 + (BOOL)hasValidZoomCodeSign:(NSString*)path;
++ (BOOL)hasValidZoomCodeSignBlock:(CFStringRef)filepath;//ZOOM-157888
 
 //for sdk
 + (void)setCustomBundlePath:(NSString*)bundlePath fileName:(NSString*)fileName;

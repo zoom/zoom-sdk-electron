@@ -59,6 +59,16 @@ ISettingServiceWrap& CSDKWrap::GetSettingServiceWrap()
 	return ISettingServiceWrap::GetInst();
 }
 
+IZoomSDKVideoSourceHelperWrap& CSDKWrap::GetRawdataVideoSourceHelperWrap()
+{
+	return IZoomSDKVideoSourceHelperWrap::GetInst();
+}
+
+IZoomSDKAudioRawDataHelperWrap& CSDKWrap::GetAudioRawdataHelperWrap()
+{
+	return IZoomSDKAudioRawDataHelperWrap::GetInst();
+}
+
 INetworkConnectionHelperWrap& CSDKWrap::GetNetworkConnectionHelperWrap()
 {
 	return INetworkConnectionHelperWrap::GetInst();
@@ -113,19 +123,6 @@ ICustomizedResourceHelperWrap& CSDKExtWrap::GetCustomizedResourceHelperWrap()
 	return ICustomizedResourceHelperWrap::GetInst();
 }
 
-IAudioRawDataChannelWrap& CSDKExtWrap::GetAudioRawDataChannelWrap()
-{
-	return IAudioRawDataChannelWrap::GetInst();
-}
-IVideoRawDataChannelWrap& CSDKExtWrap::GetVideoRawDataChannelWrap()
-{
-	return IVideoRawDataChannelWrap::GetInst();
-}
-IShareRawDataChannelWrap& CSDKExtWrap::GetShareRawDataChannelWrap()
-{
-	return IShareRawDataChannelWrap::GetInst();
-}
-
 /////////////////////////////////////////////////////////////////////
 CSDKCustomizedUIWrap::CSDKCustomizedUIWrap()
 {
@@ -142,4 +139,22 @@ ICustomizedUIMgrWrap& CSDKCustomizedUIWrap::GetCustomizedUIMgrWrap()
 {
 	return ICustomizedUIMgrWrap::GetInst();
 }
+/////////////////////////////////////////////////////////////////////////
+CSDKRendererWrap::CSDKRendererWrap()
+{
+
+}
+
+CSDKRendererWrap& CSDKRendererWrap::GetInst()
+{
+	static CSDKRendererWrap inst;
+	return inst;
+}
+
+IZoomSDKRendererWrap& CSDKRendererWrap::GetRendererWrap()
+{
+	return IZoomSDKRendererWrap::GetInst();
+}
+
+
 END_ZOOM_SDK_NAMESPACE

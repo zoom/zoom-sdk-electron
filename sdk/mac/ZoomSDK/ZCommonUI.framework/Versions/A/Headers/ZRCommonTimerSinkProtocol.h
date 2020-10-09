@@ -25,7 +25,7 @@
 
 @protocol ZRClockTimerSinkProtocol <NSObject>
 
-- (void)onTimerFired:(NSTimer*)timer;
+- (void)onMinuteClockTimerFired:(NSTimer*)timer;
 - (int)checkTimeIntervalInMinutes;
 
 @end

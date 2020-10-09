@@ -118,7 +118,10 @@
     BOOL                _hideMeetingInfoButtonOnVideo;
     //hide invited button on participants window.
     BOOL                _hideInvitButtonOnHCWindow;
-                 
+    //Disable ZOOM original actions of clicking toolbar Leave button.
+    BOOL                _disableToolbarLeaveButtonClickOriginAction;
+    //Disable ZOOM original actions of clicking toolbar CloseCaption button.
+    BOOL                _disableToolbarCloseCaptionButtonClickOriginAction;
 }
 @property(nonatomic, assign)CGDirectDisplayID displayAppID;
 @property(nonatomic, assign)CGDirectDisplayID monitorID;
@@ -173,6 +176,8 @@
 @property(nonatomic, assign)BOOL disableBreakoutRoomsButtonClickOriginAction;
 @property(nonatomic, assign)BOOL hideMeetingInfoButtonOnVideo;
 @property(nonatomic, assign)BOOL hideInvitButtonOnHCWindow;
+@property(nonatomic, assign)BOOL disableToolbarLeaveButtonClickOriginAction;
+@property(nonatomic, assign)BOOL disableToolbarCloseCaptionButtonClickOriginAction;
 
 - (ZoomSDKError)prefillWebinarUserName:(NSString*)userName Email:(NSString*)email;
 - (ZoomSDKError)hideSDKButtons:(BOOL)hide ButtonType:(SDKButton)button;
@@ -198,6 +203,12 @@
  */
 - (void)reset;
 
+/**
+ @brief Disable confidential watermark.
+ @param disable Set it to Yes to disable use confidential watermark, otherwise not.
+ @return If return YES means the confidential watermark is disabled, otherwise not.
+ */
+-(BOOL)disableConfidentialWatermark:(BOOL)disable;
 @end
 
 

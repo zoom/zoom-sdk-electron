@@ -230,7 +230,11 @@ public:
 		v8::Local<v8::Value> argv[1] = { v8_bHandled };
 		auto fn = v8::Local<v8::Function>::New(isolate, ZoomNodeSinkHelper::GetInst().onInviteBtnClicked);
 		v8::MaybeLocal<v8::Value> bReturnedValue = fn->Call(context, global, argc, argv);
+#ifdef USING_V8_NEW_STRING
+		bHandled = bReturnedValue.ToLocalChecked()->BooleanValue(isolate);
+#else
 		bHandled = bReturnedValue.ToLocalChecked()->BooleanValue();
+#endif 
 	}
 
 	virtual void onStartShareBtnClicked()
@@ -794,6 +798,20 @@ public:
 
 		fn->Call(context, global, 0, NULL);
 	}
+	virtual void onFreeMeetingEndingReminderNotification()
+	{
+		if (ZoomNodeSinkHelper::GetInst().onFreeMeetingEndingReminderNotification.IsEmpty())
+			return;
+
+		auto isolate = v8::Isolate::GetCurrent();
+		v8::HandleScope scope(isolate);
+		auto context = isolate->GetCurrentContext();
+		auto global = context->Global();
+
+		auto fn = v8::Local<v8::Function>::New(isolate, ZoomNodeSinkHelper::GetInst().onFreeMeetingEndingReminderNotification);
+
+		fn->Call(context, global, 0, NULL);
+	}
 };
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 class ZNativeSDKDirectShareHelperWrapSink
@@ -1080,6 +1098,121 @@ public:
 
 };
 //////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+class ZNativeSDKMeetingRecordingWrapSink
+{
+public:
+
+	virtual void onRecording2MP4Done(bool bsuccess, int iResult, ZoomSTRING szPath)
+	{
+		if (ZoomNodeSinkHelper::GetInst().onRecording2MP4Done.IsEmpty())
+			return;
+
+		auto isolate = v8::Isolate::GetCurrent();
+		v8::HandleScope scope(isolate);
+		auto context = isolate->GetCurrentContext();
+		auto global = context->Global();
+
+		v8::Local<v8::Boolean> v8_bsuccess = v8::Boolean::New(isolate, bsuccess);
+		v8::Local<v8::Integer > v8_result = v8::Integer::New(isolate, (int32_t)iResult);
+		v8::Local<v8::String> v8_szPath = v8::String::NewFromUtf8(isolate, zs2s(szPath).c_str(), v8::NewStringType::kInternalized).ToLocalChecked();
+
+		int argc = 3;
+		v8::Local<v8::Value> argv[3] = { v8_bsuccess, v8_result, v8_szPath };
+		auto fn = v8::Local<v8::Function>::New(isolate, ZoomNodeSinkHelper::GetInst().onRecording2MP4Done);
+
+		fn->Call(context, global, argc, argv);
+	}
+
+	virtual void onRecording2MP4Processing(int iPercentage)
+	{
+		if (ZoomNodeSinkHelper::GetInst().onRecording2MP4Processing.IsEmpty())
+			return;
+
+		auto isolate = v8::Isolate::GetCurrent();
+		v8::HandleScope scope(isolate);
+		auto context = isolate->GetCurrentContext();
+		auto global = context->Global();
+
+		v8::Local<v8::Integer > v8_iPercentage = v8::Integer::New(isolate, (int32_t)iPercentage);
+
+		int argc = 1;
+		v8::Local<v8::Value> argv[1] = { v8_iPercentage };
+		auto fn = v8::Local<v8::Function>::New(isolate, ZoomNodeSinkHelper::GetInst().onRecording2MP4Processing);
+
+		fn->Call(context, global, argc, argv);
+
+	}
+
+	virtual void onRecordingStatus(ZNRecordingStatus status)
+	{
+		if (ZoomNodeSinkHelper::GetInst().onRecordingStatus.IsEmpty())
+			return;
+
+		auto isolate = v8::Isolate::GetCurrent();
+		v8::HandleScope scope(isolate);
+		auto context = isolate->GetCurrentContext();
+		auto global = context->Global();
+
+		v8::Local<v8::Integer> v8_recordingStatus = v8::Integer::New(isolate, (int32_t)status);
+		int argc = 1;
+		v8::Local<v8::Value> argv[1] = { v8_recordingStatus };
+		auto fn = v8::Local<v8::Function>::New(isolate, ZoomNodeSinkHelper::GetInst().onRecordingStatus);
+
+		fn->Call(context, global, argc, argv);
+	}
+	virtual void onCloudRecordingStatus(ZNRecordingStatus status)
+	{
+		if (ZoomNodeSinkHelper::GetInst().onCloudRecordingStatus.IsEmpty())
+			return;
+
+		auto isolate = v8::Isolate::GetCurrent();
+		v8::HandleScope scope(isolate);
+		auto context = isolate->GetCurrentContext();
+		auto global = context->Global();
+
+		v8::Local<v8::Integer> v8_recordingStatus = v8::Integer::New(isolate, (int32_t)status);
+		int argc = 1;
+		v8::Local<v8::Value> argv[1] = { v8_recordingStatus };
+		auto fn = v8::Local<v8::Function>::New(isolate, ZoomNodeSinkHelper::GetInst().onCloudRecordingStatus);
+
+		fn->Call(context, global, argc, argv);
+	}
+
+	virtual void onRecordPriviligeChanged(bool bCanRec)
+	{
+		if (ZoomNodeSinkHelper::GetInst().onRecordPriviligeChanged.IsEmpty())
+			return;
+
+		auto isolate = v8::Isolate::GetCurrent();
+		v8::HandleScope scope(isolate);
+		auto context = isolate->GetCurrentContext();
+		auto global = context->Global();
+
+		v8::Local<v8::Boolean> v8_bCanRec = v8::Boolean::New(isolate, bCanRec);
+		int argc = 1;
+		v8::Local<v8::Value> argv[1] = { v8_bCanRec };
+		auto fn = v8::Local<v8::Function>::New(isolate, ZoomNodeSinkHelper::GetInst().onRecordPriviligeChanged);
+
+		fn->Call(context, global, argc, argv);
+	}
+
+	virtual void onCustomizedLocalRecordingSourceNotification()
+	{
+		if (ZoomNodeSinkHelper::GetInst().onCustomizedLocalRecordingSourceNotification.IsEmpty())
+			return;
+
+		auto isolate = v8::Isolate::GetCurrent();
+		v8::HandleScope scope(isolate);
+		auto context = isolate->GetCurrentContext();
+		auto global = context->Global();
+
+		auto fn = v8::Local<v8::Function>::New(isolate, ZoomNodeSinkHelper::GetInst().onCustomizedLocalRecordingSourceNotification);
+
+		fn->Call(context, global, 0, NULL);
+	}
+
+};
+//////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
 class ZoomNodeSinkWrapMgr
 {
 public:
@@ -1100,6 +1233,9 @@ public:
 	
 	//meeting_video_ctrl_cb
 	ZNativeSDKMeetingVideoWrapSink m_meetingVideoWrapSink;
+
+	//meeting_recording_ctrl_cb
+	ZNativeSDKMeetingRecordingWrapSink m_meetingRecordingWrapSink;
 
 	//meeting_share_ctrl_cb
 	ZNativeSDKMeetingShareWrapSink m_meetingShareWrapSink;

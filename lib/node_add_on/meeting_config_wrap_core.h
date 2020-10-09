@@ -90,6 +90,8 @@ public:
 	void DisableRemoteCtrlCopyPasteFeature(bool bDisable);
 	void DisableToolbarInviteButtonClickOriginAction(bool bDisable);
 
+	void DisableConfidentialWatermark(bool bDisable);
+
 	void SetShowVideoOptimizeChkbox(bool bShow);
 	ZNRequiredInfoType GetRequiredInfoType();
 	bool InputMeetingPasswordAndScreenName(ZoomSTRING meetingPassword, ZoomSTRING screenName);
@@ -119,6 +121,7 @@ public:
 	void onEndOtherMeetingToJoinMeetingNotification();
 	void onFreeMeetingRemainTime(unsigned int leftTime);
 	void onFreeMeetingRemainTimeStopCountDown();
+	void onFreeMeetingEndingReminderNotification();
 
 private:
 	ZNativeSDKMeetingConfigWrapFreemeetingSink* m_pSink;

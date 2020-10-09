@@ -73,6 +73,8 @@
 #define KEY_RIGHT 124
 
 //ZOOM-89974
+#define KEY_FN_UP 116
+#define KEY_FN_DOWN 121
 #define KEY_FN_LEFT 115
 #define KEY_FN_RIGHT 119
 

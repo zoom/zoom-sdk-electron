@@ -9,9 +9,9 @@
 #include "embedded_browser_wrap.h"
 #include "customized_ui_components_wrap/customized_ui_mgr_wrap.h"
 #include "customized_resource_helper_wrap.h"
-#include "rawdata_audio_channel_wrap.h"
-#include "rawdata_share_channel_wrap.h"
-#include "rawdata_video_channel_wrap.h"
+#include "rawdata_audio_helper_wrap.h"
+#include "rawdata_render_wrap.h"
+#include "rawdata_video_helper_wrap.h"
 
 BEGIN_ZOOM_SDK_NAMESPACE
 class CSDKWrap
@@ -27,6 +27,10 @@ public:
 	ICalenderServiceWrap& GetCalenderServiceWrap();
 	IPreMeetingServiceWrap& GetPreMeetingServiceWrap();
 	ISettingServiceWrap& GetSettingServiceWrap();
+
+	IZoomSDKVideoSourceHelperWrap& GetRawdataVideoSourceHelperWrap();
+	IZoomSDKAudioRawDataHelperWrap& GetAudioRawdataHelperWrap();
+
 private:
 	CSDKWrap();
 };
@@ -40,9 +44,6 @@ public:
 	void DestroyEmbeddedBrowserWrap(IEmbeddedBrowserWrap* pObj);
 	ICustomizedResourceHelperWrap& GetCustomizedResourceHelperWrap();
 
-	IAudioRawDataChannelWrap& GetAudioRawDataChannelWrap();
-	IVideoRawDataChannelWrap& GetVideoRawDataChannelWrap();
-	IShareRawDataChannelWrap& GetShareRawDataChannelWrap();
 private:
 	CSDKExtWrap();
 };
@@ -55,4 +56,14 @@ public:
 private:
 	CSDKCustomizedUIWrap();
 };
+
+class CSDKRendererWrap
+{
+public:
+	static CSDKRendererWrap& GetInst();
+	IZoomSDKRendererWrap& GetRendererWrap();
+private:
+	CSDKRendererWrap();
+};
+
 END_ZOOM_SDK_NAMESPACE

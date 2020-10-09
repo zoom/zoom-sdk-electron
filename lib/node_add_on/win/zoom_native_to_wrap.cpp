@@ -1,4 +1,5 @@
 #include "zoom_native_to_wrap.h"
+#include <locale.h>
 ZNSDKError Map2WrapDefine(ZOOM_SDK_NAMESPACE::SDKError err)
 {
 	ZNSDKError zn_err_(ZNSDKERR_UNKNOWN);
@@ -82,6 +83,9 @@ ZNSDKError Map2WrapDefine(ZOOM_SDK_NAMESPACE::SDKError err)
 		break;
 	case ZOOM_SDK_NAMESPACE::SDKERR_SETTING_OS_DONT_SUPPORT:
 		zn_err_ = ZNSDKERR_SETTING_OS_DONT_SUPPORT;
+		break;
+	case ZOOM_SDK_NAMESPACE::SDKERR_EMAIL_LOGIN_IS_DISABLED:
+		zn_err_ = ZNSDKERR_EMAIL_LOGIN_IS_DISABLED;
 		break;
 	default:
 		
@@ -729,7 +733,31 @@ ZNAudioCallbackActionInfo Map2WrapDefine(ZOOM_SDK_NAMESPACE::AudioCallbackAction
 	}
 	return zn_info;
 }
-
+ZNRecordingStatus Map2WrapDefine(ZOOM_SDK_NAMESPACE::RecordingStatus status)
+{
+	ZNRecordingStatus zn_status;
+	switch (status)
+	{
+	case ZOOMSDK::Recording_Start:
+		zn_status = ZNRecording_Start;
+		break;
+	case ZOOMSDK::Recording_Stop:
+		zn_status = ZNRecording_Stop;
+		break;
+	case ZOOMSDK::Recording_DiskFull:
+		zn_status = ZNRecording_DiskFull;
+		break;
+	case ZOOMSDK::Recording_Pause:
+		zn_status = ZNRecording_Pause;
+		break;
+	case ZOOMSDK::Recording_Connecting:
+		zn_status = ZNRecording_Connecting;
+		break;
+	default:
+		break;
+	}
+	return zn_status;
+}
 /////Covert JS define to SDK
 ZOOM_SDK_NAMESPACE::SDK_LANGUAGE_ID Map2SDKDefine(ZNSDK_LANGUAGE_ID id)
 {
@@ -768,6 +796,12 @@ ZOOM_SDK_NAMESPACE::SDK_LANGUAGE_ID Map2SDKDefine(ZNSDK_LANGUAGE_ID id)
 		break;
 	case ZNLANGUAGE_Korean:
 		sdk_id = ZOOM_SDK_NAMESPACE::LANGUAGE_Korean;
+		break;
+	case ZNLANGUAGE_Vietnamese:
+		sdk_id = ZOOM_SDK_NAMESPACE::LANGUAGE_Vietnamese;
+		break;
+	case ZNLANGUAGE_Italian:
+		sdk_id = ZOOM_SDK_NAMESPACE::LANGUAGE_Italian;
 		break;
 	default:
 		break;
@@ -1019,9 +1053,6 @@ ZOOM_SDK_NAMESPACE::SDKCustomizedStringType Map2SDKDefine(ZNSDKCustomizedStringT
 	case ZN_SDK_Customized_Title_FreeZoomVideo:
 		sdk_type = ZOOM_SDK_NAMESPACE::SDK_Customized_Title_FreeZoomVideo;
 		break;
-	case ZN_SDK_Customized_Title_ViewOnly_ZoomVideo:
-		sdk_type = ZOOM_SDK_NAMESPACE::SDK_Customized_Title_ViewOnly_ZoomVideo;
-		break;
 	case ZN_SDK_Customized_Title_ViewOnly_FreeZoomVideo:
 		sdk_type = ZOOM_SDK_NAMESPACE::SDK_Customized_Title_ViewOnly_FreeZoomVideo;
 		break;
@@ -1109,6 +1140,116 @@ ZOOM_SDK_NAMESPACE::SDK_APP_Locale Map2SDKDefine(ZNSDK_APP_Locale locale)
 	}
 	return sdk_locale;
 }
+ZOOM_SDK_NAMESPACE::CustomizedLanguageType Map2SDKDefine(ZNCustomizedLanguageType customizedLanguageType)
+{
+	ZOOM_SDK_NAMESPACE::CustomizedLanguageType sdk_customizedLanguageType = ZOOM_SDK_NAMESPACE::CustomizedLanguage_None;
+	switch (customizedLanguageType)
+	{
+	case ZN_CustomizedLanguage_None:
+		sdk_customizedLanguageType = ZOOM_SDK_NAMESPACE::CustomizedLanguage_None;
+		break;
+	case ZN_CustomizedLanguage_FilePath:
+		sdk_customizedLanguageType = ZOOM_SDK_NAMESPACE::CustomizedLanguage_FilePath;
+		break;
+	case ZN_CustomizedLanguage_Content:
+		sdk_customizedLanguageType = ZOOM_SDK_NAMESPACE::CustomizedLanguage_Content;
+		break;
+	default:
+		break;
+	}
+	return sdk_customizedLanguageType;
+}
+
+ZOOM_SDK_NAMESPACE::ZoomSDKVideoRenderMode Map2SDKDefine(ZNZoomSDKVideoRenderMode videoRenderType)
+{
+	ZOOM_SDK_NAMESPACE::ZoomSDKVideoRenderMode sdk_videoRenderType = ZOOM_SDK_NAMESPACE::ZoomSDKVideoRenderMode_None;
+	switch (videoRenderType)
+	{
+	case ZNSDKVideoRenderMode_None:
+		sdk_videoRenderType = ZOOM_SDK_NAMESPACE::ZoomSDKVideoRenderMode_None;
+		break;
+	case ZNSDKVideoRenderMode_Auto:
+		sdk_videoRenderType = ZOOM_SDK_NAMESPACE::ZoomSDKVideoRenderMode_Auto;
+		break;
+	case ZNSDKVideoRenderMode_D3D11EnableFLIP:
+		sdk_videoRenderType = ZOOM_SDK_NAMESPACE::ZoomSDKVideoRenderMode_D3D11EnableFLIP;
+		break;
+	case ZNSDKVideoRenderMode_D3D11:
+		sdk_videoRenderType = ZOOM_SDK_NAMESPACE::ZoomSDKVideoRenderMode_D3D11;
+		break;
+	case ZNSDKVideoRenderMode_D3D9:
+		sdk_videoRenderType = ZOOM_SDK_NAMESPACE::ZoomSDKVideoRenderMode_D3D9;
+		break;
+	case ZNSDKVideoRenderMode_GDI:
+		sdk_videoRenderType = ZOOM_SDK_NAMESPACE::ZoomSDKVideoRenderMode_GDI;
+		break;
+	default:
+		break;
+	}
+	return sdk_videoRenderType;
+}
+ZOOM_SDK_NAMESPACE::ZoomSDKRawDataMemoryMode Map2SDKDefine(ZNSDKRawDataMemoryMode rawdataMemoryMode)
+{
+	ZOOM_SDK_NAMESPACE::ZoomSDKRawDataMemoryMode sdk_rawdataMemoryMode = ZOOM_SDK_NAMESPACE::ZoomSDKRawDataMemoryModeStack;
+	switch (rawdataMemoryMode)
+	{
+	case ZNSDKRawDataMemoryModeStack:
+		sdk_rawdataMemoryMode = ZOOM_SDK_NAMESPACE::ZoomSDKRawDataMemoryModeStack;
+		break;
+	case ZNSDKRawDataMemoryModeHeap:
+		sdk_rawdataMemoryMode = ZOOM_SDK_NAMESPACE::ZoomSDKRawDataMemoryModeHeap;
+		break;
+	default:
+		break;
+	}
+	return sdk_rawdataMemoryMode;
+}
+ZOOM_SDK_NAMESPACE::ZoomSDKRawDataType Map2SDKDefine(ZNZoomSDKRawDataType type)
+{
+	ZOOM_SDK_NAMESPACE::ZoomSDKRawDataType sdk_Type = ZOOM_SDK_NAMESPACE::RAW_DATA_TYPE_VIDEO;
+	switch (type)
+	{
+	case ZNRAW_DATA_TYPE_VIDEO:
+		sdk_Type = ZOOM_SDK_NAMESPACE::RAW_DATA_TYPE_VIDEO;
+		break;
+	case ZNRAW_DATA_TYPE_SHARE:
+		sdk_Type = ZOOM_SDK_NAMESPACE::RAW_DATA_TYPE_SHARE;
+		break;
+	default:
+		break;
+	}
+	return sdk_Type;
+}
+ZOOM_SDK_NAMESPACE::ZoomSDKResolution Map2SDKDefine(ZNZoomSDKResolution resolution)
+{
+	ZOOM_SDK_NAMESPACE::ZoomSDKResolution sdk_Resolution = ZOOM_SDK_NAMESPACE::ZoomSDKResolution_NoUse;
+	switch (resolution)
+	{
+	case ZNZoomSDKResolution_90P:
+		sdk_Resolution = ZOOM_SDK_NAMESPACE::ZoomSDKResolution_90P;
+		break;
+	case ZNZoomSDKResolution_180P:
+		sdk_Resolution = ZOOM_SDK_NAMESPACE::ZoomSDKResolution_180P;
+		break;
+	case ZNZoomSDKResolution_360P:
+		sdk_Resolution = ZOOM_SDK_NAMESPACE::ZoomSDKResolution_360P;
+		break;
+	case ZNZoomSDKResolution_720P:
+		sdk_Resolution = ZOOM_SDK_NAMESPACE::ZoomSDKResolution_720P;
+		break;
+	case ZNZoomSDKResolution_1080P:
+		sdk_Resolution = ZOOM_SDK_NAMESPACE::ZoomSDKResolution_1080P;
+		break;
+	case ZNZoomSDKResolution_NoUse:
+		sdk_Resolution = ZOOM_SDK_NAMESPACE::ZoomSDKResolution_NoUse;
+		break;
+	default:
+		break;
+	}
+	return sdk_Resolution;
+}
+
+
 std::string wStr2Str(const ZoomSTRING& s)
 {
 

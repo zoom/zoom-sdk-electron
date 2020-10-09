@@ -55,7 +55,18 @@ public:
 			args.GetReturnValue().Set(instance);
 		}
 	}
+	static v8::Local<v8::Object> GetNewInstance(const v8::FunctionCallbackInfo<v8::Value>& args)
+	{
+		v8::Isolate* isolate = args.GetIsolate();
 
+		const unsigned argc = 1;
+		v8::Local<v8::Value> argv[argc] = { args[0] };
+		v8::Local<v8::Function> cons = v8::Local<v8::Function>::New(isolate, (*GetConstructor<T >()));
+		v8::Local<v8::Context> context = isolate->GetCurrentContext();
+		v8::Local<v8::Object> instance =
+			cons->NewInstance(context, argc, argv).ToLocalChecked();
+		return instance;
+	}
 protected:
 	ZoomWrapObject() {};
 	~ZoomWrapObject() {};
@@ -97,8 +108,15 @@ public:
 	v8::Persistent<v8::Function, v8::CopyablePersistentTraits<v8::Function> > onActiveSpeakerVideoUserChanged;
 	v8::Persistent<v8::Function, v8::CopyablePersistentTraits<v8::Function> > onActiveVideoUserChanged;
 	
+	//meeting_recording_Controller_cb
+	v8::Persistent<v8::Function, v8::CopyablePersistentTraits<v8::Function> > onRecording2MP4Done;
+	v8::Persistent<v8::Function, v8::CopyablePersistentTraits<v8::Function> > onRecording2MP4Processing;
+	v8::Persistent<v8::Function, v8::CopyablePersistentTraits<v8::Function> > onRecordingStatus;
+	v8::Persistent<v8::Function, v8::CopyablePersistentTraits<v8::Function> > onCloudRecordingStatus;
+	v8::Persistent<v8::Function, v8::CopyablePersistentTraits<v8::Function> > onRecordPriviligeChanged;
+	v8::Persistent<v8::Function, v8::CopyablePersistentTraits<v8::Function> > onCustomizedLocalRecordingSourceNotification;
 
-	//meeting_video_Controller_cb
+	//meeting_share_Controller_cb
 	v8::Persistent<v8::Function, v8::CopyablePersistentTraits<v8::Function> > onSharingStatus;
 
 	//meeting_participants_Controller_cb
@@ -121,6 +139,8 @@ public:
 	v8::Persistent<v8::Function, v8::CopyablePersistentTraits<v8::Function> > onEndOtherMeetingToJoinMeetingNotification;
 	v8::Persistent<v8::Function, v8::CopyablePersistentTraits<v8::Function> > onFreeMeetingRemainTime;
 	v8::Persistent<v8::Function, v8::CopyablePersistentTraits<v8::Function> > onFreeMeetingRemainTimeStopCountDown;
+	v8::Persistent<v8::Function, v8::CopyablePersistentTraits<v8::Function> > onFreeMeetingEndingReminderNotification;
+	
 
 	//direct_share_helper_cb
 	v8::Persistent<v8::Function, v8::CopyablePersistentTraits<v8::Function> > OnDirectShareStatusUpdate;
@@ -142,6 +162,9 @@ public:
 
 	//recording_setting_context_cb
 	v8::Persistent<v8::Function, v8::CopyablePersistentTraits<v8::Function> > onCloudRecordingStorageInfo;
+
+	//rawdata_render_cb
+	v8::Persistent<v8::Function, v8::CopyablePersistentTraits<v8::Function> > onRawDataStatusChanged;
 
 	static ZoomNodeSinkHelper& GetInst()
 	{

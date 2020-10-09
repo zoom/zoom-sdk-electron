@@ -48,6 +48,6 @@ public:
     ZNAudioCallbackActionInfo ZNSDKAudioCallbackAction(ZoomSDKAudioActionInfo &info);
     ZNWebinarNeedRegisterType ZNSDKWebinarNeedRegisterType(WebinarRegisterType &type);
     ZNRequiredInfoType ZNSDKRequiredInfoType(JoinMeetingReqInfoType &type);
-    
+    ZNRecordingStatus ZNRecordingStatusChanage(ZoomSDKRecordingStatus &status);
 };
 

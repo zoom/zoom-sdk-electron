@@ -72,6 +72,8 @@ typedef enum{
     ActionMeetingCmd_DisableUnmuteBySelf,
     //Mute all participants in the meeting, available only for the host/co-host. 
     ActionMeetingCmd_MuteAll,
+    //Unmute all participants in the meeting, available only for the host/co-host. 
+    ActionMeetingCmd_UnmuteAll,
     //Lock the meeting, available only for the host/co-host. Once locked, the new participants can no longer join the meeting/co-host.
     ActionMeetingCmd_LockMeeting,
 	//Unlock the meeting, available only for the host/co-host. 
@@ -255,7 +257,31 @@ typedef enum{
     ZoomSDKError_UnSupportedFeature,
     //unsupport email login
     ZoomSDKError_EmailLoginIsDisabled,
-	//Unknown error.
+    //Module load fail.
+    ZoomSDKError_ModuleLoadFail,
+    //No video data.
+    ZoomSDKError_NoVideoData,
+    //No audio data.
+    ZoomSDKError_NoAudioData,
+    //No share data.
+    ZoomSDKError_NoShareData,
+    //Not found video device.
+    ZoomSDKError_NoVideoDeviceFound,
+    //Device error.
+    ZoomSDKError_DeviceError,
+    //Not in meeting.
+    ZoomSDKError_NotInMeeting,
+    //Init device.
+    ZoomSDKError_initDevice,
+    //Can't chanage virtual device.
+    ZoomSDKError_CanNotChanageVirtualDevice,
+    //Preprocess rawdata error.
+    ZoomSDKError_PreprocessRawdataError,
+    //No license.
+    ZoomSDKError_NoLicense,
+    //Malloc failed.
+    ZoomSDKError_Malloc_Failed,
+    //Unknown error.
     ZoomSDKError_UnKnow,
 }ZoomSDKError;
 
@@ -475,6 +501,14 @@ typedef enum{
 	//Host unmutes all participants.
     ZoomSDKAudioStatus_UnMutedAllByHost = 6,
 }ZoomSDKAudioStatus;
+
+typedef enum{
+    ZoomSDKVideoStatus_Off,
+    ZoomSDKVideoStatus_On,
+    ZoomSDKVideoStatus_MutedByHost,
+    ZoomSDKVideoStatus_None,
+}ZoomSDKVideoStatus;
+
 
 typedef enum{
 	//No audio.
@@ -1263,3 +1297,100 @@ typedef enum {
     //The value is fifteen.
     ZoomSDKFPSValue_Fifteen,
 }ZoomSDKFPSValue;
+
+/**
+ * @brief Enumerations of attendee request for help result.
+ */
+typedef enum {
+    //Host is handling other's request with the request dialog, no chance to show dialog for this request.
+    ZoomSDKRequest4HelpResult_Busy,
+    //Host click "later" button or close the request dialog directly.
+    ZoomSDKRequest4HelpResult_Ignore,
+    //Host already in your BO meeting.
+    ZoomSDKRequest4HelpResult_HostAlreadyInBO,
+    //For initialization (Host receive the help request and there is no other one currently requesting for help).
+    ZoomSDKRequest4HelpResult_Idle,
+}ZoomSDKRequest4HelpResult;
+
+
+typedef enum
+{
+    ZoomSDKRawDataMemoryMode_Stack,
+    ZoomSDKRawDataMemoryMode_Heap,
+}ZoomSDKRawDataMemoryMode;
+
+typedef enum
+{
+    ZoomSDKResolution_90P,
+    ZoomSDKResolution_180P,
+    ZoomSDKResolution_360P,
+    ZoomSDKResolution_720P,
+    ZoomSDKResolution_1080P,
+    ZoomSDKResolution_NoUse = 100
+}ZoomSDKResolution;
+
+typedef enum
+{
+    ZoomSDKLOCAL_DEVICE_ROTATION_ACTION_UNKnown,
+    ZoomSDKLOCAL_DEVICE_ROTATION_ACTION_0,
+    ZoomSDKLOCAL_DEVICE_ROTATION_ACTION_CLOCK90,
+    ZoomSDKLOCAL_DEVICE_ROTATION_ACTION_CLOCK180,
+    ZoomSDKLOCAL_DEVICE_ROTATION_ACTION_ANTI_CLOCK90,
+}ZoomSDKLocalVideoDeviceRotation;
+
+typedef enum
+{
+    ZoomSDKRawDataType_Video = 1,
+    ZoomSDKRawDataType_Share,
+}ZoomSDKRawDataType;
+
+/**
+ * @brief Enumerations of the type for save screenshot file.
+ */
+typedef enum
+{
+    //The file type is PNG.
+    ZoomSDKAnnotationSavedType_PNG,
+    //The file type is PDF.
+    ZoomSDKAnnotationSavedType_PDF
+}ZoomSDKAnnotationSavedType;
+
+/**
+ * @brief Enumerations of the priviledge for attendee chat.
+ */
+typedef enum
+{
+    //Allow attendee to chat with everyone.[for webinar]
+    ZoomSDKChatPriviledgeType_To_EveryOne,
+    //Allow attendee to chat with all panelists only.[for webinar]
+    ZoomSDKChatPriviledgeType_To_All_Panelist,
+}ZoomSDKChatPriviledgeType;
+
+/**
+ * @brief Enumerations of the type for chat message.
+ */
+typedef enum
+{
+    //For initialize
+    ZoomSDKChatMessageType_To_None,
+    //Chat message is send to all.
+    ZoomSDKChatMessageType_To_All,
+    //Chat message is send to all panelists.
+    ZoomSDKChatMessageType_To_All_Panelist,
+    //Chat message is send to individual attendee and cc panelists.
+    ZoomSDKChatMessageType_To_Individual_Panelist,
+    //Chat message is send to individual user.
+    ZoomSDKChatMessageType_To_Individual,
+    //Chat message is send to waiting room user.
+    ZoomSDKChatMessageType_To_WaitingRoomUsers,
+}ZoomSDKChatMessageType;
+
+typedef enum
+{
+    //For initialize
+    ZoomSDKSuppressBackgroundNoiseLevel_None,
+    ZoomSDKSuppressBackgroundNoiseLevel_Auto,
+    ZoomSDKSuppressBackgroundNoiseLevel_Low,
+    ZoomSDKSuppressBackgroundNoiseLevel_Medium,
+    ZoomSDKSuppressBackgroundNoiseLevel_High,
+}ZoomSDKSuppressBackgroundNoiseLevel;

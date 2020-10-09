@@ -32,6 +32,8 @@
 
 @property (nonatomic,copy) void (^updateFirstResponse)(BOOL firstResponse);
 
+@property (nonatomic,copy) BOOL (^mouseMoveOn)(id<NSTextAttachmentCell> mouseMoveOnCell, NSRect attachmentRect, NSPoint atPoint);
+
 - (void)updateTextViewContainerInset;
 
 - (NSRange)inputNearFieldSelectionStringRange ;

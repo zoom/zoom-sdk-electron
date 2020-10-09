@@ -36,13 +36,12 @@
 #include "wrap/meeting_service_components_wrap/meeting_closedcaption_ctrl_wrap.cpp"
 #include "wrap/customized_ui_components_wrap/customized_ui_mgr_wrap.cpp"
 #include "wrap/customized_ui_components_wrap/customized_annotation_wrap.cpp"
-
-
-
 #include "wrap/directshare_helper_wrap.cpp"
 #include "wrap/outlook_plugin_integration_helper_wrap.cpp"
 #include "zoom_native_to_wrap.h"
 #include "../resource.h"
+
+#include "h/rawdata/zoom_rawdata_api.h"
 
 
 std::string wsTOs(const ZoomSTRING& s)
@@ -69,10 +68,21 @@ ZNSDKError ZNativeSDKWrap::InitSDK(ZNInitParam& initParam)
 	param.enableLogByDefault = initParam.enable_log;
 	param.enableGenerateDump = initParam.enableGeneratDump;
 	param.strSupportUrl = initParam.strSupportUrl.c_str();
-	param.obConfigOpts.customizedLang.langName = wsTOs(initParam.obConfigOpts.customizedLang.langName).c_str();
-	param.obConfigOpts.customizedLang.langInfo = wsTOs(initParam.obConfigOpts.customizedLang.langInfo).c_str();
+	std::string strLangName = wsTOs(initParam.obConfigOpts.customizedLang.langName);
+	std::string strlangInfo = wsTOs(initParam.obConfigOpts.customizedLang.langInfo);
+	param.obConfigOpts.customizedLang.langName = strLangName.c_str();
+	param.obConfigOpts.customizedLang.langInfo = strlangInfo.c_str();
+	param.obConfigOpts.customizedLang.langType = Map2SDKDefine(initParam.obConfigOpts.customizedLang.langType);
 	param.locale = Map2SDKDefine(initParam.locale);
 	param.uiLogFileSize = initParam.logFileSize;
+	param.permonitor_awareness_mode = initParam.permonitor_awareness_mode;
+
+	param.videoRenderMode = Map2SDKDefine(initParam.videoRenderMode);
+	param.rawdataOpts.enableRawdataIntermediateMode = initParam.rawdataOpts.enableRawdataIntermediateMode;
+	ZoomNodeRawDataHelperMgr::GetInst().SetRawdataIntermediateMode(initParam.rawdataOpts.enableRawdataIntermediateMode);
+	param.rawdataOpts.audioRawdataMemoryMode = Map2SDKDefine(initParam.rawdataOpts.audioRawdataMemoryMode);
+	param.rawdataOpts.videoRawdataMemoryMode = Map2SDKDefine(initParam.rawdataOpts.videoRawdataMemoryMode);
+	param.rawdataOpts.shareRawdataMemoryMode = Map2SDKDefine(initParam.rawdataOpts.shareRawdataMemoryMode);
 
 	HMODULE hRes = NULL;
 	param.uiWindowIconSmallID = IDI_SDK_ICON;
@@ -81,6 +91,7 @@ ZNSDKError ZNativeSDKWrap::InitSDK(ZNInitParam& initParam)
 	param.hResInstance = hRes;
 	FreeLibrary(hRes);
 
+	
 
 	ZNSDKError err = Map2WrapDefine(ZOOM_SDK_NAMESPACE::CSDKWrap::GetInst().InitSDK(
 		initParam.path.size() > 0 ? initParam.path.c_str() : NULL, param));
@@ -127,4 +138,8 @@ ZPremeetingServiceWrap& ZNativeSDKWrap::GetPremeetingServiecWrap()
 ZCustomizedResourceWrap& ZNativeSDKWrap::GetCustomizedResourceWrap()
 {
 	return _z_customized_resource_wrap;
+}
+ZNativeRawAPIWrap& ZNativeSDKWrap::GetRawAPIWrap()
+{
+	return _z_raw_api_wrap;
 }

@@ -73,6 +73,8 @@ enum _userAudioType
     BOOL                                _isInSilentMode;
     BOOL                                _isClientSupportSilentMode;
     BOOL                                _isGuest;
+    int                                 _interpreterActiveLanguage;
+    BOOL                                _isLeavingSilentMode;
 
 }
 
@@ -107,6 +109,12 @@ enum _userAudioType
 @property (nonatomic, readwrite, assign)BOOL                                    isInSilentMode;
 @property (nonatomic, readwrite, assign)BOOL                                    isClientSupportSilentMode;
 @property (nonatomic, readwrite, assign)BOOL                                    isGuest;
+@property (nonatomic, readwrite, assign)BOOL                                    isInterpreter;
+@property (nonatomic, readwrite, assign)int                                     interpreterActiveLanguage;
+@property (nonatomic, readwrite, assign)BOOL                                    isLeavingSilentMode;
+@property (nonatomic, readwrite, retain)NSString*                               gUID;
+@property (nonatomic, readwrite, assign)BOOL                                    isViewOnlyUser;
+@property (nonatomic, readwrite, assign)BOOL                                    isViewOnlyUserCanTalk;
 
 @end
 

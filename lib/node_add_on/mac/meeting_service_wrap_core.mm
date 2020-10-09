@@ -58,6 +58,9 @@ ZNSDKError ZMeetingServiceWrap::Start(ZNStartParam startParam)
     
     elements.displayID = [display  intValue];
     elements.vanityID = [NSString stringWithCString:startParam.sdkVanityID.c_str() encoding:NSUTF8StringEncoding];
+    elements.isNoVideo = startParam.isVideoOff;
+    elements.isNoAuido = startParam.isAudioOff;
+    elements.participantId = [NSString stringWithCString:startParam.participantId.c_str() encoding:NSUTF8StringEncoding];
     ZoomSDKMeetingService *service = [[ZoomSDK sharedSDK] getMeetingService];
     if (!service) {
         return ZNSDKERR_SERVICE_FAILED;
@@ -84,6 +87,10 @@ ZNSDKError ZMeetingServiceWrap::Start_WithoutLogin(ZNStartParam startParam)
     NSString *display = [NSString stringWithCString:startParam.hDirectShareAppWnd.c_str() encoding:NSUTF8StringEncoding];
     elements.displayID = [display  intValue];
     elements.vanityID = [NSString stringWithCString:startParam.sdkVanityID.c_str() encoding:NSUTF8StringEncoding];
+   
+    elements.isNoVideo = startParam.isVideoOff;
+    elements.isNoAuido = startParam.isAudioOff;
+    elements.participantId = [NSString stringWithCString:startParam.participantId.c_str() encoding:NSUTF8StringEncoding];
     ZoomSDKMeetingService *service = [[ZoomSDK sharedSDK] getMeetingService];
     if (!service) {
         return ZNSDKERR_SERVICE_FAILED;
@@ -114,6 +121,9 @@ ZNSDKError ZMeetingServiceWrap::Join(ZNJoinParam joinParam)
     elements.displayID = [display  intValue];
     elements.vanityID = [NSString stringWithCString:joinParam.vanityID.c_str() encoding:NSUTF8StringEncoding];
     
+    elements.isNoVideo = joinParam.isVideoOff;
+    elements.isNoAuido = joinParam.isAudioOff;
+    
     if (elements.meetingNumber == 0 && elements.vanityID.length == 0) {
         elements.vanityID = nil;
     }
@@ -142,6 +152,9 @@ ZNSDKError ZMeetingServiceWrap::Join_WithoutLogin(ZNJoinParam joinParam)
     NSString *display = [NSString stringWithCString:joinParam.hDirectShareAppWnd.c_str() encoding:NSUTF8StringEncoding];
     elements.displayID = [display  intValue];
     elements.vanityID = [NSString stringWithCString:joinParam.vanityID.c_str() encoding:NSUTF8StringEncoding];
+    
+    elements.isNoVideo = joinParam.isVideoOff;
+    elements.isNoAuido = joinParam.isAudioOff;
     
     if (elements.meetingNumber == 0 && elements.vanityID.length == 0) {
         elements.vanityID = nil;

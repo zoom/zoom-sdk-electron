@@ -21,6 +21,7 @@ message BOObjectProto
 	required string MeetingToken	= 4;
 	repeated string ParticipantList = 5;	//participant GUID list
 	required string HostID			= 6;	//host GUID
+	repeated bytes NewParticipantList = 7;  //100 BO
 }
 
 enum BOControlProto
@@ -68,6 +69,8 @@ message Interpreter {
 	required string userEmail = 2;
 	required int32 firstLan = 3;
 	required int32 secondLan = 4;
+	optional string firstLanID = 5;
+	optional string secondLanID = 6;
 }
 
 message InterpreteData{

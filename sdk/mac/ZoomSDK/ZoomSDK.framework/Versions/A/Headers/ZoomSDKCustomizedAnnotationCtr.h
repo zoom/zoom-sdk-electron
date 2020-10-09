@@ -97,8 +97,15 @@ typedef struct{
  * @param snapShotName Name of the snapshot.  
  * @return If the function succeeds, the return value is ZoomSDKError_Success. Otherwise failed.
  */
-- (ZoomSDKError)saveSnapshot:(NSString*)snapShotName;
+- (ZoomSDKError)saveSnapshot:(NSString*)snapShotName NS_DEPRECATED_MAC(4.1, 5.0);
 
+/**
+ *@brief Save the snapshot in the specified path
+ *@param savedType Sets the type of file to save the screenshot (PNG or PDF).
+ *@param snapShotName Name of the snapshot.
+ *@return If the function succeeds, the return value is ZoomSDKError_Success. Otherwise failed.
+ */
+- (ZoomSDKError)saveSnapshot:(NSString*)snapShotName  snapshotSaveType:(ZoomSDKAnnotationSavedType)savedType  NS_AVAILABLE_MAC(5.2);
 @end
 
 @protocol ZoomSDKCustomizedAnnotationCtrlDelegate <NSObject>

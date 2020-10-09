@@ -24,7 +24,7 @@ Please follow this template to compose your payload for SDK initialization:
 {
 	       "appKey": "string", // Your SDK key
          "iat": long, // access token issue timestamp
-         "exp": long, // access token expire timestamp
+         "exp": long, // access token expire timestamp, max: iat + 2 days
          "tokenExp": long // token expire timestamp, MIN:30 minutes
 }
 ```
@@ -38,6 +38,20 @@ HMACSHA256(
 )
 ```
 You do not need to secret base64 encoded your signature. Once the JWT token is generated, please do not reveal it or publish it. **It is highly recommended to handle your SDK key and secret and generate JWT in a backend server to be consumed by your application. Do not generate JWT in a production application.**
+
+## 2020-10-09 @ v5.2.41735.0929
+
+## Added
+* Upgrade Electron support to v8.2.4
+* Added a new interface isH323User to check whether the user is an H.323 user
+* Added a new interfaces to get participant ID
+* Added local and cloud recording feature.
+  * Interfaces in `zoom_meeting_recording.js`
+* Added Vietnamese and Italian language support.
+
+## Changed & Fixed
+* Fixed an issue that the customized XML file does not work.
+* Fixed an issue that the onFreeMeetingNeedToUpgrade callback is causing a crash
 
 ## 2020-06-30 @ v5.0.24433.0616
 

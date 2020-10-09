@@ -49,4 +49,10 @@ typedef enum : NSUInteger {
 
 - (NSSize)calculateContentSize;
 
+- (void)confirm;
+
+- (void)updateContent;
+
+- (void)updateUI;
+
 @end

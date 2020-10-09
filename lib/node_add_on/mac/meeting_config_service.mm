@@ -45,11 +45,7 @@ ZNSDKError ZMeetingConfigWrap::EnableInviteButtonOnMeetingUI(bool bEnable)
     }
     ZoomSDKMeetingConfiguration *config = [service getMeetingConfiguration];
     if (service && config) {
-        if (bEnable == NO) {
-            [config hideSDKButtons:YES ButtonType:ToolBarInviteButton];
-        }else{
-            [config hideSDKButtons:NO ButtonType:ToolBarInviteButton];
-        }
+        config.hideInvitButtonOnHCWindow = (bEnable == YES) ? NO : YES;
     }
     return ZNSDKERR_SUCCESS;
 }
@@ -469,6 +465,17 @@ void ZMeetingConfigWrap::EnableInputMeetingScreenNameDlg(bool bEnable)
 {}
 void ZMeetingConfigWrap::RedirectWebinarNeedRegister(bool bRedirect)
 {}
+
+void ZMeetingConfigWrap::DisableConfidentialWatermark(bool bDisable)
+{
+    ZoomSDKMeetingService *service = [[ZoomSDK sharedSDK]  getMeetingService];
+    if (service) {
+        ZoomSDKMeetingConfiguration *config = [service getMeetingConfiguration];
+        if (config) {
+            [config diableConfidentialWatermark:bDisable];
+        }
+    }
+}
 
 void ZMeetingConfigWrap::EnableForceAutoStartMyVideoWhenJoinMeeting(bool bEnable)
 {

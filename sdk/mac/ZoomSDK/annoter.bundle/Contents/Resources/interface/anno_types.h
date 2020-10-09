@@ -10,6 +10,9 @@
 #ifndef __ANNO_TYPES_H__
 #define __ANNO_TYPES_H__
 
+#include <vector>
+#include <string>
+
 // ----------------------------------------------------------------------------
 // Define macro switches for decroration
 // ----------------------------------------------------------------------------
@@ -107,6 +110,10 @@
 
 #ifndef INT_MAX
     #define INT_MAX		0xffffffff
+#endif
+
+#ifndef DOUBLE64_EPSILON
+    #define DOUBLE64_EPSILON    2.2204460492503131E-16
 #endif
 
 #ifndef AnnoWnd
@@ -244,7 +251,7 @@ typedef struct tagAnnoRectF
     }
     Float32 Height() const
     {
-        return bottom - left;
+        return bottom - top;
     }
     bool IsEmpty()
     {
@@ -330,6 +337,14 @@ typedef enum tagAnnoToolType
 	NUMBER_OF_ANNO_TOOL_TYPE
 } AnnoToolType;
 
+typedef enum tagAnnoPickType
+{
+	ANNO_PICKER_TYPE_NONE,
+	ANNO_PICKER_TYPE_AUTO_SHAPE,
+	ANNO_PICKER_TYPE_TEXTBOX
+
+} AnnoPickType;
+
 typedef enum tagAnnoToolState
 {
     ANNO_TOOL_STATE_IDLE,
@@ -395,6 +410,9 @@ typedef enum tagAnnoEventType
 	ANNO_EVENT_REMOTE_DRAWING_TO_START	= 0x0300,		// to notify AS module know that remote participants are going to add annotation to presenter's shared screen.
 	ANNO_EVENT_REMOTE_DRAW_FINISHED		= 0x0301,		// to notify that a remote drawing command has been just executed on local so that uppper layer (AS) sampling program knows where to retrive the dirty region for best perofrmance
 	ANNO_EVENT_CAPTURE_CHANGED			= 0x0302,		// to notify AS module that new difference of frame has been made and needs AS to refresh
+
+	ANNO_EVENT_PICKED_OBJ_CHANGED		= 0x0303,		// to notify session that picked obj has changed
+
 
 	NUMBER_OF_ANNO_EVENT_TYPE
 } AnnoEventType;
@@ -529,25 +547,29 @@ typedef struct tagAnnoInput
 
 typedef enum tagWbConfigMask
 {
-	WB_CONFIG_NO_WINDOW_FRAME			= 0x00000001,
-	WB_CONFIG_ALWAYS_FULLSCREEN			= 0x00000002,
-	WB_CONFIG_NEEDS_VIRTUAL_KEYBOARD	= 0x00000004,
-	WB_CONFIG_TOPMOST_WINDOW			= 0x00000008,
-	WB_CONFIG_ENABLE_MULTI_TOUCH		= 0x00000010
+	WB_CONFIG_NO_WINDOW_FRAME				= 0x00000001,
+	WB_CONFIG_ALWAYS_FULLSCREEN				= 0x00000002,
+	WB_CONFIG_NEEDS_VIRTUAL_KEYBOARD		= 0x00000004,
+	WB_CONFIG_TOPMOST_WINDOW				= 0x00000008,
+	WB_CONFIG_ENABLE_MULTI_TOUCH			= 0x00000010,
+    WB_CONFIG_ENABLE_SAVE					= 0x00000020,
+	WB_CONFIG_ENABLE_HARDWARE_ACCELERATION	= 0x00000040
 } WbConfigMask;
 
 typedef UInt32 WbConfig;
 
 typedef enum tagAnnoConfigMask
 {
-	ANNO_CONFIG_NULL					= 0x00000000,
-	ANNO_CONFIG_NEEDS_VIRTUAL_KEYBOARD	= 0x00000001,
-	ANNO_CONFIG_ENABLE_MULTI_TOUCH		= 0x00000002,
-	ANNO_CONFIG_DISABLE_DESKTOP_HOOK	= 0x00000004,	
-	ANNO_CONFIG_DISABLE_ARROW_WINDOW	= 0x00000008,	
-	ANNO_CONFIG_ENABLE_DIRTY_REFRESH	= 0x00000010,
-	ANNO_CONFIG_MOBILE_SHARE_WB			= 0x00000020,
-	ANNO_CONFIG_ENABLE_SHARE_ZOOM_WINDOW = 0x00000040
+	ANNO_CONFIG_NULL							= 0x00000000,
+	ANNO_CONFIG_NEEDS_VIRTUAL_KEYBOARD			= 0x00000001,
+	ANNO_CONFIG_ENABLE_MULTI_TOUCH				= 0x00000002,
+	ANNO_CONFIG_DISABLE_DESKTOP_HOOK			= 0x00000004,
+	ANNO_CONFIG_DISABLE_ARROW_WINDOW			= 0x00000008,
+	ANNO_CONFIG_ENABLE_DIRTY_REFRESH			= 0x00000010,
+	ANNO_CONFIG_MOBILE_SHARE_WB					= 0x00000020,
+	ANNO_CONFIG_ENABLE_SHARE_ZOOM_WINDOW		= 0x00000040,
+    ANNO_CONFIG_ENABLE_SAVE						= 0x00000080,
+	ANNO_CONFIG_ENABLE_HARDWARE_ACCELERATION	= 0x00000100
 } AnnoConfigMask;
 
 typedef UInt32 AnnoConfig;
@@ -562,29 +584,11 @@ typedef enum tagAnnoBitmapFormat
 	ANNO_BITMAP_FORMAT_RGBA32	= 0x0002,	// Mac CGContext
     ANNO_BITMAP_FORMAT_RGB24    = 0x0003,
     ANNO_BITMAP_FORMAT_RGB32    = 0x0004,
-    ANNO_BITMAP_FORMAT_ARGB32   = 0x0005,
+    ANNO_BITMAP_FORMAT_ARGB32   = 0x0005,   // Android Bitmap
     ANNO_BITMAP_FORMAT_PARGB32  = 0x0006,
 	ANNO_BITMAP_FORMAT_NUMBER
 }AnnoBitmapFormat;
 
-// ----------------------------------------------------------------------------
-//	Type used by AnnoBase::GetAnnoBitmapInfo
-// ----------------------------------------------------------------------------
-typedef struct tagAnnoBitmapInfo
-{
-	UInt8*				bmData;
-	AnnoBitmapFormat	bmFormat;
-	UInt32				bmWidth;
-	UInt32				bmHeight;
-
-	tagAnnoBitmapInfo()
-	{
-		bmData		= 0;
-		bmFormat	= ANNO_BITMAP_FORMAT_NULL;
-		bmWidth		= 0;
-		bmHeight	= 0;
-	}
-}AnnoBitmapInfo;
 
 // ----------------------------------------------------------------------------
 //	Page Operation Type used by AnnoEvent::ANNO_EVENT_PAGE_CHANGED
@@ -614,11 +618,99 @@ typedef struct tagAnnoPageChangeInfo
 	}
 }AnnoPageChangeInfo;
 
+typedef enum tagAnnoSaveState
+{
+    ANNO_SAVE_END = 0,
+    ANNO_SAVE_START = 1
+} AnnoSaveState;
+
 typedef enum tagAnnoSaveType
 {
-	ANNO_SAVE_IMG = 0,
-	ANNO_SAVE_PDF = 1,
-	ANNO_SAVE_NUMBER
+    ANNO_SAVE_NONE = 0x00000000,
+    ANNO_SAVE_PNG = 0x00000001, 
+    ANNO_SAVE_PDF = 0x00000002,
+    ANNO_SAVE_PNG_MEMORY = 0x00000003,
+    ANNO_SAVE_PDF_MEMORY = 0x00000004,
+    ANNO_SAVE_BITMAP_MEMORY = 0x00000005
 }AnnoSaveType;
+
+// ----------------------------------------------------------------------------
+//	Type used by AnnoBase::GetAnnoBitmapInfo
+// ----------------------------------------------------------------------------
+typedef struct tagAnnoBitmapInfo
+{
+    UInt8*			bmData;
+    UInt32	        bmFormat;
+    UInt32			bmWidth;
+    UInt32			bmHeight;
+    UInt32          bmPageIndex;
+    UInt32          bmPageCount;
+    UInt32          bmSize;
+
+    tagAnnoBitmapInfo()
+    {
+        bmData		= 0;
+        bmFormat	= ANNO_BITMAP_FORMAT_NULL;
+        bmWidth		= 0;
+        bmHeight	= 0;
+        bmPageIndex = 0;
+        bmPageCount = 0;
+        bmSize      = 0;
+    }
+
+    void Release()
+    {
+        if(NULL != bmData)
+        {
+            delete[] bmData;
+            bmData = NULL;
+        }
+
+        bmFormat	= ANNO_BITMAP_FORMAT_NULL;
+        bmWidth		= 0;
+        bmHeight	= 0;
+        bmPageIndex = 0;
+        bmPageCount = 0;
+        bmSize      = 0;
+    }
+}AnnoBitmapInfo;
+
+typedef struct tagAnnoSaveInfo
+{
+    Int32 saveState;
+    Int32 saveType;
+    Int32 savePageNum;
+    Int32 shareType;
+    bool isAutoSave;
+    std::wstring savePath;
+    std::wstring saveDirectory;
+    void* bitmapDataFormNydus;  //attendee save
+    std::vector<int> savePagesList; //all need save pages index
+    std::vector<AnnoBitmapInfo> bitmaps; //memory of bitmaps
+
+    tagAnnoSaveInfo()
+    {
+        saveState = ANNO_SAVE_END;
+        saveType = ANNO_SAVE_PNG;
+        savePageNum = 0;
+        shareType = 0;
+        isAutoSave = false;
+        bitmapDataFormNydus = NULL;
+    }
+
+    void Release()
+    {           
+        savePagesList.clear();
+
+        for(int i=0; i<bitmaps.size(); ++i)
+        {
+            bitmaps.at(i).Release();
+        }
+        
+        bitmaps.clear();
+    }
+}AnnoSaveInfo;
+
+
 
 #endif // __ANNO_TYPES_H__

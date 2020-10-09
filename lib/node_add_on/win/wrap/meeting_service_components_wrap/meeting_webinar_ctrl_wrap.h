@@ -27,10 +27,6 @@ DEFINE_FUNC_1(DisallowAttendeeTalk, SDKError, unsigned int, userid)
 DEFINE_FUNC_0(AllowPanelistStartVideo, SDKError)
 //virtual SDKError DisallowPanelistStartVideo() = 0;
 DEFINE_FUNC_0(DisallowPanelistStartVideo, SDKError)
-//virtual SDKError AllowAttendeeChat() = 0;
-DEFINE_FUNC_0(AllowAttendeeChat, SDKError)
-//virtual SDKError DisallowAttendeeChat() = 0;
-DEFINE_FUNC_0(DisallowAttendeeChat, SDKError)
 //virtual WebinarMeetingStatus* GetWebinarMeetingStatus() = 0;
 DEFINE_FUNC_0(GetWebinarMeetingStatus, WebinarMeetingStatus*)
 

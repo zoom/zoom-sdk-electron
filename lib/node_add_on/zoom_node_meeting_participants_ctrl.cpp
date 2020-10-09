@@ -120,7 +120,7 @@ void ZoomNodeMeetingParticipantsCtrlWrap::GetUserInfoByUserID(const v8::Function
 	v8::HandleScope scope(isolate);
 	v8::Local<v8::Object> node = v8::Object::New(isolate);
 	node->Set(context, v8::String::NewFromUtf8(isolate, "userName", v8::NewStringType::kInternalized).ToLocalChecked(), v8::String::NewFromUtf8(isolate, zs2s(zn_userInfomation.userName).c_str(), v8::NewStringType::kInternalized).ToLocalChecked());
-	//node->Set(context, v8::String::NewFromUtf8(isolate, "email", v8::NewStringType::kInternalized).ToLocalChecked(), v8::String::NewFromUtf8(isolate, zs2s(zn_userInfomation.email).c_str(), v8::NewStringType::kInternalized).ToLocalChecked());
+	node->Set(context, v8::String::NewFromUtf8(isolate, "isH323User", v8::NewStringType::kInternalized).ToLocalChecked(), v8::Boolean::New(isolate, zn_userInfomation.isH323User));
 	node->Set(context, v8::String::NewFromUtf8(isolate, "isHost", v8::NewStringType::kInternalized).ToLocalChecked(), v8::Boolean::New(isolate, zn_userInfomation.isHost));
 	node->Set(context, v8::String::NewFromUtf8(isolate, "userID", v8::NewStringType::kInternalized).ToLocalChecked(), v8::Integer::New(isolate, (int32_t)zn_userInfomation.userID));
 	node->Set(context, v8::String::NewFromUtf8(isolate, "isVideoOn", v8::NewStringType::kInternalized).ToLocalChecked(), v8::Boolean::New(isolate, zn_userInfomation.isVideoOn));
@@ -130,6 +130,7 @@ void ZoomNodeMeetingParticipantsCtrlWrap::GetUserInfoByUserID(const v8::Function
 	node->Set(context, v8::String::NewFromUtf8(isolate, "isPurePhoneUser", v8::NewStringType::kInternalized).ToLocalChecked(), v8::Boolean::New(isolate, zn_userInfomation.isPurePhoneUser));
 	node->Set(context, v8::String::NewFromUtf8(isolate, "WebinarAtendeeStatus", v8::NewStringType::kInternalized).ToLocalChecked(), v8::Boolean::New(isolate, zn_userInfomation.webinarAttendeeStatus));
 	node->Set(context, v8::String::NewFromUtf8(isolate, "userInfoType", v8::NewStringType::kInternalized).ToLocalChecked(), v8::Integer::New(isolate, (int32_t)zn_userInfomation.userInfoType));
+	node->Set(context, v8::String::NewFromUtf8(isolate, "participantID", v8::NewStringType::kInternalized).ToLocalChecked(), v8::String::NewFromUtf8(isolate, zs2s(zn_userInfomation.participantID).c_str(), v8::NewStringType::kInternalized).ToLocalChecked());
 #if (defined _WIN32)
 	node->Set(context, v8::String::NewFromUtf8(isolate, "audioJoinType", v8::NewStringType::kInternalized).ToLocalChecked(), v8::Integer::New(isolate, (int32_t)zn_userInfomation.audioJoinType));
 	node->Set(context, v8::String::NewFromUtf8(isolate, "isInWaitingRoom", v8::NewStringType::kInternalized).ToLocalChecked(), v8::Boolean::New(isolate, zn_userInfomation.isInWaitingRoom));

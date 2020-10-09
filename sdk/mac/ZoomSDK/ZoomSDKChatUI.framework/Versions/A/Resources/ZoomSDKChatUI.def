@@ -16,7 +16,11 @@ _OBJC_CLASS_$_ZMSettingAudioViewController
 _OBJC_CLASS_$_ZMScheduleMainView
 _OBJC_CLASS_$_ZMSettingItemViewController
 _OBJC_CLASS_$_ZPDirectShareControlPanel
-_OBJC_CLASS_$_ZMPTMeetingManager
+_OBJC_CLASS_$_ZPHUDWindowManager
+_OBJC_CLASS_$_ZPAvatarLoader
+_OBJC_CLASS_$_ZPHUDWindowModel
+_OBJC_CLASS_$_ZMReportWindowController
+_OBJC_CLASS_$_ZPAvatarHelper
 
 
 

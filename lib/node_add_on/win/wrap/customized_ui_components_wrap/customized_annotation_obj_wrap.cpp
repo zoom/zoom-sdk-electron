@@ -44,6 +44,6 @@ IMPL_FUNC_1(ICustomizedAnnotationObj, GetCurTool, SDKError, AnnotationToolType&,
 IMPL_FUNC_0(ICustomizedAnnotationObj, Undo, SDKError, SDKERR_UNINITIALIZE)
 IMPL_FUNC_0(ICustomizedAnnotationObj, Redo, SDKError, SDKERR_UNINITIALIZE)
 IMPL_FUNC_0(ICustomizedAnnotationObj, CanSaveSnapshot, SDKError, SDKERR_UNINITIALIZE)
-IMPL_FUNC_1(ICustomizedAnnotationObj, SaveSnapshot, SDKError, const wchar_t*, path, SDKERR_UNINITIALIZE)
+IMPL_FUNC_2(ICustomizedAnnotationObj, SaveSnapshot, SDKError, const wchar_t*, path, SDKAnnoSaveType, nType, SDKERR_UNINITIALIZE)
 
 END_ZOOM_SDK_NAMESPACE

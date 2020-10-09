@@ -20,11 +20,6 @@
     <button type="button" onclick="dologout()">Logout</button>
 	</div>
   <div class="center">
-    <select id="startCBOption">
-      <option value="main" selected>Main Process</option>
-      <option value="render">Render Process</option>
-      <option value="pipe">Pipe</option>
-    </select>
     <button type="button" onclick="handleRawData('start')" id="startRawDataBtn">Start Meeting With Rawdata</button>
     <button type="button" onclick="handleRawData('join')" id="joinRawDataBtn">Join Meeting With Rawdata</button>
     <div>
@@ -112,6 +107,9 @@
       <button type="button" class="button-small" onclick="isAutoFullScreenVideoWhenJoinMeetingEnabled()">Is AutoFullScreenVideo</button>
       <button type="button" class="button-small" onclick="setRecordingPath()">Set RecordingPath</button>
       <button type="button" class="button-small" onclick="getRecordingPath()">Get RecordingPath</button>
+      <button type="button" class="button-small" onclick="enableVideoPreviewDialog()">Enable VideoPreviewDialog</button>
+      <button type="button" class="button-small" onclick="isVideoPreviewDialogEnabled()">Is VideoPreviewDialogEnabled</button>
+      <button type="button" class="button-small" onclick="disableConfidentialWatermark()">Disable ConfidentialWatermark</button>
     </div>
   </div>
 </body>
@@ -121,49 +119,45 @@
     const {ipcRenderer, remote} = require('electron');
     let hasRDLicense = remote.getGlobal('hasRDLicense');
     let startNormalBtn = document.querySelector('#startNormalBtn');
-    let startCBOption = document.querySelector('#startCBOption');
     let startRawDataBtn = document.querySelector('#startRawDataBtn');
     let joinRawDataBtn = document.querySelector('#joinRawDataBtn');
-    if (hasRDLicense == 0) {
+    if (hasRDLicense == true) {
       startNormalBtn.innerHTML = "Start Normal Meeting";
-      startCBOption.style.cssText="display: inline-block";
       startRawDataBtn.style.cssText="display: inline-block";
       joinRawDataBtn.style.cssText="display: inline-block";
     } else {
       startNormalBtn.innerHTML = "Start";
-      startCBOption.style.cssText="display: none";
       startRawDataBtn.style.cssText="display: none";
       joinRawDataBtn.style.cssText="display: none";
     }
     let tryWithMeetingNumberBtn = document.querySelector('#tryWithMeetingNumberBtn');
     let tryWithPairingCodeBtn = document.querySelector('#tryWithPairingCodeBtn');
     let cancelBtn = document.querySelector('#cancelBtn');
-    function sendstart(meetingnumber, startCBOption){
-      ipcRenderer.send('asynchronous-message', 'start', Number(meetingnumber), startCBOption);
+    function sendstart(meetingnumber, withRawdata){
+      ipcRenderer.send('asynchronous-message', 'start', Number(meetingnumber), withRawdata);
     }
-    function sendjoin(meetingnumber, username, startCBOption){
-      ipcRenderer.send('asynchronous-message', 'join', Number(meetingnumber), username, startCBOption);
+    function sendjoin(meetingnumber, username, withRawdata){
+      ipcRenderer.send('asynchronous-message', 'join', Number(meetingnumber), username, withRawdata);
     }
-    function dostart(startCBOption){
+    function dostart(withRawdata){
       let meetingnumber=document.getElementById("meetingnumber").value; 
       let username=document.getElementById("username").value; 
-      sendstart(meetingnumber, startCBOption);
+      sendstart(meetingnumber, withRawdata);
     }
-    function dojoin(startCBOption){
+    function dojoin(withRawdata){
       let meetingnumber=document.getElementById("meetingnumber").value; 
       let username=document.getElementById("username").value; 
-      sendjoin(meetingnumber, username, startCBOption);
+      sendjoin(meetingnumber, username, withRawdata);
     }
     function dologout(){
       ipcRenderer.send('asynchronous-message', 'logout');
     }
     function handleRawData (value) {
       if (value == 'start') {
-        dostart(startCBOption.value);
+        dostart(true);
       } else {
-        dojoin(startCBOption.value);
+        dojoin(true);
       }
-      ipcRenderer.send('asynchronous-message', 'handleYUV', startCBOption.value);
     }
     function getZoomSDKVersion() {
       ipcRenderer.send('asynchronous-message', 'getZoomSDKVersion');
@@ -292,8 +286,7 @@
     function setDirectShareStatusUpdateCB () {
       ipcRenderer.send('asynchronous-message', 'setDirectShareStatusUpdateCB');
     }
-    
-    setDirectShareStatusUpdateCB();
+
     function startDirectShare () {
       ipcRenderer.send('asynchronous-message', 'startDirectShare');
     }
@@ -434,5 +427,19 @@
     
     function getRecordingPath() {
       ipcRenderer.send('asynchronous-message', 'getRecordingPath');
+    }
+
+    function enableVideoPreviewDialog() {
+      let bEnable = document.getElementById("enable").value;
+			ipcRenderer.send('asynchronous-message', 'enableVideoPreviewDialog', Boolean(bEnable));
+    }
+    
+    function isVideoPreviewDialogEnabled() {
+      ipcRenderer.send('asynchronous-message', 'isVideoPreviewDialogEnabled');
+    }
+
+    function disableConfidentialWatermark() {
+      let bEnable = document.getElementById("enable").value;
+			ipcRenderer.send('asynchronous-message', 'disableConfidentialWatermark', Boolean(bEnable));
     }
   </script>

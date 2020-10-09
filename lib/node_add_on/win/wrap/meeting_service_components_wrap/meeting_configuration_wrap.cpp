@@ -156,4 +156,7 @@ IMPL_FUNC_NORET_1(IMeetingConfiguration, DisableShowJoinMeetingWnd, void, bool, 
 //virtual void SetMaxDurationForOnlyHostInMeeting(int nDuration) = 0;
 IMPL_FUNC_NORET_1(IMeetingConfiguration, SetMaxDurationForOnlyHostInMeeting, void, int, nDuration)
 
+//virtual void DisableConfidentialWatermark(bool bDisable) = 0;
+IMPL_FUNC_NORET_1(IMeetingConfiguration, DisableConfidentialWatermark, void, bool, bDisable)
+
 END_ZOOM_SDK_NAMESPACE

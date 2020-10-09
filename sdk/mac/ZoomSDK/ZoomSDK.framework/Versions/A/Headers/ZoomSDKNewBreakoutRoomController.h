@@ -66,9 +66,18 @@ NS_ASSUME_NONNULL_BEGIN
 -(ZoomSDKError)removeUserFromBO:(NSString *)userID  BOID:(NSString *)ID;
 @end
 
+@protocol ZoomSDKBOMeetingAdminDelegate <NSObject>
+@optional
+/**
+ *@brief Host will recieve this callback when attendee request for help.
+ *@param userID The ID of user who request for help.
+ */
+-(void)onHelpRequestReceived:(NSString *)userID;
+@end
 
 @interface ZoomSDKBOMeetingAdmin : NSObject
 
+@property(nonatomic,assign)id<ZoomSDKBOMeetingAdminDelegate>  delegate;
 /**
  *@brief Start breakout meeting.
  *@return If the function succeeds,will return ZoomSDKError_Success.
@@ -96,6 +105,33 @@ NS_ASSUME_NONNULL_BEGIN
  *@return If the function succeeds,will return ZoomSDKError_Success.
  */
 -(ZoomSDKError)switchAssignedUserToRunningBO:(NSString *)userID  BOID:(NSString *)ID;
+
+/**
+ *@brief  Determine if the user can start breakout room.
+ *@return If return YES means can start breakout room,otherwise not.
+ */
+-(BOOL)canStartBO;
+
+/**
+ *@brief User request to join breakout room.
+ *@param requestUserID The user id.
+ *@return If the function succeeds,will return ZoomSDKError_Success.
+ */
+-(ZoomSDKError)joinBOByUserRequest:(NSString *)requestUserID;
+
+/**
+ *@brief Notify attendee request help result.
+ *@param userID The user id of requested help.
+ *@return If the function succeeds,will return ZoomSDKError_Success.
+ */
+-(ZoomSDKError)ignoreUserHelpRequest:(NSString *)userID;
+
+/**
+ *@brief Broadcast message.
+ *@param message The broadcast context.
+ *@return If the function succeeds,will return ZoomSDKError_Success.
+ */
+-(ZoomSDKError)broadcastMessage:(NSString *)message;
 @end
 
 @interface ZoomSDKBOMeetingAssistant : NSObject
@@ -114,8 +150,29 @@ NS_ASSUME_NONNULL_BEGIN
 -(ZoomSDKError)leaveBO;
 @end
 
+@protocol ZoomSDKBOMeetingAttendeeDelegate <NSObject>
+@optional
+/**
+ *@brief Notify current user the request for help result.
+ *@param result It is the request for help result.
+ */
+-(void)onHelpRequestHandleResultReceived:(ZoomSDKRequest4HelpResult)result;
+
+/**
+ *@brief Notify the host join current breakout room.
+ */
+-(void)onHostJoinedThisBOMeeting;
+
+/**
+ *@brief Notify the host leave current breakout room.
+ */
+-(void)onHostLeaveThisBOMeeting;
+
+@end
+
 @interface ZoomSDKBOMeetingAttendee : NSObject
 
+@property(nonatomic,assign)id<ZoomSDKBOMeetingAttendeeDelegate>  delegate;
 /**
  *@brief Join Breakout meeting.
  *@return If the function succeeds,will return ZoomSDKError_Success.
@@ -133,6 +190,18 @@ NS_ASSUME_NONNULL_BEGIN
  *@return If the function succeeds,will return breakout meeting name.
  */
 -(NSString*)getBOName;
+
+/**
+ *@brief Request for help when user in breakout room.
+ *@return If the function succeeds,will return ZoomSDKError_Success.
+ */
+-(ZoomSDKError)requestForHelp;
+
+/**
+ *@brief Determine if the host is in this breakout room.
+ *@return YES means the host in breakout room,otherwise not.
+ */
+-(BOOL)isHostInThisBO;
 @end
 
 @protocol ZoomSDKBOMeetingDataHelpDelegate <NSObject>
@@ -189,6 +258,19 @@ NS_ASSUME_NONNULL_BEGIN
  *@return If the function succeeds,will return ZoomSDKBOMeetingInfo object.
  */
 -(ZoomSDKBOMeetingInfo *)getBOMeetingInfoWithBOID:(NSString *)BOID;
+
+/**
+ *@brief Determine if it is yourself by userID.
+ *@param userid The user's user ID.
+ *@return YES means yourself is in the breakout meeting ,otherwise not.
+ */
+-(BOOL)isMyselfInBo:(NSString *)userid;
+
+/**
+ *@brief Get breakout meeting name.
+ *@return The name of current breakout meeting.
+ */
+-(NSString*)getCurrentBoName;
 @end
 
 
@@ -249,6 +331,12 @@ NS_ASSUME_NONNULL_BEGIN
  *@brief If lost dataHelper's permissions change,will receive the callback.
  */
 -(void)onLostDataHelperPermission;
+
+/**
+ *@brief If host broadcast message,all attendee will revieve this callback
+ *@param message The broadcast message context.
+*/
+-(void)onNewBroadcastMessageReceived:(NSString *)message;
 @end
 
 @interface ZoomSDKNewBreakoutRoomController : NSObject

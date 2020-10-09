@@ -397,14 +397,23 @@ public:
 		) = 0;
 
 	//
-	// Call this method to save current snapshot of shared region to file, in PNG format
-	// @savePath:		file path the snapshot will be saved to
-	// @type  :         file type for saving
-	virtual int SaveSnapshotToPath(
-		IN	const wchar_t* savePath,
-		IN	const void*	   savePageList,
-		IN  AnnoSaveType   type = ANNO_SAVE_IMG
-		)=0;
+	// Call this method to save current snapshot of shared region to file or memory
+	// @saveInfo:		all save information
+	//
+    virtual int SaveAnnotation(
+        IN  const void* pSaveInfo
+        ) = 0;
+
+
+    //
+    // Call this method to load bitmaps to the annotate
+    // @bitmapList:		all bitmaps list.
+    // 
+    virtual int LoadBitmapList(
+        IN  const void* pList
+        ) = 0;
+
+
 	//
 	// Call this method to save a bitmap data buffer to file, in PNG format
 	// @bitmapWidth:	width of the bitmap, in piexles

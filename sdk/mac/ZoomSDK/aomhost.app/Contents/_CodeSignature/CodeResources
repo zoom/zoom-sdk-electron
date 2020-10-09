@@ -6,7 +6,7 @@
 	<dict>
 		<key>Resources/Base.lproj/MainMenu.nib</key>
 		<data>
-		sPPgLJ6ojygwhzX6Pf35Tgc07ds=
+		XBd4LYgbkNv7rhSLnJ11fjd/+FE=
 		</data>
 	</dict>
 	<key>files2</key>
@@ -15,20 +15,29 @@
 		<dict>
 			<key>cdhash</key>
 			<data>
-			p5gMekQD3DalkplfVkWA70n0FR0=
+			Ifs1RSr/4rszo0NmvkEezUBm6NU=
 			</data>
 			<key>requirement</key>
 			<string>identifier "zoom.us.libcmlFramework" and anchor apple generic and certificate 1[field.1.2.840.113635.100.6.2.6] /* exists */ and certificate leaf[field.1.2.840.113635.100.6.1.13] /* exists */ and certificate leaf[subject.OU] = BJ4HAAB9B3</string>
+		</dict>
+		<key>Frameworks/libmklFramework.framework</key>
+		<dict>
+			<key>cdhash</key>
+			<data>
+			I5C+Ga5kj11R0xYvGo48kpdoObo=
+			</data>
+			<key>requirement</key>
+			<string>identifier "zoom.us.libmklFramework" and anchor apple generic and certificate 1[field.1.2.840.113635.100.6.2.6] /* exists */ and certificate leaf[field.1.2.840.113635.100.6.1.13] /* exists */ and certificate leaf[subject.OU] = BJ4HAAB9B3</string>
 		</dict>
 		<key>Resources/Base.lproj/MainMenu.nib</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			sPPgLJ6ojygwhzX6Pf35Tgc07ds=
+			XBd4LYgbkNv7rhSLnJ11fjd/+FE=
 			</data>
 			<key>hash2</key>
 			<data>
-			wcwHms4BhHTqz+b6hEU9bG/riGSU22PlvQM0EDlJQoY=
+			aCzWkO6OO3hyGjtdclLIZP3w0d2ZftYzJGVuP1iWI0c=
 			</data>
 		</dict>
 	</dict>

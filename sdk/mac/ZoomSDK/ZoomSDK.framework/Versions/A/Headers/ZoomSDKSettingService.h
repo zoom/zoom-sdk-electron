@@ -446,6 +446,18 @@ typedef enum{
  */
 - (BOOL)isSupportEchoCancellation;
 
+/**
+ * @brief Get the level of suppressed background noise.
+ * @return The level of suppressed background noise.
+ */
+- (ZoomSDKSuppressBackgroundNoiseLevel)getSuppressBackgroundNoiseLevel;
+
+/**
+ * @brief Set the level of to suppress background noise.
+ * @param level The level to be set.
+ * @return If the function succeeds, it will return ZoomSDKError_success, otherwise not.
+ */
+- (ZoomSDKError)setSuppressBackgroundNoise:(ZoomSDKSuppressBackgroundNoiseLevel)level;
 @end
 
 @interface ZoomSDKVideoSetting: NSObject

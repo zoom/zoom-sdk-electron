@@ -65,6 +65,7 @@ void ZoomNodeDirectShareHelperWrap::SetDirectShareStatusUpdateCB(const v8::Funct
 void ZoomNodeDirectShareHelperWrap::TryWithMeetingNumber(const v8::FunctionCallbackInfo<v8::Value>& args)
 {
 	v8::Isolate* isolate = args.GetIsolate();
+	auto context = isolate->GetCurrentContext();
 	if (args.Length() < 1) {
 		isolate->ThrowException(v8::Exception::TypeError(
 			v8::String::NewFromUtf8(isolate, "Wrong number of arguments", v8::NewStringType::kInternalized).ToLocalChecked()));
@@ -77,7 +78,7 @@ void ZoomNodeDirectShareHelperWrap::TryWithMeetingNumber(const v8::FunctionCallb
 			v8::String::NewFromUtf8(isolate, "Wrong arguments", v8::NewStringType::kInternalized).ToLocalChecked()));
 		return;
 	}
-	unsigned long long zn_meetingNumber = (unsigned long long)args[0]->NumberValue();
+	unsigned long long zn_meetingNumber = (unsigned long long)args[0]->NumberValue(context).FromJust();
 
 	ZNSDKError err = _g_native_wrap.GetAuthServiceWrap().GetDirectShareHelper().TryWithMeetingNumber(zn_meetingNumber);
 	v8::Local<v8::Integer> bret = v8::Integer::New(isolate, (int32_t)err);

@@ -172,7 +172,8 @@
  * @brief The attendees are permitted to chat.
  * @return If the function succeeds, it will return ZoomSDKError_Success. Otherwise failed. 
  */
--(ZoomSDKError)AllowAttendeeChat;
+-(ZoomSDKError)AllowAttendeeChat NS_DEPRECATED_MAC(4.1, 5.0);
+-(ZoomSDKError)allowAttendeeChat:(ZoomSDKChatPriviledgeType)priviledge NS_AVAILABLE_MAC(5.2);
 
 /**
  * @brief Forbid the attendees to chat.

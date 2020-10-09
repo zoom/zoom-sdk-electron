@@ -19,6 +19,8 @@
 
 @property (nonatomic,assign) CGFloat selectedRadius;
 
+@property (nonatomic,retain) NSColor *fullFillBackgroundColor;
+
 @property (nonatomic,retain) NSColor *backgroundColor;
 
 @property (nonatomic,retain) NSColor *selectedBackgroundColor;
@@ -30,6 +32,11 @@
 @property(getter=isSelected) BOOL selected;
 
 @property(getter=isHoverSelected) BOOL hoverSelected;
+
+@property(nonatomic,assign) BOOL ignoreSelected;
+
+@property(nonatomic,assign) BOOL ignoreHoverSelected;
+
 
 - (NSColor *)currentBackgroudColor;
 

@@ -25,6 +25,12 @@ message InterpreterListProto{
    repeated InterpreterProto interpreters = 1;
 }
 
+message InterpretationLanguageDetail{
+   optional string languageId = 1;
+   optional string displayName = 2;
+   optional string iconContent = 3;
+}
+
 message CountryCodeProto {
   optional string id     = 1; // country id, such as 'CA' for Canada
   optional string name   = 2; // country name, such as 'Canada'
@@ -219,7 +225,7 @@ message MeetingProto {
   repeated KeyValOption zoomTunnelServer = 122; // ZOOM-84982
   optional string participantSecretKey256         = 123; //ZOOM-87204
   optional int32 asyncLoadOptions	   = 124; //ZOOM-87204
-  optional RecordingReminderProto recordingReminderProto = 125;// ZOOM-99848 conf/j¡¢conf/i response, recording reminder custom text
+  optional RecordingReminderProto recordingReminderProto = 125;// ZOOM-99848 conf/jï¾¡ï¾¢conf/i response, recording reminder custom text
   optional string pluginIntegrationUrl   = 126; //ZOOM-92273 the url for redirecting to the download-extension-plugins page
   //miss some items, keep be consistent with web in ep branch
   optional string smsuuid = 129;
@@ -234,8 +240,20 @@ message MeetingProto {
   optional string meetingFileToken = 144;
   repeated string additionalDCRegions = 145;
   repeated KeyValOption geoRegionMapping = 146; //ZOOM-154342 conf/j return geoRegion mapping
+  optional string geoRegionNetwork = 148;// ZOOM-157382, return the current cloud in i18n string in /conf/j
+  optional int64 scheduleOptions4         = 150; // schedule options4
+  optional JoinMeetingAccessToken joinMeetingAccessToken = 151; // ZOOM-163230 unique join zoommtg enhancement --- conf join
+  optional string eventDirectMeetingUrl  = 152; //ZOOM-168085 special logic for event directory associated meeting
+  repeated InterpretationLanguageDetail interpretationLanguageDetails = 153; // ZOOM-136178 WEB - Ability to add your own language for Simultaneous Interpretation
 }
 
+message JoinMeetingAccessToken {
+	optional string jmak = 1; // new jmak
+	optional string hostToken = 2; // for startmeeting action only
+	optional string hostZak = 3; // for startmeeting action only
+	optional string zoomControlOptions = 4;
+	optional string attendeeDisplayName = 5;
+}
 
 message ThirdPartAttendeeInfo {
     optional string email = 1;
@@ -340,6 +358,17 @@ message UserPhoneInfo {
   optional string countryCode = 3; // Like 1,86(no +)
 }
 
+message VirtualBackgroundFilter {
+  optional string url = 1; //VirtualBackgroundFilter img url(cdn)
+  optional string name = 2; //VirtualBackgroundFilter img name
+  optional int32  type = 3;  //VirtualBackgroundFilter img type
+  optional string thumbnailImgUrl = 4;  //VirtualBackgroundFilter thumbnail image url(cdn)
+  optional string index = 5;
+  optional int32  version = 6;
+  optional int32  order = 7;
+  optional bool zoomDefault = 8;
+}
+
 message UserProfile {
   required string id          = 1;
   optional string name        = 2;
@@ -439,17 +468,37 @@ message UserProfile {
   optional E2EKMSInfo e2eKmsInfo                         = 97;
   optional int32 calendarType                            = 98; // None = 0; Google = 1; Exchange_Online = 2; Exchange_On_Premise = 3;
   optional int32 calendarRefreshInterval                 = 99; // ZOOM-113578: in seconds, valid range [60, 15*60], only used for Exchange_On_Premise
+  optional int32 weeklyRestartWeekDay                    = 100; // ZOOM-82860: in weekday, valid range [1, 7], Sunday is 1, Monday is 2
   repeated LoginMeetingAuthProto meetingAuths          = 101;
   optional string trashcanLink                         = 102; //ZOOM-119932
   repeated VirtualBackground videoVirtualBackground    = 103; //video Virtual background list
   repeated UserPhoneInfo userPhoneInfos                = 104; // ZOOM-127932 user's own phone numbers, may be one user can have multiple phone numbers in future
   repeated KeyValOption meetingPasswordRule            = 105; //ZOOM-136702 meeting password rule
   optional int32 exchangeApiType                       = 106; //ZOOM-108606 exchange api type, EWS or Graph
+  repeated FavoriteItem favoriteList                     = 107;
   optional DisclaimerPrivacyProto loginDisclaimer      = 108;
   optional string officeGraphAccessToken               = 109; // office graph access token, different from ews token
   optional int32 officeGraphAccessTokenRefreshInterval = 110; // office graph access token interval, different from ews token interval
   optional string plainEmail                           = 113; // user original email (plaintext, not encrypt and not hash)
   repeated string uncheckedCustomDC                    = 114; //ZOOM-151395 Customization of Data Center List
+  repeated OptionsChangedKVProto  optionsChange        = 116; // ZOOM-159056-notify client options change
+  optional string resourceId                           = 120; //ZOOM-168830 Personal/Executive web support xmpp notify
+  optional int32 tokenPermission                         = 119; // ZOOM-167628 split token permission into read and write; 0x1L calendar read, 0x2L calendar write, 0x4L contact read, 0x8L contact write
+  repeated string fileIntegrationDomainWhiteList         = 121; // file integration domain for 3rd
+  optional ZREncWithGCMInfo zrEncWithGCMInfo             = 122; //ZOOM-170707
+  repeated VirtualBackgroundFilter virtualBackgroundFilter = 125; //ZOOM-177614
+  repeated InterpretationLanguageDetail interpretationLanguageDetails = 126; // ZOOM-136178 WEB - Ability to add your own language for Simultaneous Interpretation
+}
+
+message OptionsChangedKVProto {
+    optional string key  = 1;
+    repeated int64  val  = 2;
+}
+
+message ZREncWithGCMInfo {
+    optional bool isZRSupportEncForDirectShareWithGCM      = 1;
+    optional bool isZRSupportEncForZrcCommunicationWithGCM = 2;
+    optional bool isForceZrEncForZrcCommunicationWithGCM   = 3;
 }
 
 message DisclaimerPrivacyProto {
@@ -491,10 +540,12 @@ message CheckInInfo {
   optional int32 timeForNoCheckInRelease = 3; // release room after {} min of no check in in seconds
   optional bool  enableNotification      = 4; // enabled or disabled check-in notifications on the TV screen
   optional int32 countForReleaseRecurringMeetings = 5; // remove recurring meeting after {} instances
+  optional bool  needNotificationToWeb  = 6;        // true means need notification to web, then web notification to third-party
 }
 message BillingStatus{
 	required int32 status = 1; // 0: paid, 1 in freeTrial, 2: Join Only
 	optional int32 freeTrialDays = 2;
+	optional int32 haasStatus = 3; // 0: normal, 1: graceful period 1, 2: graceful period 2, 3: graceful period 3, 4: locked, 5: no plan
 }
 message KeyValOption{
 	//key: zrapi_passcode, digital_signage_playlist, digital_signage_settings, calendar_config_url
@@ -520,6 +571,8 @@ message MessengerOptions{
   optional string announcementInfo = 8;		//AnnouncementInfo 
   optional int32 e2e_kms_key_expire_time = 9;		//im_ciphered_key_expire_time, in minutes
   optional ChannelLimitation channel_limit= 10; //For channel limitation
+  optional string giphy_server_domain = 13;		//giphy server domain. https://file.zoom.us
+  optional string giphy_response_domain = 14;   //giphy response domain. zoom.us,zoom.com,zoom.com.cn,zoomgov.com
 }
 
 message OperationTime {
@@ -578,6 +631,7 @@ message SipPhoneIntegration {
   optional string activeProxyServer =         21;
   optional int32 activeProtocol =             22;
   optional bool dscp =                        23; // 0:false  1:true
+  optional string dtmfMethod =                24;
 }
 
 message TrackingField {
@@ -678,7 +732,10 @@ message RemoteControlRequestProto {
 //        RC_RESTART_OS                        = 12;
 //        RC_UPGRADE_A_DOWNGRADE               = 13;
 //        RC_UPGRADE_ROM                       = 14; // Upgrade third party device ROM. eg. DTEN D7
-    
+//        RC_NOTIFY_ROM                        = 15; // Notify the device ROM to call Web API with url in NotifiyRomREQ
+//        RC_REMOTE_CONTROLLER                 = 16;
+//        RC_LOGOUT_ZR_DEVICES                 = 18;
+//        RC_CALENDAR_EVENT_OPERATION          = 19;
 //    }
 
 	required string rcRequestId                              = 1;
@@ -699,7 +756,36 @@ message RemoteControlRequestProto {
     optional RestartOSREQ restart_os                         = 15;
     optional UpgradeDowngradeREQ upgrade_downgrade           = 16;
 	optional UpgradeRomREQ upgrade_rom                       = 17;
-    optional DeviceInfo to_device                            = 18; //need device_id and app_type here
+	optional DeviceInfo to_device                            = 18; //need device_id and app_type here
+	optional NotifiyRomREQ notify_rom                        = 19;
+	optional RemoteController remote_controller              = 20;
+    optional LogoutZRDevices logoutZRDevices                 = 22;
+    optional CalendarEventOperation calendarEventOperation   = 23;
+}
+
+message CalendarEventOperation {
+
+   enum CalendarEventOperationType {
+        CalendarEventOperationType_UNSPECIFIED = 0;
+        CalendarEventOperationType_CheckIn     = 1;
+        CalendarEventOperationType_CheckOut    = 2;
+    }
+    optional CalendarEventOperationType operationType     = 1;
+    optional string calendar_id                           = 2;   // just for google, it is resource_id in our db
+    optional string resource_email                        = 3;   // just for exchange, it is resource_email in our db
+    optional string event_id                              = 4;
+    optional string change_key                            = 5;   // just exchange have, google does not have
+}
+
+message RemoteController {
+    optional string server_url           = 1;
+    optional string session_token        = 2;
+    optional string group_id             = 3;
+    optional string node_id              = 4;
+}
+
+message NotifiyRomREQ{
+    optional string url= 1;
 }
 
 message UpgradeRomREQ {
@@ -719,6 +805,10 @@ message RestartOSREQ {
      optional bool restart                      = 1;
 }
 
+message LogoutZRDevices {
+    repeated int32 appType                    = 1;    //0:zr, 1:zrc,  2:zrp,  3:zra,  4:zrw, 99:all devices
+}
+
 //res_code: 200: success, other failed, set res_message
 //Error_UsernamePassword = 1001, Error_DiskEncrypted = 1002, Error_NoPrivelege = 1003, 500 other unknown error.
 message AutoLoginREQ {
@@ -736,6 +826,7 @@ message RemoteControlResponseProto {
 	optional string res_message                              = 3;
 	optional MeetingREQ meeting                              = 4;
     optional int32 err_code                                  = 5; // client detail error code
+	optional int32 cEvent                                    = 6; // refer the definition in RemoteControlRequestProto
 }
 
 message MeetingREQ {
@@ -817,6 +908,8 @@ message ZRInfos {
 	repeated ChangedBits changedBits                                = 4;
 	repeated ZRMeetingPeopleCount zrMeetingPeopleCount              = 5; // max people count in one meeting
     optional string selectedRoomProfileTemplateID                   = 6;
+	optional CalendarEventOperation calendarEventOperation          = 7;
+
 }
 
 message ZRMeetingPeopleCount {
@@ -904,6 +997,9 @@ message DeviceInfo {
      optional string computer_name        = 26; //ZR computer name, now only maczr/winzr fill value
      optional string rom_device_id        = 27;
      optional string rom_version          = 28;
+     optional string rom_info_ext         = 29;
+     optional string internal_zrc_screen_type   = 30; // type just like HP Slice
+     optional int32 os_architecture       = 31;  // just like  32 bit or 64 bit
 }
 
 message MDMDeviceInfo {
@@ -917,6 +1013,8 @@ message VirtualBackground {
 	optional int32 type = 4;  //virtual background img type 0:default,1:custom
 	optional string thumbnailImgUrl = 5;  //virtual video background thumbnail image url(cdn)
 	optional string thumbnailImgZoomUrl = 6;  //virtual video background thumbnail image url(zoom)
+	optional string fileId=7;
+    optional int32 fileServerType=8;//0 zoom file server; 1 cdn
 }
 
 message ZRVirtualBackground {
@@ -935,6 +1033,8 @@ message Rooms {
   optional string roomName     = 1; //zoom presence room name
   optional string roomEmail    = 2; //zoom presence room email address
   optional string displayName  = 3; //profile first name
+  optional int32 roomType      = 4; // room type  0: normal, 1: zrponly, 2: dsonly, 3: pzr for home,  4: ezr
+  optional string deviceId     = 5; //zr device id of the last login to this room, only pzr will have this field
 }
 
 message CallProto {
@@ -1174,6 +1274,7 @@ message ZoomPresence {
     DEVICE_MIC_NOCALLBACK         = 36; //value: 0 callback, 1 no callback
 	DAL_APPLY_THIRTY_DAYS 		  = 37;
     CONTROL_SYSTEM_CONFIG_STATUS  = 38; // ZRCSErrorCode
+    WHITEBOARD_CAMERA             = 39; // value: 0 paired/1 unpaired
   }
   enum AlertValueType {
     INT_TYPE                 = 1;  
@@ -1198,6 +1299,7 @@ message ZoomPresence {
   optional string roomName = 6;
   repeated Alert alert = 7;
   optional string skey = 8;
+  optional bool isHandOff = 9;
 }
 
 message AlternativeHost {
@@ -1241,6 +1343,7 @@ message Request {
   repeated string optionKeys        					= 19; // For API /profile/get, key to retrive the options value from Web, empty for old client
   optional MDMDeviceInfo mdmDeviceInfo                  = 20; // mdm device info
   repeated string userIds                               = 21; // can hold user id as parameter
+  optional SendEmailProto sendEmailProto                = 22; // ZR send email
 }                                                       
                                                         
 message SSODomain {                                     
@@ -1269,6 +1372,8 @@ message ServerDomain {
   optional string pbxWebDomain    = 17; // pbx web server domain
   optional string webinarJidDomain = 18; // webinar jid domain
   optional string ucsDomain       = 19; // UCS server domain
+  optional string nwsDomain       = 20; // NWS server domain
+  optional string integrationDomain   = 21; //Integration domain
 }                                                       
 
 //{"notifyZrcDisconnect":true,"notifyDeviceDisconnect":true, "notifyZrHeartbeat":true,"notifyZrcNotCharging":true, "notifyAudioIssue":true ???}
@@ -1358,6 +1463,35 @@ message Response {
   optional PreAssignBoListProto PreAssignBoList         = 62;
   repeated KeyValOption optionalVanityUrl 				= 63; // ZOOM-69133, personal vanity url map, key is PMI, value is url
   optional RefreshGoogleToken refreshGoogleToken  =64;
+  optional ZRBindingCode zrBindingCode                = 65; // for Personal Zoom Rooms
+  optional ZRBypassCertificate zrBypassCertificate      = 66;
+  optional ReadableErrorResp readableErrorResp          = 67;
+  optional UserProfile pzrProfile                       = 68; // ZOOM-169362, add pzr user profile for pzr
+  optional MultiFactorAuth multiFactorAuth = 70;
+}
+
+message MultiFactorAuth {
+  optional int64 options          = 1; // 0x1L, first time MFA; 0x2L, Authentication App set; 0x4L SMS set.
+  optional string firstMFALink    = 2; // the link for first time MFA
+  optional string userMFAToken    = 3; // web token which include user id. Client need to pass the value to verify MFA code.
+  optional string mfaPhoneNumber  = 4;
+}
+
+message ReadableErrorResp {
+    optional string title                               = 1;
+    optional string desc                                = 2;  // error description
+    optional string link                                = 3;
+}
+
+message ZRBypassCertificate {
+    repeated string certificate                         = 1;
+}
+
+message ZRBindingCode {
+    optional string bindingCode                         = 1;
+    optional int32 bindingCodeTTL                       = 2;   // unit: second
+    optional int32 checkStatusInterval                  = 3;   // unit: second
+    optional int32 checkStatusTimes                     = 4;
 }
 
 message RefreshGoogleToken {
@@ -1370,6 +1504,7 @@ message RefreshGoogleToken {
 message Marketplace {
 	optional string homeUrl = 1;
 	optional string apiUrl	= 2;
+	optional string cdnUrl = 3; // the cdn address
 }
 
 message SubscribeData {
@@ -1522,6 +1657,7 @@ message LaunchConfParameter
 	optional int64 userOptions3 = 	71;
 	optional UserProfile profile = 72;					// ZOOM-134295
 	optional string userHashEmail = 73;
+	optional bool boAssignDataSupport100BO  = 74;					//support 100 bo
 }                                                       
 //                                                      
 /////////////////////////////                           
@@ -1636,6 +1772,7 @@ message BroadcastMeetingItem{
   repeated BroadcastChannel channelList   = 1; // broacast channel list
   optional string                liveToken    = 2; // own this token, can broadcast
   optional int32                 maxwallusers    = 3; // can support number of wall view 
+  optional string callbackUrl             = 4; // call back url
 }
 
 message BroadcastChannel{
@@ -1770,4 +1907,79 @@ message SplashPageForWaitingRoom {
   optional string imagePath                    = 4;    // image path
   optional string ssoVanityUrl                 = 5;    // ZOOM-86210 : sso vanity url for non-login guest participant to login IM
   optional int32  options                      = 6;    // ZOOM-86210 : waiting room options
+}
+
+message FavoriteItem {
+    optional FavoriteUserProto userInfo          = 1;  // Contains IM and zr user, zrc can distinguish by xmpp
+    optional H323DeviceProto h323Device          = 2;
+    optional FavoritePhoneNumberProto phoneNum   = 3;
+}
+
+message FavoriteUserProto {
+    optional string jid                        = 1;
+}
+
+message FavoritePhoneNumberProto {
+    optional string name = 1;
+    optional string countryCode = 2;
+    optional string phoneNumber = 3;
+}
+
+message SendEmailProto {
+    enum EmailTemplateType {
+        EmailTemplateType_None                  = 0;
+        EmailTemplateType_SharingContent        = 1;
+        EmailTemplateType_ReleaseCalendarEvent  = 2;
+        EmailTemplateType_MeetingFeedback       = 3;
+        EmailTemplateType_MeetingInvite         = 4;
+    }
+    optional EmailTemplateType emailTemplateType        = 1;
+    optional string emailToAddress                      = 2;
+    optional string emailToUserId                       = 3;
+    optional SharingContentInfo sharingContentInfo      = 4;    
+    optional ReleaseCalendarEventInfo releaseCalendarEventInfo    = 5;
+    optional MeetingFeedbackInfo meetingFeedbackInfo    = 6;
+    optional MeetingInviteInfo meetingInviteInfo        = 7;
+}
+
+message MeetingInviteInfo {
+    optional string meetingId       = 1;
+}
+
+message MeetingFeedbackInfo {
+    optional string room                    = 1;
+    optional string meetingNumber           = 2;
+    optional string zrVersion               = 3;
+    optional string zrcVersion              = 4;
+}
+
+message SharingContentInfo {
+    enum SharingContentInfoType {
+        SharingContentInfoType_Single_Whiteboard_Image       = 1;
+        SharingContentInfoType_Multiple_Whiteboards_Image    = 2;
+        SharingContentInfoType_Annotations_Image             = 3;
+        SharingContentInfoType_Single_Whiteboard_PDF         = 4;
+        SharingContentInfoType_Multiple_Whiteboards_PDF      = 5;
+        SharingContentInfoType_Annotations_PDF               = 6;
+    }
+    optional SharingContentInfoType sharingContentType    = 1;
+    optional int32 expiredDay                             = 2; // for PDF
+    optional string fileDownloadUrl                       = 3; // for PDF
+    optional string meetingId                             = 4;
+}
+
+message ReleaseCalendarEventInfo {
+    enum CalendarEventType {
+        CalendarEventType_Default    = 0; // single
+        CalendarEventType_Occurrence = 1;
+        CalendarEventType_Recurrence = 2;
+    }
+    optional CalendarEventType calendarEventType  = 1;
+    optional string creator                       = 2;
+    optional string room                          = 3;
+    optional string meetingName                   = 4;
+    optional string timeScope                     = 5;
+    optional string releaseTime                   = 6;
+    optional string currentCount                  = 7; // for Occurrence
+    optional string totalCount                    = 8; // for Occurrence and Recurrence
 }

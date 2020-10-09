@@ -38,10 +38,6 @@ IMPL_FUNC_1(IMeetingWebinarController, DisallowAttendeeTalk, SDKError, unsigned 
 IMPL_FUNC_0(IMeetingWebinarController, AllowPanelistStartVideo, SDKError, SDKERR_UNINITIALIZE)
 //virtual SDKError DisallowPanelistStartVideo() = 0;
 IMPL_FUNC_0(IMeetingWebinarController, DisallowPanelistStartVideo, SDKError, SDKERR_UNINITIALIZE)
-//virtual SDKError AllowAttendeeChat() = 0;
-IMPL_FUNC_0(IMeetingWebinarController, AllowAttendeeChat, SDKError, SDKERR_UNINITIALIZE)
-//virtual SDKError DisallowAttendeeChat() = 0;
-IMPL_FUNC_0(IMeetingWebinarController, DisallowAttendeeChat, SDKError, SDKERR_UNINITIALIZE)
 //virtual WebinarMeetingStatus* GetWebinarMeetingStatus() = 0;
 IMPL_FUNC_0(IMeetingWebinarController, GetWebinarMeetingStatus, WebinarMeetingStatus*, NULL)
 

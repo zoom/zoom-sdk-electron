@@ -31,6 +31,8 @@
 
 //ZOOM SDK Custom Share UI
 #import "ZoomSDKShareContainer.h"
+#import "ZoomSDKRawDataVideoSourceController.h"
+#import "ZoomSDKRawDataController.h"
 /**
  * Initialize the class to acquire all the services. 
  *
@@ -54,10 +56,17 @@ typedef enum
     ZoomSDKNetworkService    *_networkService;
     NSMutableArray           *_languageArray;
     BOOL                     _needCustomizedUI;
+    ZoomSDKRawDataMemoryMode _videoRawDataMode;
+    ZoomSDKRawDataMemoryMode _shareRawDataMode;
+    ZoomSDKRawDataMemoryMode _audioRawDataMode;
 }
 
 @property (retain, nonatomic) NSString *zoomDomain;
 @property (assign, nonatomic) BOOL needCustomizedUI;
+@property (assign, nonatomic) BOOL enableRawdataIntermediateMode;
+@property (assign, nonatomic) ZoomSDKRawDataMemoryMode videoRawDataMode;
+@property (assign, nonatomic) ZoomSDKRawDataMemoryMode shareRawDataMode;
+@property (assign, nonatomic) ZoomSDKRawDataMemoryMode audioRawDataMode;
 /**
  * @brief The sharedSDK will be instantiated only once over the lifespan of the application. Configure the client with the specified key and secret. 
  * @note Configure the client with the specified key and secret. 
@@ -106,6 +115,12 @@ typedef enum
  * @return An object of Network Service
  */
 - (ZoomSDKNetworkService*)getNetworkService;
+
+/**
+ * @brief Get object of controller ZoomSDKRawDataController.
+ * @return If the function succeeds, it will return a ZoomSDKRawDataController object which you can use to handle raw data in meeting.
+ */
+- (ZoomSDKRawDataController*)getRawDataController;
 
 /**
  * @brief Get the serial number of SDK version.

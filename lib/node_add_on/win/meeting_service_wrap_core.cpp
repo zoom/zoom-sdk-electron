@@ -154,6 +154,10 @@ ZMeetingVideoWrap& ZMeetingServiceWrap::GetMeetingVideoCtrl()
 {
 	return m_meeting_video_ctrl;
 }
+ZMeetingRecordingWrap& ZMeetingServiceWrap::GetMeetingRecordingCtrl()
+{
+	return m_meeting_recording_ctrl;
+}
 ZMeetingParticipantsWrap& ZMeetingServiceWrap::GetMeetingParticipantsCtrl()
 {
 	return m_meeting_participants_ctrl;

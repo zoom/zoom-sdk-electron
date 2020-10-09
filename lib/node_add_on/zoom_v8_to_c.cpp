@@ -8,14 +8,16 @@ void utf8to16(const char* src, ZNODESTRING& buffer)
 
 void convertV8String2Wstring(v8::Local<v8::String> str, ZNODESTRING& output)
 {
-	if (str->Utf8Length() == 0)
-		return;
 	std::string utf8;
 #ifdef USING_V8_NEW_STRING
 	auto isolate = v8::Isolate::GetCurrent();
+	if (str->Utf8Length(isolate) == 0)
+		return;
 	utf8.resize(str->Utf8Length(isolate) + 1);
 	str->WriteUtf8(isolate, const_cast<char*>(utf8.c_str()), str->Utf8Length(isolate));
 #else
+	if (str->Utf8Length() == 0)
+		return;
 	utf8.resize(str->Utf8Length() + 1);
 	str->WriteUtf8(const_cast<char*>(utf8.c_str()), str->Utf8Length());
 #endif 
@@ -41,16 +43,20 @@ void zoom_v8toc(v8::Local<v8::String> v8string, ZNODESTRING& c_string) {
 
 void zoom_v8toc(v8::Local<v8::Boolean> v8boolean, bool& c_bool) {
 	auto isolate = v8::Isolate::GetCurrent();
-#ifdef NODE_12_VERSION
-    c_bool = v8boolean->BooleanValue(isolate) ? true : false;
-#else
-#if (defined _WIN32)
-    c_bool = v8boolean->BooleanValue() ? true : false;
-#else
-    c_bool = v8boolean->BooleanValue() ? 1 : 0;
-#endif
-#endif
 
+#if (defined _WIN32)
+#ifdef USING_V8_NEW_STRING
+	c_bool = v8boolean->BooleanValue(isolate) ? true : false;
+#else
+	c_bool = v8boolean->BooleanValue() ? true : false;
+#endif //USING_V8_NEW_STRING
+#else
+#ifdef USING_V8_NEW_STRING
+	c_bool = v8boolean->BooleanValue(isolate) ? 1 : 0;
+#else
+	c_bool = v8boolean->BooleanValue() ? 1 : 0;
+#endif //USING_V8_NEW_STRING
+#endif //_WIN32
 }
 std::string zs2s(const ZNODESTRING& s)
 {

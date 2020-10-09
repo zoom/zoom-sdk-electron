@@ -6,16 +6,16 @@
 	<dict>
 		<key>Resources/Base.lproj/MainMenu.nib</key>
 		<data>
-		7l+85mAGDt7+iq55WV4oB1ffvB4=
+		q9uCVdSP2XHbNAKHyn6z5DYoLUY=
 		</data>
 	</dict>
 	<key>files2</key>
 	<dict>
-		<key>Frameworks/zmp.prod.bundle</key>
+		<key>Frameworks/zmp.bundle</key>
 		<dict>
 			<key>cdhash</key>
 			<data>
-			y7JXZTWeq1b5dZEyDGYyUadhhC8=
+			IeW3GwOWaONxxLGCPSwp5uhB4UQ=
 			</data>
 			<key>requirement</key>
 			<string>identifier "us.zoom.zmp" and anchor apple generic and certificate 1[field.1.2.840.113635.100.6.2.6] /* exists */ and certificate leaf[field.1.2.840.113635.100.6.1.13] /* exists */ and certificate leaf[subject.OU] = BJ4HAAB9B3</string>
@@ -24,11 +24,11 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			7l+85mAGDt7+iq55WV4oB1ffvB4=
+			q9uCVdSP2XHbNAKHyn6z5DYoLUY=
 			</data>
 			<key>hash2</key>
 			<data>
-			Ix5J0BZZrdYKwxkDpigog+ESZxhez2axgcozJ5FPuNw=
+			0wYVifzcCvyYv/wg7zA2iwTURS9s7PqXarG+0rJcJgQ=
 			</data>
 		</dict>
 	</dict>

@@ -25,13 +25,14 @@
  */
 @interface ZoomSDKChatInfo : NSObject
 {
-    unsigned int _sendID;
-    unsigned int _receiverID;
-    NSString*    _sendName;
-    NSString*    _receiverName;
-    NSString*    _content;
-    time_t       _timestamp;
-    BOOL         _isChatToWaitingRoom;
+    unsigned int                      _sendID;
+    unsigned int                      _receiverID;
+    NSString*                         _sendName;
+    NSString*                         _receiverName;
+    NSString*                         _content;
+    time_t                            _timestamp;
+    BOOL                              _isChatToWaitingRoom;
+    ZoomSDKChatMessageType            _chatMessageType;
 }
 /**
  * @brief Get the user ID of whom sending message.
@@ -65,9 +66,14 @@
 - (time_t)getTimeStamp;
 /**
  * @brief The current message is send to waiting room.
- * @return If return YES means the message is send to waiting room,otherwise not.
+ * @return If return YES means the message is send to waiting room, otherwise not.
  */
 -(BOOL)isChatToWaitingRoom;
+/**
+ * @brief Get the type of the current message.
+ * @return If the function succeeds, the return value is the enum of ZoomSDKChatMessageType.
+ */
+-(ZoomSDKChatMessageType)getChatMessageType;
 @end
 /**
  * @brief ZOOM SDK audio information.
@@ -161,6 +167,11 @@
  */
 - (BOOL)isPurePhoneUser;
 /**
+ * @brief Determine whether the user corresponding to the current information joins the meeting by h323 or not.
+ * @return YES indicates that the user joins the meeting by h323.
+ */
+- (BOOL)isH323User;
+/**
  * @brief Determine if it is able to change the specified user role as the co-host.
  * @return If the specified user can be the co-host, the return value is YES. Otherwise failed.
  */
@@ -176,6 +187,13 @@
  *@return YES means that the user is talking.
  */
 - (BOOL)isTalking;
+
+/**
+ *@brief Get the participant ID matched with the current user information.
+ *@return The user participant ID.
+ */
+- (NSString *)getParticipantID;
+
 @end
 /**
  * @brief Join meeting helper.
@@ -268,8 +286,7 @@
  * @param userID The ID of user who video status changes.
  *
  */
-- (void)onVideoStatusChange:(BOOL)videoOn UserID:(unsigned int)userID;
-
+- (void)onVideoStatusChange:(ZoomSDKVideoStatus)videoStatus UserID:(unsigned int)userID;
 /**
  * @brief Notification of user's hand status changes.
  * @param raise YES means that the specified user raises hand, otherwise, puts hand down.  
@@ -310,7 +327,7 @@
  * @brief Notify that host ask you to unmute yourself.
  */
 - (void)onHostAskUnmute;
-
+- (void)onHostAskStartVideo;
 /**
  *@brief Notification of in-meeting active speakers.
  *@param useridArray The array contain userid of the active speakers.
@@ -502,4 +519,43 @@
  * @return  If the function succeeds, it will return ZoomSDKError_success, otherwise not.
  */
 - (ZoomSDKError)setMeetingTopicOnMeetingInfo:(NSString *)topic;
+
+/**
+ *@brief Determine if the share screen is allowed.
+ *@return YES means is disable share screen,otherwise not.
+ */
+-(BOOL)isParticipantsShareAllowed;
+
+/**
+ *@brief Allow participants to share screen.
+ *@param allow YES means allow participants use share screen,otherwise not.
+ *@return If the function succeeds, it will return ZoomSDKError_success, otherwise not.
+ */
+- (ZoomSDKError)allowParticipantsToShare:(BOOL)allow;
+
+/**
+ *@brief Determine if the chat is allowed.
+ *@return YES means is disable chat,otherwise not.
+ */
+-(BOOL)isParticipantsChatAllowed;
+
+/**
+ *@brief Allow participants to chat.
+ *@param allow YES means allow participants to chat,otherwise not.
+ *@return If the function succeeds, it will return ZoomSDKError_success, otherwise not.
+ */
+- (ZoomSDKError)allowParticipantsToChat:(BOOL)allow;
+
+/**
+ *@brief Determine if the participant rename is disabled.
+ *@return YES means is disable participant rename,otherwise not.
+ */
+-(BOOL)isParticipantsRenameAllowed;
+
+/**
+ *@brief Allow participants to rename.
+ *@param allow YES means allow participants to rename,otherwise not.
+ *@return If the function succeeds, it will return ZoomSDKError_success, otherwise not.
+ */
+- (ZoomSDKError)allowParticipantsToRename:(BOOL)allow;
 @end

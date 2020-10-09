@@ -81,6 +81,12 @@ ZNUserInfomation ZMeetingParticipantsWrap::GetUserInfomationByUserID(unsigned in
     bool isAttend = webinar.isAttendeeCanTalk;
     user.webinarAttendeeStatus = isAttend;
     user.userInfoType = ZN_REAL_USERINFO;
+    NSString *participantID = [userInfo getParticipantID];
+    if (!participantID) {
+        participantID = @"";
+    }
+    user.participantID = [participantID UTF8String];
+
     return user;
 }
 

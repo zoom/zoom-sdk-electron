@@ -31,8 +31,8 @@ DEFINE_FUNC_0(Undo, SDKError);
 DEFINE_FUNC_0(Redo, SDKError);
 //virtual SDKError CanSaveSnapshot() = 0;
 DEFINE_FUNC_0(CanSaveSnapshot, SDKError);
-//virtual SDKError SaveSnapshot(const wchar_t* path) = 0;
-DEFINE_FUNC_1(SaveSnapshot, SDKError, const wchar_t*, path);
+//virtual SDKError SaveSnapshot(const wchar_t* path, SDKAnnoSaveType nType) = 0;
+DEFINE_FUNC_2(SaveSnapshot, SDKError, const wchar_t*, path, SDKAnnoSaveType, nType);
 
 //virtual void onAnnotationObjToolChange(AnnotationToolType type_);
 CallBack_FUNC_1(onAnnotationObjToolChange, AnnotationToolType, type_)

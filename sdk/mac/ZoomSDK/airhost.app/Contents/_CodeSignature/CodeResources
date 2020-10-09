@@ -14,15 +14,15 @@
 		</data>
 		<key>Resources/MainMenu.nib</key>
 		<data>
-		dLTYsKKy/up/2N9feEv88w1Pfy8=
+		ZRV2tHJ3uMxu96SuLp8Mqy2yOb8=
 		</data>
 		<key>Resources/MainWindow.nib</key>
 		<data>
-		9BMNVYMSm5rpPOe7dx6wJjC0Ut0=
+		mwXITfxSq22YT5WRuqcatsmYNNE=
 		</data>
 		<key>Resources/PassWindow.nib</key>
 		<data>
-		EE8sIyWynmeTrgi93/fTRIFpSxM=
+		SRDhkbiQjrgfhOSsVueczWs+fqM=
 		</data>
 		<key>Resources/Tap Screen Mirroring.png</key>
 		<data>
@@ -67,10 +67,6 @@
 		<data>
 		8dpzEvZ9NsJk5bFwnIgpGaS9nOU=
 		</data>
-		<key>Resources/version</key>
-		<data>
-		5Sppl+CPZcgB8nRmUAJM9u9oGns=
-		</data>
 		<key>Resources/zh-Hans.lproj/MainWindow.strings</key>
 		<dict>
 			<key>hash</key>
@@ -92,41 +88,41 @@
 	</dict>
 	<key>files2</key>
 	<dict>
-		<key>Frameworks/libavcodec.55.dylib</key>
+		<key>Frameworks/libavcodec.58.dylib</key>
 		<dict>
 			<key>cdhash</key>
 			<data>
-			+Gzm5xNlPbtuI9qbm9onRxyja+Y=
+			Y3CfaAHlTGUrreSd1xobQUIpk78=
 			</data>
 			<key>requirement</key>
-			<string>identifier "libavcodec.55" and anchor apple generic and certificate 1[field.1.2.840.113635.100.6.2.6] /* exists */ and certificate leaf[field.1.2.840.113635.100.6.1.13] /* exists */ and certificate leaf[subject.OU] = BJ4HAAB9B3</string>
+			<string>identifier "libavcodec.58" and anchor apple generic and certificate 1[field.1.2.840.113635.100.6.2.6] /* exists */ and certificate leaf[field.1.2.840.113635.100.6.1.13] /* exists */ and certificate leaf[subject.OU] = BJ4HAAB9B3</string>
 		</dict>
-		<key>Frameworks/libavformat.55.dylib</key>
+		<key>Frameworks/libavformat.58.dylib</key>
 		<dict>
 			<key>cdhash</key>
 			<data>
-			ID3s6yx1QpDHTxDYDFMsKGPKFBk=
+			F28ZP+j93m5NMi+RFtxAUzMPLmA=
 			</data>
 			<key>requirement</key>
-			<string>identifier "libavformat.55" and anchor apple generic and certificate 1[field.1.2.840.113635.100.6.2.6] /* exists */ and certificate leaf[field.1.2.840.113635.100.6.1.13] /* exists */ and certificate leaf[subject.OU] = BJ4HAAB9B3</string>
+			<string>identifier "libavformat.58" and anchor apple generic and certificate 1[field.1.2.840.113635.100.6.2.6] /* exists */ and certificate leaf[field.1.2.840.113635.100.6.1.13] /* exists */ and certificate leaf[subject.OU] = BJ4HAAB9B3</string>
 		</dict>
-		<key>Frameworks/libavutil.52.dylib</key>
+		<key>Frameworks/libavutil.56.dylib</key>
 		<dict>
 			<key>cdhash</key>
 			<data>
-			/xYkJ96WtBs4sOQFTIhZzcRa7r0=
+			DmceSafUU9vbeZRwX6bE1W79Kis=
 			</data>
 			<key>requirement</key>
-			<string>identifier "libavutil.52" and anchor apple generic and certificate 1[field.1.2.840.113635.100.6.2.6] /* exists */ and certificate leaf[field.1.2.840.113635.100.6.1.13] /* exists */ and certificate leaf[subject.OU] = BJ4HAAB9B3</string>
+			<string>identifier "libavutil.56" and anchor apple generic and certificate 1[field.1.2.840.113635.100.6.2.6] /* exists */ and certificate leaf[field.1.2.840.113635.100.6.1.13] /* exists */ and certificate leaf[subject.OU] = BJ4HAAB9B3</string>
 		</dict>
-		<key>Frameworks/libswscale.2.dylib</key>
+		<key>Frameworks/libswscale.5.dylib</key>
 		<dict>
 			<key>cdhash</key>
 			<data>
-			OUDxBobSMKYXzmjvKL2D7DYOSfM=
+			y/5VveC9K58vzj/JsQACW4WZsKo=
 			</data>
 			<key>requirement</key>
-			<string>identifier "libswscale.2" and anchor apple generic and certificate 1[field.1.2.840.113635.100.6.2.6] /* exists */ and certificate leaf[field.1.2.840.113635.100.6.1.13] /* exists */ and certificate leaf[subject.OU] = BJ4HAAB9B3</string>
+			<string>identifier "libswscale.5" and anchor apple generic and certificate 1[field.1.2.840.113635.100.6.2.6] /* exists */ and certificate leaf[field.1.2.840.113635.100.6.1.13] /* exists */ and certificate leaf[subject.OU] = BJ4HAAB9B3</string>
 		</dict>
 		<key>Resources/Dark Tap Screen Mirroring.png</key>
 		<dict>
@@ -154,33 +150,33 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			dLTYsKKy/up/2N9feEv88w1Pfy8=
+			ZRV2tHJ3uMxu96SuLp8Mqy2yOb8=
 			</data>
 			<key>hash2</key>
 			<data>
-			7vtp4vKj1b6/BHzywDPcgzWDVEv3E1WjoZGuivndr6I=
+			QS+gwX1R3/eDueBO+hVn7TcJvA/VoyfpeL8hZyyQCBs=
 			</data>
 		</dict>
 		<key>Resources/MainWindow.nib</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			9BMNVYMSm5rpPOe7dx6wJjC0Ut0=
+			mwXITfxSq22YT5WRuqcatsmYNNE=
 			</data>
 			<key>hash2</key>
 			<data>
-			qyYabfHy7wKXIbRQ2gMtjB2taK80caFqABr65zY3Ug0=
+			a/1KZkYTYKtfrL2Pah4r6EmIeRK1bV4VP8kbu065QYE=
 			</data>
 		</dict>
 		<key>Resources/PassWindow.nib</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			EE8sIyWynmeTrgi93/fTRIFpSxM=
+			SRDhkbiQjrgfhOSsVueczWs+fqM=
 			</data>
 			<key>hash2</key>
 			<data>
-			jTdyqCKHuv4IpaHvVitMQVUMGaBj6ie5tGhoj7oxxuc=
+			VerBT9NLHY2+MUe370qOXGmgqtf6s3s/FxXSFDtHBUI=
 			</data>
 		</dict>
 		<key>Resources/Tap Screen Mirroring.png</key>
@@ -264,17 +260,6 @@
 			<key>hash2</key>
 			<data>
 			pZLFjUbMJnxFnT86ehedy5X13Yg7cru85QJ57JI2iiM=
-			</data>
-		</dict>
-		<key>Resources/version</key>
-		<dict>
-			<key>hash</key>
-			<data>
-			5Sppl+CPZcgB8nRmUAJM9u9oGns=
-			</data>
-			<key>hash2</key>
-			<data>
-			tyLreZafqnlidXzsLZLl7hYCWXDlj8PkT9+ORzF8ip0=
 			</data>
 		</dict>
 		<key>Resources/zh-Hans.lproj/MainWindow.strings</key>

@@ -54,6 +54,10 @@
  */
 -(void)onBreakoutRoomsButtonClick;
 
+/**
+ *@brief Notification when CloseCaption button is clicked.
+ */
+-(void)onCloseCaptionButtonClick;
 @end
 
 @interface ZoomSDKMeetingUIController :NSObject

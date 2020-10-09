@@ -192,6 +192,8 @@ public:
 	static void DisableRemoteCtrlCopyPasteFeature(const v8::FunctionCallbackInfo<v8::Value>& args);
 	static void DisableToolbarInviteButtonClickOriginAction(const v8::FunctionCallbackInfo<v8::Value>& args);
 
+	static void DisableConfidentialWatermark(const v8::FunctionCallbackInfo<v8::Value>& args);
+
 	static void SetShowVideoOptimizeChkbox(const v8::FunctionCallbackInfo<v8::Value>& args);
 	static void GetRequiredInfoType(const v8::FunctionCallbackInfo<v8::Value>& args);
 	static void InputMeetingPasswordAndScreenName(const v8::FunctionCallbackInfo<v8::Value>& args);
@@ -209,6 +211,8 @@ public:
 	static void SetonEndOtherMeetingToJoinMeetingNotificationCB(const v8::FunctionCallbackInfo<v8::Value>& args);
 	static void SetonFreeMeetingRemainTimeCB(const v8::FunctionCallbackInfo<v8::Value>& args);
 	static void SetonFreeMeetingRemainTimeStopCountDownCB(const v8::FunctionCallbackInfo<v8::Value>& args);
+	static void SetonFreeMeetingEndingReminderNotificationCB(const v8::FunctionCallbackInfo<v8::Value>& args);
+
 	//
 	static v8::Persistent<v8::Function> constructor;
 };
@@ -284,6 +288,8 @@ static void InitClassAttribute<ZoomNodeMeetingConfigCtrlWrap >(const v8::Local<v
 	NODE_SET_PROTOTYPE_METHOD(tpl, "DisableRemoteCtrlCopyPasteFeature", ZoomNodeMeetingConfigCtrlWrap::DisableRemoteCtrlCopyPasteFeature);
 	NODE_SET_PROTOTYPE_METHOD(tpl, "DisableToolbarInviteButtonClickOriginAction", ZoomNodeMeetingConfigCtrlWrap::DisableToolbarInviteButtonClickOriginAction);
 
+	NODE_SET_PROTOTYPE_METHOD(tpl, "DisableConfidentialWatermark", ZoomNodeMeetingConfigCtrlWrap::DisableConfidentialWatermark);
+
 	NODE_SET_PROTOTYPE_METHOD(tpl, "PrePopulateWebinarRegistrationInfo", ZoomNodeMeetingConfigCtrlWrap::PrePopulateWebinarRegistrationInfo);
 	NODE_SET_PROTOTYPE_METHOD(tpl, "GetReminderType", ZoomNodeMeetingConfigCtrlWrap::GetReminderType);
 	NODE_SET_PROTOTYPE_METHOD(tpl, "UpgradeMeeting", ZoomNodeMeetingConfigCtrlWrap::UpgradeMeeting);
@@ -323,6 +329,7 @@ static void InitClassAttribute<ZoomNodeMeetingConfigCtrlWrap >(const v8::Local<v
 	NODE_SET_PROTOTYPE_METHOD(tpl, "SetonEndOtherMeetingToJoinMeetingNotificationCB", ZoomNodeMeetingConfigCtrlWrap::SetonEndOtherMeetingToJoinMeetingNotificationCB);
 	NODE_SET_PROTOTYPE_METHOD(tpl, "SetonFreeMeetingRemainTimeCB", ZoomNodeMeetingConfigCtrlWrap::SetonFreeMeetingRemainTimeCB);
 	NODE_SET_PROTOTYPE_METHOD(tpl, "SetonFreeMeetingRemainTimeStopCountDownCB", ZoomNodeMeetingConfigCtrlWrap::SetonFreeMeetingRemainTimeStopCountDownCB);
+	NODE_SET_PROTOTYPE_METHOD(tpl, "SetonFreeMeetingEndingReminderNotificationCB", ZoomNodeMeetingConfigCtrlWrap::SetonFreeMeetingEndingReminderNotificationCB);
 }
 template<>
 static v8::Persistent<v8::Function>* GetConstructor<ZoomNodeMeetingConfigCtrlWrap >() {

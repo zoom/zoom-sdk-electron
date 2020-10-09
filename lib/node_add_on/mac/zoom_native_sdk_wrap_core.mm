@@ -25,6 +25,10 @@ ZNSDKError ZNativeSDKWrap::InitSDK(ZNInitParam &initParam)
         return ZNSDKERR_INVALID_PARAMETER;
     }
     [[ZoomSDK sharedSDK] setZoomDomain:domain];
+    [ZoomSDK sharedSDK].enableRawdataIntermediateMode = initParam.rawdataOpts.enableRawdataIntermediateMode;
+    [ZoomSDK sharedSDK].shareRawDataMode = (ZoomSDKRawDataMemoryMode)initParam.rawdataOpts.shareRawdataMemoryMode;
+    [ZoomSDK sharedSDK].audioRawDataMode = (ZoomSDKRawDataMemoryMode)initParam.rawdataOpts.audioRawdataMemoryMode;
+    [ZoomSDK sharedSDK].videoRawDataMode = (ZoomSDKRawDataMemoryMode)initParam.rawdataOpts.videoRawdataMemoryMode;
     _z_auth_service_wrap.Init();
     _z_meeting_service_wrap.Init();
     _z_setting_service_wrap.Init();
@@ -77,6 +81,10 @@ ZDirectShareHelperWrap &ZAuthServiceWrap::GetDirectShareHelper()
     return m_direct_share_helper;
 }
 
+ZNativeRawAPIWrap& ZNativeSDKWrap::GetRawAPIWrap()
+{
+    return _z_raw_api_wrap;
+}
 ZNativeSDKWrap::ZNativeSDKWrap()
 {
     

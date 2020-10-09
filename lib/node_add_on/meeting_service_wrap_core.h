@@ -3,6 +3,7 @@
 #include "meeting_annotation_wrap_core.h"
 #include "meeting_audio_wrap_core.h"
 #include "meeting_video_wrap_core.h"
+#include "meeting_recording_wrap_core.h"
 #include "meeting_participants_wrap_core.h"
 #include "meeting_share_wrap_core.h"
 #include "meeting_h323_wrap_core.h"
@@ -102,6 +103,7 @@ public:
 	ZMeetingAnnotationWrap& GetMeetingAnnotation();
 	ZMeetingAudioWrap& GetMeetingAudioCtrl();
 	ZMeetingVideoWrap& GetMeetingVideoCtrl();
+	ZMeetingRecordingWrap& GetMeetingRecordingCtrl();
     ZMeetingParticipantsWrap& GetMeetingParticipantsCtrl();
 	ZMeetingShareWrap& GetMeetingShareCtrl();
 	ZMeetingH323Wrap& GetMeetingH323Ctrl();
@@ -121,6 +123,7 @@ private:
 	ZMeetingAnnotationWrap m_meeting_annotation;
 	ZMeetingAudioWrap m_meeting_audio_ctrl;
 	ZMeetingVideoWrap m_meeting_video_ctrl;
+	ZMeetingRecordingWrap m_meeting_recording_ctrl;
 	ZMeetingParticipantsWrap m_meeting_participants_ctrl;
 	ZMeetingShareWrap m_meeting_share_ctrl;
 	ZMeetingH323Wrap m_meeting_h323_ctrl;

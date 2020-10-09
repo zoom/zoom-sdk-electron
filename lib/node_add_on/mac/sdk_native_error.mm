@@ -46,6 +46,40 @@ ZNSDKError nativeErrorTypeHelp::ZoomSDKErrorType(ZoomSDKError &error)
         case ZoomSDKError_TooFrequentCall:
             ret = ZNSDKERR_TOO_FREQUENT_CALL;
             break;
+            
+        case ZoomSDKError_ModuleLoadFail:
+            ret = ZNSDKERR_MODULE_LOAD_FAILED;
+            break;
+        case ZoomSDKError_NoVideoData:
+            ret = ZNSDKERR_NO_VIDEO_DATA;
+            break;
+        case ZoomSDKError_NoAudioData:
+            ret = ZNSDKERR_NO_AUDIO_DATA;
+            break;
+        case ZoomSDKError_NoShareData:
+            ret = ZNSDKERR_DEVICE_ERR;
+            break;
+        case ZoomSDKError_NoVideoDeviceFound:
+            ret = ZNSDKERR_NO_VIDEODEVICE_ISFOUND;
+            break;
+        case ZoomSDKError_DeviceError:
+            ret = ZNSDKERR_DEVICE_ERR;
+            break;
+        case ZoomSDKError_NotInMeeting:
+            ret = ZNSDKERR_NOT_IN_MEETING;
+            break;
+        case ZoomSDKError_initDevice:
+            ret = ZNSDKERR_INIT_DEVICE;
+            break;
+        case ZoomSDKError_CanNotChanageVirtualDevice:
+            ret = ZNSDKERR_CANNOT_CHANGE_VIRTUAL_DEVICE;
+            break;
+        case ZoomSDKError_PreprocessRawdataError:
+            ret = ZNSDKERR_PREPROCESS_RAWDATA_ERROR;
+            break;
+        case ZoomSDKError_NoLicense:
+            ret = ZNSDKERR_NoLicense;
+            break;
         default:
             break;
     }
@@ -325,6 +359,12 @@ NSString *nativeErrorTypeHelp::ZNSDKLanaguageChanage(ZNSDK_LANGUAGE_ID &lanaguag
             break;
         case ZNLANGUAGE_Korean:
             ret = @"ko-KR";
+            break;
+        case ZNLANGUAGE_Vietnamese:
+            ret = @"vi";
+            break;
+        case ZNLANGUAGE_Italian:
+            return @"it";
             break;
         default:
             break;
@@ -1023,3 +1063,27 @@ ZNRequiredInfoType nativeErrorTypeHelp::ZNSDKRequiredInfoType(JoinMeetingReqInfo
     }
     return ret;
 }
+
+
+ZNRecordingStatus nativeErrorTypeHelp::ZNRecordingStatusChanage(ZoomSDKRecordingStatus &status)
+{
+    ZNRecordingStatus ZNStatus = ZNRecording_Stop;
+    switch (status) {
+        case ZoomSDKRecordingStatus_Stop:
+            ZNStatus = ZNRecording_Stop;
+            break;
+        case ZoomSDKRecordingStatus_Pause:
+            ZNStatus = ZNRecording_Pause;
+            break;
+        case ZoomSDKRecordingStatus_DiskFull:
+            ZNStatus = ZNRecording_DiskFull;
+            break;
+        case ZoomSDKRecordingStatus_Start:
+            ZNStatus = ZNRecording_Start;
+            break;
+        default:
+            break;
+    }
+    return ZNStatus;
+}
+

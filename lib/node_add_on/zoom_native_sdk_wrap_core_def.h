@@ -42,6 +42,17 @@ enum ZNSDKError
 	ZNSDKERR_MEETING_VIEWTYPE_PARAMETER_IS_WRONG, ///<Incorrect ViewType parameters.
 	ZNSDKERR_MEETING_ANNOTATION_IS_OFF, ///<Annotation is disabled.
 	ZNSDKERR_SETTING_OS_DONT_SUPPORT, ///<Current OS doesn't support the setting.
+	ZNSDKERR_EMAIL_LOGIN_IS_DISABLED, //Email login is disable
+
+	ZNSDKERR_NO_VIDEO_DATA,
+	ZNSDKERR_NO_AUDIO_DATA,
+	ZNSDKERR_NO_SHARE_DATA,
+	ZNSDKERR_DEVICE_ERR,
+	ZNSDKERR_NOT_IN_MEETING,
+	ZNSDKERR_INIT_DEVICE,
+	ZNSDKERR_CANNOT_CHANGE_VIRTUAL_DEVICE,
+	ZNSDKERR_PREPROCESS_RAWDATA_ERROR,
+    ZNSDKERR_NoLicense,
 };
 enum ZNSDK_LANGUAGE_ID
 {
@@ -56,6 +67,8 @@ enum ZNSDK_LANGUAGE_ID
 	ZNLANGUAGE_Portuguese,///<In Portuguese.
 	ZNLANGUAGE_Russian,///<In Russian.
 	ZNLANGUAGE_Korean,///<In Korean.
+	ZNLANGUAGE_Vietnamese,///<In Vietnamese.
+	ZNLANGUAGE_Italian,///<In Italian.
 };
 
 enum ZNAuthResult
@@ -104,6 +117,38 @@ enum ZNSDK_APP_Locale
 	ZNSDK_APP_Locale_Default,
 	ZNSDK_APP_Locale_CN,
 };
+enum ZNZoomSDKVideoRenderMode
+{
+	ZNSDKVideoRenderMode_None = 0,
+	ZNSDKVideoRenderMode_Auto,
+	ZNSDKVideoRenderMode_D3D11EnableFLIP,
+	ZNSDKVideoRenderMode_D3D11,
+	ZNSDKVideoRenderMode_D3D9,
+	ZNSDKVideoRenderMode_GDI,
+};
+enum ZNSDKRawDataMemoryMode
+{
+	ZNSDKRawDataMemoryModeStack,
+	ZNSDKRawDataMemoryModeHeap
+};
+typedef struct tagZNRawDataOptions
+{
+	bool enableRawdataIntermediateMode; ///<false -- YUV420data, true -- intermediate data
+	ZNSDKRawDataMemoryMode  videoRawdataMemoryMode;
+	ZNSDKRawDataMemoryMode  shareRawdataMemoryMode;
+	ZNSDKRawDataMemoryMode  audioRawdataMemoryMode;
+	tagZNRawDataOptions()
+	{
+#if (defined _WIN32)
+		enableRawdataIntermediateMode = true;
+#else
+		enableRawdataIntermediateMode = false;
+#endif
+		videoRawdataMemoryMode = ZNSDKRawDataMemoryModeStack;
+		shareRawdataMemoryMode = ZNSDKRawDataMemoryModeStack;
+		audioRawdataMemoryMode = ZNSDKRawDataMemoryModeStack;
+	}
+}ZNRawDataOptions;
 typedef struct _ZNInitParam
 {
 	ZoomSTRING path;///<The path of sdk.dll
@@ -116,12 +161,17 @@ typedef struct _ZNInitParam
 	unsigned int logFileSize; ///<Size of a log file in M(megabyte). The default size is 5M. There are 5 log files in total and the file size varies from 1M to 50M.
 	bool enableGeneratDump; ///<Enable generate dump file if the app crashed.
 	ZNSDK_APP_Locale locale;
+	bool permonitor_awareness_mode;
+	ZNZoomSDKVideoRenderMode    videoRenderMode;
+	ZNRawDataOptions rawdataOpts;
 	_ZNInitParam(){
 		enable_log = true;
 		langid = ZNLANGUAGE_Unknow;
 		locale = ZNSDK_APP_Locale_Default;
 		logFileSize = 5;
 		enableGeneratDump = false;
+		permonitor_awareness_mode = true;
+		videoRenderMode = ZNSDKVideoRenderMode_None;
 	}
 }ZNInitParam;
 
@@ -398,6 +448,18 @@ enum ZNVideoStatus
 	ZN_Video_ON, ///<Video is on.
 	ZN_Video_OFF, ///<Video is off.
 };
+/*! \enum RecordingStatus
+\brief Recording status.
+Here are more detailed structural descriptions.
+*/
+enum ZNRecordingStatus
+{
+	ZNRecording_Start,///Start recording on local computer or on cloud.
+	ZNRecording_Stop,///Stop recording on local computer or on cloud.
+	ZNRecording_DiskFull,///There is no space to store for both local and cloud recording.
+	ZNRecording_Pause,///Pause recording on local or on cloud.
+	ZNRecording_Connecting,///Connecting, only for cloud recording.
+};
 enum ZNShareStatus
 {
 	ZN_Sharing_None,///<For initialization.
@@ -461,7 +523,6 @@ enum ZNSDKCustomizedStringType
 	ZN_SDK_Customized_Title_App,	///<The new string must be a pure string so that it can show correctly. This type is used to define a string to replace the title of the meeting video UI.
 	ZN_SDK_Customized_Title_ZoomVideo,  ///<The new string must be the same format as "Zoom Participant ID: %s   Meeting ID: %s" so that it can show correctly. This type is used to define a string to replace the title of the meeting video UI.
 	ZN_SDK_Customized_Title_FreeZoomVideo, ///<The new string must be the same format as "Zoom Participant ID: %s  %d-Minutes Meeting ID:%s" so that it can show correctly. This type is used to define a string to replace the title of the meeting video UI when the user is free user and in view-only status. 
-	ZN_SDK_Customized_Title_ViewOnly_ZoomVideo, ///<The new string must end up with "%s" so that it can show correctly. This type is used to define a string to replace the title of the meeting video UI.
 	ZN_SDK_Customized_Title_ViewOnly_FreeZoomVideo, ///<The new string must be the same format as "Zoom %d-Minutes Meeting ID: %s" so that it can show correctly. This type is used to define a string to replace the title of the meeting video UI when the user is free user and in view-only status. 
 };
 enum ZNSDKCustomizedURLType
@@ -563,7 +624,7 @@ enum ZNSDKUserInfoType
 typedef struct _ZNUserInfomation
 {
 	ZoomSTRING userName;///<Current user name.
-	//ZoomSTRING email;///<Current user email.
+	bool isH323User; ///<Whether the member corresponding with the current information is the h323 user or not.
 	bool isHost; ///<Whether the member corresponding with the current information is the host or not.
 	unsigned int userID;///<Current user's ID.
 	bool isVideoOn;///<The video status of the user specified by the current information.
@@ -573,6 +634,7 @@ typedef struct _ZNUserInfomation
 	bool isPurePhoneUser;///<Whether the user corresponding to the current information joins the meeting by telephone or not.
 	bool webinarAttendeeStatus;///<The webinar status of the user specified by the current information. TRUE indicates that it is able to talk.
 	ZNSDKUserInfoType userInfoType;
+	ZoomSTRING participantID;
 #if (defined BUILD_WIN)
 	ZNAudioType audioJoinType;///<the audio type of the user specified by the current information when joins the meeting. For more infomation, see \link ZNAudioType \endlink enum.
 	bool isInWaitingRoom;///<Whether the user specified by the current information is in the waiting room or not.
@@ -783,6 +845,27 @@ enum ZNAudioCallbackActionInfo
 	ZNACTION_INFO_NEED_JOIN_VOIP,
 	ZNACTION_INFO_MUTE_UNMUTE_AUDIO,
 	ZNACTION_INFO_SHOW_AUDIO_SETTING_WINDOW,
+};
+
+enum ZNZoomSDKResolution
+{
+	ZNZoomSDKResolution_90P = 0,
+	ZNZoomSDKResolution_180P,
+	ZNZoomSDKResolution_360P,
+	ZNZoomSDKResolution_720P,
+	ZNZoomSDKResolution_1080P,
+	ZNZoomSDKResolution_NoUse = 100
+};
+enum ZNZoomSDKRawDataType
+{
+	ZNRAW_DATA_TYPE_VIDEO = 0,
+	ZNRAW_DATA_TYPE_SHARE,
+};
+
+enum ZNRawDataStatus
+{
+	ZNRawData_On,
+	ZNRawData_Off,
 };
 
 typedef struct tagZNAudioBtnClickedCallbackInfo

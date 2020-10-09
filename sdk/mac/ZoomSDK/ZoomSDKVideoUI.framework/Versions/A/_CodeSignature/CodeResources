@@ -6,155 +6,143 @@
 	<dict>
 		<key>Resources/ConfJoinByID.nib</key>
 		<data>
-		4QBlFpytgdLrbR7YVovUO5WH3Ns=
+		Q9k6EWWpJmzXj1p5ovX/12pWnjE=
 		</data>
 		<key>Resources/FullScreenTipWindow.nib</key>
 		<data>
-		34oFwdRMdSdZCTXBa3nTODXN9s8=
+		Lg/5M8r0xv1fBBPmXZkH6HjnPcY=
 		</data>
 		<key>Resources/Info.plist</key>
 		<data>
-		IXqw1fHcrtQUSdZicQ9m8/IZX6M=
+		jmbB7fOe2Ji/RF/NLGi+W6EevhU=
 		</data>
 		<key>Resources/LaunchPollWindow.nib</key>
 		<data>
-		7SWdaB2KEg3h0NZfIl5nUxD0Dy8=
-		</data>
-		<key>Resources/LeaveConfConfirmWindow.nib</key>
-		<data>
-		f+J5shqr0gd5ZNuTAZgCL3+TkBQ=
+		MaVph6zFA6/Ett7gQqTnuH84fVw=
 		</data>
 		<key>Resources/PollProgressWindow.nib</key>
 		<data>
-		pAYcPoOw0zq1CxCZSaF7sL8De6E=
+		wpBW10aqWHUNOco+rbgqQw2q8aw=
 		</data>
 		<key>Resources/RemoteControlUserListForLion.nib</key>
 		<data>
-		OfTq/vYtbKoIkymLkOgwklrOnzc=
+		C9LjS2mXnWR9zIKT2SRDh7NNDv0=
 		</data>
 		<key>Resources/ShareSelectWindow.nib</key>
 		<data>
-		dn8VDcQjrD34LnNucxKxkLLNNqE=
+		Fc1KBOfum1FjnJvjBMFjHqow1LY=
 		</data>
 		<key>Resources/ZMAirHostDownloadWindowController.nib</key>
 		<data>
-		3Ziuv0ltzu/cfufQIRmVhwCjcSw=
+		a5b5WjpfV40X8VAh7pTHMXCA+nI=
 		</data>
 		<key>Resources/ZMAlert.nib</key>
 		<data>
-		RpZOE5XFGDajG9VtxlBCQ0yoR+Q=
+		TtzAm8iWaoqdX+bD7KI1E5NFGYg=
 		</data>
 		<key>Resources/ZMAnnoSavedWindow.nib</key>
 		<data>
-		JSPmAEq/LpIjVoks2wWuK4Drf38=
+		z6vuJbTIUdVYnR3WsBegj4Id0Fo=
 		</data>
 		<key>Resources/ZMAudioInfoWindowController.nib</key>
 		<data>
-		aGRjwzQlas5gwJT7uWjM7ug/+NI=
+		siBwnMo7zpVlUMMj8w0X5CbB/4U=
 		</data>
 		<key>Resources/ZMAudioWizardWindowController.nib</key>
 		<data>
-		srtgFcBhgsP8VoApY2q5pQr2Fag=
+		RNl4SiqWf1W/6TTqDHTqK9TFDvA=
 		</data>
 		<key>Resources/ZMCMRTipWindowController.nib</key>
 		<data>
-		c9CyuagG+N/DZ3w3lhneXgofvCs=
+		m/aRkjnDZoyZOPvbT7kwkkfHzA0=
 		</data>
 		<key>Resources/ZMCameraControlInfoWindow.nib</key>
 		<data>
-		03MMeYd08rZn5ZGry01HC7N6HVY=
+		cYXvYg+CzBdsPf1LP0Cj8Z3jdGM=
 		</data>
 		<key>Resources/ZMClaimHostWindowController.nib</key>
 		<data>
-		n0dJz6syk+5HHDmBXhnX/1NCMPs=
+		TRnCsYWrViXsUX8NRiErWfUvgH8=
 		</data>
 		<key>Resources/ZMCloseAudioWithoutJoinWindowController.nib</key>
 		<data>
-		9ZVmSBHlr7O1N81STRcv/oFlnVc=
+		a3qClk7RXwuWNWVfPuTr+dhda2o=
 		</data>
 		<key>Resources/ZMDialInPadWindowController.nib</key>
 		<data>
-		ZuUyZGEj0MMyRhftBl4Eop1v2UM=
+		IwfcwFlA/iGQ19cP9L4kKhahy0g=
 		</data>
 		<key>Resources/ZMJBHWindowController.nib</key>
 		<data>
-		cC5He49vo7qDEFi1zkecVDnu+PM=
+		OtsWXJB7dxClCn/Te2aNLmmOn4A=
 		</data>
 		<key>Resources/ZMJoinMeetingWindowController.nib</key>
 		<data>
-		3Ze5eI36TTZO68Gu9r1elTbivh8=
-		</data>
-		<key>Resources/ZMLeaveBOWindowController.nib</key>
-		<data>
-		0xh+3bK19kneDqrp5WX4tRpKT68=
+		3Q4v03bH7gt8ED3waPytM6R77qY=
 		</data>
 		<key>Resources/ZMMeetingMenu.nib</key>
 		<data>
-		zkzxjG8wJUmRCCmDKCaE5Qqc4yE=
+		K7d2o0H6pb3LHoN17Dm9ukYhTik=
 		</data>
 		<key>Resources/ZMMenu.nib</key>
 		<data>
-		dCMcrX/16DCKj6RoggOx6qPH/gk=
+		BBQN46sFkJHWnG+i0PGIi7nOH2U=
 		</data>
 		<key>Resources/ZMQAWindowController.nib</key>
 		<data>
-		CiJMjmF68UFFidMIqFS2oPQgMVI=
+		EliKrjNgjFzHTUBjWDsen5t0kvQ=
 		</data>
 		<key>Resources/ZMRegisterWebinarWindowController.nib</key>
 		<data>
-		hfBtjIjSY3XYfCb7zl8qCc71epU=
+		iTReCg697hTw9oJYHVppH/j6czw=
 		</data>
 		<key>Resources/ZMRemoteControlSelectScreenWindowController.nib</key>
 		<data>
-		BkoOA/Ih8rWWq1kGUAR8UqRh834=
+		4U3wSW9NvlFArylnAwGtdRhjegM=
 		</data>
 		<key>Resources/ZMRemoteControlUserListWindowController.nib</key>
 		<data>
-		nGQuQYNenBbyee5cHWidtgfhP9Q=
+		xReXz9l5hJE6cB4GE2Km516mj4A=
 		</data>
 		<key>Resources/ZMRenameWindowController.nib</key>
 		<data>
-		Q1fJdJbRA++7UETSlrMBh/ytEH4=
+		3aObtpCxoNxlLenLq0U3x8lIdHA=
 		</data>
 		<key>Resources/ZMSecurityFileCollectionItem.nib</key>
 		<data>
-		00j2mqKSA/bMB24Hkfd9UQeutB8=
+		Zpr27fQTAKDOTe5217gIyIhlJi4=
 		</data>
 		<key>Resources/ZMShareCameraWindowController.nib</key>
 		<data>
-		cDVZ1x1deZwEpG/5aSYiYy4MqnE=
+		8IPPG4Q+mrcrsHaYI1q6kWppj94=
 		</data>
 		<key>Resources/ZPChatInMeetingWindow.nib</key>
 		<data>
-		zu9ZzogDQ/fLiR61S5DWrCP8Ui8=
+		wKVJHzp220oIDSJyMlqL/OI4sK4=
 		</data>
 		<key>Resources/ZPChatUserView.nib</key>
 		<data>
-		NyyOZ/AZ3yTPgKT+2hEResgHqnA=
+		McSuZQ+YIfZY4BBS6ZtGjs5yYlg=
 		</data>
 		<key>Resources/ZPCloseCaptionWindow.nib</key>
 		<data>
-		FLpSe8CBX8mwXaOLTbpI5Vl4518=
+		XEVQB7rijHjtqNsn4eCpiS5kL2k=
 		</data>
 		<key>Resources/ZPConfJoinByWebController.nib</key>
 		<data>
-		MzTveegzXXg0X2hTI7m6Zkf74ek=
+		/U6LH5iDEh5g92/gD5kcQ1ve52A=
 		</data>
 		<key>Resources/ZPMuteAllWindowController.nib</key>
 		<data>
-		q0yj/ca352rhYqSL/Wz8fgqpjfE=
+		5DWlliYWE8ObUNHXhprY2V9QnX0=
 		</data>
 		<key>Resources/ZPShareSelectCollectionViewItem.nib</key>
 		<data>
-		UR+S9NVO2b/+zf0u6SPYvFItvEc=
-		</data>
-		<key>Resources/ZPShareSettingWnd.nib</key>
-		<data>
-		HXCdntIkM5AZEcyYObZCZSkkCwM=
+		3g9lqKw7wjSdtSSp/Vm9TemzzjI=
 		</data>
 		<key>Resources/ZoomSDKVideoUI.def</key>
 		<data>
-		Ua3Y85J82vG2qwOdyFcF3W0D21Q=
+		iOrk/umdQovaygjsOvxNqzPDbZU=
 		</data>
 	</dict>
 	<key>files2</key>
@@ -174,418 +162,385 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			4QBlFpytgdLrbR7YVovUO5WH3Ns=
+			Q9k6EWWpJmzXj1p5ovX/12pWnjE=
 			</data>
 			<key>hash2</key>
 			<data>
-			/wpqUuC65CBvpG+B9hTrBrJzv9sOg/MFuqEBdePzb7Y=
+			jeBbdS0OsN8LXTItD1NfhrMb/nVaQRV7U9ncJSe/EcA=
 			</data>
 		</dict>
 		<key>Resources/FullScreenTipWindow.nib</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			34oFwdRMdSdZCTXBa3nTODXN9s8=
+			Lg/5M8r0xv1fBBPmXZkH6HjnPcY=
 			</data>
 			<key>hash2</key>
 			<data>
-			NNi8dRBN5Ly4l8IDiCI5kP7xitY5kQ5xoHSWoIyT5ME=
+			o+muA3XTaPdeKrBiqmp6r9dzUtYnLyMYdI6jO0FESeY=
 			</data>
 		</dict>
 		<key>Resources/Info.plist</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			IXqw1fHcrtQUSdZicQ9m8/IZX6M=
+			jmbB7fOe2Ji/RF/NLGi+W6EevhU=
 			</data>
 			<key>hash2</key>
 			<data>
-			a366vP2n9Ojc46UEONbGRbkF2u4uhMCEgNGjlS16xNA=
+			RdKHbnHntwIIaVYkmuBYK8wHbyGfr47csne+cDaZ7QQ=
 			</data>
 		</dict>
 		<key>Resources/LaunchPollWindow.nib</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			7SWdaB2KEg3h0NZfIl5nUxD0Dy8=
+			MaVph6zFA6/Ett7gQqTnuH84fVw=
 			</data>
 			<key>hash2</key>
 			<data>
-			ME4Uezjwa3qsTwTJdKl65T1kOIKbIu6SFmfqD3AqzxI=
-			</data>
-		</dict>
-		<key>Resources/LeaveConfConfirmWindow.nib</key>
-		<dict>
-			<key>hash</key>
-			<data>
-			f+J5shqr0gd5ZNuTAZgCL3+TkBQ=
-			</data>
-			<key>hash2</key>
-			<data>
-			k9fU6pGeIygWpDLrXRMwgHZHNv8xocsIcuZmwCt8O+k=
+			Du0SAjEg1AyOgq6HahKCJ6wMapzQ9ji26aaPgISkFLk=
 			</data>
 		</dict>
 		<key>Resources/PollProgressWindow.nib</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			pAYcPoOw0zq1CxCZSaF7sL8De6E=
+			wpBW10aqWHUNOco+rbgqQw2q8aw=
 			</data>
 			<key>hash2</key>
 			<data>
-			pXa3C7pYjs3IHksaAfTeGp4J5tM6PC6kKIbnYQIf6z4=
+			k/smtyWI4MDPGWZXpq2l1LO97lm4mU9FjNmKuceChr0=
 			</data>
 		</dict>
 		<key>Resources/RemoteControlUserListForLion.nib</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			OfTq/vYtbKoIkymLkOgwklrOnzc=
+			C9LjS2mXnWR9zIKT2SRDh7NNDv0=
 			</data>
 			<key>hash2</key>
 			<data>
-			rqWy9mjQJ4yUnSU3lvwHqi8gkjGg2gFmHV4Qhq1RxL4=
+			CsRZNhroEcHTt4mRRV9BCPh9U6c9h3M1gWo+JNujYrg=
 			</data>
 		</dict>
 		<key>Resources/ShareSelectWindow.nib</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			dn8VDcQjrD34LnNucxKxkLLNNqE=
+			Fc1KBOfum1FjnJvjBMFjHqow1LY=
 			</data>
 			<key>hash2</key>
 			<data>
-			Fko0ZZC4aSZxLkwP4OnN9qtwNP6lCjb+GR6AGcnRkCY=
+			njaq5Bw8Wo48031knccNIhzlgAmmYcrTulHoHsNgTy4=
 			</data>
 		</dict>
 		<key>Resources/ZMAirHostDownloadWindowController.nib</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			3Ziuv0ltzu/cfufQIRmVhwCjcSw=
+			a5b5WjpfV40X8VAh7pTHMXCA+nI=
 			</data>
 			<key>hash2</key>
 			<data>
-			RxixBxHyPnvzW5yzLLKkFf2IgTNPIfRiPF3xD5Y76DM=
+			m3QGTN9/3JsU10EiXRYcXD4Jlttb7zG5PbCWdryS3R0=
 			</data>
 		</dict>
 		<key>Resources/ZMAlert.nib</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			RpZOE5XFGDajG9VtxlBCQ0yoR+Q=
+			TtzAm8iWaoqdX+bD7KI1E5NFGYg=
 			</data>
 			<key>hash2</key>
 			<data>
-			4LkEJcMbY+iSr1zR9X5W8Slf9p++5D8Te1NGP5Y3pSk=
+			hAjmVb/QK/qkZ2uHKoqr94depqhtkVo1dtdr0pmPlqs=
 			</data>
 		</dict>
 		<key>Resources/ZMAnnoSavedWindow.nib</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			JSPmAEq/LpIjVoks2wWuK4Drf38=
+			z6vuJbTIUdVYnR3WsBegj4Id0Fo=
 			</data>
 			<key>hash2</key>
 			<data>
-			YWLA9yblUYpxe+biuQ3dliYTOVwd0hbM5rlgUWG6fy8=
+			hme/Q/Oftv2zsAvqNdbUpvgY3CeGwEV9u9bZwwQuWP0=
 			</data>
 		</dict>
 		<key>Resources/ZMAudioInfoWindowController.nib</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			aGRjwzQlas5gwJT7uWjM7ug/+NI=
+			siBwnMo7zpVlUMMj8w0X5CbB/4U=
 			</data>
 			<key>hash2</key>
 			<data>
-			mzL0oF99+5LiUovm9o8T78LLRnAScc5yGBsSRQUTVXw=
+			m+995tbncZHv/tcbcuPaJAnG1diSTFH27xqKP/YTEdE=
 			</data>
 		</dict>
 		<key>Resources/ZMAudioWizardWindowController.nib</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			srtgFcBhgsP8VoApY2q5pQr2Fag=
+			RNl4SiqWf1W/6TTqDHTqK9TFDvA=
 			</data>
 			<key>hash2</key>
 			<data>
-			iQ6L23lFFNrG2UeZiS0X7Dnq/zvM05lCaH1AFdw8hco=
+			SlnPbc7iR5td98HN3dFpfUJFkcctBZeBYQk7BiJX+rc=
 			</data>
 		</dict>
 		<key>Resources/ZMCMRTipWindowController.nib</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			c9CyuagG+N/DZ3w3lhneXgofvCs=
+			m/aRkjnDZoyZOPvbT7kwkkfHzA0=
 			</data>
 			<key>hash2</key>
 			<data>
-			troF6Vz/C8YQqIKFNRX9C4osAg6qx+VeIVDfwZo0+HI=
+			6BTFkuL6NKjNrF0ZNDz/IzFpSEkKdA+EhWOZfcqVZCo=
 			</data>
 		</dict>
 		<key>Resources/ZMCameraControlInfoWindow.nib</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			03MMeYd08rZn5ZGry01HC7N6HVY=
+			cYXvYg+CzBdsPf1LP0Cj8Z3jdGM=
 			</data>
 			<key>hash2</key>
 			<data>
-			V3jCT5ptE0ATZF4SHV3BQTmOmyzPuSAawzdl6CwOQFg=
+			1mWTbgtHKlQEpIb5GQ0EvmQJwMXFm9tOMEG5gVt1P5M=
 			</data>
 		</dict>
 		<key>Resources/ZMClaimHostWindowController.nib</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			n0dJz6syk+5HHDmBXhnX/1NCMPs=
+			TRnCsYWrViXsUX8NRiErWfUvgH8=
 			</data>
 			<key>hash2</key>
 			<data>
-			s0N/3C8offUT8O0NNesaWjnY6ye9GOFX64Ya/VXeTMc=
+			kmqLMGCIAue0Ep1NqaqS0xpT0/C56U8RfBqxZBVBV9E=
 			</data>
 		</dict>
 		<key>Resources/ZMCloseAudioWithoutJoinWindowController.nib</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			9ZVmSBHlr7O1N81STRcv/oFlnVc=
+			a3qClk7RXwuWNWVfPuTr+dhda2o=
 			</data>
 			<key>hash2</key>
 			<data>
-			hspLtMxe3oFPCqv454inn1zzdMS2yYyr+PrsPAVKV94=
+			k6icQc0ibdxADM4Z/6MBr/8n/pRKUHjUrJF7xzqKP9I=
 			</data>
 		</dict>
 		<key>Resources/ZMDialInPadWindowController.nib</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			ZuUyZGEj0MMyRhftBl4Eop1v2UM=
+			IwfcwFlA/iGQ19cP9L4kKhahy0g=
 			</data>
 			<key>hash2</key>
 			<data>
-			HxpO/9YPGZU+jecsK5m+mzduUuCS+YighY/hxH+qwiY=
+			CFIRTggyVTbz39reUYk6WUSR1dBZM8NWXGKe93GQauM=
 			</data>
 		</dict>
 		<key>Resources/ZMJBHWindowController.nib</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			cC5He49vo7qDEFi1zkecVDnu+PM=
+			OtsWXJB7dxClCn/Te2aNLmmOn4A=
 			</data>
 			<key>hash2</key>
 			<data>
-			ohqD5uGCs845BaPpMMtAGgMUPX1f0VMHlyC8/qcx9Ac=
+			uWoMoulcmf+/EyMeP8fAl9NruBBVNv4pxNg/pB++NQU=
 			</data>
 		</dict>
 		<key>Resources/ZMJoinMeetingWindowController.nib</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			3Ze5eI36TTZO68Gu9r1elTbivh8=
+			3Q4v03bH7gt8ED3waPytM6R77qY=
 			</data>
 			<key>hash2</key>
 			<data>
-			IKlLDlxgdBPIsn+n1Byii7mCJpd/enU/eZYmehnSh+Y=
-			</data>
-		</dict>
-		<key>Resources/ZMLeaveBOWindowController.nib</key>
-		<dict>
-			<key>hash</key>
-			<data>
-			0xh+3bK19kneDqrp5WX4tRpKT68=
-			</data>
-			<key>hash2</key>
-			<data>
-			DzzcaHRMKR3KVoRBqvhS6gfcm7lVCAEWLZG6vlUiVjc=
+			XiHMhxhiKV2Pg3MyL3l5g7JlBFAgNrRR7JpxVfWUrrI=
 			</data>
 		</dict>
 		<key>Resources/ZMMeetingMenu.nib</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			zkzxjG8wJUmRCCmDKCaE5Qqc4yE=
+			K7d2o0H6pb3LHoN17Dm9ukYhTik=
 			</data>
 			<key>hash2</key>
 			<data>
-			7gNx4lxBn3X5QzcrN1kISd+TBBZRCdOdj8i3qsmHZRU=
+			V8/8+HZWTr0tN/UPZvlNgIcWxqSZrQ46A/KN0n8+qOQ=
 			</data>
 		</dict>
 		<key>Resources/ZMMenu.nib</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			dCMcrX/16DCKj6RoggOx6qPH/gk=
+			BBQN46sFkJHWnG+i0PGIi7nOH2U=
 			</data>
 			<key>hash2</key>
 			<data>
-			BjrNg5G2//GnMTvhk8/F/iK9Pq6H4gFurfQDnUaJYWg=
+			zZ/ipAtyPlxgyAdTqwdK2mh5/Yu2Y2fsaefqBGjpBUE=
 			</data>
 		</dict>
 		<key>Resources/ZMQAWindowController.nib</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			CiJMjmF68UFFidMIqFS2oPQgMVI=
+			EliKrjNgjFzHTUBjWDsen5t0kvQ=
 			</data>
 			<key>hash2</key>
 			<data>
-			G69Wg3Y7FHHfJ+XXfL0tcWxRsO4W4cKaaaCneM/rfmk=
+			0VnWtmA2yXkvOGqRqzGgztkTjrI6m8/Y4O+Sppuf0BY=
 			</data>
 		</dict>
 		<key>Resources/ZMRegisterWebinarWindowController.nib</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			hfBtjIjSY3XYfCb7zl8qCc71epU=
+			iTReCg697hTw9oJYHVppH/j6czw=
 			</data>
 			<key>hash2</key>
 			<data>
-			C94alGUzNZaQAeLoMZO1c4hSnyGG058dwB9zLfPuKgQ=
+			UKuK9IKsxayzO1SlQ/KQ19EIwbxWXJUOspbVwVCo4E0=
 			</data>
 		</dict>
 		<key>Resources/ZMRemoteControlSelectScreenWindowController.nib</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			BkoOA/Ih8rWWq1kGUAR8UqRh834=
+			4U3wSW9NvlFArylnAwGtdRhjegM=
 			</data>
 			<key>hash2</key>
 			<data>
-			2sdF0Di5VsQM10vztzI2nrH1DzOoROyEozZsnAvR0Kc=
+			v6/db67zokIFTMgeUQ5l5EMeHErfA6TW2HMhKa+PXLo=
 			</data>
 		</dict>
 		<key>Resources/ZMRemoteControlUserListWindowController.nib</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			nGQuQYNenBbyee5cHWidtgfhP9Q=
+			xReXz9l5hJE6cB4GE2Km516mj4A=
 			</data>
 			<key>hash2</key>
 			<data>
-			xYJ2j8Hn1xJi3mRI0+9QXXUCMEEkXLgulJYbSltgDbQ=
+			G7xTZix82s8TZcvS7TI9MYsJid5ANY+o8BGOH+uzZDk=
 			</data>
 		</dict>
 		<key>Resources/ZMRenameWindowController.nib</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			Q1fJdJbRA++7UETSlrMBh/ytEH4=
+			3aObtpCxoNxlLenLq0U3x8lIdHA=
 			</data>
 			<key>hash2</key>
 			<data>
-			MFJQSsJDfJq5klT6JD0ud3qtE1E4TJ/2CN0nNDKS7ig=
+			X7j3ILvQes6WVaVV26Z9lSLQkaDWAUANQ863YHCBgws=
 			</data>
 		</dict>
 		<key>Resources/ZMSecurityFileCollectionItem.nib</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			00j2mqKSA/bMB24Hkfd9UQeutB8=
+			Zpr27fQTAKDOTe5217gIyIhlJi4=
 			</data>
 			<key>hash2</key>
 			<data>
-			Kf17NQI6E3Gqw0Ay0H6ljz7Hciapz6A5F2KXsbCPfpg=
+			5wCQxzKQIZn8EF2n5A4NKUCrxxtIiyv2kx9XJd1gfxE=
 			</data>
 		</dict>
 		<key>Resources/ZMShareCameraWindowController.nib</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			cDVZ1x1deZwEpG/5aSYiYy4MqnE=
+			8IPPG4Q+mrcrsHaYI1q6kWppj94=
 			</data>
 			<key>hash2</key>
 			<data>
-			p7mjNrSYDXPhTf8oz2Sc4sYH+3Y/1HFVP/VwgFWIRrU=
+			FIzW2lmDHQIB0bOfv4EgSAW+7zp2IK06UqNDiHq8g9Q=
 			</data>
 		</dict>
 		<key>Resources/ZPChatInMeetingWindow.nib</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			zu9ZzogDQ/fLiR61S5DWrCP8Ui8=
+			wKVJHzp220oIDSJyMlqL/OI4sK4=
 			</data>
 			<key>hash2</key>
 			<data>
-			s75kYAOLHdSL/HibDmq+PCj0ppVwPkrlsI1oZswKA1c=
+			UJ3RNL+0q76hwcuvSuFJsw6kii7QD4GtEX0yw5y0OWk=
 			</data>
 		</dict>
 		<key>Resources/ZPChatUserView.nib</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			NyyOZ/AZ3yTPgKT+2hEResgHqnA=
+			McSuZQ+YIfZY4BBS6ZtGjs5yYlg=
 			</data>
 			<key>hash2</key>
 			<data>
-			VQ6VibW5GdODbp4JUtjq3Wx7Hu0n5LTSvT58DVfulXY=
+			v1HaqOcmvdlm/XDUkqmOWlGjJ/MYPk4eVxoqiSNwWSE=
 			</data>
 		</dict>
 		<key>Resources/ZPCloseCaptionWindow.nib</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			FLpSe8CBX8mwXaOLTbpI5Vl4518=
+			XEVQB7rijHjtqNsn4eCpiS5kL2k=
 			</data>
 			<key>hash2</key>
 			<data>
-			RqRuxHq8m4FPYe59Coo8V1T6Kr3O2IiU9AzgCHD8PcE=
+			MkelrGCn/AreoxSyF/WyV6b8z5r1NZmwu7XbHyhyst0=
 			</data>
 		</dict>
 		<key>Resources/ZPConfJoinByWebController.nib</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			MzTveegzXXg0X2hTI7m6Zkf74ek=
+			/U6LH5iDEh5g92/gD5kcQ1ve52A=
 			</data>
 			<key>hash2</key>
 			<data>
-			mkq+pUvMtnZp9R5/yKsT6MNrvQZb4mq8H2foFxXyMDs=
+			u9HUv1sM8B35wOsk25xwmDs9vxTQAHt1A7kLetuWgg8=
 			</data>
 		</dict>
 		<key>Resources/ZPMuteAllWindowController.nib</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			q0yj/ca352rhYqSL/Wz8fgqpjfE=
+			5DWlliYWE8ObUNHXhprY2V9QnX0=
 			</data>
 			<key>hash2</key>
 			<data>
-			hPCI/6np63l/6A6+1QZqDgxKUHKjCjoqRjMAqHemGu4=
+			i2tWhrb9PxxSrj10RflSLn/r+GrkA72BwTX1slyg6dc=
 			</data>
 		</dict>
 		<key>Resources/ZPShareSelectCollectionViewItem.nib</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			UR+S9NVO2b/+zf0u6SPYvFItvEc=
+			3g9lqKw7wjSdtSSp/Vm9TemzzjI=
 			</data>
 			<key>hash2</key>
 			<data>
-			N297KCpHPR5cQ00X5UBG7yHCHVeksA1kmvB2BzlkRv4=
-			</data>
-		</dict>
-		<key>Resources/ZPShareSettingWnd.nib</key>
-		<dict>
-			<key>hash</key>
-			<data>
-			HXCdntIkM5AZEcyYObZCZSkkCwM=
-			</data>
-			<key>hash2</key>
-			<data>
-			GMvTaeetMGy85affVWLP7NOdbrPSr0UbAqZF5pDJMfE=
+			P9SpqG8CvaITv0v9QcqzW4k4H/P2WmRTnpFtxudX02I=
 			</data>
 		</dict>
 		<key>Resources/ZoomSDKVideoUI.def</key>
 		<dict>
 			<key>hash</key>
 			<data>
-			Ua3Y85J82vG2qwOdyFcF3W0D21Q=
+			iOrk/umdQovaygjsOvxNqzPDbZU=
 			</data>
 			<key>hash2</key>
 			<data>
-			f2Iss4Lci1UnomRgRkyCl/SROHdFV9eDwx8D81w944Y=
+			qCaPPt8Pul6XfEI4/Ln8eBnzQctWLpgnXdkN+V4YJGI=
 			</data>
 		</dict>
 	</dict>

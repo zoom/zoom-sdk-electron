@@ -379,6 +379,10 @@ void ZMeetingConfigWrap::DisableToolbarInviteButtonClickOriginAction(bool bDisab
 {
 	//This interface is only for Mac.
 }
+void ZMeetingConfigWrap::DisableConfidentialWatermark(bool bDisable)
+{
+	ZOOM_SDK_NAMESPACE::CSDKWrap::GetInst().GetMeetingServiceWrap().T_GetMeetingConfiguration().DisableConfidentialWatermark(bDisable);
+}
 
 ZNFreeMeetingEndingReminderType ZMeetingConfigWrap::GetReminderType()
 {
@@ -472,7 +476,11 @@ void ZMeetingConfigWrap::onFreeMeetingRemainTimeStopCountDown()
 	if (m_pSink)
 		m_pSink->onFreeMeetingRemainTimeStopCountDown();
 }
-
+void ZMeetingConfigWrap::onFreeMeetingEndingReminderNotification()
+{
+	if (m_pSink)
+		m_pSink->onFreeMeetingEndingReminderNotification();
+}
 ZNWebinarNeedRegisterType ZMeetingConfigWrap::GetWebinarNeedRegisterType()
 {
 	return ZWebinarNeedRegisterHandler::GetInst().GetWebinarNeedRegisterType();

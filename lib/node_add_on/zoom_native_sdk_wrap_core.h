@@ -6,6 +6,7 @@
 #include "setting_service_wrap_core.h"
 #include "premeeting_service_wrap_core.h"
 #include "customized_resource_wrap_core.h"
+#include "zoom_native_raw_api_wrap_core.h"
 
 class ZOOM_HIDE_SYMBOL ZNativeSDKWrap
 {
@@ -20,11 +21,13 @@ public:
 	ZSettingServiceWrap& GetSettingServiceWrap();
 	ZPremeetingServiceWrap& GetPremeetingServiecWrap();
 	ZCustomizedResourceWrap& GetCustomizedResourceWrap();
+	ZNativeRawAPIWrap& GetRawAPIWrap();
 private:
 	ZAuthServiceWrap _z_auth_service_wrap;
 	ZMeetingServiceWrap _z_meeting_service_wrap;
 	ZSettingServiceWrap _z_setting_service_wrap;
 	ZPremeetingServiceWrap _z_premeeting_service_wrap;
 	ZCustomizedResourceWrap _z_customized_resource_wrap;
+	ZNativeRawAPIWrap _z_raw_api_wrap;
 };
 #endif

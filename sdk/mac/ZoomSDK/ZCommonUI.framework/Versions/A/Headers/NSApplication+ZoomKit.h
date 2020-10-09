@@ -24,8 +24,6 @@ typedef NS_ENUM(NSInteger, ZMUserAppearance){
 @property ZMUserAppearance userAppearance;
 @property (readonly, getter=isVoiceOverRunning) BOOL voiceOverRunning;//!< for tab control, use 'fullKeyboardAccessEnabled'
 
-@property (class, readonly) sint32 majorVersion;
-
 @property (nonatomic, assign) BOOL retinaBundleNotReady;
 @property (readonly) BOOL isDarkMode;
 @property (assign) NSInteger fontSizeRate;

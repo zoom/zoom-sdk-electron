@@ -5,6 +5,7 @@
 class CSDKWrap;\
 class CSDKExtWrap;\
 class CSDKCustomizedUIWrap;\
+class CSDKRendererWrap;\
 class Classname##Wrap : public Classname \
 {\
 void* external_cb;
@@ -13,6 +14,7 @@ void* external_cb;
 class CSDKWrap;\
 class CSDKExtWrap;\
 class CSDKCustomizedUIWrap;\
+class CSDKRendererWrap;\
 class Classname##Wrap : public Classname, public CallBackClass \
 {\
 CallBackClass* external_cb;
@@ -21,6 +23,7 @@ CallBackClass* external_cb;
 friend CSDKWrap;\
 friend CSDKExtWrap;\
 friend CSDKCustomizedUIWrap;\
+class CSDKRendererWrap;\
 private:\
 	Classname##Wrap(){m_obj = NULL;external_cb=NULL;};\
 	static Classname##Wrap& GetInst(){static Classname##Wrap inst; return inst;};\
@@ -31,6 +34,7 @@ public:
 class CSDKWrap;\
 class CSDKExtWrap;\
 class CSDKCustomizedUIWrap;\
+class CSDKRendererWrap;\
 class Classname##Wrap \
 {\
 void* external_cb;
@@ -38,6 +42,7 @@ void* external_cb;
 class CSDKWrap;\
 class CSDKExtWrap;\
 class CSDKCustomizedUIWrap;\
+class CSDKRendererWrap;\
 class Classname##Wrap : public CallBackClass \
 {\
 CallBackClass* external_cb;
@@ -45,6 +50,7 @@ CallBackClass* external_cb;
 friend CSDKWrap;\
 friend CSDKExtWrap;\
 friend CSDKCustomizedUIWrap;\
+friend CSDKRendererWrap;\
 private:\
 	Classname##Wrap(){m_obj = NULL;external_cb=NULL;};\
 	static Classname##Wrap& GetInst(){static Classname##Wrap inst; return inst;};\

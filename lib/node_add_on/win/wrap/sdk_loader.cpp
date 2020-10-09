@@ -44,9 +44,10 @@ void CSDKImpl::Reset()
 	m_fnRetrieveCustomizedResouceHelper = NULL;
 	m_fnCreateCustomizedUIMgr = NULL;
 	m_fnDestroyCustomizedUIMgr = NULL;
-	m_fnRetrieveAudioRawDataChannel = NULL;
-	m_fnRetrieveVideoRawDataChannel = NULL;
-	m_fnRetrieveShareRawDataChannel = NULL;
+	m_fnGetRawdataVideoSourceHelper = NULL;
+	m_fnGetAudioRawdataHelper = NULL;
+	m_fncreateRenderer = NULL;
+	m_fndestroyRenderer = NULL;
 	m_fnHasRawDataLicense = NULL;
 	m_hSdk = NULL;
 }
@@ -137,10 +138,11 @@ bool CSDKImpl::ConfigSDKModule(std::wstring& path)
 		m_fnCreateCustomizedUIMgr = (fnCreateCustomizedUIMgr)GetProcAddress(m_hSdk, "CreateCustomizedUIMgr");
 		m_fnDestroyCustomizedUIMgr = (fnDestroyCustomizedUIMgr)GetProcAddress(m_hSdk, "DestroyCustomizedUIMgr");
 
-		m_fnRetrieveAudioRawDataChannel = (fnRetrieveAudioRawDataChannel)GetProcAddress(m_hSdk, "RetrieveAudioRawDataChannel");
-		m_fnRetrieveVideoRawDataChannel = (fnRetrieveVideoRawDataChannel)GetProcAddress(m_hSdk, "RetrieveVideoRawDataChannel");
-		m_fnRetrieveShareRawDataChannel = (fnRetrieveShareRawDataChannel)GetProcAddress(m_hSdk, "RetrieveShareRawDataChannel");
-		m_fnHasRawDataLicense = (fnHasRawDataLicense)(GetProcAddress(m_hSdk, "HasRawDataLicense"));
+		m_fnGetRawdataVideoSourceHelper = (fnGetRawdataVideoSourceHelper)GetProcAddress(m_hSdk, "GetRawdataVideoSourceHelper");
+		m_fnGetAudioRawdataHelper = (fnGetAudioRawdataHelper)GetProcAddress(m_hSdk, "GetAudioRawdataHelper");
+		m_fncreateRenderer = (fncreateRenderer)GetProcAddress(m_hSdk, "createRenderer");
+		m_fndestroyRenderer = (fndestroyRenderer)GetProcAddress(m_hSdk, "destroyRenderer");
+		m_fnHasRawDataLicense = (fnHasRawDataLicense)(GetProcAddress(m_hSdk, "HasRawdataLicense"));
 
 		if (NULL == m_fnInitSDK
 			|| NULL == m_fnCleanUPSDK
@@ -163,9 +165,10 @@ bool CSDKImpl::ConfigSDKModule(std::wstring& path)
 			|| NULL == m_fnRetrieveCustomizedResouceHelper
 			|| NULL == m_fnCreateCustomizedUIMgr
 			|| NULL == m_fnDestroyCustomizedUIMgr
-			|| NULL == m_fnRetrieveAudioRawDataChannel
-			|| NULL == m_fnRetrieveVideoRawDataChannel
-			|| NULL == m_fnRetrieveShareRawDataChannel
+			|| NULL == m_fnGetRawdataVideoSourceHelper
+			|| NULL == m_fnGetAudioRawdataHelper
+			|| NULL == m_fncreateRenderer
+			|| NULL == m_fndestroyRenderer
 			|| NULL == m_fnHasRawDataLicense)
 		{
 			break;
@@ -419,44 +422,48 @@ ZOOM_SDK_NAMESPACE::SDKError(CSDKImpl::DestroyCustomizedUIMgr)(ZOOM_SDK_NAMESPAC
 	return ret;
 }
 
-ZOOM_SDK_NAMESPACE::SDKError(CSDKImpl::RetrieveAudioRawDataChannel)(ZOOM_RAWDATA_NAMESPACE::IAudioRawDataChannel** ppAudioRawDataChannel)
+ZOOM_SDK_NAMESPACE::IZoomSDKVideoSourceHelper*(CSDKImpl::GetRawdataVideoSourceHelper)()
 {
-	ZOOM_RAWDATA_NAMESPACE::SDKRawDataError ret(ZOOM_RAWDATA_NAMESPACE::SDKRawDataError_UNINITIALIZED);
-	if (m_fnRetrieveAudioRawDataChannel)
+	if (m_fnGetRawdataVideoSourceHelper)
 	{
-		ret = m_fnRetrieveAudioRawDataChannel(ppAudioRawDataChannel);
+		return m_fnGetRawdataVideoSourceHelper();
 	}
-	return error_Internal_map(ret);
+	return NULL;
 }
-
-ZOOM_SDK_NAMESPACE::SDKError(CSDKImpl::RetrieveVideoRawDataChannel)(ZOOM_RAWDATA_NAMESPACE::IVideoRawDataChannel** ppVideoRawDataChannel)
+ZOOM_SDK_NAMESPACE::IZoomSDKAudioRawDataHelper* (CSDKImpl::GetAudioRawdataHelper)()
 {
-	ZOOM_RAWDATA_NAMESPACE::SDKRawDataError ret(ZOOM_RAWDATA_NAMESPACE::SDKRawDataError_UNINITIALIZED);
-	if (m_fnRetrieveVideoRawDataChannel)
+	if (m_fnGetAudioRawdataHelper)
 	{
-		ret = m_fnRetrieveVideoRawDataChannel(ppVideoRawDataChannel);
+		return m_fnGetAudioRawdataHelper();
 	}
-	return error_Internal_map(ret);
+	return NULL;
 }
-
-ZOOM_SDK_NAMESPACE::SDKError(CSDKImpl::RetrieveShareRawDataChannel)(ZOOM_RAWDATA_NAMESPACE::IShareRawDataChannel** ppShareRawDataChannel)
+bool(CSDKImpl::HasRawDataLicense)()
 {
-	ZOOM_RAWDATA_NAMESPACE::SDKRawDataError ret(ZOOM_RAWDATA_NAMESPACE::SDKRawDataError_UNINITIALIZED);
-	if (m_fnRetrieveShareRawDataChannel)
-	{
-		ret = m_fnRetrieveShareRawDataChannel(ppShareRawDataChannel);
-	}
-	return error_Internal_map(ret);
-}
-
-ZOOM_SDK_NAMESPACE::SDKError(CSDKImpl::HasRawDataLicense)()
-{
-	ZOOM_RAWDATA_NAMESPACE::SDKRawDataError ret(ZOOM_RAWDATA_NAMESPACE::SDKRawDataError_UNINITIALIZED);
+	bool bHasLicence = false;
 	if (m_fnHasRawDataLicense)
 	{
-		ret = m_fnHasRawDataLicense();
+		bHasLicence = m_fnHasRawDataLicense();
 	}
-	return error_Internal_map(ret);
+	return bHasLicence;
+}
+ZOOM_SDK_NAMESPACE::SDKError(CSDKImpl::createRenderer)(ZOOM_SDK_NAMESPACE::IZoomSDKRenderer** ppRenderer, ZOOM_SDK_NAMESPACE::IZoomSDKRendererDelegate* pDelegate)
+{
+	ZOOM_SDK_NAMESPACE::SDKError ret(ZOOM_SDK_NAMESPACE::SDKERR_UNINITIALIZE);
+	if (m_fncreateRenderer)
+	{
+		ret = m_fncreateRenderer(ppRenderer, pDelegate);
+	}
+	return ret;
+}
+ZOOM_SDK_NAMESPACE::SDKError(CSDKImpl::destroyRenderer)(ZOOM_SDK_NAMESPACE::IZoomSDKRenderer* pRenderer)
+{
+	ZOOM_SDK_NAMESPACE::SDKError ret(ZOOM_SDK_NAMESPACE::SDKERR_UNINITIALIZE);
+	if (m_fndestroyRenderer)
+	{
+		ret = m_fndestroyRenderer(pRenderer);
+	}
+	return ret;
 }
 
 #if (!defined CSHARP_WRAP && !defined _LIB)

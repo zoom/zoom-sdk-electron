@@ -454,6 +454,7 @@ void ZoomNodeSettingAudioCtrlWrap::IsEchoCancellationEnabled(const v8::FunctionC
 void ZoomNodeSettingAudioCtrlWrap::SetMicVol(const v8::FunctionCallbackInfo<v8::Value>& args)
 {
 	v8::Isolate* isolate = args.GetIsolate();
+	auto context = isolate->GetCurrentContext();
 	if (args.Length() < 1) {
 		isolate->ThrowException(v8::Exception::TypeError(
 			v8::String::NewFromUtf8(isolate, "Wrong number of arguments", v8::NewStringType::kInternalized).ToLocalChecked()));
@@ -468,7 +469,7 @@ void ZoomNodeSettingAudioCtrlWrap::SetMicVol(const v8::FunctionCallbackInfo<v8::
 		return;
 	}
 	float zn_value;
-	zn_value = (float)args[0]->NumberValue();
+	zn_value = (float)args[0]->NumberValue(context).FromJust();
 
 	ZNSDKError err = _g_native_wrap.GetSettingServiceWrap().GetSettingAudioCtrl().SetMicVol(zn_value);
 	v8::Local<v8::Integer> bret = v8::Integer::New(isolate, (int32_t)err);
@@ -492,7 +493,7 @@ void ZoomNodeSettingAudioCtrlWrap::GetMicVol(const v8::FunctionCallbackInfo<v8::
 		return;
 	}
 	float zn_value;
-	zn_value = (float)args[0]->NumberValue();
+	zn_value = (float)args[0]->NumberValue(context).FromJust();
 
 	ZNSDKError err = _g_native_wrap.GetSettingServiceWrap().GetSettingAudioCtrl().GetMicVol(zn_value);
 	v8::HandleScope scope(isolate);
@@ -505,6 +506,7 @@ void ZoomNodeSettingAudioCtrlWrap::GetMicVol(const v8::FunctionCallbackInfo<v8::
 void ZoomNodeSettingAudioCtrlWrap::SetSpeakerVol(const v8::FunctionCallbackInfo<v8::Value>& args)
 {
 	v8::Isolate* isolate = args.GetIsolate();
+	auto context = isolate->GetCurrentContext();
 	if (args.Length() < 1) {
 		isolate->ThrowException(v8::Exception::TypeError(
 			v8::String::NewFromUtf8(isolate, "Wrong number of arguments", v8::NewStringType::kInternalized).ToLocalChecked()));
@@ -519,7 +521,7 @@ void ZoomNodeSettingAudioCtrlWrap::SetSpeakerVol(const v8::FunctionCallbackInfo<
 		return;
 	}
 	float zn_value;
-	zn_value = (float)args[0]->NumberValue();
+	zn_value = (float)args[0]->NumberValue(context).FromJust();
 
 	ZNSDKError err = _g_native_wrap.GetSettingServiceWrap().GetSettingAudioCtrl().SetSpeakerVol(zn_value);
 	v8::Local<v8::Integer> bret = v8::Integer::New(isolate, (int32_t)err);
@@ -543,7 +545,7 @@ void ZoomNodeSettingAudioCtrlWrap::GetSpeakerVol(const v8::FunctionCallbackInfo<
 		return;
 	}
 	float zn_value;
-	zn_value = (float)args[0]->NumberValue();
+	zn_value = (float)args[0]->NumberValue(context).FromJust();
 
 	ZNSDKError err = _g_native_wrap.GetSettingServiceWrap().GetSettingAudioCtrl().GetSpeakerVol(zn_value);
 	v8::HandleScope scope(isolate);

@@ -46,7 +46,9 @@ const ZoomSDK_LANGUAGE_ID = {
   LANGUAGE_French: 7,
   LANGUAGE_Portuguese: 8,
   LANGUAGE_Russian: 9,
-  LANGUAGE_Korean: 10
+  LANGUAGE_Korean: 10,
+  LANGUAGE_Vietnamese: 11,
+	LANGUAGE_Italian: 12
 };
 
 const ZoomSDKError = {
@@ -75,7 +77,16 @@ const ZoomSDKError = {
   SDKERR_MEETING_YOU_HAVE_NO_SHARE: 22,
   SDKERR_MEETING_VIEWTYPE_PARAMETER_IS_WRONG: 23,
   SDKERR_MEETING_ANNOTATION_IS_OFF: 24,
-  SDKERR_SETTING_OS_DONT_SUPPORT: 25
+  SDKERR_SETTING_OS_DONT_SUPPORT: 25,
+  SDKERR_EMAIL_LOGIN_IS_DISABLED: 26, //Email login is disable
+	SDKERR_NO_VIDEO_DATA: 27,
+	SDKERR_NO_AUDIO_DATA: 28,
+	SDKERR_NO_SHARE_DATA: 29,
+	SDKERR_DEVICE_ERR: 30,
+	SDKERR_NOT_IN_MEETING: 31,
+	SDKERR_INIT_DEVICE: 32,
+	SDKERR_CANNOT_CHANGE_VIRTUAL_DEVICE: 33,
+	SDKERR_PREPROCESS_RAWDATA_ERROR: 34
 };
 
 const ZoomAPPLocale = {
@@ -430,8 +441,7 @@ const SDKCustomizedStringType = {
   SDK_Customized_Title_App: 4,	// The new string must be a pure string so that it can show correctly. This type is used to define a string to replace the title of the meeting video UI.
   SDK_Customized_Title_ZoomVideo: 5,  // The new string must be the same format as "Zoom Participant ID: %s   Meeting ID: %s" so that it can show correctly. This type is used to define a string to replace the title of the meeting video UI.
   SDK_Customized_Title_FreeZoomVideo: 6, // The new string must be the same format as "Zoom Participant ID: %s  %d-Minutes Meeting ID:%s" so that it can show correctly. This type is used to define a string to replace the title of the meeting video UI when the user is free user and in view-only status. 
-  SDK_Customized_Title_ViewOnly_ZoomVideo: 7, // The new string must end up with "%s" so that it can show correctly. This type is used to define a string to replace the title of the meeting video UI.
-  SDK_Customized_Title_ViewOnly_FreeZoomVideo: 8, // The new string must be the same format as "Zoom %d-Minutes Meeting ID: %s" so that it can show correctly. This type is used to define a string to replace the title of the meeting video UI when the user is free user and in view-only status. 	
+  SDK_Customized_Title_ViewOnly_FreeZoomVideo: 7 // The new string must be the same format as "Zoom %d-Minutes Meeting ID: %s" so that it can show correctly. This type is used to define a string to replace the title of the meeting video UI when the user is free user and in view-only status. 	
 };
 
 const SDKCustomizedURLType = {
@@ -477,6 +487,47 @@ const ZNSDKUserInfoType = {
   ZN_REAL_USERINFO: 0,
   ZN_FAKE_USERINFO: 1
 };
+
+const ZNCustomizedLanguageType = {
+  ZN_CustomizedLanguage_None: 0, // No use of the custom resource.
+  ZN_CustomizedLanguage_FilePath: 1, // Use the specified file path to assign the custom resource.
+  ZN_CustomizedLanguage_Content: 2 // Use the specified content to assign the custom resource.
+};
+
+const ZoomSDKResolution = {
+	ZoomSDKResolution_90P: 0,
+	ZoomSDKResolution_180P: 1,
+	ZoomSDKResolution_360P: 2,
+	ZoomSDKResolution_720P: 3,
+	ZoomSDKResolution_1080P: 4,
+	ZoomSDKResolution_NoUse: 100
+};
+
+const ZoomSDKRawDataType = {
+	RAW_DATA_TYPE_VIDEO: 0,
+	RAW_DATA_TYPE_SHARE: 1
+};
+
+
+const RawDataStatus = {
+	RawData_On: 0,
+	RawData_Off: 1
+};
+
+const ZoomSDKVideoRenderMode = {
+	SDKVideoRenderMode_None: 0,
+	SDKVideoRenderMode_Auto: 1,
+	SDKVideoRenderMode_D3D11EnableFLIP: 2,
+	SDKVideoRenderMode_D3D11: 3,
+	SDKVideoRenderMode_D3D9: 4,
+	SDKVideoRenderMode_GDI: 5
+};
+
+const SDKRawDataMemoryMode = {
+	SDKRawDataMemoryModeStack: 0,
+	SDKRawDataMemoryModeHeap: 1
+};
+
 
 module.exports = {
   ZOOM_TYPE_OS_TYPE: ZOOM_TYPE_OS_TYPE,
@@ -524,7 +575,13 @@ module.exports = {
   ZNWebinarNeedRegisterType: ZNWebinarNeedRegisterType,
   ZNAudioCallbackActionInfo: ZNAudioCallbackActionInfo,
   ZNRecordingStatus: ZNRecordingStatus,
-  ZNSDKUserInfoType: ZNSDKUserInfoType
+  ZNSDKUserInfoType: ZNSDKUserInfoType,
+  ZNCustomizedLanguageType: ZNCustomizedLanguageType,
+  ZoomSDKResolution: ZoomSDKResolution,
+  ZoomSDKRawDataType: ZoomSDKRawDataType,
+  RawDataStatus: RawDataStatus,
+  ZoomSDKVideoRenderMode: ZoomSDKVideoRenderMode,
+  SDKRawDataMemoryMode: SDKRawDataMemoryMode
 }
 </code></pre>
         </article>
@@ -536,13 +593,13 @@ module.exports = {
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-settings.html">settings</a></li><li><a href="module-zoom_annotation_ctrl.html">zoom_annotation_ctrl</a></li><li><a href="module-zoom_audio_rawdata.html">zoom_audio_rawdata</a></li><li><a href="module-zoom_auth.html">zoom_auth</a></li><li><a href="module-zoom_customized_resource.html">zoom_customized_resource</a></li><li><a href="module-zoom_direct_share_helper.html">zoom_direct_share_helper</a></li><li><a href="module-zoom_h323.html">zoom_h323</a></li><li><a href="module-zoom_meeting.html">zoom_meeting</a></li><li><a href="module-zoom_meeting_audio.html">zoom_meeting_audio</a></li><li><a href="module-zoom_meeting_configuration.html">zoom_meeting_configuration</a></li><li><a href="module-zoom_meeting_info.html">zoom_meeting_info</a></li><li><a href="module-zoom_meeting_Participants_ctrl.html">zoom_meeting_Participants_ctrl</a></li><li><a href="module-zoom_meeting_share.html">zoom_meeting_share</a></li><li><a href="module-zoom_meeting_ui_ctrl.html">zoom_meeting_ui_ctrl</a></li><li><a href="module-zoom_meeting_video.html">zoom_meeting_video</a></li><li><a href="module-zoom_premeeting.html">zoom_premeeting</a></li><li><a href="module-zoom_sdk.html">zoom_sdk</a></li><li><a href="module-zoom_setting.html">zoom_setting</a></li><li><a href="module-zoom_setting_accessibility_ctrl.html">zoom_setting_accessibility_ctrl</a></li><li><a href="module-zoom_setting_audio.html">zoom_setting_audio</a></li><li><a href="module-zoom_setting_general.html">zoom_setting_general</a></li><li><a href="module-zoom_setting_recording.html">zoom_setting_recording</a></li><li><a href="module-zoom_setting_statistic_ctrl.html">zoom_setting_statistic_ctrl</a></li><li><a href="module-zoom_setting_ui_ctrl.html">zoom_setting_ui_ctrl</a></li><li><a href="module-zoom_setting_video.html">zoom_setting_video</a></li><li><a href="module-zoom_share_rawdata.html">zoom_share_rawdata</a></li><li><a href="module-zoom_sms_helper.html">zoom_sms_helper</a></li><li><a href="module-zoom_upgrade_account.html">zoom_upgrade_account</a></li><li><a href="module-zoom_video_rawdata.html">zoom_video_rawdata</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-settings.html">settings</a></li><li><a href="module-zoom_annotation_ctrl.html">zoom_annotation_ctrl</a></li><li><a href="module-zoom_auth.html">zoom_auth</a></li><li><a href="module-zoom_customized_resource.html">zoom_customized_resource</a></li><li><a href="module-zoom_direct_share_helper.html">zoom_direct_share_helper</a></li><li><a href="module-zoom_h323.html">zoom_h323</a></li><li><a href="module-zoom_meeting.html">zoom_meeting</a></li><li><a href="module-zoom_meeting_audio.html">zoom_meeting_audio</a></li><li><a href="module-zoom_meeting_configuration.html">zoom_meeting_configuration</a></li><li><a href="module-zoom_meeting_info.html">zoom_meeting_info</a></li><li><a href="module-zoom_meeting_Participants_ctrl.html">zoom_meeting_Participants_ctrl</a></li><li><a href="module-zoom_meeting_recording.html">zoom_meeting_recording</a></li><li><a href="module-zoom_meeting_share.html">zoom_meeting_share</a></li><li><a href="module-zoom_meeting_ui_ctrl.html">zoom_meeting_ui_ctrl</a></li><li><a href="module-zoom_meeting_video.html">zoom_meeting_video</a></li><li><a href="module-zoom_premeeting.html">zoom_premeeting</a></li><li><a href="module-zoom_rawdata.html">zoom_rawdata</a></li><li><a href="module-zoom_sdk.html">zoom_sdk</a></li><li><a href="module-zoom_setting.html">zoom_setting</a></li><li><a href="module-zoom_setting_accessibility_ctrl.html">zoom_setting_accessibility_ctrl</a></li><li><a href="module-zoom_setting_audio.html">zoom_setting_audio</a></li><li><a href="module-zoom_setting_general.html">zoom_setting_general</a></li><li><a href="module-zoom_setting_recording.html">zoom_setting_recording</a></li><li><a href="module-zoom_setting_statistic_ctrl.html">zoom_setting_statistic_ctrl</a></li><li><a href="module-zoom_setting_ui_ctrl.html">zoom_setting_ui_ctrl</a></li><li><a href="module-zoom_setting_video.html">zoom_setting_video</a></li><li><a href="module-zoom_sms_helper.html">zoom_sms_helper</a></li><li><a href="module-zoom_upgrade_account.html">zoom_upgrade_account</a></li></ul>
 </nav>
 
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.3</a> on Wed Jun 17 2020 16:29:35 GMT+0800 (GMT+08:00)
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.3</a> on Tue Sep 29 2020 11:02:49 GMT+0800 (GMT+08:00)
 </footer>
 
 <script> prettyPrint(); </script>

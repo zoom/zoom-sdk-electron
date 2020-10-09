@@ -26,15 +26,13 @@
     
     <section>
         <article>
-            <pre class="prettyprint source linenums"><code>const { ZoomSDK_LANGUAGE_ID, ZoomSDKError } = require('./settings.js');
+            <pre class="prettyprint source linenums"><code>const { ZoomSDK_LANGUAGE_ID, ZoomSDKError, ZNCustomizedLanguageType, ZoomAPPLocale, ZoomSDKVideoRenderMode, SDKRawDataMemoryMode } = require('./settings.js');
 const ZOOMAUTHMOD = require('./zoom_auth.js');
 const ZOOMMEETINGMOD = require('./zoom_meeting.js');
 const ZOOMSETTINGMOD = require('./zoom_setting.js');
 const ZOOMRESOURCE = require('./zoom_customized_resource.js');
 const ZOOMPREMEETING = require('./zoom_premeeting.js');
-const ZOOMVIDEORAWDATA = require('./zoom_video_rawdata.js');
-const ZOOMAUDIORAWDATA = require('./zoom_audio_rawdata.js');
-const ZOOMSHARERAWDATA = require('./zoom_share_rawdata.js');
+const ZOOMRAWDATA = require('./zoom_rawdata.js');
 const ZOOMSMS = require('./zoom_sms_helper.js');
 const os = require('os');
 const platform = os.platform();
@@ -58,23 +56,25 @@ const ZoomSDK = (() => {
     let _path = clientOpts.path || (platform == 'darwin' ? './../sdk/mac/' : arch == 'x64' ? './../sdk/win64/' : './../sdk/win32/');
     let zoomnodepath = _path + 'zoomsdk.node';
     let requireFunc = typeof __webpack_require__ === 'function' ? __non_webpack_require__ : require;
-    let addon = requireFunc(zoomnodepath)();
+    let addon = requireFunc(zoomnodepath).exports();
     let _isSDKInitialized = false;
 
     return {
       // Public methods and variables
       /**
        * mode: Zoom SDK Init
-       * @param {String} path sdk.dll path on win os, todo: mac os.
-       * @param {String} domain
-       * @param {String} langname
-       * @param {String} langinfo
-       * @param {String} strSupportUrl
-       * @param {String} langid ZoomSDK_LANGUAGE_ID,
-       * @param {Boolean} enable_log
-       * @param {Number} locale see ZoomAPPLocale in setings.js
-       * @param {Number} logfilesize Size of a log file in M(megabyte). The default size is 5M. There are 5 log files in total and the file size varies from 1M to 50M. 
-       * @param {Boolean} enableGenerateDump
+       * @param {String} path [Required] sdk.dll path on win os, todo: mac os.
+       * @param {String} domain [Required]
+       * @param {String} langname [Optional]
+       * @param {String} langinfo [Optional]
+       * @param {Number} langtype [Optional] ZNCustomizedLanguageType
+       * @param {String} strSupportUrl [Optional]
+       * @param {Number} langid [Optional] ZoomSDK_LANGUAGE_ID,
+       * @param {Boolean} enable_log [Optional]
+       * @param {Number} locale [Optional] see ZoomAPPLocale in setings.js
+       * @param {Number} logfilesize [Optional] Size of a log file in M(megabyte). The default size is 5M. There are 5 log files in total and the file size varies from 1M to 50M. 
+       * @param {Boolean} enableGenerateDump [Optional]
+       * @param {Boolean} permonitorAwarenessMode [Optional]
        * @return {ZoomSDKError}
        */
       InitSDK: function (opts) {
@@ -83,14 +83,21 @@ const ZoomSDK = (() => {
         let domain = clientOpts.domain || 'https://www.zoom.us'; 
         let langname = clientOpts.langname || '';
         let langinfo = clientOpts.langinfo || '';
+        let langtype = Number(clientOpts.langtype) || ZNCustomizedLanguageType.ZN_CustomizedLanguage_None;
         let strSupportUrl = clientOpts.strSupportUrl || 'https://zoom.us';
         let langid = clientOpts.langid || ZoomSDK_LANGUAGE_ID.LANGUAGE_Unknow;
-        let enable_log = clientOpts.enable_log;
-        let locale = Number(clientOpts.locale);
-        let logfilesize = Number(clientOpts.logfilesize);
+        let enable_log = clientOpts.enable_log || true;
+        let locale = Number(clientOpts.locale) || ZoomAPPLocale.ZNSDK_APP_Locale_Default;
+        let logfilesize = Number(clientOpts.logfilesize) || 5;
         let enableGenerateDump = clientOpts.enableGenerateDump || false;
-        let ret = addon.InitSDK(path, domain, langname, langinfo, strSupportUrl, langid, enable_log, locale, logfilesize, enableGenerateDump);
-        console.log('InitSDK', ret)
+        let permonitorAwarenessMode = clientOpts.permonitorAwarenessMode || true;
+        let videoRenderMode = clientOpts.videoRenderMode || ZoomSDKVideoRenderMode.SDKVideoRenderMode_None;
+        let videoRawdataMemoryMode = clientOpts.videoRawdataMemoryMode || SDKRawDataMemoryMode.SDKRawDataMemoryModeStack;
+        let shareRawdataMemoryMode = clientOpts.shareRawdataMemoryMode || SDKRawDataMemoryMode.SDKRawDataMemoryModeStack;
+        let audioRawdataMemoryMode = clientOpts.audioRawdataMemoryMode || SDKRawDataMemoryMode.SDKRawDataMemoryModeStack;
+        let enableRawdataIntermediateMode = clientOpts.enableRawdataIntermediateMode || platform == 'darwin' ? false : true;
+        let ret = addon.InitSDK(path, domain, langname, langinfo, langtype, strSupportUrl, langid, enable_log, locale, logfilesize, enableGenerateDump
+          , permonitorAwarenessMode, videoRenderMode, videoRawdataMemoryMode, shareRawdataMemoryMode, audioRawdataMemoryMode, enableRawdataIntermediateMode);
         if (ZoomSDKError.SDKERR_SUCCESS == ret){
           _isSDKInitialized = true;
         } else {
@@ -149,27 +156,11 @@ const ZoomSDK = (() => {
         }
         return null;
       },
-      VideoRawData: (opts) => {
+      RawData: (opts) => {
         if (_isSDKInitialized) {
           let clientOpts = opts || {};
           clientOpts.addon = addon;
-          return ZOOMVIDEORAWDATA.ZoomVideoRawData.getInstance(clientOpts);
-        }
-        return null;
-      },
-      AudioRawData: (opts) => {
-        if (_isSDKInitialized) {
-          let clientOpts = opts || {};
-          clientOpts.addon = addon;
-          return ZOOMAUDIORAWDATA.ZoomAudioRawData.getInstance(clientOpts);
-        }
-        return null;
-      },
-      ShareRawData: (opts) => {
-        if (_isSDKInitialized) {
-          let clientOpts = opts || {};
-          clientOpts.addon = addon;
-          return ZOOMSHARERAWDATA.ZoomShareRawData.getInstance(clientOpts);
+          return ZOOMRAWDATA.ZoomRawData.getInstance(clientOpts);
         }
         return null;
       },
@@ -216,13 +207,13 @@ module.exports = {
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-settings.html">settings</a></li><li><a href="module-zoom_annotation_ctrl.html">zoom_annotation_ctrl</a></li><li><a href="module-zoom_audio_rawdata.html">zoom_audio_rawdata</a></li><li><a href="module-zoom_auth.html">zoom_auth</a></li><li><a href="module-zoom_customized_resource.html">zoom_customized_resource</a></li><li><a href="module-zoom_direct_share_helper.html">zoom_direct_share_helper</a></li><li><a href="module-zoom_h323.html">zoom_h323</a></li><li><a href="module-zoom_meeting.html">zoom_meeting</a></li><li><a href="module-zoom_meeting_audio.html">zoom_meeting_audio</a></li><li><a href="module-zoom_meeting_configuration.html">zoom_meeting_configuration</a></li><li><a href="module-zoom_meeting_info.html">zoom_meeting_info</a></li><li><a href="module-zoom_meeting_Participants_ctrl.html">zoom_meeting_Participants_ctrl</a></li><li><a href="module-zoom_meeting_share.html">zoom_meeting_share</a></li><li><a href="module-zoom_meeting_ui_ctrl.html">zoom_meeting_ui_ctrl</a></li><li><a href="module-zoom_meeting_video.html">zoom_meeting_video</a></li><li><a href="module-zoom_premeeting.html">zoom_premeeting</a></li><li><a href="module-zoom_sdk.html">zoom_sdk</a></li><li><a href="module-zoom_setting.html">zoom_setting</a></li><li><a href="module-zoom_setting_accessibility_ctrl.html">zoom_setting_accessibility_ctrl</a></li><li><a href="module-zoom_setting_audio.html">zoom_setting_audio</a></li><li><a href="module-zoom_setting_general.html">zoom_setting_general</a></li><li><a href="module-zoom_setting_recording.html">zoom_setting_recording</a></li><li><a href="module-zoom_setting_statistic_ctrl.html">zoom_setting_statistic_ctrl</a></li><li><a href="module-zoom_setting_ui_ctrl.html">zoom_setting_ui_ctrl</a></li><li><a href="module-zoom_setting_video.html">zoom_setting_video</a></li><li><a href="module-zoom_share_rawdata.html">zoom_share_rawdata</a></li><li><a href="module-zoom_sms_helper.html">zoom_sms_helper</a></li><li><a href="module-zoom_upgrade_account.html">zoom_upgrade_account</a></li><li><a href="module-zoom_video_rawdata.html">zoom_video_rawdata</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-settings.html">settings</a></li><li><a href="module-zoom_annotation_ctrl.html">zoom_annotation_ctrl</a></li><li><a href="module-zoom_auth.html">zoom_auth</a></li><li><a href="module-zoom_customized_resource.html">zoom_customized_resource</a></li><li><a href="module-zoom_direct_share_helper.html">zoom_direct_share_helper</a></li><li><a href="module-zoom_h323.html">zoom_h323</a></li><li><a href="module-zoom_meeting.html">zoom_meeting</a></li><li><a href="module-zoom_meeting_audio.html">zoom_meeting_audio</a></li><li><a href="module-zoom_meeting_configuration.html">zoom_meeting_configuration</a></li><li><a href="module-zoom_meeting_info.html">zoom_meeting_info</a></li><li><a href="module-zoom_meeting_Participants_ctrl.html">zoom_meeting_Participants_ctrl</a></li><li><a href="module-zoom_meeting_recording.html">zoom_meeting_recording</a></li><li><a href="module-zoom_meeting_share.html">zoom_meeting_share</a></li><li><a href="module-zoom_meeting_ui_ctrl.html">zoom_meeting_ui_ctrl</a></li><li><a href="module-zoom_meeting_video.html">zoom_meeting_video</a></li><li><a href="module-zoom_premeeting.html">zoom_premeeting</a></li><li><a href="module-zoom_rawdata.html">zoom_rawdata</a></li><li><a href="module-zoom_sdk.html">zoom_sdk</a></li><li><a href="module-zoom_setting.html">zoom_setting</a></li><li><a href="module-zoom_setting_accessibility_ctrl.html">zoom_setting_accessibility_ctrl</a></li><li><a href="module-zoom_setting_audio.html">zoom_setting_audio</a></li><li><a href="module-zoom_setting_general.html">zoom_setting_general</a></li><li><a href="module-zoom_setting_recording.html">zoom_setting_recording</a></li><li><a href="module-zoom_setting_statistic_ctrl.html">zoom_setting_statistic_ctrl</a></li><li><a href="module-zoom_setting_ui_ctrl.html">zoom_setting_ui_ctrl</a></li><li><a href="module-zoom_setting_video.html">zoom_setting_video</a></li><li><a href="module-zoom_sms_helper.html">zoom_sms_helper</a></li><li><a href="module-zoom_upgrade_account.html">zoom_upgrade_account</a></li></ul>
 </nav>
 
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.3</a> on Wed Jun 17 2020 16:29:35 GMT+0800 (GMT+08:00)
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.3</a> on Tue Sep 29 2020 11:02:49 GMT+0800 (GMT+08:00)
 </footer>
 
 <script> prettyPrint(); </script>

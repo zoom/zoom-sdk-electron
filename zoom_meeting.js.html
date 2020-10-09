@@ -26,8 +26,7 @@
     
     <section>
         <article>
-            <pre class="prettyprint source linenums"><code>const { app } = require('electron');
-const { ZoomMeetingStatus, ZoomUserType, ZoomSDKError, ZoomMeetingAudioStatus, ZoomMeetingVideoStatus } = require('./settings.js');
+            <pre class="prettyprint source linenums"><code>const { ZoomMeetingStatus, ZoomUserType, ZoomSDKError } = require('./settings.js');
 const ZoomMeetingINFOMOD = require('./zoom_meeting_info.js');
 const ZoomMeetingUIMOD = require('./zoom_meeting_ui_ctrl.js');
 const ZoomAnnotationMOD = require('./zoom_annotation_ctrl.js');
@@ -38,6 +37,7 @@ const ZoomMeetingH323MOD = require('./zoom_h323.js');
 const ZoomMeetingConfigurationMOD = require('./zoom_meeting_configuration.js');
 const ZoomUpdateAccountMOD = require('./zoom_upgrade_account.js');
 const ZoomMeetingParticipantsMOD = require('./zoom_meeting_Participants_ctrl.js');
+const ZoomMeetingRecordingMOD = require('./zoom_meeting_recording.js');
 
 let ZoomMeetingInfo;
 let ZoomMeetingUICtrl;
@@ -49,6 +49,8 @@ let ZoomH323;
 let ZoomMeetingConfiguration;
 let ZoomPaymentReminder;
 let ZoomMeetingParticipantsCtrl;
+let ZoomMeetingRecording;
+let startOrJoinWithRawdata;
 
 /**
 *@module
@@ -63,23 +65,49 @@ const ZoomMeeting = (function () {
   */
   function init(opts) {
     let clientOpts = opts || {};
-
     // Private methods and variables
     let _addon = clientOpts.addon.GetMeetingObj() || null;
+    let _rawdataAddon = clientOpts.addon.GetRawdataAPIWrap() || null;
     let _meetingstatuscb = clientOpts.meetingstatuscb || null;
 
     function meetingstatuscb(meetingStatus, result) {
+      switch (meetingStatus) {
+        case ZoomMeetingStatus.MEETING_STATUS_CONNECTING:
+          if (startOrJoinWithRawdata) {
+            StartPipeServe()
+          }
+          break;
+        case ZoomMeetingStatus.MEETING_STATUS_DISCONNECTING:
+        case ZoomMeetingStatus.MEETING_STATUS_RECONNECTING: 
+          if (startOrJoinWithRawdata) {
+            StopPipeServe();
+          }
+          break;
+        default:
+          break;
+      }
       if (_meetingstatuscb) {
         _meetingstatuscb(meetingStatus, result)
       }
     }
 
+    function StartPipeServe() {
+      if (_rawdataAddon) {
+        return _rawdataAddon.StartPipeServe();
+      }
+      return ZoomSDKError.SDKERR_UNINITIALIZE
+    }
+
+    function StopPipeServe() {
+      if (_rawdataAddon) {
+        return _rawdataAddon.StopPipeServe();
+      }
+      return ZoomSDKError.SDKERR_UNINITIALIZE
+    }
+
     if (_addon) {
       _addon.SetMeetingStatusCB(meetingstatuscb);
     }
-
-    let _videoAddon = clientOpts.addon.GetVideoRawDataObj() || null;
-    let _shareAddon = clientOpts.addon.GetShareRawDataObj() || null;
 
     return {
       // Public methods and variables
@@ -108,17 +136,17 @@ const ZoomMeeting = (function () {
       StartMeeting: function (opts) {
         if (_addon) {
           let clientOpts = opts || {};
-          if (clientOpts.startCBOption &amp;&amp; clientOpts.startCBOption == 'pipe') {
-            this.StartVideoServer();
-            this.StartShareServer();
-          }
           let meetingnum = clientOpts.meetingnum || 0;
           let directshareappwndhandle = clientOpts.directshareappwndhandle || 0;
           let participantid = clientOpts.participantid || '';
           let isvideooff = (clientOpts.isvideooff === undefined) ? false : clientOpts.isvideooff;
           let isaudiooff = (clientOpts.isaudiooff === undefined) ? false : clientOpts.isaudiooff;
           let isdirectsharedesktop = (clientOpts.isdirectsharedesktop === undefined) ? false : clientOpts.isdirectsharedesktop;
-          return _addon.Start(Number(meetingnum), directshareappwndhandle.toString(), participantid, isvideooff, isaudiooff, isdirectsharedesktop);
+          let result = _addon.Start(Number(meetingnum), directshareappwndhandle.toString(), participantid, isvideooff, isaudiooff, isdirectsharedesktop);
+          if (result == 0) {
+            startOrJoinWithRawdata = clientOpts.withRawdata;
+          }
+          return result;
         }
         return ZoomSDKError.SDKERR_UNINITIALIZE;
       },
@@ -173,10 +201,7 @@ const ZoomMeeting = (function () {
       JoinMeeting: function (opts) {
         if (_addon) {
           let clientOpts = opts || {};
-          if (clientOpts.startCBOption &amp;&amp; clientOpts.startCBOption == 'pipe') {
-            this.StartVideoServer();
-            this.StartShareServer();
-          }
+          startOrJoinWithRawdata = clientOpts.withRawdata;
           let meetingnum = clientOpts.meetingnum || 0;
           let vanityid = clientOpts.vanityid || '';
           let username = clientOpts.username || '';
@@ -187,8 +212,12 @@ const ZoomMeeting = (function () {
           let isvideooff = (clientOpts.isvideooff === undefined) ? false : clientOpts.isvideooff;
           let isaudiooff = (clientOpts.isaudiooff === undefined) ? false : clientOpts.isaudiooff;
           let isdirectsharedesktop = (clientOpts.isdirectsharedesktop === undefined) ? false : clientOpts.isdirectsharedesktop;
-          return _addon.Join(Number(meetingnum), vanityid, username, psw, directshareappwndhandle.toString(),
+          let result =  _addon.Join(Number(meetingnum), vanityid, username, psw, directshareappwndhandle.toString(),
             participantid, webinartoken, isvideooff, isaudiooff, isdirectsharedesktop);
+          if (result == 0) {
+            startOrJoinWithRawdata = clientOpts.withRawdata;
+          }
+          return result;
         }
         return ZoomSDKError.SDKERR_UNINITIALIZE;
       },
@@ -409,82 +438,16 @@ const ZoomMeeting = (function () {
           return ZoomMeetingParticipantsCtrl;
         }
       },
-      /** mode: StartVideoServer
-      * @return {Boolean}
-      */
-      StartVideoServer: function () {
-        if (_videoAddon) {
-          let ret = _videoAddon.StartPipeServer();
-          app.startVideoServer = ret;
-          return ret;
+      GetMeetingRecording: function(opts) {
+        if (_addon) {
+          let clientOpts = opts || {};
+          clientOpts.addon = _addon;
+          clientOpts.zoommeeting = instance;
+          if (!ZoomMeetingRecording) {
+            ZoomMeetingRecording = ZoomMeetingRecordingMOD.ZoomMeetingRecording.getInstance(clientOpts);
+          }
+          return ZoomMeetingRecording;
         }
-        return ZoomSDKError.SDKERR_UNINITIALIZE;
-      },
-      /** mode: StopPipeServer
-      * @return {Boolean}
-      */
-      StopVideoServer: function () {
-        if (_videoAddon) {
-          return _videoAddon.StopPipeServer();
-        }
-        return ZoomSDKError.SDKERR_UNINITIALIZE;
-      },
-      /** mode: StartVideoClient
-      * @return {Boolean}
-      */
-      StartVideoClient: function () {
-        if (_videoAddon) {
-          let ret = _videoAddon.StartVideoClient();
-          return ret;
-        }
-        return ZoomSDKError.SDKERR_UNINITIALIZE;
-      },
-      /** mode: StopVideoClient
-      * @return {Boolean}
-      */
-      StopVideoClient: function () {
-        if (_videoAddon) {
-          return _videoAddon.StopVideoClient();
-        }
-        return ZoomSDKError.SDKERR_UNINITIALIZE;
-      },
-      /** mode: StartShareServer
-      * @return {Boolean}
-      */
-      StartShareServer: function () {
-        if (_shareAddon) {
-          let ret = _shareAddon.StartPipeServer();
-          app.startShareServer = ret;
-          return ret;
-        }
-        return ZoomSDKError.SDKERR_UNINITIALIZE;
-      },
-      /** mode: StopShareServer
-      * @return {Boolean}
-      */
-      StopShareServer: function () {
-        if (_shareAddon) {
-          return _shareAddon.StopPipeServer();
-        }
-        return ZoomSDKError.SDKERR_UNINITIALIZE;
-      },
-      /** mode: StartShareClient
-      * @return {Boolean}
-      */
-      StartShareClient: function () {
-        if (_shareAddon) {
-          return _shareAddon.StartShareClient();
-        }
-        return ZoomSDKError.SDKERR_UNINITIALIZE;
-      },
-      /** mode: StopShareClient
-      * @return {Boolean}
-      */
-      StopShareClient: function () {
-        if (_shareAddon) {
-          return _shareAddon.StopShareClient();
-        }
-        return ZoomSDKError.SDKERR_UNINITIALIZE;
       }
     };
   };
@@ -516,13 +479,13 @@ module.exports = {
 </div>
 
 <nav>
-    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-settings.html">settings</a></li><li><a href="module-zoom_annotation_ctrl.html">zoom_annotation_ctrl</a></li><li><a href="module-zoom_audio_rawdata.html">zoom_audio_rawdata</a></li><li><a href="module-zoom_auth.html">zoom_auth</a></li><li><a href="module-zoom_customized_resource.html">zoom_customized_resource</a></li><li><a href="module-zoom_direct_share_helper.html">zoom_direct_share_helper</a></li><li><a href="module-zoom_h323.html">zoom_h323</a></li><li><a href="module-zoom_meeting.html">zoom_meeting</a></li><li><a href="module-zoom_meeting_audio.html">zoom_meeting_audio</a></li><li><a href="module-zoom_meeting_configuration.html">zoom_meeting_configuration</a></li><li><a href="module-zoom_meeting_info.html">zoom_meeting_info</a></li><li><a href="module-zoom_meeting_Participants_ctrl.html">zoom_meeting_Participants_ctrl</a></li><li><a href="module-zoom_meeting_share.html">zoom_meeting_share</a></li><li><a href="module-zoom_meeting_ui_ctrl.html">zoom_meeting_ui_ctrl</a></li><li><a href="module-zoom_meeting_video.html">zoom_meeting_video</a></li><li><a href="module-zoom_premeeting.html">zoom_premeeting</a></li><li><a href="module-zoom_sdk.html">zoom_sdk</a></li><li><a href="module-zoom_setting.html">zoom_setting</a></li><li><a href="module-zoom_setting_accessibility_ctrl.html">zoom_setting_accessibility_ctrl</a></li><li><a href="module-zoom_setting_audio.html">zoom_setting_audio</a></li><li><a href="module-zoom_setting_general.html">zoom_setting_general</a></li><li><a href="module-zoom_setting_recording.html">zoom_setting_recording</a></li><li><a href="module-zoom_setting_statistic_ctrl.html">zoom_setting_statistic_ctrl</a></li><li><a href="module-zoom_setting_ui_ctrl.html">zoom_setting_ui_ctrl</a></li><li><a href="module-zoom_setting_video.html">zoom_setting_video</a></li><li><a href="module-zoom_share_rawdata.html">zoom_share_rawdata</a></li><li><a href="module-zoom_sms_helper.html">zoom_sms_helper</a></li><li><a href="module-zoom_upgrade_account.html">zoom_upgrade_account</a></li><li><a href="module-zoom_video_rawdata.html">zoom_video_rawdata</a></li></ul>
+    <h2><a href="index.html">Home</a></h2><h3>Modules</h3><ul><li><a href="module-settings.html">settings</a></li><li><a href="module-zoom_annotation_ctrl.html">zoom_annotation_ctrl</a></li><li><a href="module-zoom_auth.html">zoom_auth</a></li><li><a href="module-zoom_customized_resource.html">zoom_customized_resource</a></li><li><a href="module-zoom_direct_share_helper.html">zoom_direct_share_helper</a></li><li><a href="module-zoom_h323.html">zoom_h323</a></li><li><a href="module-zoom_meeting.html">zoom_meeting</a></li><li><a href="module-zoom_meeting_audio.html">zoom_meeting_audio</a></li><li><a href="module-zoom_meeting_configuration.html">zoom_meeting_configuration</a></li><li><a href="module-zoom_meeting_info.html">zoom_meeting_info</a></li><li><a href="module-zoom_meeting_Participants_ctrl.html">zoom_meeting_Participants_ctrl</a></li><li><a href="module-zoom_meeting_recording.html">zoom_meeting_recording</a></li><li><a href="module-zoom_meeting_share.html">zoom_meeting_share</a></li><li><a href="module-zoom_meeting_ui_ctrl.html">zoom_meeting_ui_ctrl</a></li><li><a href="module-zoom_meeting_video.html">zoom_meeting_video</a></li><li><a href="module-zoom_premeeting.html">zoom_premeeting</a></li><li><a href="module-zoom_rawdata.html">zoom_rawdata</a></li><li><a href="module-zoom_sdk.html">zoom_sdk</a></li><li><a href="module-zoom_setting.html">zoom_setting</a></li><li><a href="module-zoom_setting_accessibility_ctrl.html">zoom_setting_accessibility_ctrl</a></li><li><a href="module-zoom_setting_audio.html">zoom_setting_audio</a></li><li><a href="module-zoom_setting_general.html">zoom_setting_general</a></li><li><a href="module-zoom_setting_recording.html">zoom_setting_recording</a></li><li><a href="module-zoom_setting_statistic_ctrl.html">zoom_setting_statistic_ctrl</a></li><li><a href="module-zoom_setting_ui_ctrl.html">zoom_setting_ui_ctrl</a></li><li><a href="module-zoom_setting_video.html">zoom_setting_video</a></li><li><a href="module-zoom_sms_helper.html">zoom_sms_helper</a></li><li><a href="module-zoom_upgrade_account.html">zoom_upgrade_account</a></li></ul>
 </nav>
 
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.3</a> on Wed Jun 17 2020 16:29:35 GMT+0800 (GMT+08:00)
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.3</a> on Tue Sep 29 2020 11:02:49 GMT+0800 (GMT+08:00)
 </footer>
 
 <script> prettyPrint(); </script>

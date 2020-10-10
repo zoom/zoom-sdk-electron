@@ -102,25 +102,25 @@ Please make sure that you have configured your development environment successfu
 ### Development environment configuration for Windows
 	Note that Windows electron add-on is 32bit.
 1. Install electron and node.js
-	* how to install node.js 12.0.0 version，download url: https://nodejs.org/download/release/v12.0.0/
-	* install electron 5.0.2 version,use command run `npm install --arch=ia32 --save-dev electron@5.0.2 -g`
+	* how to install node.js 12.16.1 version，download url: https://nodejs.org/download/release/v12.16.1/
+	* install electron 8.2.4 version,use command run `npm install --arch=ia32 --save-dev electron@8.2.4 -g`
 
 2. run `npm install node-gyp -g` to install node-gyp
 
 3. run `npm install bindings -g` to install bindings
 
-4. make sure you installed msvc-2015 and python 2.7
+4. make sure you installed msvc-2019 and python 2.7
 
-5. `npm config set msvs_version 2015`
+5. `npm config set msvs_version 2019`
    `npm config set python python2.7`
    `npm config set npm_config_arch ia32`
    `npm config set npm_config_target_arch ia32`
 
 ### Development environment configuration for Mac
-1. Install node.js 12.0.0 version，download url: https://nodejs.org/download/release/v12.0.0/.
+1. Install node.js 12.16.1 version，download url: https://nodejs.org/download/release/v12.16.1/.
    also can run `ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)" ` and `sudo brew install node` to install node.js
 
-2. Install electron 5.0.2 version，use command run `npm install  --save-dev electron@5.0.2 -g`
+2. Install electron 8.2.4 version，use command run `npm install  --save-dev electron@8.2.4 -g`
 
 3. run `npm install node-gyp -g` to install node-gyp
 

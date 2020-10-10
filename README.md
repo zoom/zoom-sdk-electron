@@ -25,18 +25,16 @@
 - [Acknowledgments](#acknowledgments)   
 
 ## Latest SDK News
-1. Starting from Client SDK 5.0, if you are using tokens to start a meeting, you will only need to retrieve ZAK from Zoom API. The user token has been deprecated. 
-2. To follow with Zoom client's recent changes, Zoom SDK has temporary remove the "Unmute All" interface in Client SDK 5.0.
-3. To align with Zoom’s [recent announcement](https://blog.zoom.us/wordpress/2020/04/22/zoom-hits-milestone-on-90-day-security-plan-releases-zoom-5-0/) pertaining to our security initiative, Zoom Client SDKs have added **AES 256-bit GCM encryption** support, which provides more protection for meeting data and greater resistance to tampering. **The system-wide account enablement of AES 256-bit GCM encryption will take place on June 01.** You are **strongly recommended** to start the required upgrade to this latest version 4.6.21666.0428 at your earliest convenience. Please note that any Client SDK versions below 4.6.21666.0428 will **no longer be operational** from June 01.
-4. We have merged and unified the `windows-electron-sdk` and the `mac-electron-sdk` into one single SDK.
+1. Starting from 5.2.41735.0929, building the Electron SDK on Windows requires building with Visual Studio 2019.
+2. Starting from Client SDK 5.0, if you are using tokens to start a meeting, you will only need to retrieve ZAK from Zoom API. The user token has been deprecated. 
+3. To follow with Zoom client's recent changes, Zoom SDK has temporary remove the "Unmute All" interface in Client SDK 5.0.
+4. To align with Zoom’s [recent announcement](https://blog.zoom.us/wordpress/2020/04/22/zoom-hits-milestone-on-90-day-security-plan-releases-zoom-5-0/) pertaining to our security initiative, Zoom Client SDKs have added **AES 256-bit GCM encryption** support, which provides more protection for meeting data and greater resistance to tampering. **The system-wide account enablement of AES 256-bit GCM encryption will take place on June 01.** You are **strongly recommended** to start the required upgrade to this latest version 4.6.21666.0428 at your earliest convenience. Please note that any Client SDK versions below 4.6.21666.0428 will **no longer be operational** from June 01.
+5. We have merged and unified the `windows-electron-sdk` and the `mac-electron-sdk` into one single SDK.
 The new Electron SDK has a brand new structure, consist of the node-interface and the node-core:
 
 * Node-interface: contains all the implementations by V8 engine
 * Node-core: contains all the uniform interfaces for both Windows and Mac
 Due to the open source nature of this SDK, **you will be able to configure and compile the new Zoom Electron SDK with any versions of Electron.**
-
-
-2. Our brand new [Zoom Developer Community Forum](https://devforum.zoom.us/) is now online!!! Check it out! We are here to help! :D
 
 ## Community Support
 You can find the community support forum here:

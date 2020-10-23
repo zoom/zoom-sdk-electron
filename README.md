@@ -126,6 +126,43 @@ Please make sure that you have configured your development environment successfu
 
 4. run `npm install bindings -g` to install bindings
 
+### Initializing SDK with JWT token
+When initializing the SDK, you will need to compose a JWT token using your SDK key & secret.
+
+* How to compose JWT token for SDK initialization
+
+You may generate your JWT token using the online tool https://jwt.io/. **It is highly recommended to generate your JWT token in your backend server.**
+
+JWT is generated with three core parts: Header, Payload, and Signature. When combined, these parts are separated by a period to form a token: aaaaa.bbbbb.cccc.
+
+Please follow this template to compose your payload for SDK initialization:
+
+** Header
+```
+{
+  "alg": "HS256",
+  "typ": "JWT"
+}
+```
+** Payload
+```
+{
+         "appKey": "string",     // Your SDK key
+         "iat": long,   // access token issue timestamp (unit: second)
+         "exp": long,  // access token expire timestamp, MAX: iat + 2 days (unit: second)
+         "tokenExp": long // token expire timestamp, MIN:iat + 30 minutes (unit: second)
+}
+```
+**The minimum value of `tokenExp` should be at least 30 minutes, otherwise, SDK will reject the authentication request.**
+** Signature
+```
+HMACSHA256(
+  base64UrlEncode(header) + "." +
+  base64UrlEncode(payload),
+  "Your SDK secret here"
+)
+```
+You do not need to secret base64 encoded your signature. Once the JWT token is generated, please do not reveal it or publish it. **It is highly recommended to handle your SDK key and secret and generate JWT in a backend server to be consumed by your application. Do not generate JWT in a production application.**
 
 ## SDK Reference
 

@@ -1,0 +1,25 @@
+{
+  "name": "zoom-sdk-electron",
+  "version": "v5.2.41735.0929",
+  "description": "Zoom Electron Sdk",
+  "main": "index.js",
+  "directories": {
+    "lib": "lib",
+    "sdk": "sdk"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "install": "node-gyp rebuild"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/zoom/zoom-sdk-electron.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "gypfile": true,
+  "bugs": {
+    "url": "https://github.com/zoom/zoom-sdk-electron/issues"
+  },
+  "homepage": "https://github.com/zoom/zoom-sdk-electron#readme"
+}

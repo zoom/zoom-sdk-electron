@@ -178,6 +178,14 @@ typedef enum
  * @note Call Api firstly before you call [[ZoomSDK sharedSDK]initSDK:NO/YES] in the App.
  */
 - (ZoomSDKError)setSupportDarkModel:(BOOL)isSupport;
+
+/**
+ * @brief Set identifier of team.
+ * @param identifier Subject.OU value of the signing certificate, zoom will verify the certificate before loading.
+ * @note After you re-sign the SDK, you should call this interface to set the identifier of signature. You should call the method before calling [[ZoomSDK sharedSDK]initSDK:NO/YES] in the App.
+ */
+- (void)setTeamIdentifier:(NSString*)identifier;
+
 @end
 
 

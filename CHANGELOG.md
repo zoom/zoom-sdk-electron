@@ -39,6 +39,17 @@ HMACSHA256(
 ```
 You do not need to secret base64 encoded your signature. Once the JWT token is generated, please do not reveal it or publish it. **It is highly recommended to handle your SDK key and secret and generate JWT in a backend server to be consumed by your application. Do not generate JWT in a production application.**
 
+## 2020-10-26 @ v5.2.41762.1027
+
+## Changed & Fixed
+* [Mac] Fixed an issue that the virtual background does not work after re-signing the SDK libraries.
+  * SDK will verify the signature of all libraries. When the SDK libraries have been resigned, please call the interface `setTeamIdentifier` to set the organization unit of the signature before intializing in the app.
+  ```
+     setTeamIdentifier(“the ou of certificate”);
+  ```
+
+* [Mac] Fixed an issue that the keychain popup dialog contains 'Zoom', the new keychain pops up will use the app's name instead.
+
 ## 2020-10-09 @ v5.2.41735.0929
 
 ## Added

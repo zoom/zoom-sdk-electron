@@ -559,6 +559,12 @@ let functionObj = {
       domainWindow = null;
     }
   },
+  setTeamIdentifier: function (identifier) {
+    const opts = {
+      identifier: identifier
+    }
+    var ret = zoomsdk.SetTeamIdentifier(opts);
+  },
   setDomain: function (domain, enable_log) {
     const opts = {
       path: '', // win require absolute path, mac require ''

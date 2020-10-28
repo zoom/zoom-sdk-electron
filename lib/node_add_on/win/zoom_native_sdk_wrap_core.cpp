@@ -143,3 +143,7 @@ ZNativeRawAPIWrap& ZNativeSDKWrap::GetRawAPIWrap()
 {
 	return _z_raw_api_wrap;
 }
+void ZNativeSDKWrap::SetTeamIdentifier(ZoomSTRING identifier)
+{
+	//only for Mac
+}

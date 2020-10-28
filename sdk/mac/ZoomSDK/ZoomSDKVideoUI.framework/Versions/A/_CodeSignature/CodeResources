@@ -6,7 +6,7 @@
 	<dict>
 		<key>Resources/ConfJoinByID.nib</key>
 		<data>
-		Q9k6EWWpJmzXj1p5ovX/12pWnjE=
+		fX5eGhBYFbbtV4zIgvdh7JoQF78=
 		</data>
 		<key>Resources/FullScreenTipWindow.nib</key>
 		<data>
@@ -14,7 +14,7 @@
 		</data>
 		<key>Resources/Info.plist</key>
 		<data>
-		jmbB7fOe2Ji/RF/NLGi+W6EevhU=
+		pDjVW0YUZHo1ZQW99C1SxT15DSo=
 		</data>
 		<key>Resources/LaunchPollWindow.nib</key>
 		<data>
@@ -34,7 +34,7 @@
 		</data>
 		<key>Resources/ZMAirHostDownloadWindowController.nib</key>
 		<data>
-		a5b5WjpfV40X8VAh7pTHMXCA+nI=
+		8cpUw5EyBCZLn099snSub7pNOOI=
 		</data>
 		<key>Resources/ZMAlert.nib</key>
 		<data>
@@ -46,7 +46,7 @@
 		</data>
 		<key>Resources/ZMAudioInfoWindowController.nib</key>
 		<data>
-		siBwnMo7zpVlUMMj8w0X5CbB/4U=
+		G3cxuJLjy8Qx1xtJbo3mdFESoIw=
 		</data>
 		<key>Resources/ZMAudioWizardWindowController.nib</key>
 		<data>
@@ -62,7 +62,7 @@
 		</data>
 		<key>Resources/ZMClaimHostWindowController.nib</key>
 		<data>
-		TRnCsYWrViXsUX8NRiErWfUvgH8=
+		YWzpAJz7yKy+evQtNF5lRCAXzZo=
 		</data>
 		<key>Resources/ZMCloseAudioWithoutJoinWindowController.nib</key>
 		<data>
@@ -74,7 +74,7 @@
 		</data>
 		<key>Resources/ZMJBHWindowController.nib</key>
 		<data>
-		OtsWXJB7dxClCn/Te2aNLmmOn4A=
+		v6GKfH4+THS76RMbgIh9y6i/+XQ=
 		</data>
 		<key>Resources/ZMJoinMeetingWindowController.nib</key>
 		<data>
@@ -102,7 +102,7 @@
 		</data>
 		<key>Resources/ZMRemoteControlUserListWindowController.nib</key>
 		<data>
-		xReXz9l5hJE6cB4GE2Km516mj4A=
+		xFpVahA0LSYzJlw4/il2uSsnASo=
 		</data>
 		<key>Resources/ZMRenameWindowController.nib</key>
 		<data>
@@ -118,7 +118,7 @@
 		</data>
 		<key>Resources/ZPChatInMeetingWindow.nib</key>
 		<data>
-		wKVJHzp220oIDSJyMlqL/OI4sK4=
+		VovJjQ9zuGU/UXO7MNSTKFb1guk=
 		</data>
 		<key>Resources/ZPChatUserView.nib</key>
 		<data>
@@ -126,7 +126,7 @@
 		</data>
 		<key>Resources/ZPCloseCaptionWindow.nib</key>
 		<data>
-		XEVQB7rijHjtqNsn4eCpiS5kL2k=
+		WWws/aRj9+OAwGa/wubxXrevCmQ=
 		</data>
 		<key>Resources/ZPConfJoinByWebController.nib</key>
 		<data>
@@ -162,11 +162,11 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			Q9k6EWWpJmzXj1p5ovX/12pWnjE=
+			fX5eGhBYFbbtV4zIgvdh7JoQF78=
 			</data>
 			<key>hash2</key>
 			<data>
-			jeBbdS0OsN8LXTItD1NfhrMb/nVaQRV7U9ncJSe/EcA=
+			s5hJ/2F8uAYMZ4LOf9OfhYKRGVAFQlgumumiIs5SXZ4=
 			</data>
 		</dict>
 		<key>Resources/FullScreenTipWindow.nib</key>
@@ -184,11 +184,11 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			jmbB7fOe2Ji/RF/NLGi+W6EevhU=
+			pDjVW0YUZHo1ZQW99C1SxT15DSo=
 			</data>
 			<key>hash2</key>
 			<data>
-			RdKHbnHntwIIaVYkmuBYK8wHbyGfr47csne+cDaZ7QQ=
+			eQzQouZRlZDR6l7VmpG4NvuHmu/NlY3sSFLp3QkxY9g=
 			</data>
 		</dict>
 		<key>Resources/LaunchPollWindow.nib</key>
@@ -239,11 +239,11 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			a5b5WjpfV40X8VAh7pTHMXCA+nI=
+			8cpUw5EyBCZLn099snSub7pNOOI=
 			</data>
 			<key>hash2</key>
 			<data>
-			m3QGTN9/3JsU10EiXRYcXD4Jlttb7zG5PbCWdryS3R0=
+			TWoSIPdio4XzzpuP70xKtxWC68k754W9DCPdMh3KXVo=
 			</data>
 		</dict>
 		<key>Resources/ZMAlert.nib</key>
@@ -272,11 +272,11 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			siBwnMo7zpVlUMMj8w0X5CbB/4U=
+			G3cxuJLjy8Qx1xtJbo3mdFESoIw=
 			</data>
 			<key>hash2</key>
 			<data>
-			m+995tbncZHv/tcbcuPaJAnG1diSTFH27xqKP/YTEdE=
+			JTs4b4kcxgS58k8UYz4KL11we8dhmixJLnpI2IrH3p4=
 			</data>
 		</dict>
 		<key>Resources/ZMAudioWizardWindowController.nib</key>
@@ -316,11 +316,11 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			TRnCsYWrViXsUX8NRiErWfUvgH8=
+			YWzpAJz7yKy+evQtNF5lRCAXzZo=
 			</data>
 			<key>hash2</key>
 			<data>
-			kmqLMGCIAue0Ep1NqaqS0xpT0/C56U8RfBqxZBVBV9E=
+			W4izFf8TtHH6QcMFNxhLwduob2HFxVtU2aZ84qTJXz4=
 			</data>
 		</dict>
 		<key>Resources/ZMCloseAudioWithoutJoinWindowController.nib</key>
@@ -349,11 +349,11 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			OtsWXJB7dxClCn/Te2aNLmmOn4A=
+			v6GKfH4+THS76RMbgIh9y6i/+XQ=
 			</data>
 			<key>hash2</key>
 			<data>
-			uWoMoulcmf+/EyMeP8fAl9NruBBVNv4pxNg/pB++NQU=
+			CWhAxfaHJe2P1bqgThYSkzDXECTY1df9QiiqLeRrq34=
 			</data>
 		</dict>
 		<key>Resources/ZMJoinMeetingWindowController.nib</key>
@@ -426,11 +426,11 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			xReXz9l5hJE6cB4GE2Km516mj4A=
+			xFpVahA0LSYzJlw4/il2uSsnASo=
 			</data>
 			<key>hash2</key>
 			<data>
-			G7xTZix82s8TZcvS7TI9MYsJid5ANY+o8BGOH+uzZDk=
+			zhR4D9s9wE44HN4l0srCj0t3xOOsejdTR/nUx1Dkwk8=
 			</data>
 		</dict>
 		<key>Resources/ZMRenameWindowController.nib</key>
@@ -470,11 +470,11 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			wKVJHzp220oIDSJyMlqL/OI4sK4=
+			VovJjQ9zuGU/UXO7MNSTKFb1guk=
 			</data>
 			<key>hash2</key>
 			<data>
-			UJ3RNL+0q76hwcuvSuFJsw6kii7QD4GtEX0yw5y0OWk=
+			vsZLd3H88r3sIWBd2uO3muAhGIOwzF0zvUnPG5/ek40=
 			</data>
 		</dict>
 		<key>Resources/ZPChatUserView.nib</key>
@@ -492,11 +492,11 @@
 		<dict>
 			<key>hash</key>
 			<data>
-			XEVQB7rijHjtqNsn4eCpiS5kL2k=
+			WWws/aRj9+OAwGa/wubxXrevCmQ=
 			</data>
 			<key>hash2</key>
 			<data>
-			MkelrGCn/AreoxSyF/WyV6b8z5r1NZmwu7XbHyhyst0=
+			J3gkumnlzQYn/lOnEnnWY0C2+XFVfpNTlvA1+I5QGXc=
 			</data>
 		</dict>
 		<key>Resources/ZPConfJoinByWebController.nib</key>

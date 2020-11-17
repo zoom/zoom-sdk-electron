@@ -26,14 +26,8 @@
     
     <section>
         <article>
-            <pre class="prettyprint source linenums"><code>/*
- * @Description: In User Settings Edit
- * @Author: your name
- * @Date: 2019-08-09 18:14:09
- * @LastEditTime: 2019-08-13 16:42:29
- * @LastEditors: Please set LastEditors
- */
-const { ZoomSDKError } = require('./settings.js');
+            <pre class="prettyprint source linenums"><code>const { ZoomSDKError } = require('./settings.js');
+const messages = require('./electron_sdk_pb.js');
 
 /**
 *@module
@@ -92,7 +86,14 @@ var ZoomRawData = (function () {
         if (_addon) {
           let clientOpts = opts || {};
           let recv_handle = clientOpts.recv_handle;
-          return _addon.CreateRenderer(Number(recv_handle));
+          try {
+            let CreateRendererParams = new messages.CreateRendererParams();
+            CreateRendererParams.setRecvhandle(Number(recv_handle));
+            let bytes = CreateRendererParams.serializeBinary();
+            return _addon.CreateRenderer(bytes);            
+          } catch (error) {
+            return ZoomSDKError.SDKERR_INVALID_PARAMETER;
+          }
         }
         return ZoomSDKError.SDKERR_UNINITIALIZE
       },
@@ -104,7 +105,14 @@ var ZoomRawData = (function () {
         if (_addon) {
           let clientOpts = opts || {};
           let recv_handle = clientOpts.recv_handle;
-          return _addon.DestroyRenderer(Number(recv_handle));
+          try {
+            let DestroyRendererParams = new messages.DestroyRendererParams();
+            DestroyRendererParams.setRecvhandle(Number(recv_handle));
+            let bytes = DestroyRendererParams.serializeBinary();
+            return _addon.DestroyRenderer(bytes);
+          } catch (error) {
+            return ZoomSDKError.SDKERR_INVALID_PARAMETER;
+          }
         }
         return ZoomSDKError.SDKERR_UNINITIALIZE
       },
@@ -120,7 +128,16 @@ var ZoomRawData = (function () {
           let userid = clientOpts.userid;
           let rawdataType = clientOpts.rawdataType;
           let recv_handle = clientOpts.recv_handle;
-          return _addon.Subscribe(Number(userid), Number(rawdataType), Number(recv_handle));
+          try {
+            let SubscribeParams = new messages.SubscribeParams();
+            SubscribeParams.setUserid(Number(userid));
+            SubscribeParams.setRawdatatype(Number(rawdataType));
+            SubscribeParams.setRecvhandle(Number(recv_handle));
+            let bytes = SubscribeParams.serializeBinary();
+            return _addon.Subscribe(bytes);
+          } catch (error) {
+            return ZoomSDKError.SDKERR_INVALID_PARAMETER;
+          }
         }
         return ZoomSDKError.SDKERR_UNINITIALIZE
       },
@@ -132,7 +149,14 @@ var ZoomRawData = (function () {
         if (_addon) {
           let clientOpts = opts || {};
           let recv_handle = clientOpts.recv_handle;
-          return _addon.UnSubscribe(Number(recv_handle));
+          try {
+            let UnSubscribeParams = new messages.UnSubscribeParams();
+            UnSubscribeParams.setRecvhandle(Number(recv_handle));
+            let bytes = UnSubscribeParams.serializeBinary();
+            return _addon.UnSubscribe(bytes);
+          } catch (error) {
+            return ZoomSDKError.SDKERR_INVALID_PARAMETER;
+          }
         }
         return ZoomSDKError.SDKERR_UNINITIALIZE;
       },
@@ -146,7 +170,15 @@ var ZoomRawData = (function () {
           let clientOpts = opts || {};
           let resolution = clientOpts.resolution;
           let recv_handle = clientOpts.recv_handle;
-          return _addon.SetRawDataResolution(Number(resolution), Number(recv_handle));
+          try {
+            let SetRawDataResolutionParams = new messages.SetRawDataResolutionParams();
+            SetRawDataResolutionParams.setResolution(Number(resolution));
+            SetRawDataResolutionParams.setRecvhandle(Number(recv_handle));
+            let bytes = SetRawDataResolutionParams.serializeBinary();
+            return _addon.SetRawDataResolution(bytes);
+          } catch (error) {
+            return ZoomSDKError.SDKERR_INVALID_PARAMETER;
+          }
         }
         return ZoomSDKError.SDKERR_UNINITIALIZE
       },
@@ -158,7 +190,14 @@ var ZoomRawData = (function () {
         if (_addon) {
           let clientOpts = opts || {};
           let recv_handle = clientOpts.recv_handle;
-          return _addon.GetResolution(Number(recv_handle));
+          try {
+            let GetResolutionParams = new messages.GetResolutionParams();
+            GetResolutionParams.setRecvhandle(Number(recv_handle));
+            let bytes = GetResolutionParams.serializeBinary();
+            return _addon.GetResolution(bytes);
+          } catch (error) {
+            return ZoomSDKError.SDKERR_INVALID_PARAMETER;
+          }
         }
         return ZoomSDKError.SDKERR_UNINITIALIZE
       },
@@ -170,7 +209,14 @@ var ZoomRawData = (function () {
         if (_addon) {
           let clientOpts = opts || {};
           let recv_handle = clientOpts.recv_handle;
-          return _addon.GetRawDataType(Number(recv_handle));
+          try {
+            let GetRawDataTypeParams = new messages.GetRawDataTypeParams();
+            GetRawDataTypeParams.setRecvhandle(Number(recv_handle));
+            let bytes = GetRawDataTypeParams.serializeBinary();
+            return _addon.GetRawDataType(bytes);
+          } catch (error) {
+            return ZoomSDKError.SDKERR_INVALID_PARAMETER;
+          }
         }
         return ZoomSDKError.SDKERR_UNINITIALIZE
       },
@@ -182,7 +228,14 @@ var ZoomRawData = (function () {
         if (_addon) {
           let clientOpts = opts || {};
           let recv_handle = clientOpts.recv_handle;
-          return _addon.GetUserId(Number(recv_handle));
+          try {
+            let GetUserIdParams = new messages.GetUserIdParams();
+            GetUserIdParams.setRecvhandle(Number(recv_handle));
+            let bytes = GetUserIdParams.serializeBinary();
+            return _addon.GetUserId(bytes);
+          } catch (error) {
+            return ZoomSDKError.SDKERR_INVALID_PARAMETER;
+          }
         }
         return ZoomSDKError.SDKERR_UNINITIALIZE
       },
@@ -247,7 +300,7 @@ module.exports = {
 <br class="clear">
 
 <footer>
-    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.3</a> on Tue Sep 29 2020 11:02:49 GMT+0800 (GMT+08:00)
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 3.6.3</a> on Wed Nov 11 2020 10:53:26 GMT+0800 (GMT+08:00)
 </footer>
 
 <script> prettyPrint(); </script>

@@ -14,26 +14,30 @@ void ZoomNodeSettingAudioCtrlWrap::SelectMic(const v8::FunctionCallbackInfo<v8::
 {
 
 	v8::Isolate* isolate = args.GetIsolate();
-	if (args.Length() < 2) {
-		isolate->ThrowException(v8::Exception::TypeError(
-			v8::String::NewFromUtf8(isolate, "Wrong number of arguments", v8::NewStringType::kInternalized).ToLocalChecked()));
-		return;
-	}
-
-	if (!args[0]->IsString() ||
-		!args[1]->IsString()
-		)
+	ZNSDKError err = ZNSDKERR_SUCCESS;
+	do
 	{
-		isolate->ThrowException(v8::Exception::TypeError(
-			v8::String::NewFromUtf8(isolate, "Wrong arguments", v8::NewStringType::kInternalized).ToLocalChecked()));
-		return;
-	}
-	ZoomSTRING zn_deviceId;
-	zoom_v8toc(args[0].As<v8::String>(), zn_deviceId);
-	ZoomSTRING zn_deviceName;
-	zoom_v8toc(args[1].As<v8::String>(), zn_deviceName);
+		com::electron::sdk::proto::SelectMicParams proto_params;
+		if (!SetProtoParam<com::electron::sdk::proto::SelectMicParams >(args, proto_params))
+		{
+			err = ZNSDKERR_INVALID_PARAMETER;
+			break;
+		}
+		if (!proto_params.has_deviceid() ||
+			!proto_params.has_devicename()
+			)
+		{
+			err = ZNSDKERR_INVALID_PARAMETER;
+			break;
+		}
+		ZoomSTRING _zn_deviceId;
+		_zn_deviceId = s2zs(proto_params.deviceid());
+		ZoomSTRING _zn_deviceName;
+		_zn_deviceName = s2zs(proto_params.devicename());
 
-	ZNSDKError err = _g_native_wrap.GetSettingServiceWrap().GetSettingAudioCtrl().SelectMic(zn_deviceId, zn_deviceName);
+		err = _g_native_wrap.GetSettingServiceWrap().GetSettingAudioCtrl().SelectMic(_zn_deviceId, _zn_deviceName);
+	} while (false);
+	
 	v8::Local<v8::Integer> bret = v8::Integer::New(isolate, (int32_t)err);
 	args.GetReturnValue().Set(bret);
 }
@@ -61,26 +65,30 @@ void ZoomNodeSettingAudioCtrlWrap::SelectSpeaker(const v8::FunctionCallbackInfo<
 {
 
 	v8::Isolate* isolate = args.GetIsolate();
-	if (args.Length() < 2) {
-		isolate->ThrowException(v8::Exception::TypeError(
-			v8::String::NewFromUtf8(isolate, "Wrong number of arguments", v8::NewStringType::kInternalized).ToLocalChecked()));
-		return;
-	}
-
-	if (!args[0]->IsString() ||
-		!args[1]->IsString()
-		)
+	ZNSDKError err = ZNSDKERR_SUCCESS;
+	do
 	{
-		isolate->ThrowException(v8::Exception::TypeError(
-			v8::String::NewFromUtf8(isolate, "Wrong arguments", v8::NewStringType::kInternalized).ToLocalChecked()));
-		return;
-	}
-	ZoomSTRING zn_deviceId;
-	zoom_v8toc(args[0].As<v8::String>(), zn_deviceId);
-	ZoomSTRING zn_deviceName;
-	zoom_v8toc(args[1].As<v8::String>(), zn_deviceName);
+		com::electron::sdk::proto::SelectSpeakerParams proto_params;
+		if (!SetProtoParam<com::electron::sdk::proto::SelectSpeakerParams >(args, proto_params))
+		{
+			err = ZNSDKERR_INVALID_PARAMETER;
+			break;
+		}
+		if (!proto_params.has_deviceid() ||
+			!proto_params.has_devicename()
+			)
+		{
+			err = ZNSDKERR_INVALID_PARAMETER;
+			break;
+		}
+		ZoomSTRING _zn_deviceId;
+		_zn_deviceId = s2zs(proto_params.deviceid());
+		ZoomSTRING _zn_deviceName;
+		_zn_deviceName = s2zs(proto_params.devicename());
 
-	ZNSDKError err = _g_native_wrap.GetSettingServiceWrap().GetSettingAudioCtrl().SelectSpeaker(zn_deviceId, zn_deviceName);
+		err = _g_native_wrap.GetSettingServiceWrap().GetSettingAudioCtrl().SelectSpeaker(_zn_deviceId, _zn_deviceName);
+	} while (false);
+	
 	v8::Local<v8::Integer> bret = v8::Integer::New(isolate, (int32_t)err);
 	args.GetReturnValue().Set(bret);
 }
@@ -122,48 +130,52 @@ void ZoomNodeSettingAudioCtrlWrap::IsAutoAdjustMicEnabled(const v8::FunctionCall
 void ZoomNodeSettingAudioCtrlWrap::EnableAutoJoinAudio(const v8::FunctionCallbackInfo<v8::Value>& args)
 {
 	v8::Isolate* isolate = args.GetIsolate();
-	if (args.Length() < 1) {
-		isolate->ThrowException(v8::Exception::TypeError(
-			v8::String::NewFromUtf8(isolate, "Wrong number of arguments", v8::NewStringType::kInternalized).ToLocalChecked()));
-		return;
-	}
-
-	if (!args[0]->IsBoolean()
-		)
+	ZNSDKError err = ZNSDKERR_SUCCESS;
+	do
 	{
-		isolate->ThrowException(v8::Exception::TypeError(
-			v8::String::NewFromUtf8(isolate, "Wrong arguments", v8::NewStringType::kInternalized).ToLocalChecked()));
-		return;
-	}
-	bool zn_bEnable;
-	zoom_v8toc(args[0].As<v8::Boolean>(), zn_bEnable);
+		com::electron::sdk::proto::EnableAutoJoinAudioParams proto_params;
+		if (!SetProtoParam<com::electron::sdk::proto::EnableAutoJoinAudioParams >(args, proto_params))
+		{
+			err = ZNSDKERR_INVALID_PARAMETER;
+			break;
+		}
+		if (!proto_params.has_benable())
+		{
+			err = ZNSDKERR_INVALID_PARAMETER;
+			break;
+		}
+		bool _bEnable = false;
+		convertBool(proto_params.benable(), _bEnable);
 
-
-	ZNSDKError err = _g_native_wrap.GetSettingServiceWrap().GetSettingAudioCtrl().EnableAutoJoinAudio(zn_bEnable);
+		err = _g_native_wrap.GetSettingServiceWrap().GetSettingAudioCtrl().EnableAutoJoinAudio(_bEnable);
+	} while (false);
+	
 	v8::Local<v8::Integer> bret = v8::Integer::New(isolate, (int32_t)err);
 	args.GetReturnValue().Set(bret);
 }
 void ZoomNodeSettingAudioCtrlWrap::EnableAutoAdjustMic(const v8::FunctionCallbackInfo<v8::Value>& args)
 {
 	v8::Isolate* isolate = args.GetIsolate();
-	if (args.Length() < 1) {
-		isolate->ThrowException(v8::Exception::TypeError(
-			v8::String::NewFromUtf8(isolate, "Wrong number of arguments", v8::NewStringType::kInternalized).ToLocalChecked()));
-		return;
-	}
-
-	if (!args[0]->IsBoolean()
-		)
+	ZNSDKError err = ZNSDKERR_SUCCESS;
+	do
 	{
-		isolate->ThrowException(v8::Exception::TypeError(
-			v8::String::NewFromUtf8(isolate, "Wrong arguments", v8::NewStringType::kInternalized).ToLocalChecked()));
-		return;
-	}
-	bool zn_bEnable;
-	zoom_v8toc(args[0].As<v8::Boolean>(), zn_bEnable);
+		com::electron::sdk::proto::EnableAutoAdjustMicParams proto_params;
+		if (!SetProtoParam<com::electron::sdk::proto::EnableAutoAdjustMicParams >(args, proto_params))
+		{
+			err = ZNSDKERR_INVALID_PARAMETER;
+			break;
+		}
+		if (!proto_params.has_benable())
+		{
+			err = ZNSDKERR_INVALID_PARAMETER;
+			break;
+		}
+		bool _bEnable = false;
+		convertBool(proto_params.benable(), _bEnable);
 
-
-	ZNSDKError err = _g_native_wrap.GetSettingServiceWrap().GetSettingAudioCtrl().EnableAutoAdjustMic(zn_bEnable);
+		err = _g_native_wrap.GetSettingServiceWrap().GetSettingAudioCtrl().EnableAutoAdjustMic(_bEnable);
+	} while (false);
+	
 	v8::Local<v8::Integer> bret = v8::Integer::New(isolate, (int32_t)err);
 	args.GetReturnValue().Set(bret);
 }
@@ -171,96 +183,108 @@ void ZoomNodeSettingAudioCtrlWrap::EnableAutoAdjustMic(const v8::FunctionCallbac
 void ZoomNodeSettingAudioCtrlWrap::SetComputerMicDeviceChangedCB(const v8::FunctionCallbackInfo<v8::Value>& args)
 {
 	v8::Isolate* isolate = args.GetIsolate();
-	if (args.Length() < 1) {
-		isolate->ThrowException(v8::Exception::TypeError(
-			v8::String::NewFromUtf8(isolate, "Wrong number of arguments", v8::NewStringType::kInternalized).ToLocalChecked()));
-		return;
-	}
-	if (args[0]->IsNull())	{		ZoomNodeSinkHelper::GetInst().onComputerMicDeviceChanged.Empty();		return;	}
-	if (!args[0]->IsFunction())
-	{
-		isolate->ThrowException(v8::Exception::TypeError(
-			v8::String::NewFromUtf8(isolate, "Wrong arguments", v8::NewStringType::kInternalized).ToLocalChecked()));
-		return;
-	}
-
-	v8::Local<v8::Function> cbfunc = v8::Local<v8::Function>::Cast(args[0]);
-	v8::Persistent<v8::Function, v8::CopyablePersistentTraits<v8::Function> > cb(isolate, cbfunc);
-	ZoomNodeSinkHelper::GetInst().onComputerMicDeviceChanged = cb;
-
 	ZNSDKError err = ZNSDKERR_SUCCESS;
+	do
+	{
+		if (args.Length() < 1) {
+			err = ZNSDKERR_INVALID_PARAMETER;
+			break;
+		}
+		if (args[0]->IsNull())		{			ZoomNodeSinkHelper::GetInst().onComputerMicDeviceChanged.Empty();			err = ZNSDKERR_INVALID_PARAMETER;
+			break;		}
+		if (!args[0]->IsFunction())
+		{
+			err = ZNSDKERR_INVALID_PARAMETER;
+			break;
+		}
+
+		v8::Local<v8::Function> cbfunc = v8::Local<v8::Function>::Cast(args[0]);
+		v8::Persistent<v8::Function, v8::CopyablePersistentTraits<v8::Function> > cb(isolate, cbfunc);
+		ZoomNodeSinkHelper::GetInst().onComputerMicDeviceChanged = cb;
+
+	} while (false);
+	
 	v8::Local<v8::Integer> bret = v8::Integer::New(isolate, (int32_t)err);
 	args.GetReturnValue().Set(bret);
 }
 void ZoomNodeSettingAudioCtrlWrap::SetComputerSpeakerDeviceChangedCB(const v8::FunctionCallbackInfo<v8::Value>& args)
 {
 	v8::Isolate* isolate = args.GetIsolate();
-	if (args.Length() < 1) {
-		isolate->ThrowException(v8::Exception::TypeError(
-			v8::String::NewFromUtf8(isolate, "Wrong number of arguments", v8::NewStringType::kInternalized).ToLocalChecked()));
-		return;
-	}
-	if (args[0]->IsNull())	{		ZoomNodeSinkHelper::GetInst().onComputerSpeakerDeviceChanged.Empty();		return;	}
-	if (!args[0]->IsFunction())
-	{
-		isolate->ThrowException(v8::Exception::TypeError(
-			v8::String::NewFromUtf8(isolate, "Wrong arguments", v8::NewStringType::kInternalized).ToLocalChecked()));
-		return;
-	}
-
-	v8::Local<v8::Function> cbfunc = v8::Local<v8::Function>::Cast(args[0]);
-	v8::Persistent<v8::Function, v8::CopyablePersistentTraits<v8::Function> > cb(isolate, cbfunc);
-	ZoomNodeSinkHelper::GetInst().onComputerSpeakerDeviceChanged = cb;
-
 	ZNSDKError err = ZNSDKERR_SUCCESS;
+	do
+	{
+		if (args.Length() < 1) {
+			err = ZNSDKERR_INVALID_PARAMETER;
+			break;
+		}
+		if (args[0]->IsNull())		{			ZoomNodeSinkHelper::GetInst().onComputerSpeakerDeviceChanged.Empty();			err = ZNSDKERR_INVALID_PARAMETER;
+			break;		}
+		if (!args[0]->IsFunction())
+		{
+			err = ZNSDKERR_INVALID_PARAMETER;
+			break;
+		}
+
+		v8::Local<v8::Function> cbfunc = v8::Local<v8::Function>::Cast(args[0]);
+		v8::Persistent<v8::Function, v8::CopyablePersistentTraits<v8::Function> > cb(isolate, cbfunc);
+		ZoomNodeSinkHelper::GetInst().onComputerSpeakerDeviceChanged = cb;
+
+	} while (false);
+	
 	v8::Local<v8::Integer> bret = v8::Integer::New(isolate, (int32_t)err);
 	args.GetReturnValue().Set(bret);
 }
 void ZoomNodeSettingAudioCtrlWrap::SetDefaultMicDeviceChangedCB(const v8::FunctionCallbackInfo<v8::Value>& args)
 {
 	v8::Isolate* isolate = args.GetIsolate();
-	if (args.Length() < 1) {
-		isolate->ThrowException(v8::Exception::TypeError(
-			v8::String::NewFromUtf8(isolate, "Wrong number of arguments", v8::NewStringType::kInternalized).ToLocalChecked()));
-		return;
-	}
-	if (args[0]->IsNull())	{		ZoomNodeSinkHelper::GetInst().onDefaultMicDeviceChanged.Empty();		return;	}
-	if (!args[0]->IsFunction())
-	{
-		isolate->ThrowException(v8::Exception::TypeError(
-			v8::String::NewFromUtf8(isolate, "Wrong arguments", v8::NewStringType::kInternalized).ToLocalChecked()));
-		return;
-	}
-
-	v8::Local<v8::Function> cbfunc = v8::Local<v8::Function>::Cast(args[0]);
-	v8::Persistent<v8::Function, v8::CopyablePersistentTraits<v8::Function> > cb(isolate, cbfunc);
-	ZoomNodeSinkHelper::GetInst().onDefaultMicDeviceChanged = cb;
-
 	ZNSDKError err = ZNSDKERR_SUCCESS;
+	do
+	{
+		if (args.Length() < 1) {
+			err = ZNSDKERR_INVALID_PARAMETER;
+			break;
+		}
+		if (args[0]->IsNull())		{			ZoomNodeSinkHelper::GetInst().onDefaultMicDeviceChanged.Empty();			err = ZNSDKERR_INVALID_PARAMETER;
+			break;		}
+		if (!args[0]->IsFunction())
+		{
+			err = ZNSDKERR_INVALID_PARAMETER;
+			break;
+		}
+
+		v8::Local<v8::Function> cbfunc = v8::Local<v8::Function>::Cast(args[0]);
+		v8::Persistent<v8::Function, v8::CopyablePersistentTraits<v8::Function> > cb(isolate, cbfunc);
+		ZoomNodeSinkHelper::GetInst().onDefaultMicDeviceChanged = cb;
+
+	} while (false);
+	
 	v8::Local<v8::Integer> bret = v8::Integer::New(isolate, (int32_t)err);
 	args.GetReturnValue().Set(bret);
 }
 void ZoomNodeSettingAudioCtrlWrap::SetDefaultSpeakerDeviceChangedCB(const v8::FunctionCallbackInfo<v8::Value>& args)
 {
 	v8::Isolate* isolate = args.GetIsolate();
-	if (args.Length() < 1) {
-		isolate->ThrowException(v8::Exception::TypeError(
-			v8::String::NewFromUtf8(isolate, "Wrong number of arguments", v8::NewStringType::kInternalized).ToLocalChecked()));
-		return;
-	}
-	if (args[0]->IsNull())	{		ZoomNodeSinkHelper::GetInst().onDefaultSpeakerDeviceChanged.Empty();		return;	}
-	if (!args[0]->IsFunction())
-	{
-		isolate->ThrowException(v8::Exception::TypeError(
-			v8::String::NewFromUtf8(isolate, "Wrong arguments", v8::NewStringType::kInternalized).ToLocalChecked()));
-		return;
-	}
-
-	v8::Local<v8::Function> cbfunc = v8::Local<v8::Function>::Cast(args[0]);
-	v8::Persistent<v8::Function, v8::CopyablePersistentTraits<v8::Function> > cb(isolate, cbfunc);
-	ZoomNodeSinkHelper::GetInst().onDefaultSpeakerDeviceChanged = cb;
-
 	ZNSDKError err = ZNSDKERR_SUCCESS;
+	do
+	{
+		if (args.Length() < 1) {
+			err = ZNSDKERR_INVALID_PARAMETER;
+			break;
+		}
+		if (args[0]->IsNull())		{			ZoomNodeSinkHelper::GetInst().onDefaultSpeakerDeviceChanged.Empty();			err = ZNSDKERR_INVALID_PARAMETER;
+			break;		}
+		if (!args[0]->IsFunction())
+		{
+			err = ZNSDKERR_INVALID_PARAMETER;
+			break;
+		}
+
+		v8::Local<v8::Function> cbfunc = v8::Local<v8::Function>::Cast(args[0]);
+		v8::Persistent<v8::Function, v8::CopyablePersistentTraits<v8::Function> > cb(isolate, cbfunc);
+		ZoomNodeSinkHelper::GetInst().onDefaultSpeakerDeviceChanged = cb;
+
+	} while (false);
+	
 	v8::Local<v8::Integer> bret = v8::Integer::New(isolate, (int32_t)err);
 	args.GetReturnValue().Set(bret);
 }
@@ -268,24 +292,26 @@ void ZoomNodeSettingAudioCtrlWrap::SetDefaultSpeakerDeviceChangedCB(const v8::Fu
 void ZoomNodeSettingAudioCtrlWrap::EnableStereoAudio(const v8::FunctionCallbackInfo<v8::Value>& args)
 {
 	v8::Isolate* isolate = args.GetIsolate();
-	if (args.Length() < 1) {
-		isolate->ThrowException(v8::Exception::TypeError(
-			v8::String::NewFromUtf8(isolate, "Wrong number of arguments", v8::NewStringType::kInternalized).ToLocalChecked()));
-		return;
-	}
-
-	if (!args[0]->IsBoolean()
-		)
+	ZNSDKError err = ZNSDKERR_SUCCESS;
+	do
 	{
-		isolate->ThrowException(v8::Exception::TypeError(
-			v8::String::NewFromUtf8(isolate, "Wrong arguments", v8::NewStringType::kInternalized).ToLocalChecked()));
-		return;
-	}
-	bool zn_bEnable;
-	zoom_v8toc(args[0].As<v8::Boolean>(), zn_bEnable);
+		com::electron::sdk::proto::EnableStereoAudioParams proto_params;
+		if (!SetProtoParam<com::electron::sdk::proto::EnableStereoAudioParams >(args, proto_params))
+		{
+			err = ZNSDKERR_INVALID_PARAMETER;
+			break;
+		}
+		if (!proto_params.has_benable())
+		{
+			err = ZNSDKERR_INVALID_PARAMETER;
+			break;
+		}
+		bool _bEnable = false;
+		convertBool(proto_params.benable(), _bEnable);
 
-
-	ZNSDKError err = _g_native_wrap.GetSettingServiceWrap().GetSettingAudioCtrl().EnableStereoAudio(zn_bEnable);
+		err = _g_native_wrap.GetSettingServiceWrap().GetSettingAudioCtrl().EnableStereoAudio(_bEnable);
+	} while (false);
+	
 	v8::Local<v8::Integer> bret = v8::Integer::New(isolate, (int32_t)err);
 	args.GetReturnValue().Set(bret);
 }
@@ -299,24 +325,26 @@ void ZoomNodeSettingAudioCtrlWrap::IsStereoAudioEnable(const v8::FunctionCallbac
 void ZoomNodeSettingAudioCtrlWrap::EnableMicOriginalInput(const v8::FunctionCallbackInfo<v8::Value>& args)
 {
 	v8::Isolate* isolate = args.GetIsolate();
-	if (args.Length() < 1) {
-		isolate->ThrowException(v8::Exception::TypeError(
-			v8::String::NewFromUtf8(isolate, "Wrong number of arguments", v8::NewStringType::kInternalized).ToLocalChecked()));
-		return;
-	}
-
-	if (!args[0]->IsBoolean()
-		)
+	ZNSDKError err = ZNSDKERR_SUCCESS;
+	do
 	{
-		isolate->ThrowException(v8::Exception::TypeError(
-			v8::String::NewFromUtf8(isolate, "Wrong arguments", v8::NewStringType::kInternalized).ToLocalChecked()));
-		return;
-	}
-	bool zn_bEnable;
-	zoom_v8toc(args[0].As<v8::Boolean>(), zn_bEnable);
+		com::electron::sdk::proto::EnableMicOriginalInputParams proto_params;
+		if (!SetProtoParam<com::electron::sdk::proto::EnableMicOriginalInputParams >(args, proto_params))
+		{
+			err = ZNSDKERR_INVALID_PARAMETER;
+			break;
+		}
+		if (!proto_params.has_benable())
+		{
+			err = ZNSDKERR_INVALID_PARAMETER;
+			break;
+		}
+		bool _bEnable = false;
+		convertBool(proto_params.benable(), _bEnable);
 
-
-	ZNSDKError err = _g_native_wrap.GetSettingServiceWrap().GetSettingAudioCtrl().EnableMicOriginalInput(zn_bEnable);
+		err = _g_native_wrap.GetSettingServiceWrap().GetSettingAudioCtrl().EnableMicOriginalInput(_bEnable);
+	} while (false);
+	
 	v8::Local<v8::Integer> bret = v8::Integer::New(isolate, (int32_t)err);
 	args.GetReturnValue().Set(bret);
 }
@@ -330,24 +358,26 @@ void ZoomNodeSettingAudioCtrlWrap::IsMicOriginalInputEnable(const v8::FunctionCa
 void ZoomNodeSettingAudioCtrlWrap::EnableHoldSpaceKeyToSpeak(const v8::FunctionCallbackInfo<v8::Value>& args)
 {
 	v8::Isolate* isolate = args.GetIsolate();
-	if (args.Length() < 1) {
-		isolate->ThrowException(v8::Exception::TypeError(
-			v8::String::NewFromUtf8(isolate, "Wrong number of arguments", v8::NewStringType::kInternalized).ToLocalChecked()));
-		return;
-	}
-
-	if (!args[0]->IsBoolean()
-		)
+	ZNSDKError err = ZNSDKERR_SUCCESS;
+	do
 	{
-		isolate->ThrowException(v8::Exception::TypeError(
-			v8::String::NewFromUtf8(isolate, "Wrong arguments", v8::NewStringType::kInternalized).ToLocalChecked()));
-		return;
-	}
-	bool zn_bEnable;
-	zoom_v8toc(args[0].As<v8::Boolean>(), zn_bEnable);
+		com::electron::sdk::proto::EnableHoldSpaceKeyToSpeakParams proto_params;
+		if (!SetProtoParam<com::electron::sdk::proto::EnableHoldSpaceKeyToSpeakParams >(args, proto_params))
+		{
+			err = ZNSDKERR_INVALID_PARAMETER;
+			break;
+		}
+		if (!proto_params.has_benable())
+		{
+			err = ZNSDKERR_INVALID_PARAMETER;
+			break;
+		}
+		bool _bEnable = false;
+		convertBool(proto_params.benable(), _bEnable);
 
-
-	ZNSDKError err = _g_native_wrap.GetSettingServiceWrap().GetSettingAudioCtrl().EnableHoldSpaceKeyToSpeak(zn_bEnable);
+		err = _g_native_wrap.GetSettingServiceWrap().GetSettingAudioCtrl().EnableHoldSpaceKeyToSpeak(_bEnable);
+	} while (false);
+	
 	v8::Local<v8::Integer> bret = v8::Integer::New(isolate, (int32_t)err);
 	args.GetReturnValue().Set(bret);
 }
@@ -361,24 +391,26 @@ void ZoomNodeSettingAudioCtrlWrap::IsHoldSpaceKeyToSpeakEnabled(const v8::Functi
 void ZoomNodeSettingAudioCtrlWrap::EnableAlwaysMuteMicWhenJoinVoip(const v8::FunctionCallbackInfo<v8::Value>& args)
 {
 	v8::Isolate* isolate = args.GetIsolate();
-	if (args.Length() < 1) {
-		isolate->ThrowException(v8::Exception::TypeError(
-			v8::String::NewFromUtf8(isolate, "Wrong number of arguments", v8::NewStringType::kInternalized).ToLocalChecked()));
-		return;
-	}
-
-	if (!args[0]->IsBoolean()
-		)
+	ZNSDKError err = ZNSDKERR_SUCCESS;
+	do
 	{
-		isolate->ThrowException(v8::Exception::TypeError(
-			v8::String::NewFromUtf8(isolate, "Wrong arguments", v8::NewStringType::kInternalized).ToLocalChecked()));
-		return;
-	}
-	bool zn_bEnable;
-	zoom_v8toc(args[0].As<v8::Boolean>(), zn_bEnable);
+		com::electron::sdk::proto::EnableAlwaysMuteMicWhenJoinVoipParams proto_params;
+		if (!SetProtoParam<com::electron::sdk::proto::EnableAlwaysMuteMicWhenJoinVoipParams >(args, proto_params))
+		{
+			err = ZNSDKERR_INVALID_PARAMETER;
+			break;
+		}
+		if (!proto_params.has_benable())
+		{
+			err = ZNSDKERR_INVALID_PARAMETER;
+			break;
+		}
+		bool _bEnable = false;
+		convertBool(proto_params.benable(), _bEnable);
 
-
-	ZNSDKError err = _g_native_wrap.GetSettingServiceWrap().GetSettingAudioCtrl().EnableAlwaysMuteMicWhenJoinVoip(zn_bEnable);
+		err = _g_native_wrap.GetSettingServiceWrap().GetSettingAudioCtrl().EnableAlwaysMuteMicWhenJoinVoip(_bEnable);
+	} while (false);
+	
 	v8::Local<v8::Integer> bret = v8::Integer::New(isolate, (int32_t)err);
 	args.GetReturnValue().Set(bret);
 }
@@ -392,24 +424,26 @@ void ZoomNodeSettingAudioCtrlWrap::IsAlwaysMuteMicWhenJoinVoipEnabled(const v8::
 void ZoomNodeSettingAudioCtrlWrap::EnableSuppressAudioNotify(const v8::FunctionCallbackInfo<v8::Value>& args)
 {
 	v8::Isolate* isolate = args.GetIsolate();
-	if (args.Length() < 1) {
-		isolate->ThrowException(v8::Exception::TypeError(
-			v8::String::NewFromUtf8(isolate, "Wrong number of arguments", v8::NewStringType::kInternalized).ToLocalChecked()));
-		return;
-	}
-
-	if (!args[0]->IsBoolean()
-		)
+	ZNSDKError err = ZNSDKERR_SUCCESS;
+	do
 	{
-		isolate->ThrowException(v8::Exception::TypeError(
-			v8::String::NewFromUtf8(isolate, "Wrong arguments", v8::NewStringType::kInternalized).ToLocalChecked()));
-		return;
-	}
-	bool zn_bEnable;
-	zoom_v8toc(args[0].As<v8::Boolean>(), zn_bEnable);
+		com::electron::sdk::proto::EnableSuppressAudioNotifyParams proto_params;
+		if (!SetProtoParam<com::electron::sdk::proto::EnableSuppressAudioNotifyParams >(args, proto_params))
+		{
+			err = ZNSDKERR_INVALID_PARAMETER;
+			break;
+		}
+		if (!proto_params.has_benable())
+		{
+			err = ZNSDKERR_INVALID_PARAMETER;
+			break;
+		}
+		bool _bEnable = false;
+		convertBool(proto_params.benable(), _bEnable);
 
-
-	ZNSDKError err = _g_native_wrap.GetSettingServiceWrap().GetSettingAudioCtrl().EnableSuppressAudioNotify(zn_bEnable);
+		err = _g_native_wrap.GetSettingServiceWrap().GetSettingAudioCtrl().EnableSuppressAudioNotify(_bEnable);
+	} while (false);
+	
 	v8::Local<v8::Integer> bret = v8::Integer::New(isolate, (int32_t)err);
 	args.GetReturnValue().Set(bret);
 }
@@ -423,24 +457,26 @@ void ZoomNodeSettingAudioCtrlWrap::IsSuppressAudioNotifyEnabled(const v8::Functi
 void ZoomNodeSettingAudioCtrlWrap::EnableEchoCancellation(const v8::FunctionCallbackInfo<v8::Value>& args)
 {
 	v8::Isolate* isolate = args.GetIsolate();
-	if (args.Length() < 1) {
-		isolate->ThrowException(v8::Exception::TypeError(
-			v8::String::NewFromUtf8(isolate, "Wrong number of arguments", v8::NewStringType::kInternalized).ToLocalChecked()));
-		return;
-	}
-
-	if (!args[0]->IsBoolean()
-		)
+	ZNSDKError err = ZNSDKERR_SUCCESS;
+	do
 	{
-		isolate->ThrowException(v8::Exception::TypeError(
-			v8::String::NewFromUtf8(isolate, "Wrong arguments", v8::NewStringType::kInternalized).ToLocalChecked()));
-		return;
-	}
-	bool zn_bEnable;
-	zoom_v8toc(args[0].As<v8::Boolean>(), zn_bEnable);
+		com::electron::sdk::proto::EnableEchoCancellationParams proto_params;
+		if (!SetProtoParam<com::electron::sdk::proto::EnableEchoCancellationParams >(args, proto_params))
+		{
+			err = ZNSDKERR_INVALID_PARAMETER;
+			break;
+		}
+		if (!proto_params.has_benable())
+		{
+			err = ZNSDKERR_INVALID_PARAMETER;
+			break;
+		}
+		bool _bEnable = false;
+		convertBool(proto_params.benable(), _bEnable);
 
-
-	ZNSDKError err = _g_native_wrap.GetSettingServiceWrap().GetSettingAudioCtrl().EnableEchoCancellation(zn_bEnable);
+		err = _g_native_wrap.GetSettingServiceWrap().GetSettingAudioCtrl().EnableEchoCancellation(_bEnable);
+	} while (false);
+	
 	v8::Local<v8::Integer> bret = v8::Integer::New(isolate, (int32_t)err);
 	args.GetReturnValue().Set(bret);
 }
@@ -454,24 +490,26 @@ void ZoomNodeSettingAudioCtrlWrap::IsEchoCancellationEnabled(const v8::FunctionC
 void ZoomNodeSettingAudioCtrlWrap::SetMicVol(const v8::FunctionCallbackInfo<v8::Value>& args)
 {
 	v8::Isolate* isolate = args.GetIsolate();
-	auto context = isolate->GetCurrentContext();
-	if (args.Length() < 1) {
-		isolate->ThrowException(v8::Exception::TypeError(
-			v8::String::NewFromUtf8(isolate, "Wrong number of arguments", v8::NewStringType::kInternalized).ToLocalChecked()));
-		return;
-	}
-
-	if (!args[0]->IsNumber()
-		)
+	ZNSDKError err = ZNSDKERR_SUCCESS;
+	do
 	{
-		isolate->ThrowException(v8::Exception::TypeError(
-			v8::String::NewFromUtf8(isolate, "Wrong arguments", v8::NewStringType::kInternalized).ToLocalChecked()));
-		return;
-	}
-	float zn_value;
-	zn_value = (float)args[0]->NumberValue(context).FromJust();
+		com::electron::sdk::proto::SetMicVolParams proto_params;
+		if (!SetProtoParam<com::electron::sdk::proto::SetMicVolParams >(args, proto_params))
+		{
+			err = ZNSDKERR_INVALID_PARAMETER;
+			break;
+		}
+		if (!proto_params.has_value())
+		{
+			err = ZNSDKERR_INVALID_PARAMETER;
+			break;
+		}
+		float _zn_value;
+		_zn_value = proto_params.value();
 
-	ZNSDKError err = _g_native_wrap.GetSettingServiceWrap().GetSettingAudioCtrl().SetMicVol(zn_value);
+		err = _g_native_wrap.GetSettingServiceWrap().GetSettingAudioCtrl().SetMicVol(_zn_value);
+	} while (false);
+	
 	v8::Local<v8::Integer> bret = v8::Integer::New(isolate, (int32_t)err);
 	args.GetReturnValue().Set(bret);
 }
@@ -479,22 +517,7 @@ void ZoomNodeSettingAudioCtrlWrap::GetMicVol(const v8::FunctionCallbackInfo<v8::
 {
 	v8::Isolate* isolate = args.GetIsolate();
 	auto context = isolate->GetCurrentContext();
-	if (args.Length() < 1) {
-		isolate->ThrowException(v8::Exception::TypeError(
-			v8::String::NewFromUtf8(isolate, "Wrong number of arguments", v8::NewStringType::kInternalized).ToLocalChecked()));
-		return;
-	}
-
-	if (!args[0]->IsNumber()
-		)
-	{
-		isolate->ThrowException(v8::Exception::TypeError(
-			v8::String::NewFromUtf8(isolate, "Wrong arguments", v8::NewStringType::kInternalized).ToLocalChecked()));
-		return;
-	}
-	float zn_value;
-	zn_value = (float)args[0]->NumberValue(context).FromJust();
-
+	float zn_value = 0;
 	ZNSDKError err = _g_native_wrap.GetSettingServiceWrap().GetSettingAudioCtrl().GetMicVol(zn_value);
 	v8::HandleScope scope(isolate);
 	v8::Local<v8::Object> node = v8::Object::New(isolate);
@@ -506,24 +529,26 @@ void ZoomNodeSettingAudioCtrlWrap::GetMicVol(const v8::FunctionCallbackInfo<v8::
 void ZoomNodeSettingAudioCtrlWrap::SetSpeakerVol(const v8::FunctionCallbackInfo<v8::Value>& args)
 {
 	v8::Isolate* isolate = args.GetIsolate();
-	auto context = isolate->GetCurrentContext();
-	if (args.Length() < 1) {
-		isolate->ThrowException(v8::Exception::TypeError(
-			v8::String::NewFromUtf8(isolate, "Wrong number of arguments", v8::NewStringType::kInternalized).ToLocalChecked()));
-		return;
-	}
-
-	if (!args[0]->IsNumber()
-		)
+	ZNSDKError err = ZNSDKERR_SUCCESS;
+	do
 	{
-		isolate->ThrowException(v8::Exception::TypeError(
-			v8::String::NewFromUtf8(isolate, "Wrong arguments", v8::NewStringType::kInternalized).ToLocalChecked()));
-		return;
-	}
-	float zn_value;
-	zn_value = (float)args[0]->NumberValue(context).FromJust();
+		com::electron::sdk::proto::SetSpeakerVolParams proto_params;
+		if (!SetProtoParam<com::electron::sdk::proto::SetSpeakerVolParams >(args, proto_params))
+		{
+			err = ZNSDKERR_INVALID_PARAMETER;
+			break;
+		}
+		if (!proto_params.has_value())
+		{
+			err = ZNSDKERR_INVALID_PARAMETER;
+			break;
+		}
+		float _zn_value;
+		_zn_value = proto_params.value();
 
-	ZNSDKError err = _g_native_wrap.GetSettingServiceWrap().GetSettingAudioCtrl().SetSpeakerVol(zn_value);
+		err = _g_native_wrap.GetSettingServiceWrap().GetSettingAudioCtrl().SetSpeakerVol(_zn_value);
+	} while (false);
+	
 	v8::Local<v8::Integer> bret = v8::Integer::New(isolate, (int32_t)err);
 	args.GetReturnValue().Set(bret);
 }
@@ -531,22 +556,7 @@ void ZoomNodeSettingAudioCtrlWrap::GetSpeakerVol(const v8::FunctionCallbackInfo<
 {
 	v8::Isolate* isolate = args.GetIsolate();
 	auto context = isolate->GetCurrentContext();
-	if (args.Length() < 1) {
-		isolate->ThrowException(v8::Exception::TypeError(
-			v8::String::NewFromUtf8(isolate, "Wrong number of arguments", v8::NewStringType::kInternalized).ToLocalChecked()));
-		return;
-	}
-
-	if (!args[0]->IsNumber()
-		)
-	{
-		isolate->ThrowException(v8::Exception::TypeError(
-			v8::String::NewFromUtf8(isolate, "Wrong arguments", v8::NewStringType::kInternalized).ToLocalChecked()));
-		return;
-	}
-	float zn_value;
-	zn_value = (float)args[0]->NumberValue(context).FromJust();
-
+	float zn_value = 0;
 	ZNSDKError err = _g_native_wrap.GetSettingServiceWrap().GetSettingAudioCtrl().GetSpeakerVol(zn_value);
 	v8::HandleScope scope(isolate);
 	v8::Local<v8::Object> node = v8::Object::New(isolate);

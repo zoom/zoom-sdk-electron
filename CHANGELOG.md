@@ -1,6 +1,21 @@
 # CHANGELOG
 
 ## Note
+In version 5.2.42037.1112 of the Electron SDK,the support for Protocol Buffers is being added.
+
+If you are building your own version of the Electron SDK, you will need to follow these steps:
+* Download  protobuf 3.4.0 source file and rename the src folder to protobuf_src.
+* Copy the src folder into the lib/node_add_on folder.
+* Run the build_nodeaddon script.
+
+If you would like to use recent versions of protobuf(higher than 3.4.0), in addition to following the above steps, you must also do the following:
+
+* Download the execution file of the corresponding protobuf and add its directory into the system path.
+* In the terminal, navigate to the root directory of the Electron SDK(same level as the build_nodeaddon file).
+* Run protoc.exe —js_out=import_style=common.js,binary:. lib/electron_sdk_proto command in the terminal to generate a electron_sdk_pb.js file. After generating this file, you will be able to use the interfaces provided by the Electron SDK.
+
+If you are not building your own version of the Electron SDK and are using the Electron SDK provided by Zoom, this change will not impact your app and no further action is required on your end.
+
 ### New SDK Initialization method: Using JWT token
 Introducing new SDK initialization method -- JWT token, which is more secure, more convenient, and more versatile.
 
@@ -38,6 +53,23 @@ HMACSHA256(
 )
 ```
 You do not need to secret base64 encoded your signature. Once the JWT token is generated, please do not reveal it or publish it. **It is highly recommended to handle your SDK key and secret and generate JWT in a backend server to be consumed by your application. Do not generate JWT in a production application.**
+
+## 2020-11-17 @ v5.2.42037.1112
+
+## Added
+* Added new enums.
+  * `ZoomSDKVideoCaptureMethod`
+  * `ZoomSDKRenderPostProcessing`
+  * `ZoomSDKVideoHardwareEncodeType`
+* Added a new interface to set team identifier on macOS
+  * `SetTeamIdentifier`
+* Added new parameters to interface `initSDK` in zoom_sdk.js
+  * Added `renderPostProcessing` and `videoCaptureMethod`
+* Added new parameters to interface `Setting_EnableHardwareEncode` in zoom_setting_video.js
+  * Added `encodeType`
+* Added new parameters to interface `Setting_IsHardwareEncodeEnabled` in zoom_setting_video.js
+  * Added `encodeType`
+* Removed the watermark by default. If you wish to retain the Zoom watermark, please contact us via developersupport@zoom.us.
 
 ## 2020-10-26 @ v5.2.41762.1027
 

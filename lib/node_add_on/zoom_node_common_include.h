@@ -1,7 +1,7 @@
 #pragma once
 #include <node.h>
 #include <v8.h>
-
+#include "electron_sdk.pb.h"
 #if (V8_MAJOR_VERSION >= 7)
 #define USING_V8_NEW_STRING
 #endif

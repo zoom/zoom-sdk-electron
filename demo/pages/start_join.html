@@ -110,6 +110,7 @@
       <button type="button" class="button-small" onclick="enableVideoPreviewDialog()">Enable VideoPreviewDialog</button>
       <button type="button" class="button-small" onclick="isVideoPreviewDialogEnabled()">Is VideoPreviewDialogEnabled</button>
       <button type="button" class="button-small" onclick="disableConfidentialWatermark()">Disable ConfidentialWatermark</button>
+      <button type="button" class="button-small" onclick="enableInviteButtonOnMeetingUI()">Enable InviteButtonOnMeetingUI</button>
     </div>
   </div>
 </body>
@@ -436,6 +437,11 @@
     
     function isVideoPreviewDialogEnabled() {
       ipcRenderer.send('asynchronous-message', 'isVideoPreviewDialogEnabled');
+    }
+    
+    function enableInviteButtonOnMeetingUI() {
+      let bEnable = document.getElementById("enable").value;
+      ipcRenderer.send('asynchronous-message', 'enableInviteButtonOnMeetingUI', Boolean(bEnable));
     }
 
     function disableConfidentialWatermark() {

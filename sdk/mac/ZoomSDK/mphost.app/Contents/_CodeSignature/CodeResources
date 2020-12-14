@@ -15,7 +15,7 @@
 		<dict>
 			<key>cdhash</key>
 			<data>
-			WBWq4S/BweGd50kDxX7ImuBjjW8=
+			MfGcBSn2lFdGhzl2DRBNd+vIXfM=
 			</data>
 			<key>requirement</key>
 			<string>identifier "us.zoom.zmp" and anchor apple generic and certificate 1[field.1.2.840.113635.100.6.2.6] /* exists */ and certificate leaf[field.1.2.840.113635.100.6.1.13] /* exists */ and certificate leaf[subject.OU] = BJ4HAAB9B3</string>

@@ -10,290 +10,244 @@ void ZoomNodeMeetingAnnotationWrap::IsAnnoataionDisable(const v8::FunctionCallba
 void ZoomNodeMeetingAnnotationWrap::StartAnnotation(const v8::FunctionCallbackInfo<v8::Value>& args)
 {
 	v8::Isolate* isolate = args.GetIsolate();
-	if (args.Length() < 3) {
-		isolate->ThrowException(v8::Exception::TypeError(
-			v8::String::NewFromUtf8(isolate, "Wrong number of arguments", v8::NewStringType::kInternalized).ToLocalChecked()));
-		return;
-	}
-
-	if (!args[0]->IsNumber() ||
-		!args[1]->IsString() ||
-		!args[2]->IsString()
-		)
+	ZNSDKError err = ZNSDKERR_SUCCESS;
+	do
 	{
-		isolate->ThrowException(v8::Exception::TypeError(
-			v8::String::NewFromUtf8(isolate, "Wrong arguments", v8::NewStringType::kInternalized).ToLocalChecked()));
-		return;
-	}
+		com::electron::sdk::proto::StartAnnotationParams proto_params;
+		if (!SetProtoParam<com::electron::sdk::proto::StartAnnotationParams >(args, proto_params))
+		{
+			err = ZNSDKERR_INVALID_PARAMETER;
+			break;
+		}
+		if (!proto_params.has_viewtype() ||
+			!proto_params.has_left() ||
+			!proto_params.has_top()
+			)
+		{
+			err = ZNSDKERR_INVALID_PARAMETER;
+			break;
+		}
+		int _type = proto_params.viewtype();
+		ZNSDKViewType _zn_sdk_view_type;
+		switch (_type)
+		{
+		case 0:
+			_zn_sdk_view_type = ZNSDK_FIRST_VIEW;
+			break;
+		case 1:
+			_zn_sdk_view_type = ZNSDK_SECOND_VIEW;
+			break;
+		default:
+			break;
+		}
+		ZoomSTRING _left;
+		ZoomSTRING _top;
+		_left = s2zs(proto_params.left());
+		_top = s2zs(proto_params.top());
 
-	unsigned int type = (unsigned int)args[0].As<v8::Integer >()->Value();
-	ZNSDKViewType zn_sdk_view_type;
-	switch (type)
-	{
-	case 0:
-		zn_sdk_view_type = ZNSDK_FIRST_VIEW;
-		break;
-	case 1:
-		zn_sdk_view_type = ZNSDK_SECOND_VIEW;
-		break;
-	default:
-		break;
-	}
-	ZoomSTRING left;
-	ZoomSTRING top;
-	zoom_v8toc(args[1].As<v8::String>(), left);
-	zoom_v8toc(args[2].As<v8::String>(), top);
-
-	ZNSDKError err = _g_native_wrap.GetMeetingServiceWrap().GetMeetingAnnotation().StartAnnotation(zn_sdk_view_type, left, top);
+		err = _g_native_wrap.GetMeetingServiceWrap().GetMeetingAnnotation().StartAnnotation(_zn_sdk_view_type, _left, _top);
+	} while (false);
+	
 	v8::Local<v8::Integer> bret = v8::Integer::New(isolate, (int32_t)err);
 	args.GetReturnValue().Set(bret);
 }
 void ZoomNodeMeetingAnnotationWrap::StopAnnotation(const v8::FunctionCallbackInfo<v8::Value>& args)
 {
 	v8::Isolate* isolate = args.GetIsolate();
-	if (args.Length() < 1) {
-		isolate->ThrowException(v8::Exception::TypeError(
-			v8::String::NewFromUtf8(isolate, "Wrong number of arguments", v8::NewStringType::kInternalized).ToLocalChecked()));
-		return;
-	}
-
-	if (!args[0]->IsNumber())
+	ZNSDKError err = ZNSDKERR_SUCCESS;
+	do
 	{
-		isolate->ThrowException(v8::Exception::TypeError(
-			v8::String::NewFromUtf8(isolate, "Wrong arguments", v8::NewStringType::kInternalized).ToLocalChecked()));
-		return;
-	}
-
-	unsigned int type = (unsigned int)args[0].As<v8::Integer >()->Value();
-	ZNSDKViewType zn_sdk_view_type;
-	switch (type)
-	{
-	case 0:
-		zn_sdk_view_type = ZNSDK_FIRST_VIEW;
-		break;
-	case 1:
-		zn_sdk_view_type = ZNSDK_SECOND_VIEW;
-		break;
-	default:
-		break;
-	}
-	ZNSDKError err = _g_native_wrap.GetMeetingServiceWrap().GetMeetingAnnotation().StopAnnotation(zn_sdk_view_type);
+		com::electron::sdk::proto::StopAnnotationParams proto_params;
+		if (!SetProtoParam<com::electron::sdk::proto::StopAnnotationParams >(args, proto_params))
+		{
+			err = ZNSDKERR_INVALID_PARAMETER;
+			break;
+		}
+		if (!proto_params.has_viewtype())
+		{
+			err = ZNSDKERR_INVALID_PARAMETER;
+			break;
+		}
+		int _type = proto_params.viewtype();
+		ZNSDKViewType _zn_sdk_view_type;
+		switch (_type)
+		{
+		case 0:
+			_zn_sdk_view_type = ZNSDK_FIRST_VIEW;
+			break;
+		case 1:
+			_zn_sdk_view_type = ZNSDK_SECOND_VIEW;
+			break;
+		default:
+			break;
+		}
+		err = _g_native_wrap.GetMeetingServiceWrap().GetMeetingAnnotation().StopAnnotation(_zn_sdk_view_type);
+	} while (false);
+	
 	v8::Local<v8::Integer> bret = v8::Integer::New(isolate, (int32_t)err);
 	args.GetReturnValue().Set(bret);
 }
 void ZoomNodeMeetingAnnotationWrap::SetTool(const v8::FunctionCallbackInfo<v8::Value>& args)
 {
 	v8::Isolate* isolate = args.GetIsolate();
-	if (args.Length() < 2) {
-		isolate->ThrowException(v8::Exception::TypeError(
-			v8::String::NewFromUtf8(isolate, "Wrong number of arguments", v8::NewStringType::kInternalized).ToLocalChecked()));
-		return;
-	}
-
-	if (!args[0]->IsNumber() ||
-		!args[1]->IsNumber()
-		)
+	ZNSDKError err = ZNSDKERR_SUCCESS;
+	do
 	{
-		isolate->ThrowException(v8::Exception::TypeError(
-			v8::String::NewFromUtf8(isolate, "Wrong arguments", v8::NewStringType::kInternalized).ToLocalChecked()));
-		return;
-	}
+		com::electron::sdk::proto::SetToolParams proto_params;
+		if (!SetProtoParam<com::electron::sdk::proto::SetToolParams >(args, proto_params))
+		{
+			err = ZNSDKERR_INVALID_PARAMETER;
+			break;
+		}
+		if (!proto_params.has_viewtype() ||
+			!proto_params.has_tooltype()
+			)
+		{
+			err = ZNSDKERR_INVALID_PARAMETER;
+			break;
+		}
+		ZNSDKViewType _zn_view_type = (ZNSDKViewType)proto_params.viewtype();
+		ZNAnnotationToolType _zn_tool_type = (ZNAnnotationToolType)proto_params.tooltype();
 
-	unsigned int viewType = (unsigned int)args[0].As<v8::Integer >()->Value();
-	ZNSDKViewType zn_view_type;
-	switch (viewType)
-	{
-	case 0:
-		zn_view_type = ZNSDK_FIRST_VIEW;
-		break;
-	case 1:
-		zn_view_type = ZNSDK_SECOND_VIEW;
-		break;
-	default:
-		break;
-	}
-	unsigned int toolType = (unsigned int)args[1].As<v8::Integer >()->Value();
-	ZNAnnotationToolType zn_tool_type = (ZNAnnotationToolType)toolType;
-	ZNSDKError err = _g_native_wrap.GetMeetingServiceWrap().GetMeetingAnnotation().SetTool(zn_view_type, zn_tool_type);
+		err = _g_native_wrap.GetMeetingServiceWrap().GetMeetingAnnotation().SetTool(_zn_view_type, _zn_tool_type);
+	} while (false);
+	
 	v8::Local<v8::Integer> bret = v8::Integer::New(isolate, (int32_t)err);
 	args.GetReturnValue().Set(bret);
 }
 void ZoomNodeMeetingAnnotationWrap::Clear(const v8::FunctionCallbackInfo<v8::Value>& args)
 {
 	v8::Isolate* isolate = args.GetIsolate();
-	if (args.Length() < 2) {
-		isolate->ThrowException(v8::Exception::TypeError(
-			v8::String::NewFromUtf8(isolate, "Wrong number of arguments", v8::NewStringType::kInternalized).ToLocalChecked()));
-		return;
-	}
-
-	if (!args[0]->IsNumber() ||
-		!args[1]->IsNumber()
-		)
+	ZNSDKError err = ZNSDKERR_SUCCESS;
+	do
 	{
-		isolate->ThrowException(v8::Exception::TypeError(
-			v8::String::NewFromUtf8(isolate, "Wrong arguments", v8::NewStringType::kInternalized).ToLocalChecked()));
-		return;
-	}
+		com::electron::sdk::proto::ClearAnnotationParams proto_params;
+		if (!SetProtoParam<com::electron::sdk::proto::ClearAnnotationParams >(args, proto_params))
+		{
+			err = ZNSDKERR_INVALID_PARAMETER;
+			break;
+		}
+		if (!proto_params.has_viewtype() ||
+			!proto_params.has_cleartype()
+			)
+		{
+			err = ZNSDKERR_INVALID_PARAMETER;
+			break;
+		}
+		ZNSDKViewType _zn_view_type = (ZNSDKViewType)proto_params.viewtype();
+		ZNAnnotationClearType _zn_clear_type = (ZNAnnotationClearType)proto_params.cleartype();
 
-	unsigned int viewType = (unsigned int)args[0].As<v8::Integer >()->Value();
-	ZNSDKViewType zn_view_type;
-	switch (viewType)
-	{
-	case 0:
-		zn_view_type = ZNSDK_FIRST_VIEW;
-		break;
-	case 1:
-		zn_view_type = ZNSDK_SECOND_VIEW;
-		break;
-	default:
-		break;
-	}
-	unsigned int clearType = (unsigned int)args[1].As<v8::Integer >()->Value();
-	ZNAnnotationClearType zn_clear_type = (ZNAnnotationClearType)clearType;
-	ZNSDKError err = _g_native_wrap.GetMeetingServiceWrap().GetMeetingAnnotation().Clear(zn_view_type, zn_clear_type);
+		err = _g_native_wrap.GetMeetingServiceWrap().GetMeetingAnnotation().Clear(_zn_view_type, _zn_clear_type);
+	} while (false);
+	
 	v8::Local<v8::Integer> bret = v8::Integer::New(isolate, (int32_t)err);
 	args.GetReturnValue().Set(bret);
 }
 void ZoomNodeMeetingAnnotationWrap::SetColor(const v8::FunctionCallbackInfo<v8::Value>& args)
 {
 	v8::Isolate* isolate = args.GetIsolate();
-	if (args.Length() < 2) {
-		isolate->ThrowException(v8::Exception::TypeError(
-			v8::String::NewFromUtf8(isolate, "Wrong number of arguments", v8::NewStringType::kInternalized).ToLocalChecked()));
-		return;
-	}
-
-	if (!args[0]->IsNumber() ||
-		!args[1]->IsString()
-		)
+	ZNSDKError err = ZNSDKERR_SUCCESS;
+	do
 	{
-		isolate->ThrowException(v8::Exception::TypeError(
-			v8::String::NewFromUtf8(isolate, "Wrong arguments", v8::NewStringType::kInternalized).ToLocalChecked()));
-		return;
-	}
+		com::electron::sdk::proto::SetColorParams proto_params;
+		if (!SetProtoParam<com::electron::sdk::proto::SetColorParams >(args, proto_params))
+		{
+			err = ZNSDKERR_INVALID_PARAMETER;
+			break;
+		}
+		if (!proto_params.has_viewtype() ||
+			!proto_params.has_color()
+			)
+		{
+			err = ZNSDKERR_INVALID_PARAMETER;
+			break;
+		}
+		ZNSDKViewType _zn_view_type = (ZNSDKViewType)proto_params.viewtype();
+		ZoomSTRING _color;
+		_color = s2zs(proto_params.color());
 
-	unsigned int type = (unsigned int)args[0].As<v8::Integer >()->Value();
-	ZNSDKViewType zn_sdk_view_type;
-	switch (type)
-	{
-	case 0:
-		zn_sdk_view_type = ZNSDK_FIRST_VIEW;
-		break;
-	case 1:
-		zn_sdk_view_type = ZNSDK_SECOND_VIEW;
-		break;
-	default:
-		break;
-	}
-	ZoomSTRING color;
-	zoom_v8toc(args[1].As<v8::String>(), color);
-
-	ZNSDKError err = _g_native_wrap.GetMeetingServiceWrap().GetMeetingAnnotation().SetColor(zn_sdk_view_type, color);
+		err = _g_native_wrap.GetMeetingServiceWrap().GetMeetingAnnotation().SetColor(_zn_view_type, _color);
+	} while (false);
+	
 	v8::Local<v8::Integer> bret = v8::Integer::New(isolate, (int32_t)err);
 	args.GetReturnValue().Set(bret);
 }
 void ZoomNodeMeetingAnnotationWrap::SetLineWidth(const v8::FunctionCallbackInfo<v8::Value>& args)
 {
 	v8::Isolate* isolate = args.GetIsolate();
-	if (args.Length() < 2) {
-		isolate->ThrowException(v8::Exception::TypeError(
-			v8::String::NewFromUtf8(isolate, "Wrong number of arguments", v8::NewStringType::kInternalized).ToLocalChecked()));
-		return;
-	}
-
-	if (!args[0]->IsNumber() ||
-		!args[1]->IsString()
-		)
+	ZNSDKError err = ZNSDKERR_SUCCESS;
+	do
 	{
-		isolate->ThrowException(v8::Exception::TypeError(
-			v8::String::NewFromUtf8(isolate, "Wrong arguments", v8::NewStringType::kInternalized).ToLocalChecked()));
-		return;
-	}
+		com::electron::sdk::proto::SetLineWidthParams proto_params;
+		if (!SetProtoParam<com::electron::sdk::proto::SetLineWidthParams >(args, proto_params))
+		{
+			err = ZNSDKERR_INVALID_PARAMETER;
+			break;
+		}
+		if (!proto_params.has_viewtype() ||
+			!proto_params.has_linewidth()
+			)
+		{
+			err = ZNSDKERR_INVALID_PARAMETER;
+			break;
+		}
+		ZNSDKViewType _zn_view_type = (ZNSDKViewType)proto_params.viewtype();
+		ZoomSTRING _linewith;
+		_linewith = s2zs(proto_params.linewidth());
 
-	unsigned int type = (unsigned int)args[0].As<v8::Integer >()->Value();
-	ZNSDKViewType zn_sdk_view_type;
-	switch (type)
-	{
-	case 0:
-		zn_sdk_view_type = ZNSDK_FIRST_VIEW;
-		break;
-	case 1:
-		zn_sdk_view_type = ZNSDK_SECOND_VIEW;
-		break;
-	default:
-		break;
-	}
-	ZoomSTRING lineWidth;
-	zoom_v8toc(args[1].As<v8::String>(), lineWidth);
-
-	ZNSDKError err = _g_native_wrap.GetMeetingServiceWrap().GetMeetingAnnotation().SetLineWidth(zn_sdk_view_type, lineWidth);
+		err = _g_native_wrap.GetMeetingServiceWrap().GetMeetingAnnotation().SetLineWidth(_zn_view_type, _linewith);
+	} while (false);
+	
 	v8::Local<v8::Integer> bret = v8::Integer::New(isolate, (int32_t)err);
 	args.GetReturnValue().Set(bret);
 }
 void ZoomNodeMeetingAnnotationWrap::Undo(const v8::FunctionCallbackInfo<v8::Value>& args)
 {
 	v8::Isolate* isolate = args.GetIsolate();
-	if (args.Length() < 1) {
-		isolate->ThrowException(v8::Exception::TypeError(
-			v8::String::NewFromUtf8(isolate, "Wrong number of arguments", v8::NewStringType::kInternalized).ToLocalChecked()));
-		return;
-	}
-
-	if (!args[0]->IsNumber())
+	ZNSDKError err = ZNSDKERR_SUCCESS;
+	do
 	{
-		isolate->ThrowException(v8::Exception::TypeError(
-			v8::String::NewFromUtf8(isolate, "Wrong arguments", v8::NewStringType::kInternalized).ToLocalChecked()));
-		return;
-	}
+		com::electron::sdk::proto::UndoParams proto_params;
+		if (!SetProtoParam<com::electron::sdk::proto::UndoParams >(args, proto_params))
+		{
+			err = ZNSDKERR_INVALID_PARAMETER;
+			break;
+		}
+		if (!proto_params.has_viewtype())
+		{
+			err = ZNSDKERR_INVALID_PARAMETER;
+			break;
+		}
+		ZNSDKViewType _zn_view_type = (ZNSDKViewType)proto_params.viewtype();
 
-	unsigned int type = (unsigned int)args[0].As<v8::Integer >()->Value();
-	ZNSDKViewType zn_sdk_view_type;
-	switch (type)
-	{
-	case 0:
-		zn_sdk_view_type = ZNSDK_FIRST_VIEW;
-		break;
-	case 1:
-		zn_sdk_view_type = ZNSDK_SECOND_VIEW;
-		break;
-	default:
-		break;
-	}
-	ZNSDKError err = _g_native_wrap.GetMeetingServiceWrap().GetMeetingAnnotation().Undo(zn_sdk_view_type);
+		err = _g_native_wrap.GetMeetingServiceWrap().GetMeetingAnnotation().Undo(_zn_view_type);
+	} while (false);
+	
 	v8::Local<v8::Integer> bret = v8::Integer::New(isolate, (int32_t)err);
 	args.GetReturnValue().Set(bret);
 }
 void ZoomNodeMeetingAnnotationWrap::Redo(const v8::FunctionCallbackInfo<v8::Value>& args)
 {
 	v8::Isolate* isolate = args.GetIsolate();
-	if (args.Length() < 1) {
-		isolate->ThrowException(v8::Exception::TypeError(
-			v8::String::NewFromUtf8(isolate, "Wrong number of arguments", v8::NewStringType::kInternalized).ToLocalChecked()));
-		return;
-	}
-
-	if (!args[0]->IsNumber())
+	ZNSDKError err = ZNSDKERR_SUCCESS;
+	do
 	{
-		isolate->ThrowException(v8::Exception::TypeError(
-			v8::String::NewFromUtf8(isolate, "Wrong arguments", v8::NewStringType::kInternalized).ToLocalChecked()));
-		return;
-	}
+		com::electron::sdk::proto::UndoParams proto_params;
+		if (!SetProtoParam<com::electron::sdk::proto::UndoParams >(args, proto_params))
+		{
+			err = ZNSDKERR_INVALID_PARAMETER;
+			break;
+		}
+		if (!proto_params.has_viewtype())
+		{
+			err = ZNSDKERR_INVALID_PARAMETER;
+			break;
+		}
+		ZNSDKViewType _zn_view_type = (ZNSDKViewType)proto_params.viewtype();
 
-	unsigned int type = (unsigned int)args[0].As<v8::Integer >()->Value();
-	ZNSDKViewType zn_sdk_view_type;
-	switch (type)
-	{
-	case 0:
-		zn_sdk_view_type = ZNSDK_FIRST_VIEW;
-		break;
-	case 1:
-		zn_sdk_view_type = ZNSDK_SECOND_VIEW;
-		break;
-	default:
-		break;
-	}
-	ZNSDKError err = _g_native_wrap.GetMeetingServiceWrap().GetMeetingAnnotation().Redo(zn_sdk_view_type);
+		err = _g_native_wrap.GetMeetingServiceWrap().GetMeetingAnnotation().Redo(_zn_view_type);
+	} while (false);
+	
 	v8::Local<v8::Integer> bret = v8::Integer::New(isolate, (int32_t)err);
 	args.GetReturnValue().Set(bret);
 }

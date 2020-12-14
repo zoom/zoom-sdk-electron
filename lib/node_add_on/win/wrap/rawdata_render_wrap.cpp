@@ -1,17 +1,17 @@
 ﻿#pragma once
-#include "rawdata_share_channel_wrap.h"
+#include "rawdata_render_wrap.h"
 BEGIN_ZOOM_SDK_NAMESPACE
-ZOOM_RAWDATA_NAMESPACE::IZoomSDKRenderer* InitIZoomSDKRendererFunc(IZoomSDKRendererDelegate* pEvent)
+IZoomSDKRenderer* InitIZoomSDKRendererFunc(IZoomSDKRendererDelegate* pEvent)
 {
-	ZOOM_RAWDATA_NAMESPACE::IZoomSDKRenderer* pObj(NULL);
+	IZoomSDKRenderer* pObj(NULL);
 	CSDKImpl::GetInst().createRenderer(&pObj, pEvent);
 	return pObj;
 }
 
-void UninitIZoomSDKRendererFunc(ZOOM_RAWDATA_NAMESPACE::IZoomSDKRenderer* obj)
+void UninitIZoomSDKRendererFunc(IZoomSDKRenderer* obj)
 {
 	if (obj)
-		CSDKImpl::GetInst().destroyRenderer();
+		CSDKImpl::GetInst().destroyRenderer(obj);
 }
 SDKError IZoomSDKRendererWrap::setRawDataResolution(ZoomSDKResolution resolution)
 {
@@ -36,19 +36,19 @@ ZoomSDKResolution IZoomSDKRendererWrap::getResolution()
 {
 	if (m_obj)
 		return m_obj->getResolution();
-	return SDKERR_UNINITIALIZE;
+	return ZoomSDKResolution_NoUse;
 }
 ZoomSDKRawDataType IZoomSDKRendererWrap::getRawDataType()
 {
 	if (m_obj)
 		return m_obj->getRawDataType();
-	return SDKERR_UNINITIALIZE;
+	return RAW_DATA_TYPE_VIDEO;
 }
 uint32_t IZoomSDKRendererWrap::getUserId()
 {
 	if (m_obj)
 		return m_obj->getUserId();
-	return SDKERR_UNINITIALIZE;
+	return 0xFFFF;
 }
 
 END_ZOOM_SDK_NAMESPACE

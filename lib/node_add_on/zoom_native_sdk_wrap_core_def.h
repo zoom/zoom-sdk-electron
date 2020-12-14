@@ -126,6 +126,34 @@ enum ZNZoomSDKVideoRenderMode
 	ZNSDKVideoRenderMode_D3D9,
 	ZNSDKVideoRenderMode_GDI,
 };
+enum ZNZoomSDKRenderPostProcessing
+{
+	ZNZoomSDKRenderPostProcessing_None = 0,
+	ZNZoomSDKRenderPostProcessing_Auto,
+	ZNZoomSDKRenderPostProcessing_Enable,
+	ZNZoomSDKRenderPostProcessing_Disable,
+};
+enum ZNZoomSDKVideoCaptureMethod
+{
+	ZNZoomSDKVideoCaptureMethod_None = 0,
+	ZNZoomSDKVideoCaptureMethod_Auto,
+	ZNZoomSDKVideoCaptureMethod_DirectSHow,
+	ZNZoomSDKVideoCaptureMethod_MediaFoundation,
+};
+
+typedef struct tagZNZoomSDKRenderOptions
+{
+	ZNZoomSDKVideoRenderMode    videoRenderMode;
+	ZNZoomSDKRenderPostProcessing renderPostProcessing;
+	ZNZoomSDKVideoCaptureMethod videoCaptureMethod;
+	tagZNZoomSDKRenderOptions()
+	{
+		videoRenderMode = ZNSDKVideoRenderMode_None;
+		renderPostProcessing = ZNZoomSDKRenderPostProcessing_Auto;
+		videoCaptureMethod = ZNZoomSDKVideoCaptureMethod_Auto;
+	}
+}ZNZoomSDKRenderOptions;
+
 enum ZNSDKRawDataMemoryMode
 {
 	ZNSDKRawDataMemoryModeStack,
@@ -162,7 +190,7 @@ typedef struct _ZNInitParam
 	bool enableGeneratDump; ///<Enable generate dump file if the app crashed.
 	ZNSDK_APP_Locale locale;
 	bool permonitor_awareness_mode;
-	ZNZoomSDKVideoRenderMode    videoRenderMode;
+	ZNZoomSDKRenderOptions renderOpts;
 	ZNRawDataOptions rawdataOpts;
 	_ZNInitParam(){
 		enable_log = true;
@@ -171,7 +199,6 @@ typedef struct _ZNInitParam
 		logFileSize = 5;
 		enableGeneratDump = false;
 		permonitor_awareness_mode = true;
-		videoRenderMode = ZNSDKVideoRenderMode_None;
 	}
 }ZNInitParam;
 
@@ -879,6 +906,13 @@ typedef struct tagZNAudioBtnClickedCallbackInfo
 	}
 
 }ZNAudioBtnClickedCallbackInfo;
+
+typedef enum
+{
+	ZN_VIDEO_HARDWARE_ENCODE_RECEIVING = 0,
+	ZN_VIDEO_HARDWARE_ENCODE_SENDING,
+	ZN_VIDEO_HARDWARE_ENCODE_PROCESSING,
+}ZN_VIDEO_HARDWARE_ENCODE_TYPE;
 
 
 

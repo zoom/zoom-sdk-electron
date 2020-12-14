@@ -72,3 +72,26 @@ std::string zs2s(const ZNODESTRING& s)
 #endif
 
 }
+ZNODESTRING s2zs(const std::string& s)
+{
+#if (defined _WIN32)
+	const char* chSrc_test = s.c_str();
+	ZNODESTRING buffer;
+	if (s.empty())
+	{
+		return buffer;
+	}
+	buffer.resize(MultiByteToWideChar(CP_UTF8, 0, chSrc_test, -1, 0, 0));
+	MultiByteToWideChar(CP_UTF8, 0, chSrc_test, -1, &buffer[0], buffer.size());
+	return buffer;
+#else
+	return s;
+#endif
+}
+void convertBool(bool o_bool, bool& n_bool) {
+#if (defined _WIN32)
+	n_bool = o_bool ? true : false;
+#else
+	n_bool = o_bool ? 1 : 0;
+#endif
+}

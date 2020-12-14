@@ -1,6 +1,13 @@
 const { app, BrowserWindow, ipcMain, nativeTheme } = require('electron');
 const { ZOOM_TYPE_OS_TYPE, ZoomSDK_LANGUAGE_ID, ZoomSDKError, ZoomAuthResult, ZoomLoginStatus, ZoomMeetingStatus,
   ZoomMeetingUIFloatVideoType, SDKCustomizedStringType, SDKCustomizedURLType, ZoomAPPLocale } = require('../lib/settings.js');
+try {
+  require('../lib/electron_sdk_pb.js');
+} catch (error) {
+  console.log('Please execute npm install google-protobuf at root of the project \nRefer to README.md')
+  app.exit()
+  return
+}
 const ZOOMSDKMOD = require('../lib/zoom_sdk.js');
 const os = require('os');
 const platform = os.platform();
@@ -55,7 +62,7 @@ function sdkauthCB(status) {
       meetingstatuscb: meetingstatuscb,
       meetinguserjoincb: meetinguserjoincb,
       meetinguserleftcb: meetinguserleftcb,
-      meetinghostchangecb: meetinghostchangecb,
+      meetinghostchangecb: meetinghostchangecb
     }
     zoommeeting = zoomsdk.GetMeeting(opts);
     app.zoommeeting = zoommeeting;
@@ -1133,15 +1140,17 @@ let functionObj = {
     }
     let ret = zoomsetvideo.Setting_IsSpotlightSelfEnabled(opts);
   },
-  enableHardwareEncode: function (bEnable) {
+  enableHardwareEncode: function (bEnable, encodeType) {
     let opts = {
-      bEnable: bEnable
+      bEnable: bEnable,
+      encodeType: encodeType
     }
     let ret = zoomsetvideo.Setting_EnableHardwareEncode(opts);
   },
-  isHardwareEncodeEnabled: function (bEnable) {
+  isHardwareEncodeEnabled: function (bEnable, encodeType) {
     let opts = {
-      bEnable: bEnable
+      bEnable: bEnable,
+      encodeType: encodeType
     }
     let ret = zoomsetvideo.Setting_IsHardwareEncodeEnabled(opts);
   },

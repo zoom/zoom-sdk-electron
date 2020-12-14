@@ -38,8 +38,7 @@
 		<button type="button" class="button-small" onclick="getH323Address()">Get H323Address</button>
 		<button type="button" class="button-small" onclick="getH323Password()">Get H323Password</button>
 		<button type="button" class="button-small" onclick="getCalloutH323DeviceList()">Get CalloutH323DeviceList</button>
-		<!-- <button type="button" class="button-small" onclick="enableInviteButtonOnMeetingUI()">Enable InviteButtonOnMeetingUI</button>
-		<button type="button" class="button-small" onclick="getReminderType()">Get ReminderType</button>
+		<!-- <button type="button" class="button-small" onclick="getReminderType()">Get ReminderType</button>
 		<button type="button" class="button-small" onclick="upgradeMeeting()">Upgrade Meeting</button>
 		<button type="button" class="button-small" onclick="upgradeAccount()">Upgrade Account</button>
     <button type="button" class="button-small" onclick="cancelUpdate()">Cancel Update</button> -->
@@ -113,6 +112,21 @@
     <button type="button" class="button-small" onclick="queryAudioStatisticInfo()">Query Audio StatisticInfo</button>
     <button type="button" class="button-small" onclick="queryVideoStatisticInfo()">Query Video StatisticInfo</button>
     <button type="button" class="button-small" onclick="queryShareStatisticInfo()">Query Share StatisticInfo</button> -->
+    <div class="section">Meeting Recording</div>
+    <div>
+      <input type="text" name="recPath" class="input-show" placeholder="input recPath or cloud_recording" id="recPath"/>
+      <input type="text" name="userid2" class="input-show" placeholder="input userid" id="userid2"/>
+    </div>
+    <button type="button" class="button-small" onclick="canStartRecording()">Can StartRecording</button>
+		<button type="button" class="button-small" onclick="startRecording()">Start Recording</button>
+		<button type="button" class="button-small" onclick="stopRecording()">Stop Recording</button>
+    <button type="button" class="button-small" onclick="canAllowDisAllowLocalRecording()">Can AllowDisAllowLocalRecording</button>
+    <button type="button" class="button-small" onclick="startCloudRecording()">Start CloudRecording</button>
+    <button type="button" class="button-small" onclick="stopCloudRecording()">Stop CloudRecording</button>
+    <button type="button" class="button-small" onclick="isSupportLocalRecording()">Is SupportLocalRecording</button>
+    <button type="button" class="button-small" onclick="allowLocalRecording()">Allow LocalRecording</button>
+    <button type="button" class="button-small" onclick="disAllowLocalRecording()">Dis AllowLocalRecording</button>
+    <button type="button" class="button-small" onclick="requestCustomizedLocalRecordingSource()">Request CustomizedLocalRecordingSource</button>
   </div>
 </body>
 </html>
@@ -450,11 +464,6 @@
   function getCalloutH323DeviceList() {
     ipcRenderer.send('asynchronous-message', 'getCalloutH323DeviceList');
   }
-
-  // function enableInviteButtonOnMeetingUI() {
-  //   let email = document.getElementById("email").value;
-  // 	ipcRenderer.send('asynchronous-message', 'enableInviteButtonOnMeetingUI', Boolean(email));
-  // }
       
   // function getReminderType() {
   // 	ipcRenderer.send('asynchronous-message', 'getReminderType');
@@ -486,5 +495,50 @@
 
   function queryShareStatisticInfo() {
     ipcRenderer.send('asynchronous-message', 'queryShareStatisticInfo');
+  }
+
+  function canStartRecording() {
+    let cloud_recording = document.getElementById("recPath").value;
+    ipcRenderer.send('asynchronous-message', 'canStartRecording', Boolean(cloud_recording));
+  }
+
+  function startRecording() {
+    let recPath = document.getElementById("recPath").value;
+    ipcRenderer.send('asynchronous-message', 'startRecording', recPath);
+  }
+
+  function stopRecording() {
+    ipcRenderer.send('asynchronous-message', 'stopRecording');
+  }
+
+  function canAllowDisAllowLocalRecording() {
+    ipcRenderer.send('asynchronous-message', 'canAllowDisAllowLocalRecording');
+  }
+
+  function startCloudRecording() {
+    ipcRenderer.send('asynchronous-message', 'startCloudRecording');
+  }
+
+  function stopCloudRecording() {
+    ipcRenderer.send('asynchronous-message', 'stopCloudRecording');
+  }
+
+  function isSupportLocalRecording() {
+    let userid = document.getElementById("userid2").value;
+    ipcRenderer.send('asynchronous-message', 'isSupportLocalRecording', userid);
+  }
+
+  function allowLocalRecording() {
+    let userid = document.getElementById("userid2").value;
+    ipcRenderer.send('asynchronous-message', 'allowLocalRecording', userid);
+  }
+
+  function disAllowLocalRecording() {
+    let userid = document.getElementById("userid2").value;
+    ipcRenderer.send('asynchronous-message', 'disAllowLocalRecording', userid);
+  }
+
+  function requestCustomizedLocalRecordingSource() {
+    ipcRenderer.send('asynchronous-message', 'requestCustomizedLocalRecordingSource');
   }
 </script>

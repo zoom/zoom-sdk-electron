@@ -36,13 +36,9 @@ ZNSDKError ZNativeSDKWrap::InitSDK(ZNInitParam &initParam)
     return ZNSDKERR_SUCCESS;
 }
 
-//before initsdk called
 void ZNativeSDKWrap::SetTeamIdentifier(ZoomSTRING identifier)
 {
-    if (!identifier.empty()) {
-        NSString *identifierStr = [NSString stringWithUTF8String:identifier.c_str()];
-        [[ZoomSDK sharedSDK] setTeamIdentifier:identifierStr];
-    }
+    [[ZoomSDK sharedSDK] setTeamIdentifier:[NSString stringWithUTF8String:identifier.c_str()]];
 }
 
 ZNSDKError ZNativeSDKWrap::CleanUPSDK()

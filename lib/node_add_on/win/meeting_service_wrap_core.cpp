@@ -435,8 +435,8 @@ ZNSDKError ZMeetingUICtrlWrap::HideJoinAudioDlg()
 ZNSDKError ZMeetingUICtrlWrap::GetWallViewPageInfo(ZNVideoWallPageInfoParam& param)
 {
 	ZOOM_SDK_NAMESPACE::VideoWallPageInfoParam sdk_param;
-	sdk_param.nCurrentPage = _wtoi(param.currentPage.c_str());
-	sdk_param.nTotalPages = _wtoi(param.totalPages.c_str());
+	sdk_param.nCurrentPage = 0;
+	sdk_param.nTotalPages = 0;
 	ZNSDKError err = Map2WrapDefine(ZOOM_SDK_NAMESPACE::CSDKWrap::GetInst().GetMeetingServiceWrap().T_GetUIController().GetWallViewPageInfo(sdk_param));
 	wchar_t temp_current[1024];
 	int radix = 10;
@@ -458,8 +458,7 @@ ZNSDKError ZMeetingUICtrlWrap::ShowSharingFrameWindows(bool bShow)
 ZNSDKError ZMeetingUICtrlWrap::GetCurrentSplitScreenModeInfo(ZNSplitScreenInfo& info)
 {
 	ZOOM_SDK_NAMESPACE::SplitScreenInfo param;
-	param.bInSplitScreenMode = info.bZNInSplitScreenMode;
-	param.bSupportSplitScreen = info.bZNSupportSplitScreen;
+
 	ZNSDKError err = Map2WrapDefine(ZOOM_SDK_NAMESPACE::CSDKWrap::GetInst().GetMeetingServiceWrap().T_GetUIController().GetCurrentSplitScreenModeInfo(param));
 	info.bZNInSplitScreenMode = param.bInSplitScreenMode;
 	info.bZNSupportSplitScreen = param.bSupportSplitScreen;

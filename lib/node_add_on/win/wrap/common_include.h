@@ -36,6 +36,7 @@
 #include "../h/meeting_service_components/meeting_waiting_room_interface.h"
 #include "../h/meeting_service_components/meeting_webinar_interface.h"
 #include "../h/meeting_service_components/meeting_closedcaption_interface.h"
+#include "../h/meeting_service_components/meeting_interpretation_interface.h"
 #include "../h/zoom_sdk_ext.h"
 #include "../h/zoom_sdk_util_define.h"
 #include "../h/network_connection_handler_interface.h"
@@ -47,6 +48,7 @@
 #include "../h/rawdata/rawdata_video_source_helper_interface.h"
 #include "../h/rawdata/rawdata_renderer_interface.h"
 #include "../h/rawdata/rawdata_audio_helper_interface.h"
+#include "../h/zoom_sdk_raw_data_def.h"
 #include "../h/zoom_sdk_sms_helper_interface.h"
 #elif (defined CSHARP_WRAP) || (defined INTEL_UNITE)
 #include "../h/zoom_sdk.h"
@@ -81,6 +83,7 @@
 #include "../h/meeting_service_components/meeting_waiting_room_interface.h"
 #include "../h/meeting_service_components/meeting_webinar_interface.h"
 #include "../h/meeting_service_components/meeting_closedcaption_interface.h"
+#include "../h/meeting_service_components/meeting_interpretation_interface.h"
 #include "../h/zoom_sdk_ext.h"
 #include "../h/zoom_sdk_util_define.h"
 #include "../h/network_connection_handler_interface.h"
@@ -92,6 +95,7 @@
 #include "../h/rawdata/rawdata_video_source_helper_interface.h"
 #include "../h/rawdata/rawdata_renderer_interface.h"
 #include "../h/rawdata/rawdata_audio_helper_interface.h"
+#include "../h/zoom_sdk_raw_data_def.h"
 #include "../h/zoom_sdk_sms_helper_interface.h"
 #else
 #include "../../zoom_sdk/include/zoom_sdk.h"
@@ -126,6 +130,7 @@
 #include "../../zoom_sdk/include/meeting_service_components/meeting_waiting_room_interface.h"
 #include "../../zoom_sdk/include/meeting_service_components/meeting_webinar_interface.h"
 #include "../../zoom_sdk/include/meeting_service_components/meeting_closedcaption_interface.h"
+#include "../../zoom_sdk/include/meeting_service_components/meeting_interpretation_interface.h"
 #include "../../zoom_sdk/include/zoom_sdk_ext.h"
 #include "../../zoom_sdk/include/zoom_sdk_util_define.h"
 #include "../../zoom_sdk/include/network_connection_handler_interface.h"
@@ -137,6 +142,7 @@
 #include "../../zoom_sdk/include/rawdata/rawdata_video_source_helper_interface.h"
 #include "../../zoom_sdk/include/rawdata/rawdata_renderer_interface.h"
 #include "../../zoom_sdk/include/rawdata/rawdata_audio_helper_interface.h"
+#include "../../zoom_sdk/include/zoom_sdk_raw_data_def.h"
 #include "../h/zoom_sdk_sms_helper_interface.h"
 #endif
 #include <string>

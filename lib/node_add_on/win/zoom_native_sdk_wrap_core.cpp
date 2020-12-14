@@ -26,6 +26,7 @@
 #include "wrap/meeting_service_components_wrap/meeting_video_wrap.cpp"
 #include "wrap/meeting_service_components_wrap/meeting_waiting_room_wrap.cpp"
 #include "wrap/meeting_service_components_wrap/meeting_realname_auth_helper_wrap.cpp"
+#include "wrap/meeting_service_components_wrap/meeting_interpretation_ctrl_wrap.cpp"
 //
 #include "wrap/video_setting_context_wrap.cpp"
 #include "wrap/audio_setting_context_wrap.cpp"
@@ -77,7 +78,9 @@ ZNSDKError ZNativeSDKWrap::InitSDK(ZNInitParam& initParam)
 	param.uiLogFileSize = initParam.logFileSize;
 	param.permonitor_awareness_mode = initParam.permonitor_awareness_mode;
 
-	param.videoRenderMode = Map2SDKDefine(initParam.videoRenderMode);
+	param.renderOpts.videoRenderMode = Map2SDKDefine(initParam.renderOpts.videoRenderMode);
+	param.renderOpts.renderPostProcessing = Map2SDKDefine(initParam.renderOpts.renderPostProcessing);
+	param.renderOpts.videoCaptureMethod = Map2SDKDefine(initParam.renderOpts.videoCaptureMethod);
 	param.rawdataOpts.enableRawdataIntermediateMode = initParam.rawdataOpts.enableRawdataIntermediateMode;
 	ZoomNodeRawDataHelperMgr::GetInst().SetRawdataIntermediateMode(initParam.rawdataOpts.enableRawdataIntermediateMode);
 	param.rawdataOpts.audioRawdataMemoryMode = Map2SDKDefine(initParam.rawdataOpts.audioRawdataMemoryMode);
@@ -143,7 +146,7 @@ ZNativeRawAPIWrap& ZNativeSDKWrap::GetRawAPIWrap()
 {
 	return _z_raw_api_wrap;
 }
-void ZNativeSDKWrap::SetTeamIdentifier(ZoomSTRING identifier)
+void ZNativeSDKWrap::SetTeamIdentifier(ZoomSTRING)
 {
-	//only for Mac
+	//only for MAC
 }

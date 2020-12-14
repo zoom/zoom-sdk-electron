@@ -31,8 +31,8 @@ public:
 	bool IsAlwaysUse16v9();
 	ZNSDKError EnableSpotlightSelf(bool bEnable);
 	bool IsSpotlightSelfEnabled();
-	ZNSDKError EnableHardwareEncode(bool bEnable);
-	bool IsHardwareEncodeEnabled();
+	ZNSDKError EnableHardwareEncode(bool bEnable, ZN_VIDEO_HARDWARE_ENCODE_TYPE encodeType);
+	bool IsHardwareEncodeEnabled(ZN_VIDEO_HARDWARE_ENCODE_TYPE encodeType);
 	ZNSDKError Enable49VideoesInGallaryView(bool bEnable);
 	bool Is49VideoesInGallaryViewEnabled();
 	ZNSDKError EnableHideNoVideoUsersOnWallView(bool bEnable);

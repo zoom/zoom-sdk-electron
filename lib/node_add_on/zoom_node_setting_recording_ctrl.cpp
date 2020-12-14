@@ -13,24 +13,26 @@ ZoomNodeSettingRecordingCtrlWrap::~ZoomNodeSettingRecordingCtrlWrap()
 void ZoomNodeSettingRecordingCtrlWrap::SetRecordingPath(const v8::FunctionCallbackInfo<v8::Value>& args)
 {
 	v8::Isolate* isolate = args.GetIsolate();
-	if (args.Length() < 1) {
-		isolate->ThrowException(v8::Exception::TypeError(
-			v8::String::NewFromUtf8(isolate, "Wrong number of arguments", v8::NewStringType::kInternalized).ToLocalChecked()));
-		return;
-	}
-
-	if (!args[0]->IsString()
-		)
+	ZNSDKError err = ZNSDKERR_SUCCESS;
+	do
 	{
-		isolate->ThrowException(v8::Exception::TypeError(
-			v8::String::NewFromUtf8(isolate, "Wrong arguments", v8::NewStringType::kInternalized).ToLocalChecked()));
-		return;
-	}
-	ZoomSTRING zn_szPath;
-	zoom_v8toc(args[0].As<v8::String>(), zn_szPath);
+		com::electron::sdk::proto::SetRecordingPathParams proto_params;
+		if (!SetProtoParam<com::electron::sdk::proto::SetRecordingPathParams >(args, proto_params))
+		{
+			err = ZNSDKERR_INVALID_PARAMETER;
+			break;
+		}
+		if (!proto_params.has_recpath())
+		{
+			err = ZNSDKERR_INVALID_PARAMETER;
+			break;
+		}
+		ZoomSTRING _zn_szPath;
+		_zn_szPath = s2zs(proto_params.recpath());
 
-
-	ZNSDKError err = _g_native_wrap.GetSettingServiceWrap().GetSettingRecordingCtrl().SetRecordingPath(zn_szPath);
+		err = _g_native_wrap.GetSettingServiceWrap().GetSettingRecordingCtrl().SetRecordingPath(_zn_szPath);
+	} while (false);
+	
 	v8::Local<v8::Integer> bret = v8::Integer::New(isolate, (int32_t)err);
 	args.GetReturnValue().Set(bret);
 }
@@ -46,24 +48,31 @@ void ZoomNodeSettingRecordingCtrlWrap::GetRecordingPath(const v8::FunctionCallba
 void ZoomNodeSettingRecordingCtrlWrap::SetonCloudRecordingStorageInfoCB(const v8::FunctionCallbackInfo<v8::Value>& args)
 {
 	v8::Isolate* isolate = args.GetIsolate();
-	if (args.Length() < 1) {
-		isolate->ThrowException(v8::Exception::TypeError(
-			v8::String::NewFromUtf8(isolate, "Wrong number of arguments", v8::NewStringType::kInternalized).ToLocalChecked()));
-		return;
-	}
-	if (args[0]->IsNull())	{		ZoomNodeSinkHelper::GetInst().onCloudRecordingStorageInfo.Empty();		return;	}
-	if (!args[0]->IsFunction())
-	{
-		isolate->ThrowException(v8::Exception::TypeError(
-			v8::String::NewFromUtf8(isolate, "Wrong arguments", v8::NewStringType::kInternalized).ToLocalChecked()));
-		return;
-	}
-
-	v8::Local<v8::Function> cbfunc = v8::Local<v8::Function>::Cast(args[0]);
-	v8::Persistent<v8::Function, v8::CopyablePersistentTraits<v8::Function> > cb(isolate, cbfunc);
-	ZoomNodeSinkHelper::GetInst().onCloudRecordingStorageInfo = cb;
-
 	ZNSDKError err = ZNSDKERR_SUCCESS;
+	do
+	{
+		if (args.Length() < 1) {
+			err = ZNSDKERR_INVALID_PARAMETER;
+			break;
+		}
+		if (args[0]->IsNull())
+		{
+			ZoomNodeSinkHelper::GetInst().onCloudRecordingStorageInfo.Empty();
+			err = ZNSDKERR_INVALID_PARAMETER;
+			break;
+		}
+		if (!args[0]->IsFunction())
+		{
+			err = ZNSDKERR_INVALID_PARAMETER;
+			break;
+		}
+
+		v8::Local<v8::Function> cbfunc = v8::Local<v8::Function>::Cast(args[0]);
+		v8::Persistent<v8::Function, v8::CopyablePersistentTraits<v8::Function> > cb(isolate, cbfunc);
+		ZoomNodeSinkHelper::GetInst().onCloudRecordingStorageInfo = cb;
+
+	} while (false);
+	
 	v8::Local<v8::Integer> bret = v8::Integer::New(isolate, (int32_t)err);
 	args.GetReturnValue().Set(bret);
 }
@@ -94,22 +103,7 @@ void ZoomNodeSettingRecordingCtrlWrap::CanGetRecordingManagementURL(const v8::Fu
 {
 	v8::Isolate* isolate = args.GetIsolate();
 	auto context = isolate->GetCurrentContext();
-	if (args.Length() < 1) {
-		isolate->ThrowException(v8::Exception::TypeError(
-			v8::String::NewFromUtf8(isolate, "Wrong number of arguments", v8::NewStringType::kInternalized).ToLocalChecked()));
-		return;
-	}
-
-	if (!args[0]->IsBoolean()
-		)
-	{
-		isolate->ThrowException(v8::Exception::TypeError(
-			v8::String::NewFromUtf8(isolate, "Wrong arguments", v8::NewStringType::kInternalized).ToLocalChecked()));
-		return;
-	}
-	bool zn_bEnable;
-	zoom_v8toc(args[0].As<v8::Boolean>(), zn_bEnable);
-
+	bool zn_bEnable = false;
 	ZNSDKError err = _g_native_wrap.GetSettingServiceWrap().GetSettingRecordingCtrl().CanGetRecordingManagementURL(zn_bEnable);
 	v8::HandleScope scope(isolate);
 	v8::Local<v8::Object> node = v8::Object::New(isolate);
@@ -121,24 +115,26 @@ void ZoomNodeSettingRecordingCtrlWrap::CanGetRecordingManagementURL(const v8::Fu
 void ZoomNodeSettingRecordingCtrlWrap::EnableSelectRecordFileLocationAfterMeeting(const v8::FunctionCallbackInfo<v8::Value>& args)
 {
 	v8::Isolate* isolate = args.GetIsolate();
-	if (args.Length() < 1) {
-		isolate->ThrowException(v8::Exception::TypeError(
-			v8::String::NewFromUtf8(isolate, "Wrong number of arguments", v8::NewStringType::kInternalized).ToLocalChecked()));
-		return;
-	}
-
-	if (!args[0]->IsBoolean()
-		)
+	ZNSDKError err = ZNSDKERR_SUCCESS;
+	do
 	{
-		isolate->ThrowException(v8::Exception::TypeError(
-			v8::String::NewFromUtf8(isolate, "Wrong arguments", v8::NewStringType::kInternalized).ToLocalChecked()));
-		return;
-	}
-	bool zn_bEnable;
-	zoom_v8toc(args[0].As<v8::Boolean>(), zn_bEnable);
+		com::electron::sdk::proto::EnableSelectRecordFileLocationAfterMeetingParams proto_params;
+		if (!SetProtoParam<com::electron::sdk::proto::EnableSelectRecordFileLocationAfterMeetingParams >(args, proto_params))
+		{
+			err = ZNSDKERR_INVALID_PARAMETER;
+			break;
+		}
+		if (!proto_params.has_benable())
+		{
+			err = ZNSDKERR_INVALID_PARAMETER;
+			break;
+		}
+		bool _bEnable = false;
+		convertBool(proto_params.benable(), _bEnable);
 
-
-	ZNSDKError err = _g_native_wrap.GetSettingServiceWrap().GetSettingRecordingCtrl().EnableSelectRecordFileLocationAfterMeeting(zn_bEnable);
+		err = _g_native_wrap.GetSettingServiceWrap().GetSettingRecordingCtrl().EnableSelectRecordFileLocationAfterMeeting(_bEnable);
+	} while (false);
+	
 	v8::Local<v8::Integer> bret = v8::Integer::New(isolate, (int32_t)err);
 	args.GetReturnValue().Set(bret);
 }
@@ -152,24 +148,26 @@ void ZoomNodeSettingRecordingCtrlWrap::IsSelectRecordFileLocationAfterMeetingEna
 void ZoomNodeSettingRecordingCtrlWrap::EnableMultiAudioStreamRecord(const v8::FunctionCallbackInfo<v8::Value>& args)
 {
 	v8::Isolate* isolate = args.GetIsolate();
-	if (args.Length() < 1) {
-		isolate->ThrowException(v8::Exception::TypeError(
-			v8::String::NewFromUtf8(isolate, "Wrong number of arguments", v8::NewStringType::kInternalized).ToLocalChecked()));
-		return;
-	}
-
-	if (!args[0]->IsBoolean()
-		)
+	ZNSDKError err = ZNSDKERR_SUCCESS;
+	do
 	{
-		isolate->ThrowException(v8::Exception::TypeError(
-			v8::String::NewFromUtf8(isolate, "Wrong arguments", v8::NewStringType::kInternalized).ToLocalChecked()));
-		return;
-	}
-	bool zn_bEnable;
-	zoom_v8toc(args[0].As<v8::Boolean>(), zn_bEnable);
+		com::electron::sdk::proto::EnableMultiAudioStreamRecordParams proto_params;
+		if (!SetProtoParam<com::electron::sdk::proto::EnableMultiAudioStreamRecordParams >(args, proto_params))
+		{
+			err = ZNSDKERR_INVALID_PARAMETER;
+			break;
+		}
+		if (!proto_params.has_benable())
+		{
+			err = ZNSDKERR_INVALID_PARAMETER;
+			break;
+		}
+		bool _bEnable = false;
+		convertBool(proto_params.benable(), _bEnable);
 
-
-	ZNSDKError err = _g_native_wrap.GetSettingServiceWrap().GetSettingRecordingCtrl().EnableMultiAudioStreamRecord(zn_bEnable);
+		err = _g_native_wrap.GetSettingServiceWrap().GetSettingRecordingCtrl().EnableMultiAudioStreamRecord(_bEnable);
+	} while (false);
+	
 	v8::Local<v8::Integer> bret = v8::Integer::New(isolate, (int32_t)err);
 	args.GetReturnValue().Set(bret);
 }
@@ -183,24 +181,26 @@ void ZoomNodeSettingRecordingCtrlWrap::IsMultiAudioStreamRecordEnabled(const v8:
 void ZoomNodeSettingRecordingCtrlWrap::EnableAddTimestampWatermark(const v8::FunctionCallbackInfo<v8::Value>& args)
 {
 	v8::Isolate* isolate = args.GetIsolate();
-	if (args.Length() < 1) {
-		isolate->ThrowException(v8::Exception::TypeError(
-			v8::String::NewFromUtf8(isolate, "Wrong number of arguments", v8::NewStringType::kInternalized).ToLocalChecked()));
-		return;
-	}
-
-	if (!args[0]->IsBoolean()
-		)
+	ZNSDKError err = ZNSDKERR_SUCCESS;
+	do
 	{
-		isolate->ThrowException(v8::Exception::TypeError(
-			v8::String::NewFromUtf8(isolate, "Wrong arguments", v8::NewStringType::kInternalized).ToLocalChecked()));
-		return;
-	}
-	bool zn_bEnable;
-	zoom_v8toc(args[0].As<v8::Boolean>(), zn_bEnable);
+		com::electron::sdk::proto::EnableAddTimestampWatermarkParams proto_params;
+		if (!SetProtoParam<com::electron::sdk::proto::EnableAddTimestampWatermarkParams >(args, proto_params))
+		{
+			err = ZNSDKERR_INVALID_PARAMETER;
+			break;
+		}
+		if (!proto_params.has_benable())
+		{
+			err = ZNSDKERR_INVALID_PARAMETER;
+			break;
+		}
+		bool _bEnable = false;
+		convertBool(proto_params.benable(), _bEnable);
 
-
-	ZNSDKError err = _g_native_wrap.GetSettingServiceWrap().GetSettingRecordingCtrl().EnableAddTimestampWatermark(zn_bEnable);
+		err = _g_native_wrap.GetSettingServiceWrap().GetSettingRecordingCtrl().EnableAddTimestampWatermark(_bEnable);
+	} while (false);
+	
 	v8::Local<v8::Integer> bret = v8::Integer::New(isolate, (int32_t)err);
 	args.GetReturnValue().Set(bret);
 }
@@ -214,24 +214,26 @@ void ZoomNodeSettingRecordingCtrlWrap::IsAddTimestampWatermarkEnabled(const v8::
 void ZoomNodeSettingRecordingCtrlWrap::EnableOptimizeFor3rdPartyVideoEditor(const v8::FunctionCallbackInfo<v8::Value>& args)
 {
 	v8::Isolate* isolate = args.GetIsolate();
-	if (args.Length() < 1) {
-		isolate->ThrowException(v8::Exception::TypeError(
-			v8::String::NewFromUtf8(isolate, "Wrong number of arguments", v8::NewStringType::kInternalized).ToLocalChecked()));
-		return;
-	}
-
-	if (!args[0]->IsBoolean()
-		)
+	ZNSDKError err = ZNSDKERR_SUCCESS;
+	do
 	{
-		isolate->ThrowException(v8::Exception::TypeError(
-			v8::String::NewFromUtf8(isolate, "Wrong arguments", v8::NewStringType::kInternalized).ToLocalChecked()));
-		return;
-	}
-	bool zn_bEnable;
-	zoom_v8toc(args[0].As<v8::Boolean>(), zn_bEnable);
+		com::electron::sdk::proto::EnableOptimizeFor3rdPartyVideoEditorParams proto_params;
+		if (!SetProtoParam<com::electron::sdk::proto::EnableOptimizeFor3rdPartyVideoEditorParams >(args, proto_params))
+		{
+			err = ZNSDKERR_INVALID_PARAMETER;
+			break;
+		}
+		if (!proto_params.has_benable())
+		{
+			err = ZNSDKERR_INVALID_PARAMETER;
+			break;
+		}
+		bool _bEnable = false;
+		convertBool(proto_params.benable(), _bEnable);
 
-
-	ZNSDKError err = _g_native_wrap.GetSettingServiceWrap().GetSettingRecordingCtrl().EnableOptimizeFor3rdPartyVideoEditor(zn_bEnable);
+		err = _g_native_wrap.GetSettingServiceWrap().GetSettingRecordingCtrl().EnableOptimizeFor3rdPartyVideoEditor(_bEnable);
+	} while (false);
+	
 	v8::Local<v8::Integer> bret = v8::Integer::New(isolate, (int32_t)err);
 	args.GetReturnValue().Set(bret);
 }
@@ -245,24 +247,26 @@ void ZoomNodeSettingRecordingCtrlWrap::IsOptimizeFor3rdPartyVideoEditorEnabled(c
 void ZoomNodeSettingRecordingCtrlWrap::EnableShowVideoThumbnailWhenShare(const v8::FunctionCallbackInfo<v8::Value>& args)
 {
 	v8::Isolate* isolate = args.GetIsolate();
-	if (args.Length() < 1) {
-		isolate->ThrowException(v8::Exception::TypeError(
-			v8::String::NewFromUtf8(isolate, "Wrong number of arguments", v8::NewStringType::kInternalized).ToLocalChecked()));
-		return;
-	}
-
-	if (!args[0]->IsBoolean()
-		)
+	ZNSDKError err = ZNSDKERR_SUCCESS;
+	do
 	{
-		isolate->ThrowException(v8::Exception::TypeError(
-			v8::String::NewFromUtf8(isolate, "Wrong arguments", v8::NewStringType::kInternalized).ToLocalChecked()));
-		return;
-	}
-	bool zn_bEnable;
-	zoom_v8toc(args[0].As<v8::Boolean>(), zn_bEnable);
+		com::electron::sdk::proto::EnableShowVideoThumbnailWhenShareParams proto_params;
+		if (!SetProtoParam<com::electron::sdk::proto::EnableShowVideoThumbnailWhenShareParams >(args, proto_params))
+		{
+			err = ZNSDKERR_INVALID_PARAMETER;
+			break;
+		}
+		if (!proto_params.has_benable())
+		{
+			err = ZNSDKERR_INVALID_PARAMETER;
+			break;
+		}
+		bool _bEnable = false;
+		convertBool(proto_params.benable(), _bEnable);
 
-
-	ZNSDKError err = _g_native_wrap.GetSettingServiceWrap().GetSettingRecordingCtrl().EnableShowVideoThumbnailWhenShare(zn_bEnable);
+		err = _g_native_wrap.GetSettingServiceWrap().GetSettingRecordingCtrl().EnableShowVideoThumbnailWhenShare(_bEnable);
+	} while (false);
+	
 	v8::Local<v8::Integer> bret = v8::Integer::New(isolate, (int32_t)err);
 	args.GetReturnValue().Set(bret);
 }
@@ -276,24 +280,26 @@ void ZoomNodeSettingRecordingCtrlWrap::IsShowVideoThumbnailWhenShareEnabled(cons
 void ZoomNodeSettingRecordingCtrlWrap::EnablePlaceVideoNextToShareInRecord(const v8::FunctionCallbackInfo<v8::Value>& args)
 {
 	v8::Isolate* isolate = args.GetIsolate();
-	if (args.Length() < 1) {
-		isolate->ThrowException(v8::Exception::TypeError(
-			v8::String::NewFromUtf8(isolate, "Wrong number of arguments", v8::NewStringType::kInternalized).ToLocalChecked()));
-		return;
-	}
-
-	if (!args[0]->IsBoolean()
-		)
+	ZNSDKError err = ZNSDKERR_SUCCESS;
+	do
 	{
-		isolate->ThrowException(v8::Exception::TypeError(
-			v8::String::NewFromUtf8(isolate, "Wrong arguments", v8::NewStringType::kInternalized).ToLocalChecked()));
-		return;
-	}
-	bool zn_bEnable;
-	zoom_v8toc(args[0].As<v8::Boolean>(), zn_bEnable);
+		com::electron::sdk::proto::EnablePlaceVideoNextToShareInRecordParams proto_params;
+		if (!SetProtoParam<com::electron::sdk::proto::EnablePlaceVideoNextToShareInRecordParams >(args, proto_params))
+		{
+			err = ZNSDKERR_INVALID_PARAMETER;
+			break;
+		}
+		if (!proto_params.has_benable())
+		{
+			err = ZNSDKERR_INVALID_PARAMETER;
+			break;
+		}
+		bool _bEnable = false;
+		convertBool(proto_params.benable(), _bEnable);
 
-
-	ZNSDKError err = _g_native_wrap.GetSettingServiceWrap().GetSettingRecordingCtrl().EnablePlaceVideoNextToShareInRecord(zn_bEnable);
+		err = _g_native_wrap.GetSettingServiceWrap().GetSettingRecordingCtrl().EnablePlaceVideoNextToShareInRecord(_bEnable);
+	} while (false);
+	
 	v8::Local<v8::Integer> bret = v8::Integer::New(isolate, (int32_t)err);
 	args.GetReturnValue().Set(bret);
 }

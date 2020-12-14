@@ -1220,6 +1220,73 @@ ZOOM_SDK_NAMESPACE::ZoomSDKRawDataType Map2SDKDefine(ZNZoomSDKRawDataType type)
 	}
 	return sdk_Type;
 }
+
+ZOOM_SDK_NAMESPACE::VIDEO_HARDWARE_ENCODE_TYPE Map2SDKDefine(ZN_VIDEO_HARDWARE_ENCODE_TYPE encodeType)
+{
+	ZOOM_SDK_NAMESPACE::VIDEO_HARDWARE_ENCODE_TYPE sdk_encodeType = ZOOM_SDK_NAMESPACE::VIDEO_HARDWARE_ENCODE_RECEIVING;
+	switch (encodeType)
+	{
+	case ZN_VIDEO_HARDWARE_ENCODE_RECEIVING:
+		sdk_encodeType = ZOOM_SDK_NAMESPACE::VIDEO_HARDWARE_ENCODE_RECEIVING;
+		break;
+	case ZN_VIDEO_HARDWARE_ENCODE_SENDING:
+		sdk_encodeType = ZOOM_SDK_NAMESPACE::VIDEO_HARDWARE_ENCODE_SENDING;
+		break;
+	case ZN_VIDEO_HARDWARE_ENCODE_PROCESSING:
+		sdk_encodeType = ZOOM_SDK_NAMESPACE::VIDEO_HARDWARE_ENCODE_PROCESSING;
+		break;
+	default:
+		break;
+	}
+	return sdk_encodeType;
+}
+
+ZOOM_SDK_NAMESPACE::ZoomSDKRenderPostProcessing Map2SDKDefine(ZNZoomSDKRenderPostProcessing postProcessing)
+{
+	ZOOM_SDK_NAMESPACE::ZoomSDKRenderPostProcessing sdk_postProcessing = ZOOM_SDK_NAMESPACE::ZoomSDKRenderPostProcessing_None;
+	switch (postProcessing)
+	{
+	case ZNZoomSDKRenderPostProcessing_None:
+		sdk_postProcessing = ZOOM_SDK_NAMESPACE::ZoomSDKRenderPostProcessing_None;
+		break;
+	case ZNZoomSDKRenderPostProcessing_Auto:
+		sdk_postProcessing = ZOOM_SDK_NAMESPACE::ZoomSDKRenderPostProcessing_Auto;
+		break;
+	case ZNZoomSDKRenderPostProcessing_Enable:
+		sdk_postProcessing = ZOOM_SDK_NAMESPACE::ZoomSDKRenderPostProcessing_Enable;
+		break;
+	case ZNZoomSDKRenderPostProcessing_Disable:
+		sdk_postProcessing = ZOOM_SDK_NAMESPACE::ZoomSDKRenderPostProcessing_Disable;
+		break;
+	default:
+		break;
+	}
+	return sdk_postProcessing;
+}
+
+ZOOM_SDK_NAMESPACE::ZoomSDKVideoCaptureMethod Map2SDKDefine(ZNZoomSDKVideoCaptureMethod method)
+{
+	ZOOM_SDK_NAMESPACE::ZoomSDKVideoCaptureMethod sdk_method = ZOOM_SDK_NAMESPACE::ZoomSDKVideoCaptureMethod_None;
+	switch (sdk_method)
+	{
+	case ZNZoomSDKVideoCaptureMethod_None:
+		sdk_method = ZOOM_SDK_NAMESPACE::ZoomSDKVideoCaptureMethod_None;
+		break;
+	case ZNZoomSDKVideoCaptureMethod_Auto:
+		sdk_method = ZOOM_SDK_NAMESPACE::ZoomSDKVideoCaptureMethod_Auto;
+		break;
+	case ZNZoomSDKVideoCaptureMethod_DirectSHow:
+		sdk_method = ZOOM_SDK_NAMESPACE::ZoomSDKVideoCaptureMethod_DirectSHow;
+		break;
+	case ZNZoomSDKVideoCaptureMethod_MediaFoundation:
+		sdk_method = ZOOM_SDK_NAMESPACE::ZoomSDKVideoCaptureMethod_MediaFoundation;
+		break;
+	default:
+		break;
+	}
+	return sdk_method;
+}
+
 ZOOM_SDK_NAMESPACE::ZoomSDKResolution Map2SDKDefine(ZNZoomSDKResolution resolution)
 {
 	ZOOM_SDK_NAMESPACE::ZoomSDKResolution sdk_Resolution = ZOOM_SDK_NAMESPACE::ZoomSDKResolution_NoUse;

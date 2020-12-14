@@ -1,13 +1,13 @@
 #pragma once
-#include "rawdata_audio_channel_wrap.h"
+#include "rawdata_audio_helper_wrap.h"
 BEGIN_ZOOM_SDK_NAMESPACE
 IZoomSDKAudioRawDataHelper* InitIZoomSDKAudioRawDataHelperFunc(IZoomSDKAudioRawDataDelegate* pEvent)
 {
 	IZoomSDKAudioRawDataHelper* pObj(NULL);
-	CSDKImpl::GetInst().GetAudioRawdataHelper(&pObj);
+	pObj = CSDKImpl::GetInst().GetAudioRawdataHelper();
 	if (pObj)
 	{
-		pObj->SetEvent(pEvent);
+		SetEvent(pEvent);
 	}
 	return pObj;
 }

@@ -13,32 +13,35 @@ ZoomNodeMeetingH323CtrlWrap::~ZoomNodeMeetingH323CtrlWrap()
 void ZoomNodeMeetingH323CtrlWrap::CallOutH323(const v8::FunctionCallbackInfo<v8::Value>& args)
 {
 	v8::Isolate* isolate = args.GetIsolate();
-	if (args.Length() < 4) {
-		isolate->ThrowException(v8::Exception::TypeError(
-			v8::String::NewFromUtf8(isolate, "Wrong number of arguments", v8::NewStringType::kInternalized).ToLocalChecked()));
-		return;
-	}
-
-	if (!args[0]->IsString() ||
-		!args[1]->IsString() ||
-		!args[2]->IsString() ||
-		!args[3]->IsNumber())
+	ZNSDKError err = ZNSDKERR_SUCCESS;
+	do
 	{
-		isolate->ThrowException(v8::Exception::TypeError(
-			v8::String::NewFromUtf8(isolate, "Wrong arguments", v8::NewStringType::kInternalized).ToLocalChecked()));
-		return;
-	}
+		com::electron::sdk::proto::CallOutH323Params proto_params;
+		if (!SetProtoParam<com::electron::sdk::proto::CallOutH323Params >(args, proto_params))
+		{
+			err = ZNSDKERR_INVALID_PARAMETER;
+			break;
+		}
+		if (!proto_params.has_devicee164num() ||
+			!proto_params.has_deviceip() ||
+			!proto_params.has_devicename() ||
+			!proto_params.has_h323devicetype()
+			)
+		{
+			err = ZNSDKERR_INVALID_PARAMETER;
+			break;
+		}
+		ZoomSTRING _zn_deviceName;
+		_zn_deviceName = s2zs(proto_params.devicename());
+		ZoomSTRING _zn_deviceIP;
+		_zn_deviceIP = s2zs(proto_params.deviceip());
+		ZoomSTRING _zn_deviceE164num;
+		_zn_deviceE164num = s2zs(proto_params.devicee164num());
+		ZNH323DeviceType _zn_type = (ZNH323DeviceType)proto_params.h323devicetype();
 
-	ZoomSTRING zn_deviceName;
-	zoom_v8toc(args[0].As<v8::String>(), zn_deviceName);
-	ZoomSTRING zn_deviceIP;
-	zoom_v8toc(args[1].As<v8::String>(), zn_deviceIP);
-	ZoomSTRING zn_deviceE164num;
-	zoom_v8toc(args[2].As<v8::String>(), zn_deviceE164num);
-	ZNH323DeviceType zn_type;
-	zn_type = (ZNH323DeviceType)args[3].As<v8::Integer >()->Value();
-
-	ZNSDKError err = _g_native_wrap.GetMeetingServiceWrap().GetMeetingH323Ctrl().CallOutH323(zn_deviceName, zn_deviceIP, zn_deviceE164num, zn_type);
+		err = _g_native_wrap.GetMeetingServiceWrap().GetMeetingH323Ctrl().CallOutH323(_zn_deviceName, _zn_deviceIP, _zn_deviceE164num, _zn_type);
+	} while (false);
+	
 	v8::Local<v8::Integer> bret = v8::Integer::New(isolate, (int32_t)err);
 	args.GetReturnValue().Set(bret);
 }
@@ -91,24 +94,31 @@ void ZoomNodeMeetingH323CtrlWrap::GetCalloutH323DviceList(const v8::FunctionCall
 void ZoomNodeMeetingH323CtrlWrap::SetH323CallOutStatusCB(const v8::FunctionCallbackInfo<v8::Value>& args)
 {
 	v8::Isolate* isolate = args.GetIsolate();
-	if (args.Length() < 1) {
-		isolate->ThrowException(v8::Exception::TypeError(
-			v8::String::NewFromUtf8(isolate, "Wrong number of arguments", v8::NewStringType::kInternalized).ToLocalChecked()));
-		return;
-	}
-	if (args[0]->IsNull())	{		ZoomNodeSinkHelper::GetInst().onH323CalloutStatusNotify.Empty();		return;	}
-	if (!args[0]->IsFunction())
-	{
-		isolate->ThrowException(v8::Exception::TypeError(
-			v8::String::NewFromUtf8(isolate, "Wrong arguments", v8::NewStringType::kInternalized).ToLocalChecked()));
-		return;
-	}
-
-	v8::Local<v8::Function> cbfunc = v8::Local<v8::Function>::Cast(args[0]);
-	v8::Persistent<v8::Function, v8::CopyablePersistentTraits<v8::Function> > cb(isolate, cbfunc);
-	ZoomNodeSinkHelper::GetInst().onH323CalloutStatusNotify = cb;
-
 	ZNSDKError err = ZNSDKERR_SUCCESS;
+	do
+	{
+		if (args.Length() < 1) {
+			err = ZNSDKERR_INVALID_PARAMETER;
+			break;
+		}
+		if (args[0]->IsNull())
+		{
+			ZoomNodeSinkHelper::GetInst().onH323CalloutStatusNotify.Empty();
+			err = ZNSDKERR_INVALID_PARAMETER;
+			break;
+		}
+		if (!args[0]->IsFunction())
+		{
+			err = ZNSDKERR_INVALID_PARAMETER;
+			break;
+		}
+
+		v8::Local<v8::Function> cbfunc = v8::Local<v8::Function>::Cast(args[0]);
+		v8::Persistent<v8::Function, v8::CopyablePersistentTraits<v8::Function> > cb(isolate, cbfunc);
+		ZoomNodeSinkHelper::GetInst().onH323CalloutStatusNotify = cb;
+
+	} while (false);
+	
 	v8::Local<v8::Integer> bret = v8::Integer::New(isolate, (int32_t)err);
 	args.GetReturnValue().Set(bret);
 }

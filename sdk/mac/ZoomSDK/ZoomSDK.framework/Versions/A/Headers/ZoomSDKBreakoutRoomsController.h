@@ -15,12 +15,12 @@
  * @brief Get the ID of breakout room.
  * @return If the function succeeds, it will return a NSString of breakout room's ID.
  */
--(NSString*)getBID;
+-(NSString*)getBID NS_DEPRECATED_MAC(4.0, 5.2);
 /**
  * @brief Get the name of breakout room.
  * @return If the function succeeds, it will return the name of breakout room.
  */
--(NSString*)getBreakoutRoomsName;
+-(NSString*)getBreakoutRoomsName NS_DEPRECATED_MAC(4.0, 5.2);
 @end
 
 @protocol ZoomSDKBreakoutRoomsDelegate <NSObject>
@@ -28,7 +28,7 @@
  * @brief ZoomSDK supports to receive the request to join breakout room.
  * @param bID The ID of breakout room.
  */
-- (void)onBreakoutRoomsStarted:(NSString*)bID;
+- (void)onBreakoutRoomsStarted:(NSString*)bID NS_DEPRECATED_MAC(4.0, 5.2);
 @end
 
 @interface ZoomSDKBreakoutRoomsController:NSObject
@@ -41,18 +41,18 @@
  * @param bID The ID of breakout room which you want to join in.
  * @return If the function succeeds, it will return ZoomSDKError_Success. Otherwise failed.
  */
--(ZoomSDKError)joinBreakoutRoom:(NSString*)bID;
+-(ZoomSDKError)joinBreakoutRoom:(NSString*)bID NS_DEPRECATED_MAC(4.0, 5.2);
 /**
  * @brief User leaves breakout room.
  * @return If the function succeeds, it will return ZoomSDKError_Success. Otherwise failed.
  */
--(ZoomSDKError)leaveBreakoutRoom;
+-(ZoomSDKError)leaveBreakoutRoom NS_DEPRECATED_MAC(4.0, 5.2);
 /**
  * @brief Get information of breakout rooms.
  * @param infoArray A pointer of NSMutableArray, the array contains ZoomSDKBreakoutRoomsInfo object.
  * @return If the function succeeds, it will return ZoomSDKError_Success. Otherwise failed.
  */
--(ZoomSDKError)getBreakoutRoomsInfo:(NSMutableArray**)infoArray;
+-(ZoomSDKError)getBreakoutRoomsInfo:(NSMutableArray**)infoArray NS_DEPRECATED_MAC(4.0, 5.2);
 @end
 
 

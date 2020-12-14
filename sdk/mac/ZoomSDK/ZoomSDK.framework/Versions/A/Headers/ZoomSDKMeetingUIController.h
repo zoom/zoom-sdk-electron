@@ -175,4 +175,11 @@
  * @return If the function succeeds, it will return the ZoomSDKError_Success, otherwise failed.
  */
 - (ZoomSDKError)isShowVideoPreviewWhenJoinMeeting:(BOOL)isShow;
+
+/**
+ * @brief Display previous or following page of video view when in sharing.
+ * @param nextPage Set it to YES to display following page of video view, NO to display previous page.
+ * @return If the function succeeds, it will return the ZoomSDKError_Success, otherwise failed.
+ */
+- (ZoomSDKError)pagingToPreOrNextViewWhenSharing:(BOOL)nextPage;
 @end

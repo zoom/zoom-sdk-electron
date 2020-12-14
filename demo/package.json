@@ -8,19 +8,19 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "packager-win": "electron-packager ./ zoomsdkapp --ia32 --out ./OutApp --version 1.4.0 --overwrite --icon=./app.ico",
     "packager-mac": "electron-packager ./ zoomsdkapp --platform=darwin --arch=x64 --out ./OutApp --electron-version=8.2.4 --overwrite --icon=./app.icns&& yes|cp -R  -H ../lib ./OutApp/zoomsdkapp-darwin-x64/zoomsdkapp.app/Contents/Resources/ && rm -rf ../sdk/win32 && rm -rf ../sdk/win64 && yes|cp -R  -H ../sdk ./OutApp/zoomsdkapp-darwin-x64/zoomsdkapp.app/Contents/Resources/ &&yes|cp -R  -H ../sdk/mac/Plugins ./OutApp/zoomsdkapp-darwin-x64/zoomsdkapp.app/Contents/ && yes|cp -R  -H ../sdk/mac/Resources ./OutApp/zoomsdkapp-darwin-x64/zoomsdkapp.app/Contents/&& yes|cp -R  -H ../sdk/mac/ZoomSDK/* ./OutApp/zoomsdkapp-darwin-x64/zoomsdkapp.app/Contents/Frameworks",
-    "postinstall-mac": "yes|cp -R  -H ../sdk/mac/Plugins ./node_modules/electron/dist/Electron.app/Contents/&& yes|cp -R  -H ../sdk/mac/Resources ./node_modules/electron/dist/Electron.app/Contents/ && yes|cp -R  -H ../sdk/mac/ZoomSDK/ ./node_modules/electron/dist/Electron.app/Contents/Frameworks"
+    "postinstall-mac": "yes|cp -R  -H ../sdk/mac/Plugins ./node_modules/electron/dist/Electron.app/Contents/&& yes|cp -R  -H ../sdk/mac/Resources ./node_modules/electron/dist/Electron.app/Contents/ && yes|cp -R  -H ../sdk/mac/ZoomSDK/ ./node_modules/electron/dist/Electron.app/Contents/Frameworks && yes|cp -R  -H ../sdk/mac/libprotobuf-lite.14.dylib ./node_modules/electron/dist/Electron.app/Contents/Frameworks"
   },
   "author": "",
   "license": "ISC",
   "gypfile": true,
   "devDependencies": {
-    "electron-packager": "^12.0.0",
-    "electron-rebuild": "^1.5.10",
+    "electron-rebuild": "^1.10.0",
+    "electron-packager": "^14.0.4",
     "electron": "^8.2.4"
   },
   "dependencies": {
     "electron": "^8.2.4",
-    "electron-rebuild": "^1.5.10",
-    "electron-packager": "^12.0.0"
+    "electron-rebuild": "^1.10.0",
+    "electron-packager": "^14.0.4"
   }
 }

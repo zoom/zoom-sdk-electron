@@ -131,13 +131,13 @@ bool ZSettingVideoWrap::IsSpotlightSelfEnabled()
 {
 	return ZOOM_SDK_NAMESPACE::CSDKWrap::GetInst().GetSettingServiceWrap().T_GetVideoSettings().IsSpotlightSelfEnabled();
 }
-ZNSDKError ZSettingVideoWrap::EnableHardwareEncode(bool bEnable)
+ZNSDKError ZSettingVideoWrap::EnableHardwareEncode(bool bEnable, ZN_VIDEO_HARDWARE_ENCODE_TYPE encodeType)
 {
-	return Map2WrapDefine(ZOOM_SDK_NAMESPACE::CSDKWrap::GetInst().GetSettingServiceWrap().T_GetVideoSettings().EnableHardwareEncode(bEnable));
+	return Map2WrapDefine(ZOOM_SDK_NAMESPACE::CSDKWrap::GetInst().GetSettingServiceWrap().T_GetVideoSettings().EnableHardwareEncode(bEnable, Map2SDKDefine(encodeType)));
 }
-bool ZSettingVideoWrap::IsHardwareEncodeEnabled()
+bool ZSettingVideoWrap::IsHardwareEncodeEnabled(ZN_VIDEO_HARDWARE_ENCODE_TYPE encodeType)
 {
-	return ZOOM_SDK_NAMESPACE::CSDKWrap::GetInst().GetSettingServiceWrap().T_GetVideoSettings().IsHardwareEncodeEnabled();
+	return ZOOM_SDK_NAMESPACE::CSDKWrap::GetInst().GetSettingServiceWrap().T_GetVideoSettings().IsHardwareEncodeEnabled(Map2SDKDefine(encodeType));
 }
 ZNSDKError ZSettingVideoWrap::Enable49VideoesInGallaryView(bool bEnable)
 {

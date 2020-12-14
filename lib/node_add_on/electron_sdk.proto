@@ -1,0 +1,942 @@
+syntax = "proto2";
+option optimize_for = LITE_RUNTIME;
+package com.electron.sdk.proto;
+
+message InitSDKParams {
+    optional string path = 1;  			//param.path
+	optional string domain = 2;			//param.domain
+	optional string customizedLanguageName = 3;			//param.customizedLanguageName
+	optional string customizedLanguageInfo = 4;		//param.customizedLanguageInfo
+	optional int32 customizedLanguageType = 5;		//param.customizedLanguageType
+	optional string strSupportUrl = 6;		//param.strSupportUrl
+	optional int32 langID = 7;		//param.langID
+	optional bool enableLog = 8;	//param.enableLog
+	optional int32 appLocale = 9;
+	optional int32 logFileSize = 10;
+	optional bool enableGeneralDump = 11;
+	optional bool permonitorAwarenessMode = 12;
+	optional int32 videoRenderMode = 13;
+	optional int32 videoRawdataMemoryMode = 14;
+	optional int32 shareRawdataMemoryMode = 15;
+	optional int32 audioRawdataMemoryMode = 16;
+	optional bool enableRawdataIntermediateMode = 17;
+	optional int32 renderPostProcessing = 18;
+	optional int32 videoCaptureMethod = 19;
+}
+message AuthParams {
+    optional string key = 1;  			
+	optional string secret = 2;			
+}
+
+message AuthWithJwtTokenParams {
+    optional string sdkJwtToken = 1;  			
+}
+
+message LoginParams {
+    optional string userName = 1;  			
+	optional string psw = 2; 
+	optional bool rememberMe = 3; 
+}
+
+message LoginWithSSOTokenParams {
+    optional string ssoToken = 1;
+	optional bool rememberMe = 2; 
+}
+
+message StartMeetingParams {
+    optional uint64 meetingNumber = 1;  	
+	optional string hDirectShareAppWnd = 2;
+	optional string participantID = 3;
+	optional bool isVideoOff = 4;
+	optional bool isAudioOff = 5;
+	optional bool isDirectShareDesktop = 6;
+}
+
+message StartWithoutLoginParams {
+    optional string userID = 1;
+	optional string userZAK = 2;
+	optional string userName = 3;
+	optional int32 nodeUserType = 4;
+	optional uint64 meetingNumber = 5;
+	optional string sdkVanityID = 6;
+	optional string hDirectShareAppWnd = 7;
+	optional string participantID = 8;
+	optional bool isDirectShareDesktop = 9;
+	optional bool isVideoOff = 10;
+	optional bool isAudioOff = 11;
+}
+
+message JoinMeetingParams {
+    optional uint64 meetingNumber = 1;	
+    optional string vanityID = 2;
+	optional string userName = 3;
+	optional string psw = 4;
+	optional string hDirectShareAppWnd = 5;
+	optional string participantID = 6;
+	optional string webinarToken = 7;
+	optional bool isVideoOff = 8;
+	optional bool isAudioOff = 9;
+	optional bool isDirectShareDesktop = 10;
+}
+
+message JoinWithoutLoginParams {
+    optional uint64 meetingNumber = 1;	
+    optional string vanityID = 2;
+	optional string userName = 3;
+	optional string psw = 4;
+	optional string hDirectShareAppWnd = 5;
+	optional string userZAK = 6;
+	optional string participantID = 7;
+	optional string webinarToken = 8;
+	optional bool isDirectShareDesktop = 9;
+	optional bool isVideoOff = 10;
+	optional bool isAudioOff = 11;
+}
+
+message LeaveMeetingParams {
+    optional bool bEnd = 1;
+}
+
+message HandleZoomWebUriProtocolActionParams {			
+    optional string protocolAction = 1;
+}
+
+message ShowChatDlgParams {
+    optional string hParent = 1;
+	optional string rectLeft = 2;
+	optional string rectTop = 3;
+	optional string rectRight = 4;
+	optional string rectBottom = 5;
+}
+
+message EnterFullScreenParams {
+	optional bool bFirstView = 1;
+    optional bool bSecView = 2;
+}
+
+message ExitFullScreenParams {
+	optional bool bFirstView = 1;
+    optional bool bSecView = 2;
+}
+
+message MoveFloatVideoWndParams {
+	optional string left = 1;
+	optional string top = 2;
+}
+
+message ShowSharingToolbarParams {
+	optional bool bShow = 1;
+}
+
+message ChangeFloatoActiveSpkVideoSizeParams {
+	optional int32 floatVideoType = 1;
+}
+
+message ShowParticipantsListWndParams {
+	optional bool bShow = 1;
+}
+
+message ShowBottomFloatToolbarWndParams {
+	optional bool bShow = 1;
+}
+
+message ShowPreOrNextPageVideoParams {
+	optional bool bPageUp = 1;
+}
+
+message ShowSharingFrameWindowsParams {
+	optional bool bShow = 1;
+}
+
+message SwitchSplitScreenModeParams {
+	optional bool bSplit = 1;
+}
+
+message SwitchMinimizeUIMode4FirstScreenMeetingUIWndParams {
+	optional int32 minimizeUIMOde = 1;
+}
+
+message SwapToShowShareViewOrVideoParams {
+	optional bool bToDisplayShare = 1;
+}
+
+message ShowSettingDlgParams {
+	optional string hParent = 1;
+	optional string left = 2;
+	optional string top = 3;
+	optional string hSettingWnd = 4;
+	optional bool bShow = 5;
+}
+
+message ScheduleMeetingWithWndParams {
+	optional string hSelfWnd = 1;  			//for mac, this param is height of wnd
+	optional string hParent = 2;  			//for mac, this param is width of wnd
+	optional string left = 3;
+	optional string top = 4;
+}
+
+message EditMeetingParams {
+	optional uint64 meetingNumber = 1;  			
+}
+
+message EditMeetingWithWndParams {
+	optional string hSelfWnd = 1;  			//for mac, this param is height of wnd
+	optional string hParent = 2;  			//for mac, this param is width of wnd
+	optional string left = 3;
+	optional string top = 4;
+	optional uint64 meetingNumber = 5;
+}
+
+message DeleteMeetingParams {
+	optional uint64 meetingNumber = 1;  			
+}
+
+message AddCustomizedPictureResourceParams {
+	optional string strPNGID = 1;  
+	optional string strPNGPath = 2;
+}
+
+message AddCustomizedStringResourceParams {
+	optional int32 customizedStringType = 1; 
+	optional string strCustomizedString = 2;
+}
+
+message AddCustomizedURLResourceParams {
+	optional int32 customizedURLType = 1; 
+	optional string strCustomizedURL = 2;
+}
+
+message TryWithMeetingNumberParams {
+	optional uint64 meetingNumber = 1;  			
+}
+
+message TryWithPairingCodeParams {
+	optional string paringCode = 1;  			
+}
+
+message StartAnnotationParams {
+	optional int32 viewType = 1;
+	optional string left = 2;
+	optional string top = 3;
+}
+
+message StopAnnotationParams {
+	optional int32 viewType = 1;
+}
+
+message SetToolParams {
+	optional int32 viewType = 1;
+	optional int32 toolType = 2;
+}
+
+message ClearAnnotationParams {
+	optional int32 viewType = 1;
+	optional int32 clearType = 2;
+}
+
+message SetColorParams {
+	optional int32 viewType = 1;
+	optional string color = 2;
+}
+
+message SetLineWidthParams {
+	optional int32 viewType = 1;
+	optional string lineWidth = 2;
+}
+
+message UndoParams {
+	optional int32 viewType = 1;
+}
+
+message RedoParams {
+	optional int32 viewType = 1;
+}
+
+message MuteAudioParams {
+	optional int32 userID = 1;
+	optional bool allowUnmuteBySelf = 2;
+}
+
+message UnmuteAudioParams {
+	optional int32 userID = 1;
+}
+
+message EnablePlayChimeWhenEnterOrExitParams {
+	optional bool bEnable = 1;
+}
+
+message EnableInviteButtonOnMeeitngUIParams {
+	optional bool bEnable = 1;
+}
+
+message SetFloatVideoPosParams {
+	optional string left = 1;
+	optional string top = 2;
+	optional string hSelfWnd = 3;
+	optional string hParent = 4;
+}
+
+message SetBottomFloatToolBarWndVisibilityParams {
+	optional bool bShow = 1;
+}
+
+message SetSharingToolBarVisibilityParams {
+	optional bool bShow = 1;
+}
+
+message SetDirectShareMonitorIDParams {
+	optional string monitorID = 1;
+}
+
+message SetMeetingUIPosParams {
+	optional string left = 1;
+	optional string top = 2;
+	optional string hSelfWnd = 3;
+	optional string hParent = 4;
+}
+
+message DisableWaitingForHostDialogParams {
+	optional bool bDisable = 1;
+}
+
+message DisablePopupMeetingWrongPSWDlgParams {
+	optional bool bDisable = 1;
+}
+
+message EnableAutoEndOtherMeetingWhenStartMeetingParams {
+	optional bool bEnable = 1;
+}
+
+message EnableLButtonDBClick4SwitchFullScreenModeParams {
+	optional bool bEnable = 1;
+}
+
+message SetFloatVideoWndVisibilityParams {
+	optional bool bShow = 1;
+}
+
+message PrePopulateWebinarRegistrationInfoParams {
+	optional string email = 1;
+	optional string userName = 2;
+}
+
+message EnableAutoAdjustSpeakerVolumeWhenJoinAudioParams {
+	optional bool bEnable = 1;
+}
+
+message EnableAutoAdjustMicVolumeWhenJoinAudioParams {
+	optional bool bEnable = 1;
+}
+
+
+message ConfigDSCPParams {
+    optional int32 dscpAudio = 1;  			
+    optional int32 dscpVideo = 2;
+    optional bool bReset = 3;
+}
+
+message EnableHIdeFullPhoneNumber4PureCallinUserParams {
+	optional bool bEnable = 1;
+}
+
+message EnableShareIOSDeviceParams {
+	optional bool bEnable = 1;
+}
+
+message EnableShareWhiteBoardParams {
+	optional bool bEnable = 1;
+}
+
+message EnableLengthLimitationOfMeetingNumberParams {
+	optional bool bEnable = 1;
+}
+
+message ForceDisableMultiShareParams {
+	optional bool bDisable = 1;
+}
+
+message EnableLocalRecordingConverProgressBarDialogParams {
+    optional bool bEnable = 1;
+}
+
+message SetMaxDurationForOnlyHostInMeetingParams {
+    optional int32 nDuration = 1; 
+}
+
+message EnableApproveRemoteControlDlgParams {
+    optional bool bEnable = 1;
+}
+
+message EnableDeclineRemoteControlResponseDlgParams {
+    optional bool bEnable = 1; 
+}
+
+message EnableLeaveMeetingOptionForHostParams {
+    optional bool bEnable = 1;
+}
+
+message EnableVideoButtonOnMeetingUIParams {
+    optional bool bEnable = 1; 
+}
+
+message EnableAudioButtonOnMeetingUIParams {
+    optional bool bEnable = 1; 
+}
+
+message EnableEnterAndExitFullScreenButtonOnMeetingUIParams {
+    optional bool bEnable = 1; 
+}
+
+message RedirectClickShareBTNEventParams {
+    optional bool bRedirect = 1; 
+}
+
+message RedirectClickEndMeetingBTNEventParams {
+    optional bool bRedirect = 1; 
+}
+
+message RedirectFreeMeetingEndingReminderDlgParams {
+    optional bool bRedirect = 1; 
+}
+
+message RedirectClickCustomLiveStreamMenuEventParams {
+    optional bool bRedirect = 1; 
+}
+
+message RedirectClickParticipantListBTNEventParams {
+    optional bool bRedirect = 1; 
+}
+
+message RedirectClickCCBTNEventParams {
+    optional bool bRedirect = 1; 
+}
+
+message RedirectClickAudioBTNEventParams {
+    optional bool bRedirect = 1; 
+}
+
+message RedirectClickAudioMenuBTNEventParams {
+    optional bool bRedirect = 1; 
+}
+
+message RedirectMeetingWarningMsgParams {
+    optional bool bRedirectBadNetwork = 1; 
+	optional bool bRedirectWarnHighCPU = 2;
+}
+
+message EnableToolTipsShowParams {
+    optional bool bEnable = 1; 
+}
+
+message EnableAirplayInstructionWindowParams {
+    optional bool bEnable = 1; 
+}
+
+message EnableClaimHostFeatureParams {
+    optional bool bEnable = 1; 
+}
+
+message EnableAutoHideJoinAudioDialogParams {
+    optional bool bEnable = 1; 
+}
+
+message AlwaysShowIconOnTaskBarParams {
+    optional bool bAlwaysShow = 1; 
+}
+
+message DisableSplitScreenModeUIElementsParams {
+    optional bool bDisable = 1; 
+}
+
+message SetShowAudioUseComputerSoundChkboxParams {
+    optional bool bShow = 1; 
+}
+
+message SetShowCallInTabParams {
+    optional bool bShow = 1; 
+}
+
+message SetShowCallMeTabParams {
+    optional bool bShow = 1; 
+}
+
+message DisableTopMostAttr4SettingDialogParams {
+    optional bool bDisable = 1; 
+}
+
+message EnableGrabShareWithoutReminderParams {
+    optional bool bEnable = 1; 
+}
+
+message EnableShowShareSwitchMultiToSingleConfirmDlgParams {
+    optional bool bEnable = 1; 
+}
+
+message DisableFreeMeetingRemainTimeNotifyParams {
+    optional bool bDisable = 1; 
+}
+
+message HideChatItemOnMeetingUIParams {
+    optional bool bHide = 1; 
+}
+
+message HideRecordItemOnMeetingUIParams {
+    optional bool bHide = 1; 
+}
+
+message HideUpgradeFreeMeetingButtonParams {
+    optional bool bHide = 1; 
+}
+
+message SetShowInviteDlgTabPageParams {
+    optional int32 tabPage = 1; 
+	optional bool bShow = 2;
+}
+
+message SetShowH323SubTabPageParams {
+    optional int32 tabPage = 1; 
+	optional bool bShow = 2;
+}
+
+message HideUpgradeWarningMsgForFreeUserWhenScheduleParams {
+    optional bool bHide = 1; 
+}
+
+message HideSwitchCameraButtonParams {
+    optional bool bHide = 1; 
+}
+
+message HideCopyUrlOnInviteWindowParams {
+    optional bool bHide = 1; 
+}
+
+message HideCopyInvitationOnInviteWindowParams {
+    optional bool bHide = 1; 
+}
+
+message HideKeypadButtonOnMeetingWindowParams {
+    optional bool bHide = 1; 
+}
+
+message HideRemoteControlOnMeetingUIParams {
+    optional bool bHide = 1; 
+}
+
+message HideQAOnMeetingUIParams {
+    optional bool bHide = 1; 
+}
+
+message HidePollOnMeetingUIParams {
+    optional bool bHide = 1; 
+}
+
+message EnableInputMeetingPasswordDlgParams {
+    optional bool bEnable = 1; 
+}
+
+message EnableInputMeetingScreenNameDlgParams {
+    optional bool bEnable = 1; 
+}
+
+message RedirectWebinarNeedRegisterParams {
+    optional bool bRedirect = 1; 
+}
+
+message RedirectEndOtherMeetingParams {
+    optional bool bRedirect = 1; 
+}
+
+message EnableForceAutoStartMyVideoWhenJoinMeetingParams {
+    optional bool bEnable = 1; 
+}
+
+message EnableForceAutoStopMyVideoWhenJoinMeetingParams {
+    optional bool bEnable = 1; 
+}
+
+message DisableAutoShowSelectJoinAudioDlgWhenJoinMeetingParams {
+    optional bool bDisable = 1; 
+}
+
+message DisableShowJoinMeetingWndParams {
+    optional bool bDisable = 1; 
+}
+
+message DisableConfidentialWatermarkParams {
+    optional bool bDisable = 1; 
+}
+
+message DisableRemoteCtrlCopyPasteFeatureParams {
+    optional bool bDisable = 1; 
+}
+
+message DisableToolbarInviteButtonClickOriginActionParams {
+    optional bool bDisable = 1; 
+}
+
+message SetShowVideoOptimizeChkboxParams {
+    optional bool bShow = 1; 
+}
+
+message InputMeetingPasswordAndScreenNameParams {
+    optional string psw = 1; 
+	optional string screenName = 2;
+}
+
+message InputMeetingIDAndScreenNameParams {
+    optional string meetingID = 1; 
+	optional string screenName = 2;
+}
+
+message InputMeetingScreenNameParams {
+    optional string screenName = 1; 
+}
+
+message InputWebinarRegisterEmailAndScreenNameParams {
+    optional string email = 1; 
+	optional string screenName = 2;
+}
+
+message CallOutH323Params {
+    optional string deviceName = 1; 
+	optional string deviceIP = 2;
+	optional string deviceE164num = 3;
+	optional int32 h323DeviceType = 4;
+}
+
+message GetUserInfoByUserIDParams {
+    optional uint32 userID = 1; 
+}
+
+message StartRecordingParams {
+    optional string recPath = 1; 
+}
+
+message CanStartRecordingParams {
+    optional bool bCloudRecording = 1; 
+	optional uint32 userID = 2;
+}
+
+message IsSupportLocalRecordingParams {
+    optional uint32 userID = 1; 
+}
+
+message AllowLocalRecordingParams {
+    optional int32 userID = 1; 
+}
+
+message DisAllowLocalRecordingParams {
+    optional uint32 userID = 1; 
+}
+
+message StartAppShareParams {
+    optional string hShareApp = 1; 
+}
+
+message StartMonitorShareParams {
+    optional string monitorID = 1; 
+}
+
+message MuteVideoParams {
+    optional uint32 userID = 1; 
+}
+
+message UnMuteVideoParams {
+    optional uint32 userID = 1; 
+}
+
+message PinVideoParams {
+    optional bool bPin = 1; 
+	optional bool bFirstView = 2;
+	optional uint32 userID = 3;
+}
+
+message SpotlightVideoParams {
+    optional bool bSpotlight = 1; 
+	optional uint32 userID = 2;
+}
+
+message HideOrShowNoVideoUserOnVideoWallParams {
+    optional bool bHide = 1; 
+}
+
+message CreateRendererParams {
+    optional uint64 recvHandle = 1; 
+}
+
+message DestroyRendererParams {
+    optional uint64 recvHandle = 1; 
+}
+
+message SubscribeParams {
+    optional uint32 userID = 1; 
+	optional int32 rawDataType = 2;
+	optional uint64 recvHandle = 3;
+}
+
+message UnSubscribeParams {
+    optional uint64 recvHandle = 1; 
+}
+
+message SetRawDataResolutionParams {
+    optional int32 resolution = 1;
+	optional uint64 recvHandle = 2;
+}
+
+message GetResolutionParams {
+    optional uint64 recvHandle = 1; 
+}
+
+message GetRawDataTypeParams {
+    optional uint64 recvHandle = 1; 
+}
+
+message GetUserIdParams {
+    optional uint64 recvHandle = 1; 
+}
+
+message EnableZoomAuthRealNameMeetingUIShownParams {
+    optional bool bEnable = 1; 
+}
+
+message RetrieveParams {
+    optional string countryCode = 1; 
+	optional string phoneNum = 2;
+}
+
+message VerifyParams {
+    optional string countryCode = 1; 
+	optional string phoneNum = 2;
+	optional string verificationCode = 3;
+}
+
+message SetDefaultCellPhoneInfoParams {
+    optional string countryCode = 1; 
+	optional string phoneNum = 2;
+}
+
+message EnableAlwaysShowMeetingControlsParams {
+    optional bool bEnable = 1; 
+}
+
+message SelectMicParams {
+    optional string deviceID = 1; 
+	optional string deviceName = 2;
+}
+
+message SelectSpeakerParams {
+    optional string deviceID = 1; 
+	optional string deviceName = 2;
+}
+
+message EnableAutoJoinAudioParams {
+    optional bool bEnable = 1; 
+}
+
+message EnableAutoAdjustMicParams {
+    optional bool bEnable = 1; 
+}
+
+message EnableStereoAudioParams {
+    optional bool bEnable = 1; 
+}
+
+message EnableMicOriginalInputParams {
+    optional bool bEnable = 1; 
+}
+
+message EnableHoldSpaceKeyToSpeakParams {
+    optional bool bEnable = 1; 
+}
+
+message EnableAlwaysMuteMicWhenJoinVoipParams {
+    optional bool bEnable = 1; 
+}
+
+message EnableSuppressAudioNotifyParams {
+    optional bool bEnable = 1; 
+}
+
+message EnableEchoCancellationParams {
+    optional bool bEnable = 1; 
+}
+
+message SetMicVolParams {
+    optional float value = 1; 
+}
+
+message SetSpeakerVolParams {
+    optional float value = 1; 
+}
+
+message EnableDualScreenModeParams {
+    optional bool bEnable = 1; 
+}
+
+message TurnOffAeroModeInSharingParams {
+    optional bool bTurnOff = 1; 
+}
+
+message EnableAutoFitToWindowWhenViewSharingParams {
+    optional bool bEnable = 1; 
+}
+
+message EnableAutoFullScreenVideoWhenJoinMeetingParams {
+    optional bool bEnable = 1; 
+}
+
+message EnableSplitScreenModeParams {
+    optional bool bEnable = 1; 
+}
+
+message EnableAutoFullScreenVideoWhenViewShareParams {
+    optional bool bEnable = 1; 
+}
+
+message EnableDisplayReminderWindowWhenExitParams {
+    optional bool bEnable = 1; 
+}
+
+message EnableShowMyMeetingElapseTimeParams {
+    optional bool bEnable = 1; 
+}
+
+message EnableAccelerateGPUWhenShareParams {
+    optional bool bEnable = 1; 
+}
+
+message EnableRemoteControlAllApplicationsParams {
+    optional bool bEnable = 1; 
+}
+
+message SetRecordingPathParams {
+    optional string recPath = 1; 
+}
+
+message EnableSelectRecordFileLocationAfterMeetingParams {
+    optional bool bEnable = 1; 
+}
+
+message EnableMultiAudioStreamRecordParams {
+    optional bool bEnable = 1; 
+}
+
+message EnableAddTimestampWatermarkParams {
+    optional bool bEnable = 1; 
+}
+
+message EnableOptimizeFor3rdPartyVideoEditorParams {
+    optional bool bEnable = 1; 
+}
+
+message EnableShowVideoThumbnailWhenShareParams {
+    optional bool bEnable = 1; 
+}
+
+message EnablePlaceVideoNextToShareInRecordParams {
+    optional bool bEnable = 1; 
+}
+
+message DisableAdvancedFeatures4GeneralSettingParams {
+    optional bool bDisable = 1; 
+}
+
+message DisableAccountSettingTabPageParams {
+    optional bool bDisable = 1; 
+}
+
+message ConfSettingDialogShownTabPageParams {
+    optional uint64 showOption = 1; 
+}
+
+message SelectVideoCameraParams {
+    optional string deviceID = 1; 
+}
+
+message EnableVideoMirrorEffectParams {
+    optional bool bEnable = 1; 
+}
+
+message EnableFaceBeautyEffectParams {
+    optional bool bEnable = 1; 
+}
+
+message EnableHDVideoParams {
+    optional bool bEnable = 1; 
+}
+
+message EnableAlwaysShowNameOnVideoParams {
+    optional bool bEnable = 1; 
+}
+
+message EnableVideoPreviewDialogParams {
+    optional bool bEnable = 1; 
+}
+
+message EnableAutoTurnOffVideoWhenJoinMeetingParams {
+    optional bool bEnable = 1; 
+}
+
+message EnableAlwaysUse16v9Params {
+    optional bool bEnable = 1; 
+}
+
+message EnableSpotlightSelfParams {
+    optional bool bEnable = 1; 
+}
+
+message EnableHardwareEncodeParams {
+    optional bool bEnable = 1; 
+	optional int32 encodeType = 2;
+}
+
+message IsHardwareEncodeEnabledParams { 
+	optional int32 encodeType = 1;
+}
+
+message Enable49VideoesInGallaryViewParams {
+    optional bool bEnable = 1; 
+}
+
+message EnableHideNoVideoUsersOnWallViewParams {
+    optional bool bEnable = 1; 
+}
+
+message SetTeamIdentifierParams {
+    optional string identifier = 1; 
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

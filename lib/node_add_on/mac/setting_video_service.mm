@@ -327,12 +327,37 @@ bool ZSettingVideoWrap::IsSpotlightSelfEnabled()
     return false;
 }
 
-ZNSDKError ZSettingVideoWrap::EnableHardwareEncode(bool bEnable)
+ZNSDKError ZSettingVideoWrap::EnableHardwareEncode(bool bEnable, ZN_VIDEO_HARDWARE_ENCODE_TYPE encodeType)
 {
+    ZoomSDKSettingService *service = [[ZoomSDK sharedSDK] getSettingService];
+    if (!service)
+        return ZNSDKERR_SERVICE_FAILED;
+    ZoomSDKVideoSetting *video = [service getVideoSetting];
+    if (!video)
+        return ZNSDKERR_SERVICE_FAILED;
+    
+    if (encodeType == ZN_VIDEO_HARDWARE_ENCODE_RECEIVING){
+        ZoomSDKError ret = [video enableHardwareAccelerationForVideoReceive:bEnable];
+        nativeErrorTypeHelp help;
+        return help.ZoomSDKErrorType(ret);
+    }
     return ZNSDKERR_NO_IMPL;
 }
-bool ZSettingVideoWrap::IsHardwareEncodeEnabled()
+
+bool ZSettingVideoWrap::IsHardwareEncodeEnabled(ZN_VIDEO_HARDWARE_ENCODE_TYPE encodeType)
 {
+    ZoomSDKSettingService *service = [[ZoomSDK sharedSDK] getSettingService];
+    if (!service)
+        return ZNSDKERR_SERVICE_FAILED;
+    ZoomSDKVideoSetting *video = [service getVideoSetting];
+    if (!video)
+        return ZNSDKERR_SERVICE_FAILED;
+    
+    if (encodeType == ZN_VIDEO_HARDWARE_ENCODE_RECEIVING) {
+        BOOL isForce = NO;
+        BOOL enable = [video isHardwareAccelerationForVideoReceiveOn:&isForce];
+        return (enable == YES) ? true : false;
+    }
     return false;
 }
 ZNSDKError ZSettingVideoWrap::Enable49VideoesInGallaryView(bool bEnable)

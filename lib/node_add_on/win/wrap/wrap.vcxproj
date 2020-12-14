@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
-<Project DefaultTargets="Build" ToolsVersion="14.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+<Project DefaultTargets="Build" ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup Label="ProjectConfigurations">
     <ProjectConfiguration Include="Debug|Win32">
       <Configuration>Debug</Configuration>
@@ -14,18 +14,18 @@
     <ProjectGuid>{5B3D4BAD-0C04-4412-A4B5-053E9DA52A16}</ProjectGuid>
     <RootNamespace>wrap</RootNamespace>
     <Keyword>Win32Proj</Keyword>
-    <WindowsTargetPlatformVersion>8.1</WindowsTargetPlatformVersion>
+    <WindowsTargetPlatformVersion>10.0.18362.0</WindowsTargetPlatformVersion>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'" Label="Configuration">
     <ConfigurationType>DynamicLibrary</ConfigurationType>
-    <PlatformToolset>v140</PlatformToolset>
+    <PlatformToolset>v142</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
     <WholeProgramOptimization>true</WholeProgramOptimization>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
     <ConfigurationType>StaticLibrary</ConfigurationType>
-    <PlatformToolset>v140</PlatformToolset>
+    <PlatformToolset>v142</PlatformToolset>
     <CharacterSet>Unicode</CharacterSet>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.props" />
@@ -48,6 +48,7 @@
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <OutDir>$(SolutionDir)$(Configuration)\</OutDir>
     <IntDir>$(Configuration)\</IntDir>
+    <LibraryPath>$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -94,6 +95,7 @@
     <ClCompile Include="meeting_service_components_wrap\meeting_closedcaption_ctrl_wrap.cpp" />
     <ClCompile Include="meeting_service_components_wrap\meeting_configuration_wrap.cpp" />
     <ClCompile Include="meeting_service_components_wrap\meeting_h323_helper_wrap.cpp" />
+    <ClCompile Include="meeting_service_components_wrap\meeting_interpretation_ctrl_wrap.cpp" />
     <ClCompile Include="meeting_service_components_wrap\meeting_live_stream_wrap.cpp" />
     <ClCompile Include="meeting_service_components_wrap\meeting_participants_ctrl_wrap.cpp" />
     <ClCompile Include="meeting_service_components_wrap\meeting_phone_helper_wrap.cpp" />
@@ -109,9 +111,9 @@
     <ClCompile Include="network_connection_handler_wrap.cpp" />
     <ClCompile Include="outlook_plugin_integration_helper_wrap.cpp" />
     <ClCompile Include="premeeting_service_wrap.cpp" />
-    <ClCompile Include="rawdata_audio_channel_wrap.cpp" />
-    <ClCompile Include="rawdata_share_channel_wrap.cpp" />
-    <ClCompile Include="rawdata_video_channel_wrap.cpp" />
+    <ClCompile Include="rawdata_audio_helper_wrap.cpp" />
+    <ClCompile Include="rawdata_render_wrap.cpp" />
+    <ClCompile Include="rawdata_video_helper_wrap.cpp" />
     <ClCompile Include="recording_setting_context_wrap.cpp" />
     <ClCompile Include="sdk_loader.cpp" />
     <ClCompile Include="sdk_wrap.cpp" />
@@ -139,6 +141,7 @@
     <ClInclude Include="meeting_service_components_wrap\meeting_closedcaption_ctrl_wrap.h" />
     <ClInclude Include="meeting_service_components_wrap\meeting_configuration_wrap.h" />
     <ClInclude Include="meeting_service_components_wrap\meeting_h323_helper_wrap.h" />
+    <ClInclude Include="meeting_service_components_wrap\meeting_interpretation_ctrl_wrap.h" />
     <ClInclude Include="meeting_service_components_wrap\meeting_live_stream_wrap.h" />
     <ClInclude Include="meeting_service_components_wrap\meeting_participants_ctrl_wrap.h" />
     <ClInclude Include="meeting_service_components_wrap\meeting_phone_helper_wrap.h" />
@@ -154,9 +157,10 @@
     <ClInclude Include="network_connection_handler_wrap.h" />
     <ClInclude Include="outlook_plugin_integration_helper_wrap.h" />
     <ClInclude Include="premeeting_service_wrap.h" />
-    <ClInclude Include="rawdata_audio_channel_wrap.h" />
-    <ClInclude Include="rawdata_share_channel_wrap.h" />
-    <ClInclude Include="rawdata_video_channel_wrap.h" />
+    <ClInclude Include="rawdata_audio_helper_wrap.h" />
+    <ClInclude Include="rawdata_renderer_callback_wrap.h" />
+    <ClInclude Include="rawdata_render_wrap.h" />
+    <ClInclude Include="rawdata_video_helper_wrap.h" />
     <ClInclude Include="recording_setting_context_wrap.h" />
     <ClInclude Include="sdk_loader.h" />
     <ClInclude Include="sdk_wrap.h" />

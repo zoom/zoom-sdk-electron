@@ -49,9 +49,9 @@ DEFINE_FUNC_1(EnableSpotlightSelf, SDKError, bool, bEnable)
 //virtual bool IsSpotlightSelfEnabled() = 0;
 DEFINE_FUNC_0(IsSpotlightSelfEnabled, bool)
 //virtual SDKError EnableHardwareEncode(bool bEnable) = 0;
-DEFINE_FUNC_1(EnableHardwareEncode, SDKError, bool, bEnable)
+DEFINE_FUNC_2(EnableHardwareEncode, SDKError, bool, bEnable, VIDEO_HARDWARE_ENCODE_TYPE, encodeType)
 //virtual bool IsHardwareEncodeEnabled() = 0;
-DEFINE_FUNC_0(IsHardwareEncodeEnabled, bool)
+DEFINE_FUNC_1(IsHardwareEncodeEnabled, bool, VIDEO_HARDWARE_ENCODE_TYPE, encodeType)
 //virtual SDKError Enable49VideoesInGallaryView(bool bEnable) = 0;
 DEFINE_FUNC_1(Enable49VideoesInGallaryView, SDKError, bool, bEnable)
 //virtual bool Is49VideoesInGallaryViewEnabled() = 0;

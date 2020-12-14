@@ -99,6 +99,13 @@
  * @param type Data type of the current user.
  */
 -(void)onRenderDataTypeChanged:(ZoomSDKVideoElement*)element DataType:(VideoRenderDataType)type;
+
+/**
+ * @brief Callback of user's subscription failed.
+ * @param element The point of element to the user.
+ * @param error The error of the failed reason.
+ */
+-(void)onCustomVideoSubscribeFail:(ZoomSDKVideoElement*)element error:(int)error;
 @end
 
 @interface ZoomSDKVideoContainer : NSObject

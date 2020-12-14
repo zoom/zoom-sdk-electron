@@ -12,23 +12,26 @@ ZoomNodeSDKSMSHelperWrap::~ZoomNodeSDKSMSHelperWrap()
 void ZoomNodeSDKSMSHelperWrap::EnableZoomAuthRealNameMeetingUIShown(const v8::FunctionCallbackInfo<v8::Value>& args)
 {
 	v8::Isolate* isolate = args.GetIsolate();
-	if (args.Length() < 1) {
-		isolate->ThrowException(v8::Exception::TypeError(
-			v8::String::NewFromUtf8(isolate, "Wrong number of arguments", v8::NewStringType::kInternalized).ToLocalChecked()));
-		return;
-	}
-
-	if (!args[0]->IsBoolean())
+	bool err = false;
+	do
 	{
-		isolate->ThrowException(v8::Exception::TypeError(
-			v8::String::NewFromUtf8(isolate, "Wrong arguments", v8::NewStringType::kInternalized).ToLocalChecked()));
-		return;
-	}
+		com::electron::sdk::proto::EnableZoomAuthRealNameMeetingUIShownParams proto_params;
+		if (!SetProtoParam<com::electron::sdk::proto::EnableZoomAuthRealNameMeetingUIShownParams >(args, proto_params))
+		{
+			err = false;
+			break;
+		}
+		if (!proto_params.has_benable())
+		{
+			err = false;
+			break;
+		}
+		bool _bEnable = false;
+		convertBool(proto_params.benable(), _bEnable);
 
-	bool zn_enable;
-	zoom_v8toc(args[0].As<v8::Boolean>(), zn_enable);
-
-	bool err = _g_native_wrap.GetMeetingServiceWrap().GetSDKSMSHelper().EnableZoomAuthRealNameMeetingUIShown(zn_enable);
+		err = _g_native_wrap.GetMeetingServiceWrap().GetSDKSMSHelper().EnableZoomAuthRealNameMeetingUIShown(_bEnable);
+	} while (false);
+	
 	v8::Local<v8::Boolean> bret = v8::Boolean::New(isolate, err);
 	args.GetReturnValue().Set(bret);
 }
@@ -42,26 +45,30 @@ void ZoomNodeSDKSMSHelperWrap::GetResendSMSVerificationCodeHandler(const v8::Fun
 void ZoomNodeSDKSMSHelperWrap::Retrieve(const v8::FunctionCallbackInfo<v8::Value>& args)
 {
 	v8::Isolate* isolate = args.GetIsolate();
-	if (args.Length() < 2) {
-		isolate->ThrowException(v8::Exception::TypeError(
-			v8::String::NewFromUtf8(isolate, "Wrong number of arguments", v8::NewStringType::kInternalized).ToLocalChecked()));
-		return;
-	}
-
-	if (!args[0]->IsString() ||
-		!args[1]->IsString())
+	bool err = false;
+	do
 	{
-		isolate->ThrowException(v8::Exception::TypeError(
-			v8::String::NewFromUtf8(isolate, "Wrong arguments", v8::NewStringType::kInternalized).ToLocalChecked()));
-		return;
-	}
+		com::electron::sdk::proto::RetrieveParams proto_params;
+		if (!SetProtoParam<com::electron::sdk::proto::RetrieveParams >(args, proto_params))
+		{
+			err = false;
+			break;
+		}
+		if (!proto_params.has_countrycode() ||
+			!proto_params.has_phonenum()
+			)
+		{
+			err = false;
+			break;
+		}
+		ZoomSTRING _zn_countryCode;
+		_zn_countryCode = s2zs(proto_params.countrycode());
+		ZoomSTRING _zn_phoneNum;
+		_zn_phoneNum = s2zs(proto_params.phonenum());
 
-	ZoomSTRING zn_countryCode;
-	zoom_v8toc(args[0].As<v8::String>(), zn_countryCode);
-	ZoomSTRING zn_phoneNum;
-	zoom_v8toc(args[1].As<v8::String>(), zn_phoneNum);
-
-	bool err = _g_native_wrap.GetMeetingServiceWrap().GetSDKSMSHelper().Retrieve(zn_countryCode, zn_phoneNum);
+		err = _g_native_wrap.GetMeetingServiceWrap().GetSDKSMSHelper().Retrieve(_zn_countryCode, _zn_phoneNum);
+	} while (false);
+	
 	v8::Local<v8::Boolean> bret = v8::Boolean::New(isolate, err);
 	args.GetReturnValue().Set(bret);
 }
@@ -82,29 +89,33 @@ void ZoomNodeSDKSMSHelperWrap::GetReVerifySMSVerificationCodeHandler(const v8::F
 void ZoomNodeSDKSMSHelperWrap::Verify(const v8::FunctionCallbackInfo<v8::Value>& args)
 {
 	v8::Isolate* isolate = args.GetIsolate();
-	if (args.Length() < 2) {
-		isolate->ThrowException(v8::Exception::TypeError(
-			v8::String::NewFromUtf8(isolate, "Wrong number of arguments", v8::NewStringType::kInternalized).ToLocalChecked()));
-		return;
-	}
-
-	if (!args[0]->IsString() ||
-		!args[1]->IsString() ||
-		!args[2]->IsString())
+	bool err = false;
+	do
 	{
-		isolate->ThrowException(v8::Exception::TypeError(
-			v8::String::NewFromUtf8(isolate, "Wrong arguments", v8::NewStringType::kInternalized).ToLocalChecked()));
-		return;
-	}
+		com::electron::sdk::proto::VerifyParams proto_params;
+		if (!SetProtoParam<com::electron::sdk::proto::VerifyParams >(args, proto_params))
+		{
+			err = false;
+			break;
+		}
+		if (!proto_params.has_countrycode() ||
+			!proto_params.has_phonenum() ||
+			!proto_params.has_verificationcode()
+			)
+		{
+			err = false;
+			break;
+		}
+		ZoomSTRING _zn_countryCode;
+		_zn_countryCode = s2zs(proto_params.countrycode());
+		ZoomSTRING _zn_phoneNum;
+		_zn_phoneNum = s2zs(proto_params.phonenum());
+		ZoomSTRING _zn_verificationCode;
+		_zn_verificationCode = s2zs(proto_params.verificationcode());
 
-	ZoomSTRING zn_countryCode;
-	zoom_v8toc(args[0].As<v8::String>(), zn_countryCode);
-	ZoomSTRING zn_phoneNum;
-	zoom_v8toc(args[1].As<v8::String>(), zn_phoneNum);
-	ZoomSTRING zn_verificationCode;
-	zoom_v8toc(args[2].As<v8::String>(), zn_verificationCode);
-
-	bool err = _g_native_wrap.GetMeetingServiceWrap().GetSDKSMSHelper().Verify(zn_countryCode, zn_phoneNum, zn_verificationCode);
+		err = _g_native_wrap.GetMeetingServiceWrap().GetSDKSMSHelper().Verify(_zn_countryCode, _zn_phoneNum, _zn_verificationCode);
+	} while (false);
+	
 	v8::Local<v8::Boolean> bret = v8::Boolean::New(isolate, err);
 	args.GetReturnValue().Set(bret);
 }
@@ -137,98 +148,112 @@ void ZoomNodeSDKSMSHelperWrap::GetSupportPhoneNumberCountryList(const v8::Functi
 void ZoomNodeSDKSMSHelperWrap::SetNeedRealNameAuthMeetingNotificationCB(const v8::FunctionCallbackInfo<v8::Value>& args)
 {
 	v8::Isolate* isolate = args.GetIsolate();
-	if (args.Length() < 1) {
-		isolate->ThrowException(v8::Exception::TypeError(
-			v8::String::NewFromUtf8(isolate, "Wrong number of arguments", v8::NewStringType::kInternalized).ToLocalChecked()));
-		return;
-	}
-	if (args[0]->IsNull())	{		ZoomNodeSinkHelper::GetInst().onNeedRealNameAuthMeetingNotification.Empty();		return;	}
-	if (!args[0]->IsFunction())
-	{
-		isolate->ThrowException(v8::Exception::TypeError(
-			v8::String::NewFromUtf8(isolate, "Wrong arguments", v8::NewStringType::kInternalized).ToLocalChecked()));
-		return;
-	}
-
-	v8::Local<v8::Function> cbfunc = v8::Local<v8::Function>::Cast(args[0]);
-	v8::Persistent<v8::Function, v8::CopyablePersistentTraits<v8::Function> > cb(isolate, cbfunc);
-	ZoomNodeSinkHelper::GetInst().onNeedRealNameAuthMeetingNotification = cb;
-
 	ZNSDKError err = ZNSDKERR_SUCCESS;
+	do
+	{
+		if (args.Length() < 1) {
+			err = ZNSDKERR_INVALID_PARAMETER;
+			break;
+		}
+		if (args[0]->IsNull())		{			ZoomNodeSinkHelper::GetInst().onNeedRealNameAuthMeetingNotification.Empty();			err = ZNSDKERR_INVALID_PARAMETER;
+			break;		}
+		if (!args[0]->IsFunction())
+		{
+			err = ZNSDKERR_INVALID_PARAMETER;
+			break;
+		}
+
+		v8::Local<v8::Function> cbfunc = v8::Local<v8::Function>::Cast(args[0]);
+		v8::Persistent<v8::Function, v8::CopyablePersistentTraits<v8::Function> > cb(isolate, cbfunc);
+		ZoomNodeSinkHelper::GetInst().onNeedRealNameAuthMeetingNotification = cb;
+
+	} while (false);
+	
 	v8::Local<v8::Integer> bret = v8::Integer::New(isolate, (int32_t)err);
 	args.GetReturnValue().Set(bret);
 }
 void ZoomNodeSDKSMSHelperWrap::SetRetrieveSMSVerificationCodeResultNotificationCB(const v8::FunctionCallbackInfo<v8::Value>& args)
 {
 	v8::Isolate* isolate = args.GetIsolate();
-	if (args.Length() < 1) {
-		isolate->ThrowException(v8::Exception::TypeError(
-			v8::String::NewFromUtf8(isolate, "Wrong number of arguments", v8::NewStringType::kInternalized).ToLocalChecked()));
-		return;
-	}
-	if (args[0]->IsNull())	{		ZoomNodeSinkHelper::GetInst().onRetrieveSMSVerificationCodeResultNotification.Empty();		return;	}
-	if (!args[0]->IsFunction())
-	{
-		isolate->ThrowException(v8::Exception::TypeError(
-			v8::String::NewFromUtf8(isolate, "Wrong arguments", v8::NewStringType::kInternalized).ToLocalChecked()));
-		return;
-	}
-
-	v8::Local<v8::Function> cbfunc = v8::Local<v8::Function>::Cast(args[0]);
-	v8::Persistent<v8::Function, v8::CopyablePersistentTraits<v8::Function> > cb(isolate, cbfunc);
-	ZoomNodeSinkHelper::GetInst().onRetrieveSMSVerificationCodeResultNotification = cb;
-
 	ZNSDKError err = ZNSDKERR_SUCCESS;
+	do
+	{
+		if (args.Length() < 1) {
+			err = ZNSDKERR_INVALID_PARAMETER;
+			break;
+		}
+		if (args[0]->IsNull())		{			ZoomNodeSinkHelper::GetInst().onRetrieveSMSVerificationCodeResultNotification.Empty();			err = ZNSDKERR_INVALID_PARAMETER;
+			break;		}
+		if (!args[0]->IsFunction())
+		{
+			isolate->ThrowException(v8::Exception::TypeError(
+				v8::String::NewFromUtf8(isolate, "Wrong arguments", v8::NewStringType::kInternalized).ToLocalChecked()));
+			return;
+		}
+
+		v8::Local<v8::Function> cbfunc = v8::Local<v8::Function>::Cast(args[0]);
+		v8::Persistent<v8::Function, v8::CopyablePersistentTraits<v8::Function> > cb(isolate, cbfunc);
+		ZoomNodeSinkHelper::GetInst().onRetrieveSMSVerificationCodeResultNotification = cb;
+
+	} while (false);
+	
 	v8::Local<v8::Integer> bret = v8::Integer::New(isolate, (int32_t)err);
 	args.GetReturnValue().Set(bret);
 }
 void ZoomNodeSDKSMSHelperWrap::SetVerifySMSVerificationCodeResultNotificationCB(const v8::FunctionCallbackInfo<v8::Value>& args)
 {
 	v8::Isolate* isolate = args.GetIsolate();
-	if (args.Length() < 1) {
-		isolate->ThrowException(v8::Exception::TypeError(
-			v8::String::NewFromUtf8(isolate, "Wrong number of arguments", v8::NewStringType::kInternalized).ToLocalChecked()));
-		return;
-	}
-	if (args[0]->IsNull())	{		ZoomNodeSinkHelper::GetInst().onVerifySMSVerificationCodeResultNotification.Empty();		return;	}
-	if (!args[0]->IsFunction())
-	{
-		isolate->ThrowException(v8::Exception::TypeError(
-			v8::String::NewFromUtf8(isolate, "Wrong arguments", v8::NewStringType::kInternalized).ToLocalChecked()));
-		return;
-	}
-
-	v8::Local<v8::Function> cbfunc = v8::Local<v8::Function>::Cast(args[0]);
-	v8::Persistent<v8::Function, v8::CopyablePersistentTraits<v8::Function> > cb(isolate, cbfunc);
-	ZoomNodeSinkHelper::GetInst().onVerifySMSVerificationCodeResultNotification = cb;
-
 	ZNSDKError err = ZNSDKERR_SUCCESS;
+	do
+	{
+		if (args.Length() < 1) {
+			err = ZNSDKERR_INVALID_PARAMETER;
+			break;
+		}
+		if (args[0]->IsNull())		{			ZoomNodeSinkHelper::GetInst().onVerifySMSVerificationCodeResultNotification.Empty();			err = ZNSDKERR_INVALID_PARAMETER;
+			break;		}
+		if (!args[0]->IsFunction())
+		{
+			err = ZNSDKERR_INVALID_PARAMETER;
+			break;
+		}
+
+		v8::Local<v8::Function> cbfunc = v8::Local<v8::Function>::Cast(args[0]);
+		v8::Persistent<v8::Function, v8::CopyablePersistentTraits<v8::Function> > cb(isolate, cbfunc);
+		ZoomNodeSinkHelper::GetInst().onVerifySMSVerificationCodeResultNotification = cb;
+
+	} while (false);
+	
 	v8::Local<v8::Integer> bret = v8::Integer::New(isolate, (int32_t)err);
 	args.GetReturnValue().Set(bret);
 }
 void ZoomNodeSDKSMSHelperWrap::SetDefaultCellPhoneInfo(const v8::FunctionCallbackInfo<v8::Value>& args)
 {
 	v8::Isolate* isolate = args.GetIsolate();
-	if (args.Length() < 2) {
-		isolate->ThrowException(v8::Exception::TypeError(
-			v8::String::NewFromUtf8(isolate, "Wrong number of arguments", v8::NewStringType::kInternalized).ToLocalChecked()));
-		return;
-	}
-
-	if (!args[0]->IsString() ||
-		!args[1]->IsString())
+	bool err = false;
+	do
 	{
-		isolate->ThrowException(v8::Exception::TypeError(
-			v8::String::NewFromUtf8(isolate, "Wrong arguments", v8::NewStringType::kInternalized).ToLocalChecked()));
-		return;
-	}
+		com::electron::sdk::proto::SetDefaultCellPhoneInfoParams proto_params;
+		if (!SetProtoParam<com::electron::sdk::proto::SetDefaultCellPhoneInfoParams >(args, proto_params))
+		{
+			err = false;
+			break;
+		}
+		if (!proto_params.has_countrycode() ||
+			!proto_params.has_phonenum()
+			)
+		{
+			err = false;
+			break;
+		}
+		ZoomSTRING _zn_countryCode;
+		_zn_countryCode = s2zs(proto_params.countrycode());
+		ZoomSTRING _zn_phoneNum;
+		_zn_phoneNum = s2zs(proto_params.phonenum());
 
-	ZoomSTRING zn_countryCode;
-	zoom_v8toc(args[0].As<v8::String>(), zn_countryCode);
-	ZoomSTRING zn_phoneNum;
-	zoom_v8toc(args[1].As<v8::String>(), zn_phoneNum);
-
-	bool err = _g_native_wrap.GetMeetingServiceWrap().GetSDKSMSHelper().SetDefaultCellPhoneInfo(zn_countryCode, zn_phoneNum);
+		err = _g_native_wrap.GetMeetingServiceWrap().GetSDKSMSHelper().SetDefaultCellPhoneInfo(_zn_countryCode, _zn_phoneNum);
+	} while (false);
+	
 	v8::Local<v8::Boolean> bret = v8::Boolean::New(isolate, err);
 	args.GetReturnValue().Set(bret);
 }

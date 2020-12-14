@@ -79,6 +79,7 @@
 			      "./lib/node_add_on/mac/rawdataDelegate.m",
 			      "./lib/node_add_on/zoom_node_rawdata_api_ctrl.cpp",
 			      "./lib/node_add_on/zoom_node_rawdata_helper_mgr_class.cpp",
+			      "./lib/node_add_on/electron_sdk.pb.cc",
 
 			  ],
 			  'mac_framework_dirs':[
@@ -88,7 +89,11 @@
 			  'libraries':[
 			   "ZoomSDK.framework",
 
+			   "../sdk/mac/libprotobuf-lite.14.dylib",
 			   ],
+			   'include_dirs':[
+			   "./lib/node_add_on/protobuf_src",
+				],
 			   },
    		      "xcode_settings":{
                     "DEBUG_INFORMATION_FORMAT": "dwarf-with-dsym",
@@ -117,6 +122,11 @@
 				  }, 
 				},
 		  }, # configurations
+		  'link_settings':{
+			  'libraries':[
+			   "./../sdk/win64/libprotobuf-lite.lib",
+			   ],
+			   },
 		  }
 		  ],
 		  [
@@ -131,9 +141,17 @@
 					  'GenerateMapFile': 'true',
 					  'ProgramDatabaseFile': "<(module_32pdbfile_name)",
 					},
+					'VCCLCompilerTool': {
+                     'RuntimeLibrary': '2',
+                    },
 				  }, 
 				},
 		  }, # configurations
+		  'link_settings':{
+			  'libraries':[
+			   "./../sdk/win32/libprotobuf-lite.lib",
+			   ],
+			   },
 		  }
 		  ],
 		  [
@@ -166,6 +184,7 @@
 			  "./lib/node_add_on/win/customized_resource_wrap_core.cpp",
 			  "./lib/node_add_on/win/zoom_sdk_sms_helper_wrap_core.cpp",
 			  "./lib/node_add_on/zoom_node_addon.cpp",
+			  "./lib/node_add_on/electron_sdk.pb.cc",
 			  "./lib/node_add_on/node_res.rc",
 			  "./lib/node_add_on/win/zoom_native_to_wrap.cpp",
 			  
@@ -210,6 +229,10 @@
 		  ],
 			  
 			  'defines':['BUILD_WIN'],
+			  
+			   'include_dirs':[
+			   "./lib/node_add_on/protobuf_src",
+				],
 		  
 		  }
 		  
@@ -231,6 +254,7 @@
 			     "./lib/node_add_on/zoom_v8_to_c.cpp",
 			     "./lib/node_add_on/uv_ipc_common.cpp",
 			     "./lib/node_add_on/zoom_v8_to_c.cpp",
+			     "./lib/node_add_on/electron_sdk.pb.cc",
 			  ],
 			  'mac_framework_dirs':[
 			  './../sdk/mac/ZoomSDK',
@@ -238,8 +262,12 @@
 			  'link_settings':{
 			  'libraries':[
 			   "ZoomSDK.framework",
+			   "../sdk/mac/libprotobuf-lite.14.dylib",
 
 			   ],
+			   'include_dirs':[
+			   "./lib/node_add_on/protobuf_src",
+				],
 			   },
 			   "xcode_settings":{
                     "DEBUG_INFORMATION_FORMAT": "dwarf-with-dsym",
@@ -266,6 +294,12 @@
 				  }, 
 				},
 		  }, # configurations
+		  'link_settings':{
+			  'libraries':[
+			   "./../sdk/win64/libprotobuf-lite.lib",
+
+			   ],
+			   },
 		  }
 		  ],
 		  [
@@ -280,16 +314,25 @@
 					  'GenerateMapFile': 'true',
 					  'ProgramDatabaseFile': "<(render_module_32pdbfile_name)",
 					},
+					'VCCLCompilerTool': {
+                     'RuntimeLibrary': '2',
+                    },
 				  }, 
 				},
 		  }, # configurations
+		  'link_settings':{
+			  'libraries':[
+			   "./../sdk/win32/libprotobuf-lite.lib",
+
+			   ],
+			   },
 		  }
 		  ],
 		  [
 		  'OS=="win"',
 		  {
 		  "sources":[
-			
+			  "./lib/node_add_on/electron_sdk.pb.cc",
 			  "./lib/node_add_on/zoom_node_render_addon.cpp",
 			  "./lib/node_add_on/node_res.rc",
 			  "./lib/node_add_on/win/zoom_native_to_wrap.cpp",
@@ -301,7 +344,10 @@
 		  ],
 			  
 			'defines':['BUILD_WIN'],  
-		  
+			
+			   'include_dirs':[
+			   "./lib/node_add_on/protobuf_src",
+				],
 		  }
 		  
 		  ]

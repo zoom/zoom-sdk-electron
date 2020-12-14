@@ -24,6 +24,7 @@
 #import "ZoomSDKRealNameAuthenticationController.h"
 #import "ZoomSDKQAController.h"
 #import "ZoomSDKNewBreakoutRoomController.h"
+#import "ZoomSDKInterpretationController.h"
 
 @interface ZoomSDKSecuritySessionKey : NSObject
 {
@@ -261,6 +262,7 @@
     ZoomSDKRealNameAuthenticationController*       _realNameController;
     ZoomSDKQAController*             _QAController;
     ZoomSDKNewBreakoutRoomController*  _newBOController;
+    ZoomSDKInterpretationController *  _InterpretationController;
 }
 /**
  * Callback of receiving meeting events.
@@ -361,6 +363,12 @@
  *@return If the function succeeds, it will return a ZoomSDKNewBreakoutRoomController object.
  */
 -(ZoomSDKNewBreakoutRoomController *)getNewBreakoutRoomController;
+
+/**
+ *@brief Get object of ZoomSDKInterpretationController.
+ *@return If the function succeeds, it will return a ZoomSDKInterpretationController object.
+ */
+-(ZoomSDKInterpretationController*)getInterpretationController;
 /**
  * @brief Start a ZOOM meeting with meeting number for login user.
  * @param context It is a ZoomSDKStartMeetingElements class,contain all params to start meeting.

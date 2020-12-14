@@ -23,6 +23,7 @@ public:
 	ZCustomizedResourceWrap& GetCustomizedResourceWrap();
 	ZNativeRawAPIWrap& GetRawAPIWrap();
 	void SetTeamIdentifier(ZoomSTRING identifier);
+		 
 private:
 	ZAuthServiceWrap _z_auth_service_wrap;
 	ZMeetingServiceWrap _z_meeting_service_wrap;

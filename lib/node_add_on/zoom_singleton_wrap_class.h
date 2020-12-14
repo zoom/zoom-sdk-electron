@@ -175,4 +175,34 @@ public:
 private:
 	ZoomNodeSinkHelper() {}
 };
+
+///////////////////////////////////////////////////////////////////////////////
+
+template<class T>
+static bool SetProtoParam(const v8::FunctionCallbackInfo<v8::Value>& args, T& proto_param) {
+
+	v8::Isolate* isolate_temp = args.GetIsolate();
+
+	if (args.Length() < 1 ||
+		!args[0]->IsUint8Array()
+		)
+	{
+		return false;
+	}
+	v8::Local<v8::Uint8Array> uint8array_temp_param = args[0].As<v8::Uint8Array>();
+
+	size_t sz_temp_param = uint8array_temp_param->ByteLength();
+	char* char_temp_param = (char*)uint8array_temp_param->Buffer()->GetContents().Data();
+
+	if (!char_temp_param)
+	{
+		return false;
+	}
+
+	if (!proto_param.ParseFromArray(char_temp_param, sz_temp_param))
+	{
+		return false;
+	}
+	return true;
+}
 #endif // !_zoom_singleton_wrap_class_h_

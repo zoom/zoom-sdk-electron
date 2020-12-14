@@ -13,7 +13,7 @@ INIT_UNINIT_WITHEVENT(IZoomSDKVideoSourceHelper)
 //virtual SDKError setPreProcessor(IZoomSDKPreProcessor* processor) = 0;
 DEFINE_FUNC_1(setPreProcessor, SDKError, IZoomSDKPreProcessor*, processor)
 //virtual SDKError setExternalVideoSource(IZoomSDKVideoSource* source) = 0;
-DEFINE_FUNC_1(setExternalVideoSource, SDKError, IZoomSDKPreProcessor*, processor)
+DEFINE_FUNC_1(setExternalVideoSource, SDKError, IZoomSDKVideoSource*, processor)
 
 //IZoomSDKVideoSender.onPreProcessRawData(YUVProcessDataI420* rawData)
 CallBack_FUNC_1(onPreProcessRawData, YUVProcessDataI420*, rawData);

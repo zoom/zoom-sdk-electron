@@ -194,6 +194,17 @@
  */
 - (NSString *)getParticipantID;
 
+/**
+ *@brief Determine if user is interpreter.
+ *@return YES means that the user is interpreter.
+ */
+- (BOOL)isInterpreter;
+
+/**
+ *@brief Get interpreter active language.
+ *@return Value of language id.
+ */
+- (NSString *)getInterpreterActiveLanguage;
 @end
 /**
  * @brief Join meeting helper.
@@ -327,6 +338,9 @@
  * @brief Notify that host ask you to unmute yourself.
  */
 - (void)onHostAskUnmute;
+/**
+ * @brief Notify that host ask you to start video.
+ */
 - (void)onHostAskStartVideo;
 /**
  *@brief Notification of in-meeting active speakers.

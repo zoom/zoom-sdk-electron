@@ -34,6 +34,7 @@ CallBack_FUNC_1(onLayoutNotification, RECT, wnd_client_rect)
 CallBack_FUNC_1(onVideoRenderElementDestroyed, IVideoRenderElement*, pElement)
 //virtual void onWindowMsgNotification(UINT uMsg, WPARAM wParam, LPARAM lParam) = 0;
 CallBack_FUNC_3(onWindowMsgNotification, UINT, uMsg, WPARAM, wParam, LPARAM, lParam)
-
+//virtual void onSubscribeUserFail(int iErrorCode, IVideoRenderElement* pElement) = 0;
+CallBack_FUNC_2(onSubscribeUserFail, int, iErrorCode, IVideoRenderElement*, pElement)
 END_CLASS_DEFINE(ICustomizedVideoContainer)
 END_ZOOM_SDK_NAMESPACE

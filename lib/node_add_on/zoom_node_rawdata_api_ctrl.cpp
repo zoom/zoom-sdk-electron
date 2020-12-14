@@ -36,22 +36,24 @@ void ZoomNodeRawApiCtrlWrap::GetRawdataVideoSourceHelper(const v8::FunctionCallb
 void ZoomNodeRawApiCtrlWrap::CreateRenderer(const v8::FunctionCallbackInfo<v8::Value>& args)
 {
 	v8::Isolate* isolate = args.GetIsolate();
-	auto context = isolate->GetCurrentContext();
-	if (args.Length() < 1) {
-		isolate->ThrowException(v8::Exception::TypeError(
-			v8::String::NewFromUtf8(isolate, "Wrong number of arguments", v8::NewStringType::kInternalized).ToLocalChecked()));
-		return;
-	}
-
-	if (!args[0]->IsNumber())
+	ZNSDKError err = ZNSDKERR_SUCCESS;
+	do
 	{
-		isolate->ThrowException(v8::Exception::TypeError(
-			v8::String::NewFromUtf8(isolate, "Wrong arguments", v8::NewStringType::kInternalized).ToLocalChecked()));
-		return;
-	}
-
-	unsigned long long zn_recv_handle = (unsigned long long)args[0]->NumberValue(context).FromJust();
-	ZNSDKError err = _g_native_wrap.GetRawAPIWrap().CreateRenderer(zn_recv_handle);
+		com::electron::sdk::proto::CreateRendererParams proto_params;
+		if (!SetProtoParam<com::electron::sdk::proto::CreateRendererParams >(args, proto_params))
+		{
+			err = ZNSDKERR_INVALID_PARAMETER;
+			break;
+		}
+		if (!proto_params.has_recvhandle())
+		{
+			err = ZNSDKERR_INVALID_PARAMETER;
+			break;
+		}
+		unsigned long long _zn_recv_handle = proto_params.recvhandle();
+		err = _g_native_wrap.GetRawAPIWrap().CreateRenderer(_zn_recv_handle);
+	} while (false);
+	
 
 	v8::Local<v8::Integer> bret = v8::Integer::New(isolate, (int32_t)err);
 	args.GetReturnValue().Set(bret);
@@ -59,95 +61,104 @@ void ZoomNodeRawApiCtrlWrap::CreateRenderer(const v8::FunctionCallbackInfo<v8::V
 void ZoomNodeRawApiCtrlWrap::DestroyRenderer(const v8::FunctionCallbackInfo<v8::Value>& args)
 {
 	v8::Isolate* isolate = args.GetIsolate();
-	auto context = isolate->GetCurrentContext();
-	if (args.Length() < 1) {
-		isolate->ThrowException(v8::Exception::TypeError(
-			v8::String::NewFromUtf8(isolate, "Wrong number of arguments", v8::NewStringType::kInternalized).ToLocalChecked()));
-		return;
-	}
-
-	if (!args[0]->IsNumber())
+	ZNSDKError err = ZNSDKERR_SUCCESS;
+	do
 	{
-		isolate->ThrowException(v8::Exception::TypeError(
-			v8::String::NewFromUtf8(isolate, "Wrong arguments", v8::NewStringType::kInternalized).ToLocalChecked()));
-		return;
-	}
-	//
-	unsigned long long zn_recv_handle = (unsigned long long)args[0]->NumberValue(context).FromJust();
-	ZNSDKError err = _g_native_wrap.GetRawAPIWrap().DestroyRenderer(zn_recv_handle);
+		com::electron::sdk::proto::DestroyRendererParams proto_params;
+		if (!SetProtoParam<com::electron::sdk::proto::DestroyRendererParams >(args, proto_params))
+		{
+			err = ZNSDKERR_INVALID_PARAMETER;
+			break;
+		}
+		if (!proto_params.has_recvhandle())
+		{
+			err = ZNSDKERR_INVALID_PARAMETER;
+			break;
+		}
+		unsigned long long _zn_recv_handle = proto_params.recvhandle();
+		err = _g_native_wrap.GetRawAPIWrap().DestroyRenderer(_zn_recv_handle);
+	} while (false);
+	
 	v8::Local<v8::Integer> bret = v8::Integer::New(isolate, (int32_t)err);
 	args.GetReturnValue().Set(bret);
 }
 void ZoomNodeRawApiCtrlWrap::Subscribe(const v8::FunctionCallbackInfo<v8::Value>& args)
 {
 	v8::Isolate* isolate = args.GetIsolate();
-	auto context = isolate->GetCurrentContext();
-	if (args.Length() < 3) {
-		isolate->ThrowException(v8::Exception::TypeError(
-			v8::String::NewFromUtf8(isolate, "Wrong number of arguments", v8::NewStringType::kInternalized).ToLocalChecked()));
-		return;
-	}
-
-	if (!args[0]->IsNumber() ||
-		!args[1]->IsNumber() ||
-		!args[2]->IsNumber()
-		)
+	ZNSDKError err = ZNSDKERR_SUCCESS;
+	do
 	{
-		isolate->ThrowException(v8::Exception::TypeError(
-			v8::String::NewFromUtf8(isolate, "Wrong arguments", v8::NewStringType::kInternalized).ToLocalChecked()));
-		return;
-	}
-
-	uint32_t zn_userid = (uint32_t)args[0]->NumberValue(context).FromJust();
-	ZNZoomSDKRawDataType zn_rawdataType = (ZNZoomSDKRawDataType)args[1]->NumberValue(context).FromJust();
-	unsigned long long zn_recv_handle = (unsigned long long)args[2]->NumberValue(context).FromJust();
-	ZNSDKError err = _g_native_wrap.GetRawAPIWrap().Subscribe(zn_userid, zn_rawdataType, zn_recv_handle);
+		com::electron::sdk::proto::SubscribeParams proto_params;
+		if (!SetProtoParam<com::electron::sdk::proto::SubscribeParams >(args, proto_params))
+		{
+			err = ZNSDKERR_INVALID_PARAMETER;
+			break;
+		}
+		if (!proto_params.has_recvhandle() ||
+			!proto_params.has_rawdatatype() ||
+			!proto_params.has_userid()
+			)
+		{
+			err = ZNSDKERR_INVALID_PARAMETER;
+			break;
+		}
+		uint32_t _zn_userid = proto_params.userid();
+		ZNZoomSDKRawDataType _zn_rawdataType = (ZNZoomSDKRawDataType)proto_params.rawdatatype();
+		unsigned long long _zn_recv_handle = proto_params.recvhandle();
+		err = _g_native_wrap.GetRawAPIWrap().Subscribe(_zn_userid, _zn_rawdataType, _zn_recv_handle);
+	} while (false);
+	
 	v8::Local<v8::Integer> bret = v8::Integer::New(isolate, (int32_t)err);
 	args.GetReturnValue().Set(bret);
 }
 void ZoomNodeRawApiCtrlWrap::UnSubscribe(const v8::FunctionCallbackInfo<v8::Value>& args)
 {
 	v8::Isolate* isolate = args.GetIsolate();
-	auto context = isolate->GetCurrentContext();
-	if (args.Length() < 1) {
-		isolate->ThrowException(v8::Exception::TypeError(
-			v8::String::NewFromUtf8(isolate, "Wrong number of arguments", v8::NewStringType::kInternalized).ToLocalChecked()));
-		return;
-	}
-
-	if (!args[0]->IsNumber())
+	ZNSDKError err = ZNSDKERR_SUCCESS;
+	do
 	{
-		isolate->ThrowException(v8::Exception::TypeError(
-			v8::String::NewFromUtf8(isolate, "Wrong arguments", v8::NewStringType::kInternalized).ToLocalChecked()));
-		return;
-	}
-
-	unsigned long long zn_recv_handle = (unsigned long long)args[0]->NumberValue(context).FromJust();
-	ZNSDKError err = _g_native_wrap.GetRawAPIWrap().UnSubscribe(zn_recv_handle);
+		com::electron::sdk::proto::UnSubscribeParams proto_params;
+		if (!SetProtoParam<com::electron::sdk::proto::UnSubscribeParams >(args, proto_params))
+		{
+			err = ZNSDKERR_INVALID_PARAMETER;
+			break;
+		}
+		if (!proto_params.has_recvhandle())
+		{
+			err = ZNSDKERR_INVALID_PARAMETER;
+			break;
+		}
+		unsigned long long _zn_recv_handle = proto_params.recvhandle();
+		err = _g_native_wrap.GetRawAPIWrap().UnSubscribe(_zn_recv_handle);
+	} while (false);
+	
 	v8::Local<v8::Integer> bret = v8::Integer::New(isolate, (int32_t)err);
 	args.GetReturnValue().Set(bret);
 }
 void ZoomNodeRawApiCtrlWrap::SetRawDataResolution(const v8::FunctionCallbackInfo<v8::Value>& args)
 {
 	v8::Isolate* isolate = args.GetIsolate();
-	auto context = isolate->GetCurrentContext();
-	if (args.Length() < 2) {
-		isolate->ThrowException(v8::Exception::TypeError(
-			v8::String::NewFromUtf8(isolate, "Wrong number of arguments", v8::NewStringType::kInternalized).ToLocalChecked()));
-		return;
-	}
-
-	if (!args[0]->IsNumber() ||
-		!args[1]->IsNumber()
-		)
+	ZNSDKError err = ZNSDKERR_SUCCESS;
+	do
 	{
-		isolate->ThrowException(v8::Exception::TypeError(
-			v8::String::NewFromUtf8(isolate, "Wrong arguments", v8::NewStringType::kInternalized).ToLocalChecked()));
-		return;
-	}
-	ZNZoomSDKResolution zn_resolution = (ZNZoomSDKResolution)args[0]->NumberValue(context).FromJust();
-	unsigned long long zn_recv_handle = (unsigned long long)args[1]->NumberValue(context).FromJust();
-	ZNSDKError err = _g_native_wrap.GetRawAPIWrap().SetRawDataResolution(zn_resolution, zn_recv_handle);
+		com::electron::sdk::proto::SetRawDataResolutionParams proto_params;
+		if (!SetProtoParam<com::electron::sdk::proto::SetRawDataResolutionParams >(args, proto_params))
+		{
+			err = ZNSDKERR_INVALID_PARAMETER;
+			break;
+		}
+		if (!proto_params.has_recvhandle() ||
+			!proto_params.has_resolution()
+			)
+		{
+			err = ZNSDKERR_INVALID_PARAMETER;
+			break;
+		}
+		ZNZoomSDKResolution _zn_resolution = (ZNZoomSDKResolution)proto_params.resolution();
+		unsigned long long _zn_recv_handle = proto_params.recvhandle();
+		err = _g_native_wrap.GetRawAPIWrap().SetRawDataResolution(_zn_resolution, _zn_recv_handle);
+	} while (false);
+	
 	v8::Local<v8::Integer> bret = v8::Integer::New(isolate, (int32_t)err);
 	args.GetReturnValue().Set(bret);
 }
@@ -155,26 +166,31 @@ void ZoomNodeRawApiCtrlWrap::GetResolution(const v8::FunctionCallbackInfo<v8::Va
 {
 	v8::Isolate* isolate = args.GetIsolate();
 	auto context = isolate->GetCurrentContext();
-	if (args.Length() < 1) {
-		isolate->ThrowException(v8::Exception::TypeError(
-			v8::String::NewFromUtf8(isolate, "Wrong number of arguments", v8::NewStringType::kInternalized).ToLocalChecked()));
-		return;
-	}
-
-	if (!args[0]->IsNumber())
+	ZNSDKError err = ZNSDKERR_SUCCESS;
+	ZNZoomSDKResolution _zn_resolution = ZNZoomSDKResolution_NoUse;
+	do
 	{
-		isolate->ThrowException(v8::Exception::TypeError(
-			v8::String::NewFromUtf8(isolate, "Wrong arguments", v8::NewStringType::kInternalized).ToLocalChecked()));
-		return;
-	}
-	ZNZoomSDKResolution zn_resolution = ZNZoomSDKResolution_NoUse;
-	unsigned long long zn_recv_handle = (unsigned long long)args[0]->NumberValue(context).FromJust();
-	ZNSDKError err = _g_native_wrap.GetRawAPIWrap().GetResolution(zn_resolution, zn_recv_handle);
+		com::electron::sdk::proto::GetResolutionParams proto_params;
+		if (!SetProtoParam<com::electron::sdk::proto::GetResolutionParams >(args, proto_params))
+		{
+			err = ZNSDKERR_INVALID_PARAMETER;
+			break;
+		}
+		if (!proto_params.has_recvhandle())
+		{
+			err = ZNSDKERR_INVALID_PARAMETER;
+			break;
+		}
+
+		unsigned long long _zn_recv_handle = proto_params.recvhandle();
+		err = _g_native_wrap.GetRawAPIWrap().GetResolution(_zn_resolution, _zn_recv_handle);
+	} while (false);
+	
 
 	v8::HandleScope scope(isolate);
 	v8::Local<v8::Object> node = v8::Object::New(isolate);
 	node->Set(context, v8::String::NewFromUtf8(isolate, "err", v8::NewStringType::kInternalized).ToLocalChecked(), v8::Integer::New(isolate, (int32_t)err));
-	node->Set(context, v8::String::NewFromUtf8(isolate, "resolution", v8::NewStringType::kInternalized).ToLocalChecked(), v8::Integer::New(isolate, (int32_t)zn_resolution));
+	node->Set(context, v8::String::NewFromUtf8(isolate, "resolution", v8::NewStringType::kInternalized).ToLocalChecked(), v8::Integer::New(isolate, (int32_t)_zn_resolution));
 
 	args.GetReturnValue().Set(node);
 }
@@ -182,26 +198,30 @@ void ZoomNodeRawApiCtrlWrap::GetRawDataType(const v8::FunctionCallbackInfo<v8::V
 {
 	v8::Isolate* isolate = args.GetIsolate();
 	auto context = isolate->GetCurrentContext();
-	if (args.Length() < 1) {
-		isolate->ThrowException(v8::Exception::TypeError(
-			v8::String::NewFromUtf8(isolate, "Wrong number of arguments", v8::NewStringType::kInternalized).ToLocalChecked()));
-		return;
-	}
-
-	if (!args[0]->IsNumber())
+	ZNSDKError err = ZNSDKERR_SUCCESS;
+	ZNZoomSDKRawDataType _zn_rawdataType = ZNRAW_DATA_TYPE_VIDEO;
+	do
 	{
-		isolate->ThrowException(v8::Exception::TypeError(
-			v8::String::NewFromUtf8(isolate, "Wrong arguments", v8::NewStringType::kInternalized).ToLocalChecked()));
-		return;
-	}
-	ZNZoomSDKRawDataType zn_rawdataType = ZNRAW_DATA_TYPE_VIDEO;
-	unsigned long long zn_recv_handle = (unsigned long long)args[0]->NumberValue(context).FromJust();
-	ZNSDKError err = _g_native_wrap.GetRawAPIWrap().GetRawDataType(zn_rawdataType, zn_recv_handle);
+		com::electron::sdk::proto::GetRawDataTypeParams proto_params;
+		if (!SetProtoParam<com::electron::sdk::proto::GetRawDataTypeParams >(args, proto_params))
+		{
+			err = ZNSDKERR_INVALID_PARAMETER;
+			break;
+		}
+		if (!proto_params.has_recvhandle())
+		{
+			err = ZNSDKERR_INVALID_PARAMETER;
+			break;
+		}
 
+		unsigned long long _zn_recv_handle = proto_params.recvhandle();
+		err = _g_native_wrap.GetRawAPIWrap().GetRawDataType(_zn_rawdataType, _zn_recv_handle);
+	} while (false);
+	
 	v8::HandleScope scope(isolate);
 	v8::Local<v8::Object> node = v8::Object::New(isolate);
 	node->Set(context, v8::String::NewFromUtf8(isolate, "err", v8::NewStringType::kInternalized).ToLocalChecked(), v8::Integer::New(isolate, (int32_t)err));
-	node->Set(context, v8::String::NewFromUtf8(isolate, "rawdataType", v8::NewStringType::kInternalized).ToLocalChecked(), v8::Integer::New(isolate, (int32_t)zn_rawdataType));
+	node->Set(context, v8::String::NewFromUtf8(isolate, "rawdataType", v8::NewStringType::kInternalized).ToLocalChecked(), v8::Integer::New(isolate, (int32_t)_zn_rawdataType));
 
 	args.GetReturnValue().Set(node);
 }
@@ -209,54 +229,61 @@ void ZoomNodeRawApiCtrlWrap::GetUserId(const v8::FunctionCallbackInfo<v8::Value>
 {
 	v8::Isolate* isolate = args.GetIsolate();
 	auto context = isolate->GetCurrentContext();
-	if (args.Length() < 1) {
-		isolate->ThrowException(v8::Exception::TypeError(
-			v8::String::NewFromUtf8(isolate, "Wrong number of arguments", v8::NewStringType::kInternalized).ToLocalChecked()));
-		return;
-	}
-
-	if (!args[0]->IsNumber())
+	ZNSDKError err = ZNSDKERR_SUCCESS;
+	uint32_t _zn_userid = 0;
+	do
 	{
-		isolate->ThrowException(v8::Exception::TypeError(
-			v8::String::NewFromUtf8(isolate, "Wrong arguments", v8::NewStringType::kInternalized).ToLocalChecked()));
-		return;
-	}
-	uint32_t zn_userid = 0;
-	unsigned long long zn_recv_handle = (unsigned long long)args[0]->NumberValue(context).FromJust();
-	ZNSDKError err = _g_native_wrap.GetRawAPIWrap().GetUserId(zn_userid, zn_recv_handle);
+		com::electron::sdk::proto::GetUserIdParams proto_params;
+		if (!SetProtoParam<com::electron::sdk::proto::GetUserIdParams >(args, proto_params))
+		{
+			err = ZNSDKERR_INVALID_PARAMETER;
+			break;
+		}
+		if (!proto_params.has_recvhandle())
+		{
+			err = ZNSDKERR_INVALID_PARAMETER;
+			break;
+		}
 
+		unsigned long long _zn_recv_handle = proto_params.recvhandle();
+		err = _g_native_wrap.GetRawAPIWrap().GetUserId(_zn_userid, _zn_recv_handle);
+	} while (false);
+	
 	v8::HandleScope scope(isolate);
 	v8::Local<v8::Object> node = v8::Object::New(isolate);
 	node->Set(context, v8::String::NewFromUtf8(isolate, "err", v8::NewStringType::kInternalized).ToLocalChecked(), v8::Integer::New(isolate, (int32_t)err));
-	node->Set(context, v8::String::NewFromUtf8(isolate, "userid", v8::NewStringType::kInternalized).ToLocalChecked(), v8::Integer::New(isolate, zn_userid));
+	node->Set(context, v8::String::NewFromUtf8(isolate, "userid", v8::NewStringType::kInternalized).ToLocalChecked(), v8::Integer::New(isolate, _zn_userid));
 
 	args.GetReturnValue().Set(node);
 }
 void ZoomNodeRawApiCtrlWrap::SetonRawDataStatusChangedCB(const v8::FunctionCallbackInfo<v8::Value>& args)
 {
 	v8::Isolate* isolate = args.GetIsolate();
-	if (args.Length() < 1) {
-		isolate->ThrowException(v8::Exception::TypeError(
-			v8::String::NewFromUtf8(isolate, "Wrong number of arguments", v8::NewStringType::kInternalized).ToLocalChecked()));
-		return;
-	}
-	if (args[0]->IsNull())
-	{
-		ZoomNodeSinkHelper::GetInst().onRawDataStatusChanged.Empty();
-		return;
-	}
-	if (!args[0]->IsFunction())
-	{
-		isolate->ThrowException(v8::Exception::TypeError(
-			v8::String::NewFromUtf8(isolate, "Wrong arguments", v8::NewStringType::kInternalized).ToLocalChecked()));
-		return;
-	}
-
-	v8::Local<v8::Function> cbfunc = v8::Local<v8::Function>::Cast(args[0]);
-	v8::Persistent<v8::Function, v8::CopyablePersistentTraits<v8::Function> > cb(isolate, cbfunc);
-	ZoomNodeSinkHelper::GetInst().onRawDataStatusChanged = cb;
-
 	ZNSDKError err = ZNSDKERR_SUCCESS;
+	do
+	{
+		if (args.Length() < 1) {
+			err = ZNSDKERR_INVALID_PARAMETER;
+			break;
+		}
+		if (args[0]->IsNull())
+		{
+			ZoomNodeSinkHelper::GetInst().onRawDataStatusChanged.Empty();
+			err = ZNSDKERR_INVALID_PARAMETER;
+			break;
+		}
+		if (!args[0]->IsFunction())
+		{
+			err = ZNSDKERR_INVALID_PARAMETER;
+			break;
+		}
+
+		v8::Local<v8::Function> cbfunc = v8::Local<v8::Function>::Cast(args[0]);
+		v8::Persistent<v8::Function, v8::CopyablePersistentTraits<v8::Function> > cb(isolate, cbfunc);
+		ZoomNodeSinkHelper::GetInst().onRawDataStatusChanged = cb;
+
+	} while (false);
+	
 	v8::Local<v8::Integer> bret = v8::Integer::New(isolate, (int32_t)err);
 	args.GetReturnValue().Set(bret);
 }

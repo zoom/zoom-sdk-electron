@@ -49,6 +49,9 @@ ZOOM_SDK_NAMESPACE::ZoomSDKVideoRenderMode Map2SDKDefine(ZNZoomSDKVideoRenderMod
 ZOOM_SDK_NAMESPACE::ZoomSDKRawDataMemoryMode Map2SDKDefine(ZNSDKRawDataMemoryMode rawdataMemoryMode);
 ZOOM_SDK_NAMESPACE::ZoomSDKRawDataType Map2SDKDefine(ZNZoomSDKRawDataType type);
 ZOOM_SDK_NAMESPACE::ZoomSDKResolution Map2SDKDefine(ZNZoomSDKResolution resolution);
+ZOOM_SDK_NAMESPACE::VIDEO_HARDWARE_ENCODE_TYPE Map2SDKDefine(ZN_VIDEO_HARDWARE_ENCODE_TYPE encodeType);
+ZOOM_SDK_NAMESPACE::ZoomSDKRenderPostProcessing Map2SDKDefine(ZNZoomSDKRenderPostProcessing postProcessing);
+ZOOM_SDK_NAMESPACE::ZoomSDKVideoCaptureMethod Map2SDKDefine(ZNZoomSDKVideoCaptureMethod method);
 //convert zoomstring to string
 std::string wStr2Str(const ZoomSTRING& s);
 //convert string to zoomstring

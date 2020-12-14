@@ -13,44 +13,51 @@ ZoomNodeMeetingShareCtrlWrap::~ZoomNodeMeetingShareCtrlWrap()
 void ZoomNodeMeetingShareCtrlWrap::StartAppShare(const v8::FunctionCallbackInfo<v8::Value>& args)
 {
 	v8::Isolate* isolate = args.GetIsolate();
-	if (args.Length() < 1) {
-		isolate->ThrowException(v8::Exception::TypeError(
-			v8::String::NewFromUtf8(isolate, "Wrong number of arguments", v8::NewStringType::kInternalized).ToLocalChecked()));
-		return;
-	}
-
-	if (!args[0]->IsString())
+	ZNSDKError err = ZNSDKERR_SUCCESS;
+	do
 	{
-		isolate->ThrowException(v8::Exception::TypeError(
-			v8::String::NewFromUtf8(isolate, "Wrong arguments", v8::NewStringType::kInternalized).ToLocalChecked()));
-		return;
-	}
+		com::electron::sdk::proto::StartAppShareParams proto_params;
+		if (!SetProtoParam<com::electron::sdk::proto::StartAppShareParams >(args, proto_params))
+		{
+			err = ZNSDKERR_INVALID_PARAMETER;
+			break;
+		}
+		if (!proto_params.has_hshareapp())
+		{
+			err = ZNSDKERR_INVALID_PARAMETER;
+			break;
+		}
+		ZoomSTRING _zn_hShare_app;
+		_zn_hShare_app = s2zs(proto_params.hshareapp());
 
-	ZoomSTRING zn_hShare_app;
-	zoom_v8toc(args[0].As<v8::String>(), zn_hShare_app);
-	ZNSDKError err = _g_native_wrap.GetMeetingServiceWrap().GetMeetingShareCtrl().StartAppShare(zn_hShare_app);
+		err = _g_native_wrap.GetMeetingServiceWrap().GetMeetingShareCtrl().StartAppShare(_zn_hShare_app);
+	} while (false);
+	
 	v8::Local<v8::Integer> bret = v8::Integer::New(isolate, (int32_t)err);
 	args.GetReturnValue().Set(bret);
 }
 void ZoomNodeMeetingShareCtrlWrap::StartMonitorShare(const v8::FunctionCallbackInfo<v8::Value>& args)
 {
 	v8::Isolate* isolate = args.GetIsolate();
-	if (args.Length() < 1) {
-		isolate->ThrowException(v8::Exception::TypeError(
-			v8::String::NewFromUtf8(isolate, "Wrong number of arguments", v8::NewStringType::kInternalized).ToLocalChecked()));
-		return;
-	}
-
-	if (!args[0]->IsString())
+	ZNSDKError err = ZNSDKERR_SUCCESS;
+	do
 	{
-		isolate->ThrowException(v8::Exception::TypeError(
-			v8::String::NewFromUtf8(isolate, "Wrong arguments", v8::NewStringType::kInternalized).ToLocalChecked()));
-		return;
-	}
-
-	ZoomSTRING zn_monitorID;
-	zoom_v8toc(args[0].As<v8::String>(), zn_monitorID);
-	ZNSDKError err = _g_native_wrap.GetMeetingServiceWrap().GetMeetingShareCtrl().StartMonitorShare(zn_monitorID);
+		com::electron::sdk::proto::StartMonitorShareParams proto_params;
+		if (!SetProtoParam<com::electron::sdk::proto::StartMonitorShareParams >(args, proto_params))
+		{
+			err = ZNSDKERR_INVALID_PARAMETER;
+			break;
+		}
+		if (!proto_params.has_monitorid())
+		{
+			err = ZNSDKERR_INVALID_PARAMETER;
+			break;
+		}
+		ZoomSTRING _zn_monitorID;
+		_zn_monitorID = s2zs(proto_params.monitorid());
+		err = _g_native_wrap.GetMeetingServiceWrap().GetMeetingShareCtrl().StartMonitorShare(_zn_monitorID);
+	} while (false);
+	
 	v8::Local<v8::Integer> bret = v8::Integer::New(isolate, (int32_t)err);
 	args.GetReturnValue().Set(bret);
 }
@@ -64,24 +71,31 @@ void ZoomNodeMeetingShareCtrlWrap::StopShare(const v8::FunctionCallbackInfo<v8::
 void ZoomNodeMeetingShareCtrlWrap::SetOnSharingStatusCB(const v8::FunctionCallbackInfo<v8::Value>& args)
 {
 	v8::Isolate* isolate = args.GetIsolate();
-	if (args.Length() < 1) {
-		isolate->ThrowException(v8::Exception::TypeError(
-			v8::String::NewFromUtf8(isolate, "Wrong number of arguments", v8::NewStringType::kInternalized).ToLocalChecked()));
-		return;
-	}
-	if (args[0]->IsNull())	{		ZoomNodeSinkHelper::GetInst().onSharingStatus.Empty();		return;	}
-	if (!args[0]->IsFunction())
-	{
-		isolate->ThrowException(v8::Exception::TypeError(
-			v8::String::NewFromUtf8(isolate, "Wrong arguments", v8::NewStringType::kInternalized).ToLocalChecked()));
-		return;
-	}
-
-	v8::Local<v8::Function> cbfunc = v8::Local<v8::Function>::Cast(args[0]);
-	v8::Persistent<v8::Function, v8::CopyablePersistentTraits<v8::Function> > cb(isolate, cbfunc);
-	ZoomNodeSinkHelper::GetInst().onSharingStatus = cb;
-
 	ZNSDKError err = ZNSDKERR_SUCCESS;
+	do
+	{
+		if (args.Length() < 1) {
+			err = ZNSDKERR_INVALID_PARAMETER;
+			break;
+		}
+		if (args[0]->IsNull())
+		{
+			ZoomNodeSinkHelper::GetInst().onSharingStatus.Empty();
+			err = ZNSDKERR_INVALID_PARAMETER;
+			break;;
+		}
+		if (!args[0]->IsFunction())
+		{
+			err = ZNSDKERR_INVALID_PARAMETER;
+			break;
+		}
+
+		v8::Local<v8::Function> cbfunc = v8::Local<v8::Function>::Cast(args[0]);
+		v8::Persistent<v8::Function, v8::CopyablePersistentTraits<v8::Function> > cb(isolate, cbfunc);
+		ZoomNodeSinkHelper::GetInst().onSharingStatus = cb;
+
+	} while (false);
+	
 	v8::Local<v8::Integer> bret = v8::Integer::New(isolate, (int32_t)err);
 	args.GetReturnValue().Set(bret);
 }

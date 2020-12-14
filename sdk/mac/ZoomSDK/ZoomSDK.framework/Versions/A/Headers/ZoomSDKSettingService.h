@@ -458,6 +458,46 @@ typedef enum{
  * @return If the function succeeds, it will return ZoomSDKError_success, otherwise not.
  */
 - (ZoomSDKError)setSuppressBackgroundNoise:(ZoomSDKSuppressBackgroundNoiseLevel)level;
+
+/**
+ * @brief Determine if used separate audio device to play ringtone simultaneously.
+ * @param isDisabled YES means only can used config value,can't modify.
+ * @return YES means enabled, otherwise not.
+ */
+- (BOOL)isAlwaysUseSeparateRingSpkOn:(BOOL*)isDisabled;
+
+/**
+ * @brief Enable use separate audio device to play ringtone simultaneously.
+ * @param enable YES means enabled, NO disabled.
+ * @return If the function succeeds, it will return ZoomSDKError_success, otherwise not.
+ */
+- (ZoomSDKError)enableAlwaysUseSeparateRingSpk:(BOOL)enable;
+
+/**
+ * @brief Get use separate audio device to play ringtone simultaneously devices.
+ * @return If the function succeeds, it will return an array containing SDKDeviceInfo elements, otherwise returns nil.
+ */
+- (NSArray *)getRingSpkDeviceList;
+
+/**
+ * @brief Get the volume of audio device.
+ * @return If the function succeeds, it will return an float value(0.0-255.0), otherwise returns 0.0.
+ */
+- (float)getRingSpkVolume;
+
+/**
+ * @brief Set the volume of audio device.
+ * @param value The value of device, varies from 0.0 to 255.0.
+ * @return If the function succeeds, it will return ZoomSDKError_success, otherwise not.
+ */
+- (ZoomSDKError)setRingSpkVolume:(float)value;
+
+/**
+ * @brief Select an audio device.
+ * @param deviceId The id of device.
+ * @return If the function succeeds, it will return ZoomSDKError_success, otherwise not.
+ */
+- (ZoomSDKError)setRingSpkDevice:(NSString*)deviceId;
 @end
 
 @interface ZoomSDKVideoSetting: NSObject
@@ -509,6 +549,18 @@ typedef enum{
  */
 - (ZoomSDKError)enableBeautyFace:(BOOL)enable;
 
+/**
+ * @brief Get beauty face value.
+ * @return If the function succeeds, it will return an int value(0-100), otherwise returns 0.
+ */
+- (int)getBeautyFaceValue;
+
+/**
+ * @brief Set beauty face value.
+ * @param value The value type is int, varies from 0 to 100.
+ * @return If the function succeeds, it will return ZoomSDKError_Success. Otherwise failed.
+ */
+- (ZoomSDKError)setBeautyFaceValue:(int)value;
 /**
  * @brief Turn off the participant's video when he joins meeting. 
  * @param disable YES means that the video is turned off, otherwise not. 
@@ -593,6 +645,53 @@ typedef enum{
  * @return YES means enabled, otherwise not. 
  */
 - (BOOL)isCatchHDVideoOn;
+/**
+ * @brief Determine if adjustion for low light.
+ * @param isDisabled YES means only can used config value,can't modify.
+ * @return If the function succeeds, it will return ZoomSDKSettingVideoLightAdaptionModel.
+ */
+-(ZoomSDKSettingVideoLightAdaptionModel)getLightAdjustModel:(BOOL*)isDisabled;
+/**
+ * @brief Set the way to adjust the low light.
+ * @param model The model to be set.
+ * @param value The value type is int, varies from 0 to 255.
+ * @return If the function succeeds, it will return ZoomSDKError_success, otherwise not.
+ */
+-(ZoomSDKError)setLightAdaptionModel:(ZoomSDKSettingVideoLightAdaptionModel)model LightAdaptionManualValue:(int)value;
+/**
+ * @brief Get the value of the setted.
+ * @param isDisabled YES means only can used setted value,can't modify.
+ * @return If the function succeeds, it will return an int value(0-255), otherwise returns 0.
+ */
+-(int)getLightAdaptionManualValue:(BOOL*)isDisabled;
+
+/**
+ * @brief Determine whether to hardware acceleration for video receive.
+ * @param isDisabled YES means only can used config value,can't modify.
+ * @return YES means enabled, otherwise not.
+ */
+-(BOOL)isHardwareAccelerationForVideoReceiveOn:(BOOL*)isDisabled;
+
+/**
+ * @brief Enable or disable hardware acceleration for video receive.
+ * @param enable YES means enabled, NO disabled.
+ * @return If the function succeeds, it will return ZoomSDKError_success, otherwise not.
+ */
+-(ZoomSDKError)enableHardwareAccelerationForVideoReceive:(BOOL)enable;
+
+/**
+ * @brief Determine whether to de-noise.
+ * @param isDisabled YES means only can used config value,can't modify.
+ * @return YES means enabled, otherwise not.
+ */
+-(BOOL)isTemporalDeNoiseOn:(BOOL*)isDisabled;
+
+/**
+ * @brief Enable or disable de-noise.
+ * @param enable YES means enabled, NO disabled.
+ * @return If the function succeeds, it will return ZoomSDKError_success, otherwise not.
+ */
+-(ZoomSDKError)enableTemporalDeNoise:(BOOL)enable;
 
 @end
 
@@ -839,10 +938,17 @@ typedef enum{
 
 /**
  @brief to set confirm when user leaving meeting
- @param enable Yes means will confirm when user leaving meeting
- @return If the function is success will return ZoomSDKError_Success.othereise fail
+ @param enable Yes means will confirm when user leaving meeting.
+ @return If the function is success will return ZoomSDKError_Success, othereise fail.
  */
 - (ZoomSDKError)setConfirmLeavingMeeting:(BOOL)enable;
+
+/**
+ @brief to set the appearebce of ui.
+ @param appearance The enum of appearance.
+ @return If the function is success will return ZoomSDKError_Success, othereise fail.
+ */
+- (ZoomSDKError)setUIAppearance:(ZoomSDKUIAppearance)appearance;
 @end
 
 @interface ZoomSDKStatisticsSetting: NSObject
@@ -886,6 +992,7 @@ typedef enum{
     BOOL               _isSelected;
     NSString*          _imageFilePath;
     NSString*          _imageName;
+    BOOL               _isVideo;
 }
 /**
  * @brief Determine if it is the selected virtual background image.
@@ -902,14 +1009,59 @@ typedef enum{
  * @return If the function succeeds, it will return the image file name.
  */
 - (NSString*)getImageName;
+/**
+ * @brief Determine if the selected virtual background is video.
+ * @return YES means is the selected virtual background is video, otherwise not.
+ */
+- (BOOL)isVideo;
+@end
+
+@interface ZoomSDKVideoFilterItemInfo: NSObject
+{
+    BOOL                       _isSelected;
+    NSString*                  _imageFilePath;
+    NSString*                  _imageName;
+    ZoomSDKVideoEffectType     _type;
+    int                        _index;
+}
+/**
+ * @brief Determine if it is the selected virtual background image.
+ * @return YES means is the selected virtual background image, otherwise not.
+ */
+- (BOOL)isSelected;
+
+/**
+ * @brief Get file path of the virtual background image.
+ * @return If the function succeeds, it will return the image file path.
+ */
+- (NSString*)getImageFilePath;
+
+/**
+ * @brief Get image file name of the virtual background image.
+ * @return If the function succeeds, it will return the image file name.
+ */
+- (NSString*)getImageName;
+
+/**
+ * @brief Get the type of the virtual background image or video item.
+ * @return If the function succeeds, it will return the type.
+ */
+- (ZoomSDKVideoEffectType)getType;
+
+/**
+ * @brief Get the index of the virtual background image or video item.
+ * @return If the function succeeds, it will return the index.
+ */
+- (int)getIndex;
 @end
 
 @protocol ZoomSDKVirtualBackgroundSettingDelegate <NSObject>
 @optional
 /**
  * @brief Notify the default virtual background image have been downloaded from web.
+ * @param filePath The path of the file.
  */
-- (void)onVBImageDidDownloaded;
+- (void)onVBImageDidDownloaded:(NSString*)filePath;
 
 /**
  * @brief Notify the virtual background was updated with selected color.
@@ -921,6 +1073,33 @@ typedef enum{
  * @brief Notify the selected virtual background image has been changed, user can get the new selected image through image list.
  */
 - (void)onSelectedVBImageChanged;
+
+/**
+ * @brief Notify the result of adding video virtual background.
+ * @param success YES means is successfully added, otherwise not.
+ * @param error If failed adding the video virtual background, the error will be notified.
+ */
+- (void)onVBVideoUploadedResult:(BOOL)success failedError:(ZoomSDKSettingVBVideoError)error;
+
+/**
+ * @brief Notify the default video fiter item have been downloaded from web.
+ * @param type The type of the video fiter item.
+ * @param index The index of the video fiter item.
+ */
+- (void)onVideoFilterItemDataDownloaded:(ZoomSDKVideoEffectType)type index:(int)index;
+
+/**
+ * @brief Notify the video fiter item need do some preparing before applied to video.
+ */
+- (void)onVideoFilterItemDataNeedPrepare:(ZoomSDKVideoEffectType)type index:(int)index;
+
+/**
+ * @brief Notify the video fiter item data is ready.
+ * @param ready YES means is ready, otherwise not.
+ * @param type The type of the video fiter item.
+ * @param index The index of the video fiter item.
+ */
+- (void)onVideoFilterItemDataReady:(BOOL)ready type:(ZoomSDKVideoEffectType)type index:(int)index;
 @end
 
 @interface ZoomSDKVirtualBackgroundSetting: NSObject
@@ -967,11 +1146,25 @@ typedef enum{
 - (ZoomSDKError)addBGImage:(NSString*)filePath;
 
 /**
+ * @brief Add virtual background video.
+ * @param filePath The file path of the video user want to add.
+ * @return If the function succeeds, it will return ZoomSDKError_Success.
+ */
+- (ZoomSDKError)addBGVideo:(NSString*)filePath;
+
+/**
  * @brief Remove virtual background image.
- * @param bgImageInfo The object of ZoomSDKVirtualBGImageInfo user want to remove.
+ * @param filePath The path of the virtualbackground image item user want to remove.
  * @return If the function succeeds, it will return ZoomSDKError_Success, otherwise failed.
  */
-- (ZoomSDKError)removeBGImage:(ZoomSDKVirtualBGImageInfo*)bgImageInfo;
+- (ZoomSDKError)removeBGImage:(NSString*)filePath;
+
+/**
+ * @brief Remove virtual background video.
+ * @param filePath The path of the virtualbackground video item user want to remove.
+ * @return If the function succeeds, it will return ZoomSDKError_Success, otherwise failed.
+ */
+- (ZoomSDKError)removeBGVideo:(NSString*)filePath;
 
 /**
  * @brief Get the array of virtual background images.
@@ -981,9 +1174,10 @@ typedef enum{
 
 /**
  * @brief Use the specify image as selected virtual background images.
+ * @param filePath The path of the virtualbackground image or video item user want to select.
  * @return If the function succeeds, it will return ZoomSDKError_Success, otherwise failed.
  */
-- (ZoomSDKError)useBGImage:(ZoomSDKVirtualBGImageInfo*)bgImage;
+- (ZoomSDKError)useBGImage:(NSString*)filePath;
 
 /**
  * @brief Get the selected replace color of virtual background images.
@@ -997,6 +1191,127 @@ typedef enum{
  * @note The selected replace color will be notified from callback event '- (void)onSelectedVBImageChanged'.
  */
 - (ZoomSDKError)startSelectReplaceVBColor;
+
+/**
+ * @brief Determine if support smart virtual background video feature.
+ * @return YES means is support, otherwise not.
+ */
+- (BOOL)isSupportSmartVirtualBackgroundVideo;
+
+/**
+ * @brief Determine if support green virtual background video feature.
+ * @return YES means is support, otherwise not.
+ */
+- (BOOL)isSupportGreenVirtualBackgroundVideo;
+
+/**
+ * @brief Determine if allow add new virtual background item.
+ * @return YES means is allowed, otherwise not.
+ */
+- (BOOL)isAllowAddNewVBItem;
+
+/**
+ * @brief Determine if allow remove virtual background item.
+ * @return YES means is allowed remove, otherwise not.
+ */
+- (BOOL)isAllowRemoveVBItem;
+
+/**
+ * @brief Determine if face makeup feature is enabled.
+ * @return YES means is enabled, otherwise not.
+ */
+- (BOOL)isVideoFilterEnabled;
+
+/**
+ * @brief Determine if support face makeup feature.
+ * @return YES means is support, otherwise not.
+ */
+- (BOOL)isSupportVideoFilter;
+
+/**
+ * @brief Get the array of face makeup images.
+ * @return If the function succeeds, it will return the NSArray of image list, otherwise nil.
+ */
+- (NSArray*)getVideoFilterItemList;
+
+/**
+ * @brief Use the specify image as selected face makeup images.
+ * @return If the function succeeds, it will return ZoomSDKError_Success, otherwise failed.
+ */
+- (ZoomSDKError)useVideoFilterItem:(ZoomSDKVideoEffectType)type index:(int)index;
+@end
+
+@interface ZoomSDKShareScreenSetting : NSObject
+
+/**
+ * @brief Determine if it is able to silence system notifications when sharing desktop.
+ * @param isDisabled YES means only can used config value,can't modify.
+ * @return YES means enabled, otherwise not.
+ */
+-(BOOL)isDoNotDisturbInSharingOn:(BOOL*)isDisabled;
+
+/**
+ * @brief Enable or disable silence system notifications when sharing desktop.
+ * @param enable YES means enabled, NO disabled.
+ * @return If the function succeeds, it will return ZoomSDKError_success, otherwise not.
+ */
+-(ZoomSDKError)enableDoNotDisturbInSharing:(BOOL)enable;
+
+/**
+ * @brief Determine if it is able to show green border when sharing.
+ * @param isDisabled YES means only can used config value,can't modify.
+ * @return YES means enabled, otherwise not.
+ */
+-(BOOL)isGreenBorderOn:(BOOL*)isDisabled;
+
+/**
+ * @brief Enable or disable show green border when sharing.
+ * @param enable YES means enabled, NO disabled.
+ * @return If the function succeeds, it will return ZoomSDKError_success, otherwise not.
+ */
+-(ZoomSDKError)enableGreenBorder:(BOOL)enable;
+
+/**
+ * @brief Determine if it is able to share selected app window only.
+ * @param isDisabled YES means only can used config value,can't modify.
+ * @return YES means enabled, otherwise not.
+ */
+-(BOOL)isShareSelectedWndOnlyOn:(BOOL*)isDisabled;
+
+/**
+ * @brief Enable or disable share selected app window only.
+ * @param enable YES means enabled, NO disabled.
+ * @return If the function succeeds, it will return ZoomSDKError_success, otherwise not.
+ */
+-(ZoomSDKError)enableShareSelectedWndOnly:(BOOL)enable;
+
+/**
+ * @brief Determine if it is able to using tcp connection for screen sharing.
+ * @param isDisabled YES means only can used config value,can't modify.
+ * @return YES means disabled, otherwise not.
+ */
+-(BOOL)isTCPConnectionOn:(BOOL*)isDisabled;
+
+/**
+ * @brief Enable or disable  use tcp connection for screen sharing.
+ * @param enable YES means enabled, NO disabled.
+ * @return If the function succeeds, it will return ZoomSDKError_success, otherwise not.
+ */
+-(ZoomSDKError)enableTCPConnecton:(BOOL)enable;
+
+/**
+ * @brief Set screen capture mode.
+ * @param mode The mode to be set.
+ * @return If the function succeeds, it will return ZoomSDKError_success, otherwise not.
+ */
+-(ZoomSDKError)setScreenCaptureMode:(ZoomSDKScreenCaptureMode)mode;
+
+/**
+ * @brief Get screen capture mode
+ * @param isDisabled YES means only can used config value,can't modify.
+ * @return If the function succeeds will return the current screen capture mode.
+ */
+-(ZoomSDKScreenCaptureMode)getScreenCaptureMode:(BOOL*)isDisabled;
 @end
 
 @interface ZoomSDKSettingService : NSObject
@@ -1007,6 +1322,7 @@ typedef enum{
     ZoomSDKGeneralSetting* _generalSetting;
     ZoomSDKStatisticsSetting* _statisticsSetting;
     ZoomSDKVirtualBackgroundSetting* _virtualBGSetting;
+    ZoomSDKShareScreenSetting* _shareScreenSetting;
 }
 /**
  * @brief Get the object of audio settings.
@@ -1044,6 +1360,11 @@ typedef enum{
  */
 -(ZoomSDKVirtualBackgroundSetting*)getVirtualBGSetting;
 
+/**
+ * @brief Get the object of share screen settings.
+ * @return If the function succeeds, it will return an object of ZoomSDKShareScreenSetting.
+ */
+-(ZoomSDKShareScreenSetting*)getShareScreenSetting;
 @end
 
 

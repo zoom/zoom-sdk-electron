@@ -15,6 +15,7 @@ echo "build fail ,electron not install"
 exit
 else
 cd ../
+npm install
 sed -i "" 's/8.2.4/'${version#*v}'/g' ./demo/package.json
 node-gyp rebuild --target=${version#*v}  --dist-url=https://atom.io/download/electron
 fi

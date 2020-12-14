@@ -1394,3 +1394,61 @@ typedef enum
     ZoomSDKSuppressBackgroundNoiseLevel_Medium,
     ZoomSDKSuppressBackgroundNoiseLevel_High,
 }ZoomSDKSuppressBackgroundNoiseLevel;
+
+/**
+ * @brief Enumerations of the type for screen capture.
+ */
+
+typedef enum
+{
+    //Screen capture mode is auto.
+    ZoomSDKScreenCaptureMode_Auto,
+    //Screen capture mode is legacy.
+    ZoomSDKScreenCaptureMode_Legacy,
+    //Screen capture mode is copy with window filter.
+    ZoomSDKScreenCaptureMode_GPU_Copy_Filter,
+    //Screen capture mode is advanced copy with window filter.
+    ZoomSDKScreenCaptureMode_ADA_Copy_Filter,
+    //Screen capture mode is advanced copy without window filter.
+    ZoomSDKScreenCaptureMode_ADA_Copy_Without_Filter,
+}ZoomSDKScreenCaptureMode;
+
+/**
+ * @brief Enumerations of the type for light adaption.
+ */
+
+typedef enum
+{
+    //Light adaption is none.
+    ZoomSDKSettingVideoLightAdaptionModel_None,
+    //Light adaption by auto.
+    ZoomSDKSettingVideoLightAdaptionModel_Auto,
+    //Light adaption by manual.
+    ZoomSDKSettingVideoLightAdaptionModel_Manual,
+}ZoomSDKSettingVideoLightAdaptionModel;
+
+typedef enum
+{
+    ZoomSDKSettingVBVideoError_None = 0,
+    ZoomSDKSettingVBVideoError_UnknowFormat,
+    ZoomSDKSettingVBVideoError_ResolutionBig,
+    ZoomSDKSettingVBVideoError_ResolutionHigh720P,
+    ZoomSDKSettingVBVideoError_ResolutionLow,
+    ZoomSDKSettingVBVideoError_PlayError,
+    ZoomSDKSettingVBVideoError_OpenError,
+}ZoomSDKSettingVBVideoError;
+
+typedef enum
+{
+    ZoomSDKVideoEffectType_None = 0,
+    ZoomSDKVideoEffectType_Filter = 1,
+    ZoomSDKVideoEffectType_Frame = 2,
+    ZoomSDKVideoEffectType_Sticker = 4,
+}ZoomSDKVideoEffectType;
+
+typedef enum
+{
+    ZoomSDKUIAppearance_System,
+    ZoomSDKUIAppearance_Light,
+    ZoomSDKUIAppearance_Dark,
+}ZoomSDKUIAppearance;

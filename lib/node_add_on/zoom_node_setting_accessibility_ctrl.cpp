@@ -8,29 +8,31 @@ ZoomNodeSettingAccessibilityCtrlWrap::ZoomNodeSettingAccessibilityCtrlWrap()
 
 ZoomNodeSettingAccessibilityCtrlWrap::~ZoomNodeSettingAccessibilityCtrlWrap()
 {
-	//
+
 }
 void ZoomNodeSettingAccessibilityCtrlWrap::EnableAlwaysShowMeetingControls(const v8::FunctionCallbackInfo<v8::Value>& args)
 {
 	v8::Isolate* isolate = args.GetIsolate();
-	if (args.Length() < 1) {
-		isolate->ThrowException(v8::Exception::TypeError(
-			v8::String::NewFromUtf8(isolate, "Wrong number of arguments", v8::NewStringType::kInternalized).ToLocalChecked()));
-		return;
-	}
-
-	if (!args[0]->IsBoolean()
-		)
+	ZNSDKError err = ZNSDKERR_SUCCESS;
+	do
 	{
-		isolate->ThrowException(v8::Exception::TypeError(
-			v8::String::NewFromUtf8(isolate, "Wrong arguments", v8::NewStringType::kInternalized).ToLocalChecked()));
-		return;
-	}
-	bool zn_bEnable;
-	zoom_v8toc(args[0].As<v8::Boolean>(), zn_bEnable);
+		com::electron::sdk::proto::EnableAlwaysShowMeetingControlsParams proto_params;
+		if (!SetProtoParam<com::electron::sdk::proto::EnableAlwaysShowMeetingControlsParams >(args, proto_params))
+		{
+			err = ZNSDKERR_INVALID_PARAMETER;
+			break;
+		}
+		if (!proto_params.has_benable())
+		{
+			err = ZNSDKERR_INVALID_PARAMETER;
+			break;
+		}
+		bool _zn_bEnable = false;
+		convertBool(proto_params.benable(), _zn_bEnable);
 
-
-	ZNSDKError err = _g_native_wrap.GetSettingServiceWrap().GetSettingAccessibilityCtrl().EnableAlwaysShowMeetingControls(zn_bEnable);
+		err = _g_native_wrap.GetSettingServiceWrap().GetSettingAccessibilityCtrl().EnableAlwaysShowMeetingControls(_zn_bEnable);
+	} while (false);
+	
 	v8::Local<v8::Integer> bret = v8::Integer::New(isolate, (int32_t)err);
 	args.GetReturnValue().Set(bret);
 }
@@ -38,22 +40,7 @@ void ZoomNodeSettingAccessibilityCtrlWrap::IsAlwaysShowMeetingControlsEnable(con
 {
 	v8::Isolate* isolate = args.GetIsolate();
 	auto context = isolate->GetCurrentContext();
-	if (args.Length() < 1) {
-		isolate->ThrowException(v8::Exception::TypeError(
-			v8::String::NewFromUtf8(isolate, "Wrong number of arguments", v8::NewStringType::kInternalized).ToLocalChecked()));
-		return;
-	}
-
-	if (!args[0]->IsBoolean()
-		)
-	{
-		isolate->ThrowException(v8::Exception::TypeError(
-			v8::String::NewFromUtf8(isolate, "Wrong arguments", v8::NewStringType::kInternalized).ToLocalChecked()));
-		return;
-	}
-	bool zn_bEnable;
-	zoom_v8toc(args[0].As<v8::Boolean>(), zn_bEnable);
-
+	bool zn_bEnable = false;
 	ZNSDKError err = _g_native_wrap.GetSettingServiceWrap().GetSettingAccessibilityCtrl().IsAlwaysShowMeetingControlsEnable(zn_bEnable);
 	v8::HandleScope scope(isolate);
 	v8::Local<v8::Object> node = v8::Object::New(isolate);

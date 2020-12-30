@@ -1,4 +1,0 @@
-#include "resource.h"
-
-IDI_SDK_ICON 	ICON		"zoomsdk.ico"
-IDI_SDK_BIG_ICON 	ICON		"zoomsdk.ico"

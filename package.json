@@ -1,9 +1,0 @@
-{
-  "name": "zoom-electron-sdk",
-  "scripts": {
-    "preinstall": "echo zoom electron sdk"
-  },
-  "dependencies": {
-    "google-protobuf": "3.4.0"
-  }
-}
